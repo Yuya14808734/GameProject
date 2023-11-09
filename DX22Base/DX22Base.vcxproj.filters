@@ -31,9 +31,6 @@
     <Filter Include="ソース ファイル\DX22">
       <UniqueIdentifier>{01802416-f700-4808-89e1-0764a8308379}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\DX22\Stage">
-      <UniqueIdentifier>{be3979d7-5a26-41ce-9440-9776d280db4f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\DX22\Camera">
       <UniqueIdentifier>{c0ae956a-945c-4627-a49c-31ab20eac8d0}</UniqueIdentifier>
     </Filter>
@@ -45,12 +42,6 @@
     </Filter>
     <Filter Include="ソース ファイル\DX22\Model">
       <UniqueIdentifier>{3345c097-e8c7-43fb-a0c3-e47ef2fc7bee}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\DX22\UI\TitleUI">
-      <UniqueIdentifier>{4d00ed11-2475-4ef6-bbb1-560e7971c0e3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\DX22\UI\GameUI">
-      <UniqueIdentifier>{e04ef00e-26cd-4d76-879d-1ede11b8073a}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\DX22\Sound">
       <UniqueIdentifier>{45c24ec6-e700-409d-8986-40a60fa203e4}</UniqueIdentifier>
@@ -102,9 +93,6 @@
     <ClCompile Include="CameraBase.cpp">
       <Filter>ソース ファイル\DX22\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Stage.cpp">
-      <Filter>ソース ファイル\DX22\Stage</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>ソース ファイル\DX22\Scene</Filter>
     </ClCompile>
@@ -114,9 +102,6 @@
     <ClCompile Include="Model_Contents.cpp">
       <Filter>ソース ファイル\DX22\Model</Filter>
     </ClCompile>
-    <ClCompile Include="GAMEUI.cpp">
-      <Filter>ソース ファイル\DX22\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>ソース ファイル\DX22\UI</Filter>
     </ClCompile>
@@ -125,12 +110,6 @@
     </ClCompile>
     <ClCompile Include="UIBase.cpp">
       <Filter>ソース ファイル\DX22\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI_TitleLogo.cpp">
-      <Filter>ソース ファイル\DX22\UI\TitleUI</Filter>
-    </ClCompile>
-    <ClCompile Include="ClearUI.cpp">
-      <Filter>ソース ファイル\DX22\UI\GameUI</Filter>
     </ClCompile>
     <ClCompile Include="BGM.cpp">
       <Filter>ソース ファイル\DX22\Sound</Filter>
@@ -200,17 +179,11 @@
     <ClInclude Include="CameraBase.h">
       <Filter>ソース ファイル\DX22\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Stage.h">
-      <Filter>ソース ファイル\DX22\Stage</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>ソース ファイル\DX22\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Model.h">
       <Filter>ソース ファイル\DX22\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="GAMEUI.h">
-      <Filter>ソース ファイル\DX22\UI</Filter>
     </ClInclude>
     <ClInclude Include="Sprite.h">
       <Filter>ソース ファイル\DX22\UI</Filter>
@@ -220,12 +193,6 @@
     </ClInclude>
     <ClInclude Include="UIBase.h">
       <Filter>ソース ファイル\DX22\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI_TitleLogo.h">
-      <Filter>ソース ファイル\DX22\UI\TitleUI</Filter>
-    </ClInclude>
-    <ClInclude Include="ClearUI.h">
-      <Filter>ソース ファイル\DX22\UI\GameUI</Filter>
     </ClInclude>
     <ClInclude Include="Sound.h">
       <Filter>ソース ファイル\DX22\Sound</Filter>

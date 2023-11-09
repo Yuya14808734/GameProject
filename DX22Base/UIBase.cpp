@@ -1,4 +1,6 @@
 #include "UIBase.h"
+#include "Main.h"
+
 
 UI_Base::UI_Base()
 	:m_pTexture(nullptr)
@@ -33,8 +35,8 @@ void UI_Base::Draw()
 		DirectX::XMMatrixTranspose(
 			DirectX::XMMatrixOrthographicOffCenterLH(
 				0.0f,//画面左端の座標
-				1280.0f,//画面右端の座標
-				720.0f,	//画面下端の座標
+				GetAppWidth(),//画面右端の座標
+				GetAppHeight(),	//画面下端の座標
 				0.0f,	//画面上端の座標
 				-1.0f,	//2方向で写せる最小値
 				1.0f	//2方向で写せる最大値

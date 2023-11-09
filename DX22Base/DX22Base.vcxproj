@@ -154,7 +154,6 @@
     <ClCompile Include="BGM.cpp" />
     <ClCompile Include="BlendState.cpp" />
     <ClCompile Include="CameraBase.cpp" />
-    <ClCompile Include="ClearUI.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="DirectXTex\Texture.cpp" />
@@ -174,18 +173,14 @@
     <ClCompile Include="SE.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="Stage.cpp" />
     <ClCompile Include="Startup.cpp" />
     <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="GAMEUI.cpp" />
     <ClCompile Include="UIBase.cpp" />
-    <ClCompile Include="UI_TitleLogo.cpp" />
     <ClCompile Include="WinUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BlendState.h" />
     <ClInclude Include="CameraBase.h" />
-    <ClInclude Include="ClearUI.h" />
     <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="DirectX.h" />
     <ClInclude Include="DirectXTex\Texture.h" />
@@ -204,11 +199,8 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprite.h" />
-    <ClInclude Include="Stage.h" />
     <ClInclude Include="Timer.h" />
-    <ClInclude Include="GAMEUI.h" />
     <ClInclude Include="UIBase.h" />
-    <ClInclude Include="UI_TitleLogo.h" />
     <ClInclude Include="WinUtil.h" />
   </ItemGroup>
   <ItemGroup>
