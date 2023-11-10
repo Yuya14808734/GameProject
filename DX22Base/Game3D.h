@@ -5,7 +5,6 @@
 #include "Shader.h"
 #include "ConstantBuffer.h"
 #include "BlendState.h"
-#include "GAMEUI.h"
 #include "Scene.h"
 
 class Game3D

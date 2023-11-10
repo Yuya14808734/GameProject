@@ -28,9 +28,9 @@ public:
 
 	//--- 各種データ定義
 private:
-	using Children		= std::vector<NodeIndex>;
-	using Mapping		= std::map<std::string, NodeIndex>;
-	using MappingKey	= std::pair<std::string, NodeIndex>; 
+	using Children = std::vector<NodeIndex>;
+	using Mapping = std::map<std::string, NodeIndex>;
+	using MappingKey = std::pair<std::string, NodeIndex>;
 	// 3値のアニメーションキー
 	struct Key3
 	{
@@ -132,6 +132,7 @@ public:
 
 	AnimeNo AddAnimation(const char* file);
 	void Step(float tick);
+	void SetAnimeTime(AnimeNo no, float time);
 
 	void Play(AnimeNo no, bool loop);
 	void PlayBlend(AnimeNo no, float blendTime, bool loop);
@@ -142,6 +143,7 @@ public:
 	AnimeNo GetPlayNo();
 	AnimeNo GetBlendNo();
 	float GetRemainingTime(AnimeNo no);
+	float TotalTime(AnimeNo no);
 
 private:
 	void MakeNodes(const void* pScene);

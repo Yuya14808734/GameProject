@@ -175,7 +175,7 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Startup.cpp" />
     <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="UIBase.cpp" />
+    <ClCompile Include="Image2D.cpp" />
     <ClCompile Include="WinUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -200,7 +200,7 @@
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Timer.h" />
-    <ClInclude Include="UIBase.h" />
+    <ClInclude Include="Image2D.h" />
     <ClInclude Include="WinUtil.h" />
   </ItemGroup>
   <ItemGroup>

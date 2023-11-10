@@ -19,7 +19,7 @@ Model::Model()
 	, m_pMaterials(nullptr), m_materialNum(0)
 	, m_playNo(ANIME_NONE), m_blendNo(ANIME_NONE)
 	, m_blendTime(0.0f), m_blendTotalTime(0.0f)
-	, m_parametric{ANIME_NONE, ANIME_NONE}, m_parametricBlend(0.0f)
+	, m_parametric{ ANIME_NONE, ANIME_NONE }, m_parametricBlend(0.0f)
 {
 	if (m_shaderRef == 0)
 	{
@@ -38,7 +38,7 @@ Model::~Model()
 	delete m_pBones;
 	for (unsigned int i = 0; i < m_meshNum; ++i)
 	{
-		if(m_pMeshes[i].pBones)
+		if (m_pMeshes[i].pBones)
 			delete[] m_pMeshes[i].pBones;
 		delete[] m_pMeshes[i].pVertices;
 		delete[] m_pMeshes[i].pIndices;
@@ -203,6 +203,15 @@ void Model::Step(float tick)
 	}
 }
 
+void Model::SetAnimeTime(AnimeNo no, float time)
+{
+	Animation& anime = m_animes[no];
+	anime.time = time;
+	if (anime.isLoop)
+		while (anime.time >= anime.totalTime)
+			anime.time = anime.StartTime;
+}
+
 void Model::Play(AnimeNo no, bool loop)
 {
 	if (!AnimeNoCheck(no)) { return; }
@@ -285,6 +294,12 @@ float Model::GetRemainingTime(AnimeNo no)
 {
 	if (!AnimeNoCheck(no)) { return 0.0f; }
 	return max(m_animes[no].totalTime - m_animes[no].time, 0.0f);
+}
+
+float Model::TotalTime(AnimeNo no)
+{
+	if (!AnimeNoCheck(no)) { return 0.0f; }
+	return m_animes[no].totalTime;
 }
 
 void Model::MakeNodes(const void* pScene)
@@ -465,7 +480,7 @@ void Model::UpdateAnime(AnimeNo no, float tick)
 	if (no == ANIME_PARAMETRIC) { return; }
 	Animation& anime = m_animes[no];
 	anime.time += anime.speed * tick;
-	if(anime.isLoop)
+	if (anime.isLoop)
 		while (anime.time >= anime.totalTime)
 			anime.time = anime.StartTime;
 }
@@ -587,7 +602,7 @@ void Model::CalcAnime(AnimeTransformKind kind, AnimeNo no)
 		m_animeTransform[kind][channelIt->index].quaternion = quat;
 		m_animeTransform[kind][channelIt->index].scale = scale;
 		channelIt++;
-	}	
+	}
 }
 
 DirectX::XMFLOAT3 Model::Lerp(DirectX::XMFLOAT3& a, DirectX::XMFLOAT3& b, float rate)

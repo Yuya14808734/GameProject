@@ -7,11 +7,11 @@
 #include "Sprite.h"
 #include "DirectXTex/Texture.h"
 
-class UI_Base
+class Image2D
 {
 public:
-	UI_Base();
-	virtual ~UI_Base();
+	Image2D();
+	virtual ~Image2D();
 	virtual void Update();
 	void Draw();
 	void SetPos(DirectX::XMFLOAT3 pos);

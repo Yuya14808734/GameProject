@@ -1,8 +1,8 @@
-#include "UIBase.h"
+#include "Image2D.h"
 #include "Main.h"
 
 
-UI_Base::UI_Base()
+Image2D::Image2D()
 	:m_pTexture(nullptr)
 	, m_pos({0.0f,0.0f,0.0f})
 	,m_size({ 1.0f,1.0f})
@@ -12,17 +12,17 @@ UI_Base::UI_Base()
 
 }
 
-UI_Base::~UI_Base()
+Image2D::~Image2D()
 {
 
 }
 
-void UI_Base::Update()
+void Image2D::Update()
 {
 
 }
 
-void UI_Base::Draw()
+void Image2D::Draw()
 {
 	DirectX::XMFLOAT4X4 fView;
 	DirectX::XMStoreFloat4x4(&fView,
@@ -62,11 +62,11 @@ void UI_Base::Draw()
 	Sprite::Draw();
 }
 
-void UI_Base::SetPos(DirectX::XMFLOAT3 pos)
+void Image2D::SetPos(DirectX::XMFLOAT3 pos)
 {
 	m_pos = pos;
 }
-void UI_Base::SetSize(DirectX::XMFLOAT2 size)
+void Image2D::SetSize(DirectX::XMFLOAT2 size)
 {
 	m_size = size;
 }
