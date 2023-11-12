@@ -79,6 +79,24 @@
     <Filter Include="ソース ファイル\04_Game\00_Scene">
       <UniqueIdentifier>{72381214-ba18-42e2-bbb0-22ecfc257ab4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\04_Game\02_Character">
+      <UniqueIdentifier>{a02cd7d7-6396-4334-acdb-06f00dba8cd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\03_Attack">
+      <UniqueIdentifier>{1f600c55-a4a2-40b1-8c0f-4cbca805a4b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\04_Stage">
+      <UniqueIdentifier>{db577238-41ce-43ee-89d6-c4bbc6cd6831}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\02_Character">
+      <UniqueIdentifier>{067bdd2c-52c4-41f8-9c24-1d6542679dca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\03_Attack">
+      <UniqueIdentifier>{8c6ba7ab-21a2-45f4-a8f4-d7e61bc3315e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\04_Stage">
+      <UniqueIdentifier>{0a11127a-f7bd-4096-a1fb-49a1a150a1c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BlendState.cpp">
@@ -156,6 +174,15 @@
     <ClCompile Include="Polyline.cpp">
       <Filter>ソース ファイル\01_DirectX</Filter>
     </ClCompile>
+    <ClCompile Include="Character_Base.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack_Base.cpp">
+      <Filter>ソース ファイル\04_Game\03_Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Calculation.cpp">
+      <Filter>ソース ファイル\02_System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -223,6 +250,15 @@
     </ClInclude>
     <ClInclude Include="Polyline.h">
       <Filter>ヘッダー ファイル\01_DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="Character_Base.h">
+      <Filter>ヘッダー ファイル\04_Game\02_Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Attack_Base.h">
+      <Filter>ヘッダー ファイル\04_Game\03_Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Calculation.h">
+      <Filter>ヘッダー ファイル\02_System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
