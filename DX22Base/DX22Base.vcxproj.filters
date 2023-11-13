@@ -186,6 +186,9 @@
     <ClCompile Include="ModelDrawer.cpp">
       <Filter>ソース ファイル\03_Assets\Model</Filter>
     </ClCompile>
+    <ClCompile Include="CameraManager.cpp">
+      <Filter>ソース ファイル\02_System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -265,6 +268,9 @@
     </ClInclude>
     <ClInclude Include="ModelDrawer.h">
       <Filter>ヘッダー ファイル\03_Assets\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraManager.h">
+      <Filter>ヘッダー ファイル\02_System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

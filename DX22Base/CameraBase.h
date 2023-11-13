@@ -15,6 +15,8 @@ public :
 		m_fovy(80.0f), m_aspect(16.0f / 9.0f), m_near(0.2f), m_far(1000.0f)
 	{};
 
+	virtual void ChangeInit();
+	virtual void ChangeUninit();
 	virtual ~CameraBase() {}
 	virtual void Update() = 0;
 	DirectX::XMFLOAT4X4 GetViewMatrix()

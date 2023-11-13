@@ -11,7 +11,7 @@ class ModelDrawer
 private:
 	struct ModelInformation
 	{
-		Model* model;
+		Model* model = nullptr;
 		std::map<std::string, Model::AnimeNo> animation;
 	};
 
@@ -19,7 +19,7 @@ public:
 	static void LoadModel(const char*, std::string&);
 	static void LoadAnime(const char*, std::string&, std::string&);
 	static Model* GetModel(const std::string&);
-	static void DrawModel(std::string&,CVector3& pos,CVector3& size,CVector3& rotate);
+	static void DrawModel(std::string& ModelName,CVector3& pos,CVector3& scale,CVector3& rotate);
 
 private:
 	static std::map<std::string, ModelInformation> m_Models;
@@ -40,5 +40,5 @@ private:
 	CVector3 m_pos;
 	CVector3 m_size;
 	CQuaternion m_rotate;
-	float m_AnimTime;
+	float m_AnimTime = 0.0f;
 };

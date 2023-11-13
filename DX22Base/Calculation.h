@@ -52,9 +52,7 @@ public:
 	CVector2 normalize() const;
 	CVector2 rotateRadius(float Radius);
 	CVector2 rotateAngle(float Angle);
-	DirectX::XMFLOAT2 getXMFLOAT();
-	void setXMFLOAT(DirectX::XMFLOAT2);
-
+	
 public:
 	static CVector2 GetUp();
 	static CVector2 GetRight();
@@ -104,7 +102,6 @@ public:
 	float dot(CVector3) const;
 	float length() const;
 	CVector3 normalize() const;
-	DirectX::XMFLOAT3 GetXMFLOAT3() const;
 
 public:
 	static CVector3 GetForward();

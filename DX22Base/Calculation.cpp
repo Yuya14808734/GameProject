@@ -150,17 +150,6 @@ CVector2 CVector2::rotateAngle(float Angle)
 	return rotateRadius(Angle * 3.14f / 180.0f);
 }
 
-DirectX::XMFLOAT2 CVector2::getXMFLOAT()
-{
-	return DirectX::XMFLOAT2(x, y);
-}
-
-void CVector2::setXMFLOAT(DirectX::XMFLOAT2 v)
-{
-	x = v.x;
-	y = v.y;
-}
-
 CVector2 CVector2::GetUp()
 {
 	return CVector2(0.0f, 1.0f);
@@ -339,11 +328,6 @@ CVector3 CVector3::normalize() const
 	return CVector3(0.0f, 0.0f, 1.0f);
 }
 
-DirectX::XMFLOAT3 CVector3::GetXMFLOAT3() const
-{
-	return DirectX::XMFLOAT3(x, y, z);
-}
-
 CVector3 CVector3::GetForward()
 {
 	return CVector3(0.0f, 0.0f, 1.0f);
@@ -358,6 +342,11 @@ CVector3 CVector3::GetRight()
 {
 	return CVector3(1.0f, 0.0f, 0.0f);
 }
+
+
+//--------------------------
+// CQuaternion
+//--------------------------
 
 CQuaternion::CQuaternion()
 	:CQuaternion(0.0f,0.0f,0.0f,1.0f)
@@ -411,8 +400,7 @@ CQuaternion CQuaternion::AngleAxis(const CVector3& Axis, float Angle)
 {
 	CQuaternion r_q;
 	float radian = Angle * 3.14159265359f / 180.0f;
-	DirectX::XMFLOAT3 axis_f = Axis.GetXMFLOAT3();
-	DirectX::XMVECTOR axis_v = DirectX::XMLoadFloat3(&axis_f);
+	DirectX::XMVECTOR axis_v = DirectX::XMLoadFloat3(&Axis.f);
 
 	r_q.v = DirectX::XMQuaternionRotationAxis(axis_v, radian);
 
@@ -422,8 +410,7 @@ CQuaternion CQuaternion::AngleAxis(const CVector3& Axis, float Angle)
 CQuaternion CQuaternion::RadianAxis(const CVector3& Axis, float Radian)
 {
 	CQuaternion r_q;
-	DirectX::XMFLOAT3 axis_f = Axis.GetXMFLOAT3();
-	DirectX::XMVECTOR axis_v = DirectX::XMLoadFloat3(&axis_f);
+	DirectX::XMVECTOR axis_v = DirectX::XMLoadFloat3(&Axis.f);
 
 	r_q.v = DirectX::XMQuaternionRotationAxis(axis_v, Radian);
 
