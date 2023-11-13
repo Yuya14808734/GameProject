@@ -129,9 +129,6 @@
     <ClCompile Include="ConstantBuffer.cpp">
       <Filter>ソース ファイル\01_DirectX</Filter>
     </ClCompile>
-    <ClCompile Include="CameraBase.cpp">
-      <Filter>ソース ファイル\04_Game\01_Camera</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>ソース ファイル\04_Game\00_Scene</Filter>
     </ClCompile>
@@ -189,6 +186,9 @@
     <ClCompile Include="CameraManager.cpp">
       <Filter>ソース ファイル\02_System</Filter>
     </ClCompile>
+    <ClCompile Include="CameraBase.cpp">
+      <Filter>ソース ファイル\02_System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -242,9 +242,6 @@
     <ClInclude Include="Image2D.h">
       <Filter>ヘッダー ファイル\03_Assets\2D</Filter>
     </ClInclude>
-    <ClInclude Include="CameraBase.h">
-      <Filter>ヘッダー ファイル\04_Game\01_Camera</Filter>
-    </ClInclude>
     <ClInclude Include="Effect_Manager.h">
       <Filter>ヘッダー ファイル\03_Assets\EffekSeer</Filter>
     </ClInclude>
@@ -270,6 +267,9 @@
       <Filter>ヘッダー ファイル\03_Assets\Model</Filter>
     </ClInclude>
     <ClInclude Include="CameraManager.h">
+      <Filter>ヘッダー ファイル\02_System</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraBase.h">
       <Filter>ヘッダー ファイル\02_System</Filter>
     </ClInclude>
   </ItemGroup>

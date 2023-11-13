@@ -140,8 +140,8 @@ CVector2 CVector2::normalize() const
 CVector2 CVector2::rotateRadius(float Radius)
 {
 	CVector2 temp;
-	temp.x = cos(Radius) * x - sin(Radius) * y;
-	temp.y = sin(Radius) * x + cos(Radius) * y;
+	temp.x = cosf(Radius) * x - sinf(Radius) * y;
+	temp.y = sinf(Radius) * x + cosf(Radius) * y;
 	return temp;
 }
 
@@ -283,11 +283,6 @@ CVector3 CVector3::operator / (float r) const
 		return CVector3(x / r, y / r, z / r);
 	}
 	return *this;
-}
-
-CVector3 operator * (float r, const struct CVector3& v)
-{
-	return CVector3(r * v.x, r * v.y, r * v.z);
 }
 
 bool CVector3::operator == (const CVector3& v) const

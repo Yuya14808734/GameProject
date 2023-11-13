@@ -112,7 +112,7 @@ Model::AnimeNo Model::AddAnimation(const char* file)
 	Animation& anime = m_animes.back();
 
 	// アニメーション設定
-	anime.StartTime = 1.0f / pAnime->mTicksPerSecond;
+	anime.StartTime = 1.0f / static_cast<float>(pAnime->mTicksPerSecond);
 	anime.totalTime = pAnime->mDuration / pAnime->mTicksPerSecond;
 	anime.channels.resize(pAnime->mNumChannels);
 	std::vector<Channel>::iterator channelIt = anime.channels.begin();
@@ -296,7 +296,13 @@ float Model::GetRemainingTime(AnimeNo no)
 	return max(m_animes[no].totalTime - m_animes[no].time, 0.0f);
 }
 
-float Model::TotalTime(AnimeNo no)
+float Model::AnimeStartTime(AnimeNo no)
+{
+	if (!AnimeNoCheck(no)) { return 0.0f; }
+	return m_animes[no].StartTime;
+}
+
+float Model::AnimeTotalTime(AnimeNo no)
 {
 	if (!AnimeNoCheck(no)) { return 0.0f; }
 	return m_animes[no].totalTime;

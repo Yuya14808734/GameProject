@@ -126,7 +126,7 @@ void Effect_Manager::Draw_Effect(CameraBase* pCamera)
 	m_efkManager->SetLayerParameter(0, layerParameter);
 
 	//時間を更新する
-	m_efkRenderer->SetTime(Time);
+	m_efkRenderer->SetTime(static_cast<float>(Time));
 
 	//マネージャーの更新
 	Effekseer::Manager::UpdateParameter updateParameter;

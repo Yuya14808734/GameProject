@@ -1,29 +1,27 @@
 #pragma once
 #include "CameraBase.h"
+#include <string>
 #include <map>
 
 class CameraManger
 {
 public:
-	static CameraManger* GetInstance();
+	static CameraManger& GetInstance();
 	
-public:
-	static CameraManger* Instance;
 private:
 	CameraManger();
 	~CameraManger();
 
 public:
-	void CameraInit();
 	void CameraUpdate();
 
-	CameraBase* GetSceneCamera();
-	void SetSceneCamera(CameraBase* pCamera);
-	void AddCamera(CameraBase* pCamera,std::string& CameraName);
+	CameraBase* GetSceneCamera() const;
+	void SetSceneCamera(std::string& CameraName);
+	bool AddCamera(CameraBase* pCamera, std::string& CameraName);
 	CameraBase* GetCamera(std::string& CameraName);
 	CameraBase** GetCameraPointer();
-	void DestroyCamera(std::string& CameraName);
-	void DestroyAllCamera();
+	void DestroyCamera(std::string& CameraName,bool MemoryDelete);
+	void DestroyAllCamera(bool MemoryDelete);
 
 private:
 	CameraBase* m_pNowCamera = nullptr;

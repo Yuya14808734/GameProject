@@ -143,7 +143,8 @@ public:
 	AnimeNo GetPlayNo();
 	AnimeNo GetBlendNo();
 	float GetRemainingTime(AnimeNo no);
-	float TotalTime(AnimeNo no);
+	float AnimeStartTime(AnimeNo no);
+	float AnimeTotalTime(AnimeNo no);
 
 private:
 	void MakeNodes(const void* pScene);
