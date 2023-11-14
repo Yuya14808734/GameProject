@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="00_SceneGame.cpp" />
     <ClCompile Include="Attack_Base.cpp" />
     <ClCompile Include="BGM.cpp" />
     <ClCompile Include="BlendState.cpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="Character_Base.cpp" />
+    <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="DirectXTex\Texture.cpp" />
@@ -173,22 +175,24 @@
     <ClCompile Include="Polyline.cpp" />
     <ClCompile Include="SamplerState.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="Scene_Test.cpp" />
     <ClCompile Include="SE.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Stage_Base.cpp" />
     <ClCompile Include="Startup.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Image2D.cpp" />
     <ClCompile Include="WinUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="00_SceneGame.h" />
     <ClInclude Include="Attack_Base.h" />
     <ClInclude Include="BlendState.h" />
     <ClInclude Include="Calculation.h" />
     <ClInclude Include="CameraBase.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="Character_Base.h" />
+    <ClInclude Include="Collider.h" />
     <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="DirectX.h" />
     <ClInclude Include="DirectXTex\Texture.h" />
@@ -203,10 +207,10 @@
     <ClInclude Include="Polyline.h" />
     <ClInclude Include="SamplerState.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="Scene_Test.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Stage_Base.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Image2D.h" />
     <ClInclude Include="WinUtil.h" />

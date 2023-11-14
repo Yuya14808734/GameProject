@@ -3,6 +3,9 @@
 #include "Shader.h"
 //シーンの追加
 #include "Scene.h"
+#include "CameraManager.h"
+#include "ModelDrawer.h"
+#include "Collider.h"
 
 Game3D::Game3D()
 {
@@ -22,22 +25,19 @@ Game3D::Game3D()
 	m_pBlend->Create(blend);
 	m_pBlend->Bind();
 
-	m_pWVP = new ConstantBuffer();
-	m_pWVP->Create(sizeof(DirectX::XMFLOAT4X4) * 3);
-
-	//シーンの初期化
-	CScene::SetScene<CScene>();
+	ModelDrawer::InitModels();	//モデルの初期化	
+	CScene::SetScene<CScene>();	//シーンの初期化
 }
 Game3D::~Game3D()
 {
-	CScene::DestroyScene();		//シーンの削除
-	delete m_pWVP;
+	CScene::DestroyScene();								//シーンの削除
+	CameraManger::GetInstance().DestroyAllCamera(true);	//すべてのカメラの削除
+	ModelDrawer::UninitModels();						//モデルの削除など
 	delete m_pBlend;
 }
 void Game3D::Update()
 {
 	CScene::GetScene()->Update();
-	CScene::SceneChange();
 }
 void Game3D::Draw()
 {

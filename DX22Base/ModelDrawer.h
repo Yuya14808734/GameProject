@@ -8,7 +8,7 @@
 
 class ModelDrawer
 {
-private:
+public:
 	struct ModelInformation
 	{
 		Model* model = nullptr;
@@ -18,11 +18,11 @@ private:
 public:
 	static void InitModels();
 	static void UninitModels();
-	static bool LoadModel(const char*, std::string&);
-	static bool LoadAnime(const char*, std::string&, std::string&);
-	static Model* GetModel(const std::string&);
-	static void DrawModel(std::string& ModelName,CVector3& pos,CVector3& scale,CVector3& rotate);
-	static void DestroyModel(std::string& ModelName, bool MemoryDelete);
+	static bool LoadModel(const char* FilePath, const std::string& ModelName);
+	static bool LoadAnime(const char* FilePath, const std::string& AnimeName, const std::string& ModelName);
+	static Model* GetModel(const std::string& ModelName);
+	static void DrawModel(const std::string& ModelName, const CVector3& pos, const CVector3& scale, const CVector3& rotate);
+	static void DestroyModel(const std::string& ModelName, bool MemoryDelete);
 	static void DestroyAllModel(bool MemoryDelete);
 
 private:
@@ -32,15 +32,15 @@ private:
 
 public:
 	void Draw();
-	void SetModel(std::string ModelName);
+	void SetModel(const std::string ModelName);
 	ModelInformation* GetModel();
-	void PlayAnime(std::string& AnimeName,bool Loop);
+	void PlayAnime(const std::string& AnimeName,bool Loop);
 	void SetAnimeTime(float time);
 	void SetAnimeLerp(float value);
-	void SetPosition(CVector3& pos);
-	void SetScale(CVector3& scale);
-	void SetRotate(CQuaternion& rotate);
-	void SetRotate(CVector3& rotate);
+	void SetPosition(const CVector3& pos);
+	void SetScale(const CVector3& scale);
+	void SetRotate(const CQuaternion& rotate);
+	void SetRotate(const CVector3& rotate);
 
 private:
 	ModelInformation* m_pModelInfo = nullptr;

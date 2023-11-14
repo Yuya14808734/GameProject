@@ -97,6 +97,9 @@
     <Filter Include="ヘッダー ファイル\04_Game\04_Stage">
       <UniqueIdentifier>{0a11127a-f7bd-4096-a1fb-49a1a150a1c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\04_Game\02_Character\Character_00">
+      <UniqueIdentifier>{efc5da23-9735-40db-8956-45e57cc47dd8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BlendState.cpp">
@@ -129,9 +132,6 @@
     <ClCompile Include="ConstantBuffer.cpp">
       <Filter>ソース ファイル\01_DirectX</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>ソース ファイル\04_Game\00_Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Model.cpp">
       <Filter>ソース ファイル\03_Assets\Model</Filter>
     </ClCompile>
@@ -153,9 +153,6 @@
     <ClCompile Include="Effect_Manager.cpp">
       <Filter>ソース ファイル\03_Assets\EffekSeer</Filter>
     </ClCompile>
-    <ClCompile Include="Scene_Test.cpp">
-      <Filter>ソース ファイル\04_Game\00_Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Game3D.cpp">
       <Filter>ソース ファイル\00_Main</Filter>
     </ClCompile>
@@ -171,12 +168,6 @@
     <ClCompile Include="Polyline.cpp">
       <Filter>ソース ファイル\01_DirectX</Filter>
     </ClCompile>
-    <ClCompile Include="Character_Base.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Attack_Base.cpp">
-      <Filter>ソース ファイル\04_Game\03_Attack</Filter>
-    </ClCompile>
     <ClCompile Include="Calculation.cpp">
       <Filter>ソース ファイル\02_System</Filter>
     </ClCompile>
@@ -188,6 +179,24 @@
     </ClCompile>
     <ClCompile Include="CameraBase.cpp">
       <Filter>ソース ファイル\02_System</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>ソース ファイル\02_System</Filter>
+    </ClCompile>
+    <ClCompile Include="00_SceneGame.cpp">
+      <Filter>ソース ファイル\04_Game\00_Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>ソース ファイル\02_System</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack_Base.cpp">
+      <Filter>ソース ファイル\04_Game\03_Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Character_Base.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage_Base.cpp">
+      <Filter>ソース ファイル\04_Game\04_Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -245,12 +254,6 @@
     <ClInclude Include="Effect_Manager.h">
       <Filter>ヘッダー ファイル\03_Assets\EffekSeer</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>ヘッダー ファイル\04_Game\00__Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene_Test.h">
-      <Filter>ヘッダー ファイル\04_Game\00__Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Polyline.h">
       <Filter>ヘッダー ファイル\01_DirectX</Filter>
     </ClInclude>
@@ -270,6 +273,18 @@
       <Filter>ヘッダー ファイル\02_System</Filter>
     </ClInclude>
     <ClInclude Include="CameraBase.h">
+      <Filter>ヘッダー ファイル\02_System</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>ヘッダー ファイル\02_System</Filter>
+    </ClInclude>
+    <ClInclude Include="00_SceneGame.h">
+      <Filter>ヘッダー ファイル\04_Game\00__Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage_Base.h">
+      <Filter>ヘッダー ファイル\04_Game\04_Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
       <Filter>ヘッダー ファイル\02_System</Filter>
     </ClInclude>
   </ItemGroup>

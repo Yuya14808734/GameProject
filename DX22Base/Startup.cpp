@@ -2,6 +2,7 @@
 #include "WinUtil.h"
 #include "Timer.h"
 #include <crtdbg.h>
+#include "Scene.h"
 
 //--- 定数定義
 const char* APP_TITLE = "ジュエリスト";
@@ -19,8 +20,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		Error("window initialize faield");
 	}
 	InitTimer(DEFAULT_FPS);
-	Init();
-
+	MainInit();
 
 	//--- ウィンドウの管理
 	AppState state = APP_STATE_MESSAGE;
@@ -29,13 +29,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		state = UpdateWindow();
 		if (state == APP_STATE_WAIT && UpdateTimer())
 		{
-			Update(GetDeltaTime());
-			Draw();
+			MainProcess();
 		}
 	}
 
 	// 終了時
-	Uninit();
+	MainUninit();
 	UninitTimer();
 	UninitWindow();
 	return 0;

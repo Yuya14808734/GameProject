@@ -24,10 +24,12 @@ void ModelDrawer::UninitModels()
 {
 	DestroyAllModel(true);
 	delete m_pConstantBuffer;
+	m_pConstantBuffer = nullptr;
 	delete m_pVertexShader;
+	m_pVertexShader = nullptr;
 }
 
-bool ModelDrawer::LoadModel(const char* FilePath, std::string& ModelName)
+bool ModelDrawer::LoadModel(const char* FilePath, const std::string& ModelName)
 {
 	//ÉÇÉfÉãÇ™Ç†ÇÈÇ©ÇíTÇ∑
 	std::map<std::string, ModelInformation*>::iterator it = m_Models.find(ModelName);
@@ -54,7 +56,7 @@ bool ModelDrawer::LoadModel(const char* FilePath, std::string& ModelName)
 	return true;
 }
 
-bool ModelDrawer::LoadAnime(const char* FilePath, std::string& AnimeName, std::string& ModelName)
+bool ModelDrawer::LoadAnime(const char* FilePath, const std::string& AnimeName, const std::string& ModelName)
 {
 	//Ç‹Ç∏ê›íËÇµÇΩÇ¢ÉÇÉfÉãÇ™Ç†ÇÈÇÃÇ©
 	std::map<std::string, ModelInformation*>::iterator 
@@ -115,7 +117,7 @@ Model* ModelDrawer::GetModel(const std::string& ModelName)
 	return (*model_it).second->model;
 }
 
-void ModelDrawer::DrawModel(std::string& ModelName, CVector3& pos, CVector3& scale, CVector3& rotate)
+void ModelDrawer::DrawModel(const std::string& ModelName, const CVector3& pos, const CVector3& scale, const CVector3& rotate)
 {
 	CameraBase* pCamera = CameraManger::GetInstance().GetSceneCamera();
 
@@ -151,7 +153,7 @@ void ModelDrawer::DrawModel(std::string& ModelName, CVector3& pos, CVector3& sca
 	(*model_it).second->model->Draw();
 }
 
-void ModelDrawer::DestroyModel(std::string& ModelName, bool MemoryDelete)
+void ModelDrawer::DestroyModel(const std::string& ModelName, bool MemoryDelete)
 {
 	//ÉJÉÅÉâÇ™Ç†ÇÈÇ©ÇíTÇ∑
 	std::map<std::string, ModelInformation*>::iterator it = m_Models.find(ModelName);
@@ -241,7 +243,7 @@ ModelDrawer::ModelInformation* ModelDrawer::GetModel()
 	return m_pModelInfo;
 }
 
-void ModelDrawer::PlayAnime(std::string& AnimeName,bool Loop)
+void ModelDrawer::PlayAnime(const std::string& AnimeName,bool Loop)
 {
 	if (m_pModelInfo == nullptr)
 	{
@@ -286,22 +288,22 @@ void ModelDrawer::SetAnimeLerp(float value)
 	SetAnimeTime((AnimeTotalTime - AnimeStartTime) * value + AnimeStartTime);
 }
 
-void ModelDrawer::SetPosition(CVector3& pos)
+void ModelDrawer::SetPosition(const CVector3& pos)
 {
 	m_pos = pos;
 }
 
-void ModelDrawer::SetScale(CVector3& scale)
+void ModelDrawer::SetScale(const CVector3& scale)
 {
 	m_scale = scale;
 }
 
-void ModelDrawer::SetRotate(CQuaternion& rotate)
+void ModelDrawer::SetRotate(const CQuaternion& rotate)
 {
 	m_rotate = rotate;
 }
 
-void ModelDrawer::SetRotate(CVector3& rotate)
+void ModelDrawer::SetRotate(const CVector3& rotate)
 {
 	m_rotate.v = DirectX::XMQuaternionRotationRollPitchYaw(
 		DirectX::XMConvertToRadians(rotate.x), 

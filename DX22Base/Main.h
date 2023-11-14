@@ -5,9 +5,8 @@
 unsigned int GetAppWidth();
 unsigned int GetAppHeight();
 
-void Init();
-void Uninit();
-void Update(float deltaTime);
-void Draw();
+void MainInit();
+void MainUninit();
+void MainProcess();
 
 #endif // __MAIN_H__

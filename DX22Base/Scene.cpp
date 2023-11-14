@@ -49,10 +49,16 @@ void CScene::SceneChange()
 
 void CScene::DestroyScene()
 {
-	if (m_pNowScene == nullptr)
+	if (m_pNextScene != nullptr)
 	{
-		return;
+		delete m_pNextScene;
+		m_pNextScene = nullptr;
 	}
 
-	delete m_pNowScene;
+	if (m_pNowScene != nullptr)
+	{
+		m_pNowScene->Uninit();
+		delete m_pNowScene;
+		m_pNowScene = nullptr;
+	}
 }

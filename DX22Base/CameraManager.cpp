@@ -8,9 +8,11 @@ CameraManger& CameraManger::GetInstance()
 }
 
 CameraManger::CameraManger()
+	:m_pNowCamera(nullptr)
 {
 
 }
+
 CameraManger::~CameraManger()
 {
 
@@ -18,7 +20,10 @@ CameraManger::~CameraManger()
 
 void CameraManger::CameraUpdate()
 {
-	m_pNowCamera->Update();
+	if (m_pNowCamera != nullptr)
+	{
+		m_pNowCamera->Update();
+	}
 }
 
 CameraBase* CameraManger::GetSceneCamera() const
@@ -36,6 +41,7 @@ void CameraManger::SetSceneCamera(std::string& CameraName)
 		return;
 	}
 
+	//‚ ‚ê‚Îİ’è
 	m_pNowCamera = m_CameraList[CameraName];
 }
 
@@ -54,6 +60,7 @@ bool CameraManger::AddCamera(CameraBase* pCamera, std::string& CameraName)
 		return false;
 	}
 
+	//‚È‚¯‚ê‚Î’Ç‰Á‚·‚é
 	m_CameraList.insert(std::make_pair(CameraName, pCamera));
 
 	return true;
@@ -92,11 +99,13 @@ void CameraManger::DestroyCamera(std::string& CameraName, bool MemoryDelete)
 		delete (*it).second;
 	}
 
+	//‚ ‚ê‚Îíœ
 	m_CameraList.erase(it);
 }
 
 void CameraManger::DestroyAllCamera(bool MemoryDelete)
 {
+	//‚·‚×‚Ä‚ÌƒJƒƒ‰‚ğíœ
 	if (MemoryDelete)
 	{
 		for (std::pair<std::string, CameraBase*> camera : m_CameraList)

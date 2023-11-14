@@ -5,6 +5,10 @@
 // 2D Vector
 //--------------------------
 
+const CVector2 CVector2::m_Right = CVector2(1.0f,0.0f);
+const CVector2 CVector2::m_Up = CVector2(0.0f, 1.0f);
+const CVector2 CVector2::m_Zero = CVector2(0.0f, 0.0f);
+
 CVector2::CVector2()
 {
 	x = y = 0.0f;
@@ -26,6 +30,12 @@ CVector2::CVector2(float x, float y)
 {
 	this->x = x;
 	this->y = y;
+}
+
+CVector2::CVector2(int x, int y)
+{
+	this->x = static_cast<float>(x);
+	this->y = static_cast<float>(x);
 }
 
 
@@ -150,20 +160,31 @@ CVector2 CVector2::rotateAngle(float Angle)
 	return rotateRadius(Angle * 3.14f / 180.0f);
 }
 
-CVector2 CVector2::GetUp()
+const CVector2& CVector2::GetUp()
 {
-	return CVector2(0.0f, 1.0f);
+	return m_Up;
 }
 
-CVector2 CVector2::GetRight()
+const CVector2& CVector2::GetRight()
 {
-	return CVector2(1.0f, 0.0f);
+	return m_Right;
+}
+
+const CVector2& CVector2::GetZero()
+{
+	return m_Zero;
 }
 
 //--------------------------
 // 3D Vector
 //--------------------------
 // constructors
+
+const CVector3 CVector3::m_Forward = CVector3(0.0f,0.0f,1.0f);
+const CVector3 CVector3::m_Right = CVector3(1.0f, 0.0f, 0.0f);
+const CVector3 CVector3::m_Up = CVector3(0.0f, 1.0f, 0.0f);
+const CVector3 CVector3::m_Zero = CVector3(0.0f, 0.0f, 0.0f);
+
 CVector3::CVector3()
 {
 	x = y = z = 0.0f;
@@ -204,7 +225,9 @@ CVector3::CVector3(float x, float y, float z)
 
 CVector3::CVector3(int x, int y, int z)
 {
-	*this = CVector3(static_cast<float>(x), static_cast<float>(y), static_cast<float>(z));
+	this->x = static_cast<float>(x);
+	this->y = static_cast<float>(y);
+	this->z = static_cast<float>(z);
 }
 
 CVector3& CVector3::operator =(const DirectX::XMFLOAT3& v)
@@ -323,21 +346,25 @@ CVector3 CVector3::normalize() const
 	return CVector3(0.0f, 0.0f, 1.0f);
 }
 
-CVector3 CVector3::GetForward()
+const CVector3& CVector3::GetForward()
 {
-	return CVector3(0.0f, 0.0f, 1.0f);
+	return m_Forward;
 }
 
-CVector3 CVector3::GetUp()
+const CVector3& CVector3::GetUp()
 {
-	return CVector3(0.0f, 1.0f, 0.0f);
+	return m_Up;
 }
 
-CVector3 CVector3::GetRight()
+const CVector3& CVector3::GetRight()
 {
-	return CVector3(1.0f, 0.0f, 0.0f);
+	return m_Right;
 }
 
+const CVector3& CVector3::GetZero()
+{
+	return m_Zero;
+}
 
 //--------------------------
 // CQuaternion

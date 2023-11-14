@@ -25,7 +25,7 @@ unsigned int GetAppHeight()
 	return SCREEN_HEIGHT;
 }
 
-void Init()
+void MainInit()
 {
 	if (FAILED(InitDX(GetHWND(), SCREEN_WIDTH, SCREEN_HEIGHT, false)))
 	{
@@ -52,7 +52,7 @@ void Init()
 
 	g_pGame = new Game3D();
 }
-void Uninit()
+void MainUninit()
 {
 	delete g_pGame;
 	Effect_Manager::Effect_Uninit();
@@ -63,14 +63,23 @@ void Uninit()
 	UninitTexture();
 	UninitDX();
 }
-void Update(float deltaTime)
+void MainProcess()
 {
+	//====================================================
+	//アップデート
+	//====================================================
 	UpdateInput();
 	g_pGame->Update();
-}
-void Draw()
-{
+
+	//====================================================
+	//描画
+	//====================================================
 	BeginDrawDX();
 	g_pGame->Draw();
 	EndDrawDX();
+
+	//====================================================
+	//シーンの入れ替え
+	//====================================================
+	CScene::SceneChange();
 }

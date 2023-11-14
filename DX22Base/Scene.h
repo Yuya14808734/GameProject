@@ -8,7 +8,7 @@ class CScene
 public:
 	static CScene* GetScene();	//シーンの取得
 	template<typename T>				
-	static void SetScene();				//次のシーンの設定
+	static T* SetScene();				//次のシーンの設定
 	static void SceneChange();			//次のシーンの切り替え
 	static void DestroyScene();			//シーンの削除
 
@@ -21,20 +21,20 @@ public :
 	virtual void Uninit();
 	virtual void Update();
 	virtual void Draw();
-protected:
-	CameraBase* m_pCamera;
 };
 
 template<typename T>
-void CScene::SetScene()
+T* CScene::SetScene()
 {
-	m_pNextScene = new T();
+	T* returnValue = m_pNextScene = new T();
 
 	//今のシーンが設定されていなければ
 	if (m_pNowScene == nullptr)
 	{
 		SceneChange();
 	}
+
+	return returnValue;
 }
 
 #endif // !SCENE_H

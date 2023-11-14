@@ -16,7 +16,6 @@ public:
 	void Draw();
 
 private:
-	ConstantBuffer* m_pWVP;
 	BlendState* m_pBlend;
 };
 
