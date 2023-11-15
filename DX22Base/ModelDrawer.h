@@ -37,6 +37,8 @@ public:
 	void PlayAnime(const std::string& AnimeName,bool Loop);
 	void SetAnimeTime(float time);
 	void SetAnimeLerp(float value);
+	float GetAnimeTime();
+	float GetAnimeEndTime();
 	void SetPosition(const CVector3& pos);
 	void SetScale(const CVector3& scale);
 	void SetRotate(const CQuaternion& rotate);
@@ -47,6 +49,6 @@ private:
 	CVector3 m_pos;
 	CVector3 m_scale;
 	CQuaternion m_rotate;
-	Model::AnimeNo m_AnimeNo = 0;
+	Model::AnimeNo m_NowPlayAnimeNo = 0;
 	float m_AnimTime = 0.0f;
 };

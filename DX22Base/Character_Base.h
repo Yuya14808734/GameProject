@@ -30,11 +30,13 @@ private:
 
 
 public:
+	Character() {};
+	~Character() {};
 	void Character_Init();		//キャラクターの初期化
 	void Character_Uninit();	//キャラクターの終了処理
 	void Character_Update();	//キャラクターの更新
 	void Character_Draw();		//キャラクターの描画
-	int GetPlayerBit();
+	int GetPlayerBit();			//キャラクター番号の取得
 	const Character::STATE& GetState() const;
 	ModelDrawer* GetModel() const;
 	const CVector3& GetPos() const;
@@ -48,7 +50,8 @@ public:
 	void SetForce(const CVector3& force);
 	float GetDamage() const;
 	void AddDamage(float damage);
-	std::vector<BoxCollider>* GetCollider() const;
+	void SetDamage(float damage);
+	std::vector<SphereCollider>* GetCollider() const;
 
 protected:
 
@@ -66,6 +69,8 @@ protected:
 	//パラメータ
 	const float m_WalkSpeed = 0.0f;			//歩くスピード
 	const float m_DashSpeed = 0.0f;			//走るスピード
+	const float m_JumpPower = 0.0f;			//ジャンプするときの力
+	const float m_Gravity = 0.0f;			//重力
 
 protected:
 	int m_PlayerNum = 0x00;					//このキャラクターが何番なのかを入れる

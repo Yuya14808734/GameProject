@@ -245,16 +245,19 @@ ModelDrawer::ModelInformation* ModelDrawer::GetModel()
 
 void ModelDrawer::PlayAnime(const std::string& AnimeName,bool Loop)
 {
+	//モデル情報がない場合
 	if (m_pModelInfo == nullptr)
 	{
 		return;
 	}
 
+	//モデル情報の生成をしていない
 	if (m_pModelInfo->model == nullptr)
 	{
 		return;
 	}
 
+	//アニメーションを探す
 	std::map<std::string, Model::AnimeNo>::iterator it =
 		m_pModelInfo->animation.find(AnimeName);
 	if (it == m_pModelInfo->animation.end())
@@ -262,12 +265,14 @@ void ModelDrawer::PlayAnime(const std::string& AnimeName,bool Loop)
 		return;
 	}
 
+	//アニメーションの再生
 	m_pModelInfo->model->Play((*it).second, Loop);
+	m_NowPlayAnimeNo = (*it).second;
 }
 
 void ModelDrawer::SetAnimeTime(float time)
 {
-	m_pModelInfo->model->SetAnimeTime(m_AnimeNo, time);
+	m_pModelInfo->model->SetAnimeTime(m_NowPlayAnimeNo, time);
 }
 
 void ModelDrawer::SetAnimeLerp(float value)
@@ -282,10 +287,20 @@ void ModelDrawer::SetAnimeLerp(float value)
 		value = 0.0f;
 	}
 
-	float AnimeStartTime = m_pModelInfo->model->AnimeStartTime(m_AnimeNo);
-	float AnimeTotalTime = m_pModelInfo->model->AnimeTotalTime(m_AnimeNo);
+	float AnimeStartTime = m_pModelInfo->model->AnimeStartTime(m_NowPlayAnimeNo);
+	float AnimeTotalTime = m_pModelInfo->model->AnimeTotalTime(m_NowPlayAnimeNo);
 
 	SetAnimeTime((AnimeTotalTime - AnimeStartTime) * value + AnimeStartTime);
+}
+
+float ModelDrawer::GetAnimeTime()
+{
+	return m_pModelInfo->model->AnimeStartTime(m_NowPlayAnimeNo);
+}
+
+float ModelDrawer::GetAnimeEndTime()
+{
+	return m_pModelInfo->model->AnimeTotalTime(m_NowPlayAnimeNo);
 }
 
 void ModelDrawer::SetPosition(const CVector3& pos)
