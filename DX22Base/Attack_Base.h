@@ -29,10 +29,10 @@ public:
 
 protected:
 
-	virtual void Init();
-	virtual void Uninit();
-	virtual void Update();
-	virtual void Draw();
+	virtual void Init() {};
+	virtual void Uninit() {};
+	virtual void Update() {};
+	virtual void Draw() {};
 
 protected:
 	const int AttackEndFrame = 0;				//攻撃から違うステートに変更するフレーム

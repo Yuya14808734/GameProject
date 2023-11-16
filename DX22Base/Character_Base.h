@@ -58,10 +58,10 @@ protected:
 	//======================================================
 	//多分操作などがほぼ同じになるため上の関数を使うことになりそう
 
-	virtual void Init();		//継承先の初期化
-	virtual void Uninit();		//継承先の終了処理
-	virtual void Update();		//継承先の更新
-	virtual void Draw();		//継承先の描画
+	virtual void Init() {};		//継承先の初期化
+	virtual void Uninit() {};		//継承先の終了処理
+	virtual void Update() {};		//継承先の更新
+	virtual void Draw() {};		//継承先の描画
 
 
 protected:
@@ -73,7 +73,7 @@ protected:
 	const float m_Gravity = 0.0f;			//重力
 
 protected:
-	int m_PlayerNum = 0x00;					//このキャラクターが何番なのかを入れる
+	int m_PlayerBit = 0x00;					//このキャラクターが何番なのかを入れる
 	Character::STATE m_State = STATE::MAX;	//キャラクターの状態
 	ModelDrawer m_CharacterModel;			//キャラクターのモデル
 	CVector3 m_pos;							//座標
