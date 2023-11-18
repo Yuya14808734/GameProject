@@ -204,6 +204,9 @@
     <ClCompile Include="Stage_Base.cpp">
       <Filter>ソース ファイル\04_Game\04_Stage</Filter>
     </ClCompile>
+    <ClCompile Include="Character_Base_State.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">

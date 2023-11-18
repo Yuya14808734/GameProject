@@ -27,22 +27,26 @@ public:
 
 	void SetCharacter(Character* character);			//キャラクターの設定
 
+
 protected:
 
 	virtual void Init() {};
 	virtual void Uninit() {};
 	virtual void Update() {};
 	virtual void Draw() {};
+	
+public:
+	virtual void HitTriggerGround() {};
 
 protected:
 	const int AttackEndFrame = 0;				//攻撃から違うステートに変更するフレーム
 
 private:
-	Character* m_pMyCharacter = nullptr;		//攻撃をしているキャラクター
-	ModelDrawer* m_pCharacterModel = nullptr;	//キャラクターのモデル情報
-	int m_FrameCount = 0;						//攻撃が始まってからのフレーム
-	int m_HitPlayerBit = 0x00;					//当たったプレイヤー番号
-	Character::STATE m_CharacterNextState;		//攻撃終了した後のキャラクターの状態
+	Character* m_pMyCharacter = nullptr;			//攻撃をしているキャラクター
+	ModelDrawer* m_pCharacterModel = nullptr;		//キャラクターのモデル情報
+	int m_FrameCount = 0;							//攻撃が始まってからのフレーム
+	int m_HitPlayerBit = 0x00;						//当たったプレイヤー番号
+	Character::STATE m_CharacterNextState = Character::STATE::MAX;	//攻撃終了した後のキャラクターの状態
 	std::vector<SphereCollider> m_AttackCollider;	//攻撃のコライダー(一応複数の当たり判定を持てるように)
 													//飛び道具などはアイテムなどを作ってそこで当たり判定を行う
 };

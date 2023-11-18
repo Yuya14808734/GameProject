@@ -1,4 +1,5 @@
 #include "Character_Base.h"
+#include "Attack_Base.h"
 
 int Character::m_NewPlayerBit = 0x00;
 
@@ -27,6 +28,35 @@ void Character::Character_Uninit()
 void Character::Character_Update()
 {
 	Update();
+
+	switch (m_State)
+	{
+	case Character::STATE::IDLE:
+		IdleUpdate();
+		break;
+	case Character::STATE::WALK:
+		WalkUpdate();
+		break;
+	case Character::STATE::DASH:
+		DashUpdate();
+		break;
+	case Character::STATE::ATTACK:
+		AttackUpdate();
+		break;
+	case Character::STATE::BLOWOFF:
+		BlowOffUpdate();
+		break;
+	case Character::STATE::JUMP:
+		JumpUpdate();
+		break;
+	case Character::STATE::FALL:
+		FallUpdate();
+		break;
+	case Character::STATE::MAX:
+		break;
+	default:
+		break;
+	}
 }
 
 void Character::Character_Draw()
@@ -112,7 +142,18 @@ void Character::SetDamage(float damage)
 	m_DamagePercentage = damage;
 }
 
+BoxCollider* Character::GetCharacterCollider() const
+{
+	return const_cast<BoxCollider*>(&m_CharacterCollider);
+}
+
 std::vector<SphereCollider>* Character::GetCollider() const
 {
-	return const_cast<std::vector<SphereCollider>*>(&m_Collider);
+	return const_cast<std::vector<SphereCollider>*>(&m_BodyCollider);
 }
+
+void Character::Character_HitGround()
+{
+	HitGround();
+}
+

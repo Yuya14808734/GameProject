@@ -16,6 +16,9 @@ public:
 		DASH,		//走る
 		ATTACK,		//攻撃
 		BLOWOFF,	//吹っ飛ばす
+		JUMP,		//ジャンプ
+		FALL,		//落下
+		DOWN,		//倒れる
 
 		MAX,
 	};
@@ -51,37 +54,60 @@ public:
 	float GetDamage() const;
 	void AddDamage(float damage);
 	void SetDamage(float damage);
+	BoxCollider* GetCharacterCollider() const;
 	std::vector<SphereCollider>* GetCollider() const;
+	void Character_HitGround();
 
 protected:
 
 	//======================================================
 	//多分操作などがほぼ同じになるため上の関数を使うことになりそう
 
-	virtual void Init() {};		//継承先の初期化
+	virtual void Init() {};			//継承先の初期化
 	virtual void Uninit() {};		//継承先の終了処理
 	virtual void Update() {};		//継承先の更新
-	virtual void Draw() {};		//継承先の描画
+	virtual void Draw() {};			//継承先の描画
 
+	virtual void IdleUpdate();		//止まっているときのアップデート
+	virtual void WalkUpdate();		//歩く時のアップデート
+	virtual void DashUpdate();		//走るときのアップデート
+	virtual void AttackUpdate();	//攻撃のアップデート
+	virtual void BlowOffUpdate();	//吹っ飛ばしのアップデート
+	virtual void JumpUpdate();		//浮かんでいるときのアップデート
+	virtual void FallUpdate();		//落ちているときのアップデート
+	virtual void DownUpdate();		//倒れている状態のアップデート
+	
+	virtual void HitGround();		//地面に当たった時に呼ばれる
+
+
+protected:
+	void SetAttack(Attack* pAttack);
 
 protected:
 	//======================================================
 	//パラメータ
 	const float m_WalkSpeed = 0.0f;			//歩くスピード
 	const float m_DashSpeed = 0.0f;			//走るスピード
+	const float m_FallSideMoveSpeed = 0.0f;	//落ちているときの横移動のスピード		
 	const float m_JumpPower = 0.0f;			//ジャンプするときの力
 	const float m_Gravity = 0.0f;			//重力
+	const float m_MaxFallSpeed = 0.0f;		//最大落下速度
+	const float m_Friction = 0.0f;			//摩擦量
+	const float m_AirResistance = 0.0f;		//空気抵抗
 
 protected:
 	int m_PlayerBit = 0x00;					//このキャラクターが何番なのかを入れる
 	Character::STATE m_State = STATE::MAX;	//キャラクターの状態
 	ModelDrawer m_CharacterModel;			//キャラクターのモデル
 	CVector3 m_pos;							//座標
+	CVector3 m_oldPos;						//前の座標
 	CVector3 m_scale;						//大きさ
 	CQuaternion m_rotate;					//回転量
 	CVector3 m_Velocity;					//重力など
 	CVector3 m_MoveVector;					//コントローラーの移動量
 	float m_DamagePercentage = 0.0f;		//ダメージの量
 	Attack* m_pNowAttack = nullptr;			//攻撃情報
-	std::vector<SphereCollider> m_Collider;	//プレイヤーの攻撃用コライダー(ステージとは点で行うので違います)
+	BoxCollider m_CharacterCollider;		//プレイヤーの当たり判定
+	std::vector<SphereCollider> m_BodyCollider;	//プレイヤーの攻撃用コライダー(ステージとは点で行うので違います)
+	int m_JumpCount = 0;
 };
