@@ -4,6 +4,7 @@
 //四角当たり判定
 
 BoxCollider::BoxCollider()
+	:type(BoxCollider::BOXTYPE::CENTER)
 {
 	SetBox(CVector3::GetZero(), CVector3(1.0f, 1.0f, 1.0f));
 }
@@ -26,25 +27,46 @@ void BoxCollider::SetBox(const CVector3& p, const CVector3& s)
 
 bool BoxCollider::CollisionBox(const BoxCollider& Box)
 {
-	bool temp = {};
-
-	CVector3 HitDistance;
-	HitDistance.x = size.x + Box.size.x;
-	HitDistance.y = size.y + Box.size.y;
-	HitDistance.z = size.z + Box.size.z;
+	bool temp = false;
 
 	CVector3 NowDistance;
-	NowDistance.x = pos.x - Box.pos.x;
-	NowDistance.y = pos.y - Box.pos.y;
-	NowDistance.z = pos.z - Box.pos.z;
+	CVector3 ColliderHarfSize;
 
-	NowDistance.x = NowDistance.x < 0.0f ? NowDistance.x * -1.0f : NowDistance.x;
-	NowDistance.y = NowDistance.y < 0.0f ? NowDistance.y * -1.0f : NowDistance.y;
-	NowDistance.z = NowDistance.z < 0.0f ? NowDistance.z * -1.0f : NowDistance.z;
+	CVector3 CenterPos_A = this->pos;
+	CVector3 CenterPos_B = Box.pos;
 
-	if (HitDistance.x > NowDistance.x &&
-		HitDistance.y > NowDistance.y &&
-		HitDistance.z > NowDistance.z)
+	//自分の位置を相手の位置を真ん中にする
+	switch (this->type)
+	{
+	case BoxCollider::BOXTYPE::CENTER:
+		break;
+	case BoxCollider::BOXTYPE::FOOT:
+		CenterPos_A.y -= this->size.y * 0.5f;
+		break;
+	}
+
+	switch (Box.type)
+	{
+	case BoxCollider::BOXTYPE::CENTER:
+		break;
+	case BoxCollider::BOXTYPE::FOOT:
+		CenterPos_B.y -= Box.size.y * 0.5f;
+		break;
+	}
+	
+	NowDistance = CenterPos_B - CenterPos_A;
+
+	NowDistance.x = fabsf(NowDistance.x);
+	NowDistance.y = fabsf(NowDistance.y);
+	NowDistance.z = fabsf(NowDistance.z);
+
+	ColliderHarfSize.x = (this->size.x + Box.size.x) * 0.5f;
+	ColliderHarfSize.y = (this->size.y + Box.size.y) * 0.5f;
+	ColliderHarfSize.z = (this->size.z + Box.size.z) * 0.5f;
+
+	if (ColliderHarfSize.x > NowDistance.x &&
+		ColliderHarfSize.y > NowDistance.y &&
+		ColliderHarfSize.z > NowDistance.z)
 	{
 		temp = true;
 	}

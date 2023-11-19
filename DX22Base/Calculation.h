@@ -52,6 +52,8 @@ public:
 	CVector2 normalize() const;
 	CVector2 rotateRadius(float Radius);
 	CVector2 rotateAngle(float Angle);
+	CVector2 Abs() const;
+
 	
 public:
 	static const CVector2& GetUp();
@@ -108,6 +110,8 @@ public:
 	float dot(CVector3) const;
 	float length() const;
 	CVector3 normalize() const;
+	CVector3 Abs() const;
+
 
 public:
 	static const CVector3& GetForward();

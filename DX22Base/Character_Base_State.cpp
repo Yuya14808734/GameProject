@@ -38,6 +38,8 @@ void Character::WalkUpdate()
 
 	bool NoButton = true;
 
+	m_MoveVector.x = 0.0f;
+
 	if (IsKeyPress(VK_RIGHT))
 	{		
 		m_MoveVector.x = m_WalkSpeed;
@@ -203,25 +205,43 @@ void Character::BlowOffUpdate()
 
 	m_pos += m_MoveVector;
 	m_pos += m_Velocity;
-
 }
 
 void Character::JumpUpdate()
 {
+	bool OnButton = false;
+
 	if (IsKeyPress(VK_RIGHT))
 	{
-		m_MoveVector.x = m_FallSideMoveSpeed;
+		m_Velocity.x = m_FallSideMoveSpeed;
+		OnButton = true;
 	}
 
 	if (IsKeyPress(VK_LEFT))
 	{
-		m_MoveVector.x = -m_FallSideMoveSpeed;
+		m_Velocity.x = -m_FallSideMoveSpeed;
+		OnButton = true;
 	}
 
-	m_Velocity.x *= m_AirResistance;	//空気抵抗を掛ける
+	//もう一度ジャンプができる
+	if (m_JumpCount < m_MaxJumpCount)
+	{
+		if (IsKeyTrigger(VK_UP))
+		{
+			m_JumpCount++;
+			m_Velocity.y = m_JumpPower;
+			m_State = Character::STATE::JUMP;
+		}
+	}
+
+	if (OnButton)
+	{
+		m_Velocity.x *= m_AirResistance;	//空気抵抗を掛ける
+	}
+	
 	m_Velocity.y += m_Gravity;			//重力を掛ける
 
-	//重力制御
+	//重力制御(最大の落下速度になったら)
 	if (m_Velocity.y < m_MaxFallSpeed)
 	{
 		m_Velocity.y = m_MaxFallSpeed;
@@ -237,40 +257,75 @@ void Character::JumpUpdate()
 	m_pos += m_Velocity;
 }
 
+//==============================================
+//落ちているときのアップデート
 void Character::FallUpdate()
 {
+	bool OnButton = false;
+
 	if (IsKeyPress(VK_RIGHT))
 	{
-		m_MoveVector.x = m_FallSideMoveSpeed;
+		m_Velocity.x = m_FallSideMoveSpeed;
+		OnButton = true;
 	}
 
 	if (IsKeyPress(VK_LEFT))
 	{
-		m_MoveVector.x = -m_FallSideMoveSpeed;
+		m_Velocity.x = -m_FallSideMoveSpeed;
+		OnButton = true;
 	}
+
+	//もう一度ジャンプができる
+	if (m_JumpCount < m_MaxJumpCount)
+	{
+		if (IsKeyTrigger(VK_UP))
+		{
+			m_JumpCount++;
+			m_Velocity.y = m_JumpPower;
+			m_State = Character::STATE::JUMP;
+		}
+	}
+
+	if (OnButton)
+	{
+		m_Velocity.x *= m_AirResistance;	//空気抵抗を掛ける
+	}
+
+	m_Velocity.y += m_Gravity;			//重力を掛ける
+
+	//重力制御(最大の落下速度になったら)
+	if (m_Velocity.y < m_MaxFallSpeed)
+	{
+		m_Velocity.y = m_MaxFallSpeed;
+	}
+
+	m_pos += m_MoveVector;
+	m_pos += m_Velocity;
 }
 
+//==============================================
+//倒れているときのアップデート
 void Character::DownUpdate()
 {
-	
+	if (IsKeyPress(VK_UP))
+	{
+		m_State = Character::STATE::IDLE;
+	}
+
+	if (IsKeyPress(VK_RIGHT))
+	{
+
+	}
+
+	if (IsKeyPress(VK_LEFT))
+	{
+		
+	}
 }
 
+//==============================================
+//地面に当たった時に呼ばれる
 void Character::HitGround()
 {
-}
-
-void Character::SetAttack(Attack* pAttack)
-{
-	if (m_pNowAttack != nullptr)
-	{
-		m_pNowAttack->Attack_Uninit();
-		delete m_pNowAttack;
-	}
-
-	m_pNowAttack = pAttack;
-	if (m_pNowAttack != nullptr)
-	{
-		m_pNowAttack->Attack_Init();
-		m_State = Character::STATE::ATTACK;
-	}
+	
 }

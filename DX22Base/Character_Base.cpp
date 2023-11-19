@@ -52,6 +52,9 @@ void Character::Character_Update()
 	case Character::STATE::FALL:
 		FallUpdate();
 		break;
+	case Character::STATE::DOWN:
+		DownUpdate();
+		break;
 	case Character::STATE::MAX:
 		break;
 	default:
@@ -87,6 +90,11 @@ const CVector3 & Character::GetPos() const
 void Character::SetPos(const CVector3 & pos)
 {
 	m_pos = pos;
+}
+
+const CVector3& Character::GetOldPos() const
+{
+	return m_oldPos;
 }
 
 const CVector3 & Character::GetScale() const
@@ -155,5 +163,21 @@ std::vector<SphereCollider>* Character::GetCollider() const
 void Character::Character_HitGround()
 {
 	HitGround();
+}
+
+void Character::SetAttack(Attack* pAttack)
+{
+	if (m_pNowAttack != nullptr)
+	{
+		m_pNowAttack->Attack_Uninit();
+		delete m_pNowAttack;
+	}
+
+	m_pNowAttack = pAttack;
+	if (m_pNowAttack != nullptr)
+	{
+		m_pNowAttack->Attack_Init();
+		m_State = Character::STATE::ATTACK;
+	}
 }
 

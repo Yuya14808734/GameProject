@@ -106,6 +106,9 @@
     <Filter Include="ヘッダー ファイル\04_Game\05_Effect">
       <UniqueIdentifier>{f1eb7697-a67b-476c-bfbd-72af7b47bdc6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\02_Character\Character_00">
+      <UniqueIdentifier>{2bd36819-b618-46b2-a756-32f7465490a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BlendState.cpp">
@@ -207,6 +210,9 @@
     <ClCompile Include="Character_Base_State.cpp">
       <Filter>ソース ファイル\04_Game\02_Character</Filter>
     </ClCompile>
+    <ClCompile Include="Character_00.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character\Character_00</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -295,6 +301,9 @@
     </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>ヘッダー ファイル\02_System</Filter>
+    </ClInclude>
+    <ClInclude Include="Character_00.h">
+      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

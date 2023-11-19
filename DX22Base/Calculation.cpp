@@ -160,6 +160,14 @@ CVector2 CVector2::rotateAngle(float Angle)
 	return rotateRadius(Angle * 3.14f / 180.0f);
 }
 
+CVector2 CVector2::Abs() const
+{
+	return CVector2(
+		fabsf(x),
+		fabsf(y)
+	);
+}
+
 const CVector2& CVector2::GetUp()
 {
 	return m_Up;
@@ -344,6 +352,15 @@ CVector3 CVector3::normalize() const
 	if (l != 0.0f)
 		return CVector3(x / l, y / l, z / l);
 	return CVector3(0.0f, 0.0f, 1.0f);
+}
+
+CVector3 CVector3::Abs() const
+{
+	return CVector3(
+	fabsf(x),
+	fabsf(y),
+	fabsf(z)
+	);
 }
 
 const CVector3& CVector3::GetForward()

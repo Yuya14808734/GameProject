@@ -16,9 +16,19 @@ class Ray;
 
 class BoxCollider
 {
+private:
+	enum class BOXTYPE
+	{
+		CENTER = 0,
+		FOOT,
+		MAX,
+	};
+
 public:
 	CVector3 pos;
 	CVector3 size;
+	BOXTYPE type = BOXTYPE::CENTER;
+
 
 public:
 	BoxCollider();

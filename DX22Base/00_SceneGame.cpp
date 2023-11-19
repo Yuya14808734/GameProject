@@ -58,6 +58,41 @@ void SceneGame::Update()
 
 	//キャラクターとステージの当たり判定
 	//点と四角
+	std::vector<BoxCollider>* pStageCollider = m_pStage->GetStageCollider();
+	
+	for (std::vector<Character*>::iterator it_Character = m_Characters.begin();
+		it_Character != m_Characters.end(); it_Character++)
+	{
+		BoxCollider* pCharacterCollider = (*it_Character)->GetCharacterCollider();
+
+		//当たり判定を取る
+		for (std::vector<BoxCollider>::iterator it_Stage = pStageCollider->begin();
+			it_Stage != pStageCollider->end(); it_Stage++)
+		{
+			CVector3 DiffPos = (*it_Character)->GetPos() - (*it_Character)->GetOldPos();		//前の位置から今の位置まで移動したベクトル
+			CVector3 HitSize = (pCharacterCollider->size - (*it_Stage).size) * 0.5f;
+			float NowDistanceX =  pCharacterCollider->pos.x - (*it_Stage).pos.x;
+			float AbsNowDistanceX = fabsf(NowDistanceX);
+			CVector3 OldDistance = (pCharacterCollider->pos - DiffPos) - (*it_Stage).pos;
+			CVector3 AbsOldDistance = OldDistance.Abs();
+
+			//Xの移動
+			if(AbsNowDistanceX < HitSize.x &&
+				AbsOldDistance.y < HitSize.y &&
+				AbsOldDistance.z < HitSize.z)
+			{
+				CVector3 newPos = (*it_Character)->GetPos();
+				newPos.x = (*it_Stage).pos.x + NowDistanceX < 0.0f ? -HitSize.x : HitSize.x;
+				(*it_Character)->SetPos(newPos);
+			}
+		}
+
+		//Yの移動
+
+		//Zの移動
+
+	}
+
 
 }
 

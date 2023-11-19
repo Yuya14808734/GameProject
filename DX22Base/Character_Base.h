@@ -35,28 +35,32 @@ private:
 public:
 	Character() {};
 	~Character() {};
-	void Character_Init();		//キャラクターの初期化
-	void Character_Uninit();	//キャラクターの終了処理
-	void Character_Update();	//キャラクターの更新
-	void Character_Draw();		//キャラクターの描画
-	int GetPlayerBit();			//キャラクター番号の取得
-	const Character::STATE& GetState() const;
-	ModelDrawer* GetModel() const;
-	const CVector3& GetPos() const;
-	void SetPos(const CVector3& pos);
-	const CVector3& GetScale() const;
-	void SetScale(const CVector3& scale);
-	const CQuaternion& GetRotate() const;
-	void SetRotate(const CQuaternion& rotate);
-	void SetRotate(const CVector3& rotate);
-	void AddForce(const CVector3& force);
-	void SetForce(const CVector3& force);
-	float GetDamage() const;
-	void AddDamage(float damage);
-	void SetDamage(float damage);
-	BoxCollider* GetCharacterCollider() const;
-	std::vector<SphereCollider>* GetCollider() const;
-	void Character_HitGround();
+	void Character_Init();								//キャラクターの初期化
+	void Character_Uninit();							//キャラクターの終了処理
+	void Character_Update();							//キャラクターの更新
+	void Character_Draw();								//キャラクターの描画
+	int GetPlayerBit();									//キャラクター番号の取得
+	const Character::STATE& GetState() const;			//今の状態の取得
+	ModelDrawer* GetModel() const;						//モデル情報の取得
+	const CVector3& GetPos() const;						//位置の取得
+	void SetPos(const CVector3& pos);					//位置の設定
+	const CVector3& GetOldPos() const;
+	const CVector3& GetScale() const;					//サイズの取得
+	void SetScale(const CVector3& scale);				//サイズの設定
+	const CQuaternion& GetRotate() const;				//回転量の取得
+	void SetRotate(const CQuaternion& rotate);			//回転量の設定(Quaternion)
+	void SetRotate(const CVector3& rotate);				//回転量の設定(度数法)
+	void AddForce(const CVector3& force);				//力を足してやる
+	void SetForce(const CVector3& force);				//力を設定
+	float GetDamage() const;							//ダメージの取得
+	void AddDamage(float damage);						//ダメージの加算
+	void SetDamage(float damage);						//ダメージの設定
+	BoxCollider* GetCharacterCollider() const;			//キャラクター、ステージ当たり判定の取得
+	std::vector<SphereCollider>* GetCollider() const;	//攻撃の当たり判定用
+	void Character_HitGround();							//地面に当たった時
+
+protected:
+	void SetAttack(Attack* pAttack);
 
 protected:
 
@@ -79,16 +83,13 @@ protected:
 	
 	virtual void HitGround();		//地面に当たった時に呼ばれる
 
-
-protected:
-	void SetAttack(Attack* pAttack);
-
 protected:
 	//======================================================
 	//パラメータ
 	const float m_WalkSpeed = 0.0f;			//歩くスピード
 	const float m_DashSpeed = 0.0f;			//走るスピード
-	const float m_FallSideMoveSpeed = 0.0f;	//落ちているときの横移動のスピード		
+	const float m_FallSideMoveSpeed = 0.0f;	//落ちているときの横移動のスピード
+	const int	m_MaxJumpCount = 0;			//ジャンプできる最大数
 	const float m_JumpPower = 0.0f;			//ジャンプするときの力
 	const float m_Gravity = 0.0f;			//重力
 	const float m_MaxFallSpeed = 0.0f;		//最大落下速度

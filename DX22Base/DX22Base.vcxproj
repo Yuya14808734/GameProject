@@ -158,6 +158,7 @@
     <ClCompile Include="Calculation.cpp" />
     <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="CameraManager.cpp" />
+    <ClCompile Include="Character_00.cpp" />
     <ClCompile Include="Character_Base.cpp" />
     <ClCompile Include="Character_Base_State.cpp" />
     <ClCompile Include="Collider.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="Calculation.h" />
     <ClInclude Include="CameraBase.h" />
     <ClInclude Include="CameraManager.h" />
+    <ClInclude Include="Character_00.h" />
     <ClInclude Include="Character_Base.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="ConstantBuffer.h" />
