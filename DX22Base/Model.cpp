@@ -208,8 +208,8 @@ void Model::SetAnimeTime(AnimeNo no, float time)
 	Animation& anime = m_animes[no];
 	anime.time = time;
 	if (anime.isLoop)
-		while (anime.time >= anime.totalTime)
-			anime.time = anime.StartTime;
+		while(anime.time >= anime.totalTime)
+			anime.time -= anime.totalTime;
 }
 
 void Model::Play(AnimeNo no, bool loop)

@@ -11,14 +11,14 @@
 class CameraBase {
 public :
 	CameraBase()
-		:m_pos(0.0f, 0.0f, -3.0f), m_look(0.0f, 0.0f, 0.0f), m_up(0.0f, 1.0f, 0.0f),
-		m_fovy(80.0f), m_aspect(16.0f / 9.0f), m_near(0.2f), m_far(1000.0f)
+		:m_pos(0.0f, 0.0f, 0.0f), m_look(0.0f, 0.0f, 1.0f), m_up(0.0f, 1.0f, 0.0f),
+		m_fovy(80.0f), m_aspect(16.0f / 9.0f), m_near(0.2f), m_far(100.0f)
 	{};
 
-	virtual void ChangeInit();
-	virtual void ChangeUninit();
 	virtual ~CameraBase() {}
 	virtual void Update() = 0;
+	virtual void ChangeInit() {};
+	virtual void ChangeUninit() {};
 	DirectX::XMFLOAT4X4 GetViewMatrix()
 	{
 		DirectX::XMFLOAT4X4 mat;

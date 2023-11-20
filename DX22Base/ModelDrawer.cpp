@@ -41,15 +41,16 @@ bool ModelDrawer::LoadModel(const char* FilePath, const std::string& ModelName)
 
 	ModelInformation* ModelInfo = new ModelInformation();
 	ModelInfo->model = new Model();
-	ModelInfo->model->SetVertexShader(m_pVertexShader);
 
-	if (!ModelInfo->model->Load(FilePath, false))
+	if (!ModelInfo->model->Load(FilePath,0.003f, false))
 	{
-		MessageBox(nullptr, "モデル読み込みエラー", ModelName.c_str(), MB_OK);
-		delete ModelInfo;
-		return false;
+		//MessageBox(nullptr, "モデル読み込みエラー", ModelName.c_str(), MB_OK);
+		//delete ModelInfo;
+		//return false;
 	}
 
+	ModelInfo->model->SetVertexShader(m_pVertexShader);
+	
 	//モデル情報の設定
 	m_Models.insert(std::make_pair(ModelName, ModelInfo));
 
@@ -119,7 +120,7 @@ Model* ModelDrawer::GetModel(const std::string& ModelName)
 
 void ModelDrawer::DrawModel(const std::string& ModelName, const CVector3& pos, const CVector3& scale, const CVector3& rotate)
 {
-	CameraBase* pCamera = CameraManger::GetInstance().GetSceneCamera();
+	CameraBase* pCamera = CameraManager::GetInstance().GetSceneCamera();
 
 	if(pCamera == nullptr)
 	{
@@ -190,7 +191,7 @@ void ModelDrawer::DestroyAllModel(bool MemoryDelete)
 
 void ModelDrawer::Draw()
 {
-	CameraBase* pCamera = CameraManger::GetInstance().GetSceneCamera();
+	CameraBase* pCamera = CameraManager::GetInstance().GetSceneCamera();
 
 	if (pCamera == nullptr)
 	{

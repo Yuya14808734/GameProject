@@ -213,6 +213,9 @@
     <ClCompile Include="Character_00.cpp">
       <Filter>ソース ファイル\04_Game\02_Character\Character_00</Filter>
     </ClCompile>
+    <ClCompile Include="00_CameraDebug.cpp">
+      <Filter>ソース ファイル\04_Game\01_Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -304,6 +307,9 @@
     </ClInclude>
     <ClInclude Include="Character_00.h">
       <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00</Filter>
+    </ClInclude>
+    <ClInclude Include="00_CameraDebug.h">
+      <Filter>ヘッダー ファイル\04_Game\01_Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

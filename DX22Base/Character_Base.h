@@ -44,7 +44,8 @@ public:
 	ModelDrawer* GetModel() const;						//モデル情報の取得
 	const CVector3& GetPos() const;						//位置の取得
 	void SetPos(const CVector3& pos);					//位置の設定
-	const CVector3& GetOldPos() const;
+	const CVector3& GetOldPos() const;					//前の座標を取得
+	void SetOldPos();									//前の座標を設定
 	const CVector3& GetScale() const;					//サイズの取得
 	void SetScale(const CVector3& scale);				//サイズの設定
 	const CQuaternion& GetRotate() const;				//回転量の取得
@@ -56,7 +57,6 @@ public:
 	void AddDamage(float damage);						//ダメージの加算
 	void SetDamage(float damage);						//ダメージの設定
 	BoxCollider* GetCharacterCollider() const;			//キャラクター、ステージ当たり判定の取得
-	std::vector<SphereCollider>* GetCollider() const;	//攻撃の当たり判定用
 	void Character_HitGround();							//地面に当たった時
 
 protected:
@@ -109,6 +109,5 @@ protected:
 	float m_DamagePercentage = 0.0f;		//ダメージの量
 	Attack* m_pNowAttack = nullptr;			//攻撃情報
 	BoxCollider m_CharacterCollider;		//プレイヤーの当たり判定
-	std::vector<SphereCollider> m_BodyCollider;	//プレイヤーの攻撃用コライダー(ステージとは点で行うので違います)
 	int m_JumpCount = 0;
 };

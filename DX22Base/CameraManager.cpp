@@ -1,24 +1,24 @@
 #include "CameraManager.h"
 
-CameraManger& CameraManger::GetInstance()
+CameraManager& CameraManager::GetInstance()
 {
-	static CameraManger instance;
+	static CameraManager instance;
 
 	return instance;
 }
 
-CameraManger::CameraManger()
+CameraManager::CameraManager()
 	:m_pNowCamera(nullptr)
 {
 
 }
 
-CameraManger::~CameraManger()
+CameraManager::~CameraManager()
 {
 
 }
 
-void CameraManger::CameraUpdate()
+void CameraManager::CameraUpdate()
 {
 	if (m_pNowCamera != nullptr)
 	{
@@ -26,12 +26,12 @@ void CameraManger::CameraUpdate()
 	}
 }
 
-CameraBase* CameraManger::GetSceneCamera() const
+CameraBase* CameraManager::GetSceneCamera() const
 {
 	return m_pNowCamera;
 }
 
-void CameraManger::SetSceneCamera(std::string& CameraName)
+void CameraManager::SetSceneCamera(std::string CameraName)
 {
 	//ƒJƒƒ‰‚ª‚ ‚é‚©‚ğ’T‚·
 	std::map<std::string, CameraBase*>::iterator it = m_CameraList.find(CameraName);
@@ -45,7 +45,7 @@ void CameraManger::SetSceneCamera(std::string& CameraName)
 	m_pNowCamera = m_CameraList[CameraName];
 }
 
-bool CameraManger::AddCamera(CameraBase* pCamera, std::string& CameraName)
+bool CameraManager::CreateCamera(CameraBase* pCamera, std::string CameraName)
 {
 	//ƒJƒƒ‰‚ª‚ ‚é‚©‚ğ’T‚·
 	std::map<std::string, CameraBase*>::iterator it = m_CameraList.find(CameraName);
@@ -66,7 +66,7 @@ bool CameraManger::AddCamera(CameraBase* pCamera, std::string& CameraName)
 	return true;
 }
 
-CameraBase* CameraManger::GetCamera(std::string& CameraName)
+CameraBase* CameraManager::GetCamera(std::string CameraName)
 {
 	//ƒJƒƒ‰‚ª‚ ‚é‚©‚ğ’T‚·
 	const std::map<std::string, CameraBase*>::iterator it = m_CameraList.find(CameraName);
@@ -79,12 +79,12 @@ CameraBase* CameraManger::GetCamera(std::string& CameraName)
 	return (*it).second;
 }
 
-CameraBase ** CameraManger::GetCameraPointer()
+CameraBase ** CameraManager::GetCameraPointer()
 {
 	return &m_pNowCamera;
 }
 
-void CameraManger::DestroyCamera(std::string& CameraName, bool MemoryDelete)
+void CameraManager::DestroyCamera(std::string CameraName, bool MemoryDelete)
 {
 	//ƒJƒƒ‰‚ª‚ ‚é‚©‚ğ’T‚·
 	std::map<std::string, CameraBase*>::iterator it = m_CameraList.find(CameraName);
@@ -103,7 +103,7 @@ void CameraManger::DestroyCamera(std::string& CameraName, bool MemoryDelete)
 	m_CameraList.erase(it);
 }
 
-void CameraManger::DestroyAllCamera(bool MemoryDelete)
+void CameraManager::DestroyAllCamera(bool MemoryDelete)
 {
 	//‚·‚×‚Ä‚ÌƒJƒƒ‰‚ğíœ
 	if (MemoryDelete)

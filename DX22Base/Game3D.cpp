@@ -6,6 +6,7 @@
 #include "CameraManager.h"
 #include "ModelDrawer.h"
 #include "Collider.h"
+#include "00_SceneGame.h"
 
 Game3D::Game3D()
 {
@@ -26,17 +27,18 @@ Game3D::Game3D()
 	m_pBlend->Bind();
 
 	ModelDrawer::InitModels();	//モデルの初期化	
-	CScene::SetScene<CScene>();	//シーンの初期化
+	CScene::SetScene<SceneGame>();	//シーンの初期化
 }
 Game3D::~Game3D()
 {
 	CScene::DestroyScene();								//シーンの削除
-	CameraManger::GetInstance().DestroyAllCamera(true);	//すべてのカメラの削除
+	CameraManager::GetInstance().DestroyAllCamera(true);	//すべてのカメラの削除
 	ModelDrawer::UninitModels();						//モデルの削除など
 	delete m_pBlend;
 }
 void Game3D::Update()
 {
+	CameraManager::GetInstance().CameraUpdate();
 	CScene::GetScene()->Update();
 }
 void Game3D::Draw()

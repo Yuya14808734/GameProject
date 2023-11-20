@@ -26,8 +26,8 @@ public :
 template<typename T>
 T* CScene::SetScene()
 {
-	T* returnValue = m_pNextScene = new T();
-
+	T* returnValue = new T();
+	m_pNextScene = returnValue;
 	//¡‚ÌƒV[ƒ“‚ªİ’è‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Î
 	if (m_pNowScene == nullptr)
 	{

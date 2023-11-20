@@ -1,13 +1,35 @@
 #include "00_SceneGame.h"
+#include "CameraManager.h"
+#include "00_CameraDebug.h"
+#include "ModelDrawer.h"
+
+ModelDrawer pModel1;
+ModelDrawer pModel2;
+float animeTime = 0.0f;
 
 void SceneGame::Init()
 {
+	CameraManager::GetInstance().CreateCamera(new CameraDebug(),"DebugCamera");
+	CameraManager::GetInstance().SetSceneCamera("DebugCamera");
+	ModelDrawer::LoadModel("Assets/unitychan/unitychan.fbx","UnityChan");
+	ModelDrawer::LoadAnime("Assets/unitychan/walk.fbx","Walk", "UnityChan");
+	ModelDrawer::LoadAnime("Assets/unitychan/run.fbx","Run", "UnityChan");
+	pModel1.SetModel("UnityChan");
+	pModel1.PlayAnime("Walk", true);
+	pModel1.SetAnimeTime(0.0f);
+	pModel1.SetPosition(CVector3(0.0f, 0.0f, 0.0f));
+	pModel1.SetScale(CVector3(5.0f, 5.0f, 5.0f));
 
+	pModel2.SetModel("UnityChan");
+	pModel2.PlayAnime("Run", true);
+	pModel2.SetAnimeTime(0.0f);
+	pModel2.SetPosition(CVector3(100.0f, 0.0f, 0.0f));
+	pModel2.SetScale(CVector3(5.0f, 5.0f, 5.0f));
 }
 
 void SceneGame::Uninit()
 {
-
+	CameraManager::GetInstance().DestroyCamera("DebugCamera", true);
 }
 
 void SceneGame::Update()
@@ -66,6 +88,8 @@ void SceneGame::Update()
 		BoxCollider* pCharacterCollider = (*it_Character)->GetCharacterCollider();
 
 		//当たり判定を取る
+
+		//Xの移動だけの当たり判定
 		for (std::vector<BoxCollider>::iterator it_Stage = pStageCollider->begin();
 			it_Stage != pStageCollider->end(); it_Stage++)
 		{
@@ -73,13 +97,15 @@ void SceneGame::Update()
 			CVector3 HitSize = (pCharacterCollider->size - (*it_Stage).size) * 0.5f;
 			float NowDistanceX =  pCharacterCollider->pos.x - (*it_Stage).pos.x;
 			float AbsNowDistanceX = fabsf(NowDistanceX);
-			CVector3 OldDistance = (pCharacterCollider->pos - DiffPos) - (*it_Stage).pos;
-			CVector3 AbsOldDistance = OldDistance.Abs();
-
-			//Xの移動
+			float OldDistanceY = (pCharacterCollider->pos.y - DiffPos.y) - (*it_Stage).pos.y;
+			float AbsOldDistanceY = fabsf(OldDistanceY);
+			float OldDistanceZ = (pCharacterCollider->pos.z - DiffPos.z) - (*it_Stage).pos.z;
+			float AbsOldDistanceZ = fabsf(OldDistanceZ);
+			
+			//Xの移動だけして当たっていたら
 			if(AbsNowDistanceX < HitSize.x &&
-				AbsOldDistance.y < HitSize.y &&
-				AbsOldDistance.z < HitSize.z)
+				AbsOldDistanceY < HitSize.y &&
+				AbsOldDistanceZ < HitSize.z)
 			{
 				CVector3 newPos = (*it_Character)->GetPos();
 				newPos.x = (*it_Stage).pos.x + NowDistanceX < 0.0f ? -HitSize.x : HitSize.x;
@@ -87,10 +113,53 @@ void SceneGame::Update()
 			}
 		}
 
-		//Yの移動
+		//Yの移動だけの当たり判定
+		for (std::vector<BoxCollider>::iterator it_Stage = pStageCollider->begin();
+			it_Stage != pStageCollider->end(); it_Stage++)
+		{
+			CVector3 DiffPos = (*it_Character)->GetPos() - (*it_Character)->GetOldPos();		//前の位置から今の位置まで移動したベクトル
+			CVector3 HitSize = (pCharacterCollider->size - (*it_Stage).size) * 0.5f;
+			float NowDistanceX = pCharacterCollider->pos.x - (*it_Stage).pos.x;
+			float AbsNowDistanceX = fabsf(NowDistanceX);
+			float NowDistanceY = pCharacterCollider->pos.y - (*it_Stage).pos.y;
+			float AbsNowDistanceY = fabsf(NowDistanceY);
+			float OldDistanceZ = (pCharacterCollider->pos.z - DiffPos.z) - (*it_Stage).pos.z;
+			float AbsOldDistanceZ = fabsf(OldDistanceZ);
 
-		//Zの移動
+			//Xの移動だけして当たっていたら
+			if (AbsNowDistanceX < HitSize.x &&
+				AbsNowDistanceY < HitSize.y &&
+				AbsOldDistanceZ < HitSize.z)
+			{
+				CVector3 newPos = (*it_Character)->GetPos();
+				newPos.y = (*it_Stage).pos.y + NowDistanceY < 0.0f ? -HitSize.y : HitSize.y;
+				(*it_Character)->SetPos(newPos);
+			}
+		}
 
+		//Zの移動だけの当たり判定
+		for (std::vector<BoxCollider>::iterator it_Stage = pStageCollider->begin();
+			it_Stage != pStageCollider->end(); it_Stage++)
+		{
+			CVector3 DiffPos = (*it_Character)->GetPos() - (*it_Character)->GetOldPos();		//前の位置から今の位置まで移動したベクトル
+			CVector3 HitSize = (pCharacterCollider->size - (*it_Stage).size) * 0.5f;
+			float NowDistanceX = pCharacterCollider->pos.x - (*it_Stage).pos.x;
+			float AbsNowDistanceX = fabsf(NowDistanceX);
+			float NowDistanceY = pCharacterCollider->pos.y - (*it_Stage).pos.y;
+			float AbsNowDistanceY = fabsf(NowDistanceY);
+			float NowDistanceZ = pCharacterCollider->pos.z - DiffPos.z - (*it_Stage).pos.z;
+			float AbsNowDistanceZ = fabsf(NowDistanceZ);
+
+			//Xの移動だけして当たっていたら
+			if (AbsNowDistanceX < HitSize.x &&
+				AbsNowDistanceY < HitSize.y &&
+				AbsNowDistanceZ < HitSize.z)
+			{
+				CVector3 newPos = (*it_Character)->GetPos();
+				newPos.z = (*it_Stage).pos.z + NowDistanceZ < 0.0f ? -HitSize.z : HitSize.z;
+				(*it_Character)->SetPos(newPos);
+			}
+		}
 	}
 
 
@@ -98,5 +167,17 @@ void SceneGame::Update()
 
 void SceneGame::Draw()
 {
+	Model* pModelData = ModelDrawer::GetModel("UnityChan");
+	animeTime += 1.0f / 60.0f;
+	pModel1.PlayAnime("Walk", true);
+	pModel1.SetAnimeTime(animeTime);
+	//pModelData->SetAnimeTime(WalkNo,animeTime);	//アニメーションの時間設定
+	pModelData->Step(1.0f / 60.0f);
+	pModel1.Draw();
 
+	pModel2.PlayAnime("Run",true);
+	pModel2.SetAnimeTime(animeTime);
+	//pModelData->SetAnimeTime(RunNo,animeTime);	//アニメーションの時間設定
+	pModelData->Step(1.0f / 60.0f);
+	pModel2.Draw();
 }

@@ -90,11 +90,17 @@ const CVector3 & Character::GetPos() const
 void Character::SetPos(const CVector3 & pos)
 {
 	m_pos = pos;
+	m_CharacterCollider.pos = pos;
 }
 
 const CVector3& Character::GetOldPos() const
 {
 	return m_oldPos;
+}
+
+void Character::SetOldPos()
+{
+	m_oldPos = m_pos;
 }
 
 const CVector3 & Character::GetScale() const
@@ -153,11 +159,6 @@ void Character::SetDamage(float damage)
 BoxCollider* Character::GetCharacterCollider() const
 {
 	return const_cast<BoxCollider*>(&m_CharacterCollider);
-}
-
-std::vector<SphereCollider>* Character::GetCollider() const
-{
-	return const_cast<std::vector<SphereCollider>*>(&m_BodyCollider);
 }
 
 void Character::Character_HitGround()
