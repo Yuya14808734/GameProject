@@ -153,6 +153,7 @@ private:
 	bool AnimeNoCheck(AnimeNo no);
 	void InitAnime(AnimeNo no);
 	void UpdateAnime(AnimeNo no, float tick);
+	void UpdateAnimeTime(AnimeNo no, float time);
 	void CalcBones(NodeIndex index, DirectX::XMMATRIX parent);
 	void CalcAnime(AnimeTransformKind kind, AnimeNo no);
 	DirectX::XMFLOAT3 Lerp(DirectX::XMFLOAT3& a, DirectX::XMFLOAT3& b, float rate);

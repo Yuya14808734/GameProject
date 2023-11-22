@@ -8,6 +8,7 @@
 #include "Sprite.h"
 #include "Sound.h"
 #include "Effect_Manager.h"
+#include "CameraManager.h"
 
 //--- ’è”’è‹`
 const unsigned int SCREEN_WIDTH = 1280;
@@ -75,6 +76,13 @@ void MainProcess()
 	//•`‰æ
 	//====================================================
 	BeginDrawDX();
+	CameraBase* pCamera = CameraManager::GetInstance().GetSceneCamera();
+	if (pCamera != nullptr)
+	{
+		SetGeometoryVPMatrix(
+			CameraManager::GetInstance().GetSceneCamera()->GetViewMatrix(),
+			CameraManager::GetInstance().GetSceneCamera()->GetProjectionMatrix());
+	}
 	g_pGame->Draw();
 	EndDrawDX();
 

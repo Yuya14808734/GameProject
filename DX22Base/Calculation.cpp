@@ -398,6 +398,20 @@ CQuaternion::CQuaternion(float x, float y, float z, float w)
 	v = DirectX::XMLoadFloat4(&f);
 }
 
+CQuaternion::CQuaternion(float AngleX, float AngleY, float AngleZ)
+{
+	v = DirectX::XMQuaternionRotationRollPitchYaw(
+		DirectX::XMConvertToRadians(AngleX),
+		DirectX::XMConvertToRadians(AngleY),
+		DirectX::XMConvertToRadians(AngleZ));
+}
+
+CQuaternion::CQuaternion(CVector3 Angle)
+	:CQuaternion(Angle.x, Angle.y, Angle.z)
+{
+
+}
+
 CQuaternion::CQuaternion(const DirectX::XMFLOAT4& f)
 	:CQuaternion(f.x,f.y,f.z,f.w)
 {

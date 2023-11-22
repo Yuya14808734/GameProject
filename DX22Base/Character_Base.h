@@ -58,8 +58,16 @@ public:
 	void SetDamage(float damage);						//ダメージの設定
 	BoxCollider* GetCharacterCollider() const;			//キャラクター、ステージ当たり判定の取得
 	void Character_HitGround();							//地面に当たった時
+	void DrawCollider();								//コライダーの描画
 
 protected:
+
+	/*引数(歩くスピード, 走るスピード, 落ちているときの横に動くスピード, 
+	ジャンプできる回数, ジャンプする力, 重力, 落ちる速さ, 摩擦量, 空気抵抗)*/
+	void SetParameter(
+	float WalkSpeed,float DashSpeed,float  FallSideMoveSpeed,
+		int MaxJumpCount,float JumpPower,float GravityScale,
+		float MaxFallSpeed,float Friction,	float AirResistance);
 	void SetAttack(Attack* pAttack);
 
 protected:
@@ -84,20 +92,25 @@ protected:
 	virtual void HitGround();		//地面に当たった時に呼ばれる
 
 protected:
+	//攻撃の基底関数
+	//virtual void 
+
+
+private:
 	//======================================================
-	//パラメータ
-	const float m_WalkSpeed = 0.0f;			//歩くスピード
-	const float m_DashSpeed = 0.0f;			//走るスピード
-	const float m_FallSideMoveSpeed = 0.0f;	//落ちているときの横移動のスピード
-	const int	m_MaxJumpCount = 0;			//ジャンプできる最大数
-	const float m_JumpPower = 0.0f;			//ジャンプするときの力
-	const float m_Gravity = 0.0f;			//重力
-	const float m_MaxFallSpeed = 0.0f;		//最大落下速度
-	const float m_Friction = 0.0f;			//摩擦量
-	const float m_AirResistance = 0.0f;		//空気抵抗
+	//最初に設定するパラメータ
+	int		m_PlayerBit = 0x00;				//このキャラクターが何番なのかを入れる
+	float	m_WalkSpeed			= 0.0f;		//歩くスピード
+	float	m_DashSpeed			= 0.0f;		//走るスピード
+	float	m_FallSideMoveSpeed = 0.0f;		//落ちているときの横移動のスピード
+	int		m_MaxJumpCount		= 0;		//ジャンプできる最大数
+	float	m_JumpPower			= 0.0f;		//ジャンプするときの力
+	float	m_Gravity			= 0.0f;		//重力
+	float	m_MaxFallSpeed		= 0.0f;		//最大落下速度
+	float	m_Friction			= 0.0f;		//摩擦量
+	float	m_AirResistance		= 0.0f;		//空気抵抗
 
 protected:
-	int m_PlayerBit = 0x00;					//このキャラクターが何番なのかを入れる
 	Character::STATE m_State = STATE::MAX;	//キャラクターの状態
 	ModelDrawer m_CharacterModel;			//キャラクターのモデル
 	CVector3 m_pos;							//座標

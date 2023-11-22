@@ -27,6 +27,8 @@ void Character::Character_Uninit()
 
 void Character::Character_Update()
 {
+	m_oldPos = m_pos;
+
 	Update();
 
 	switch (m_State)
@@ -60,6 +62,9 @@ void Character::Character_Update()
 	default:
 		break;
 	}
+
+	m_CharacterModel.SetPosition(m_pos);
+	m_CharacterCollider.SetPos(m_pos);
 }
 
 void Character::Character_Draw()
@@ -90,7 +95,7 @@ const CVector3 & Character::GetPos() const
 void Character::SetPos(const CVector3 & pos)
 {
 	m_pos = pos;
-	m_CharacterCollider.pos = pos;
+	m_CharacterCollider.SetPos(pos);
 }
 
 const CVector3& Character::GetOldPos() const
@@ -164,6 +169,25 @@ BoxCollider* Character::GetCharacterCollider() const
 void Character::Character_HitGround()
 {
 	HitGround();
+}
+
+void Character::DrawCollider()
+{
+	m_CharacterCollider.DrawCollider();
+}
+
+void Character::SetParameter(float WalkSpeed, float DashSpeed, float FallSideMoveSpeed, int MaxJumpCount, float JumpPower, float GravityScale, float MaxFallSpeed, float Friction, float AirResistance)
+{
+	m_PlayerBit = GetNewPlayerBit();
+	m_WalkSpeed = WalkSpeed;
+	m_DashSpeed = DashSpeed;
+	m_FallSideMoveSpeed = FallSideMoveSpeed;
+	m_MaxJumpCount = MaxJumpCount;
+	m_JumpPower = JumpPower;
+	m_Gravity = GravityScale;
+	m_MaxFallSpeed = MaxFallSpeed;
+	m_Friction = Friction;
+	m_AirResistance = AirResistance;
 }
 
 void Character::SetAttack(Attack* pAttack)

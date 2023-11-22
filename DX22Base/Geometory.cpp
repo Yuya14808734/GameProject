@@ -63,13 +63,25 @@ void UninitGeometory()
 	GEOMETORY_SAFE_DELETE(g_pGeometoryPS);
 	GEOMETORY_SAFE_DELETE(g_pGeometoryVS);
 }
+void SetGeometoryTranslate(const CVector3& v)
+{
+	SetGeometoryTranslate(v.x, v.y, v.z);
+}
 void SetGeometoryTranslate(float x, float y, float z)
 {
 	g_geometoryTransform[0] = DirectX::XMFLOAT3(x, y, z);
 }
+void SetGeometoryRotation(const CVector3& v)
+{
+	SetGeometoryRotation(v.x, v.y, v.z);
+}
 void SetGeometoryRotation(float x, float y, float z)
 {
 	g_geometoryTransform[1] = DirectX::XMFLOAT3(x, y, z);
+}
+void SetGeometoryScaling(const CVector3& v)
+{
+	SetGeometoryScaling(v.x, v.y, v.z);
 }
 void SetGeometoryScaling(float x, float y, float z)
 {

@@ -109,6 +109,12 @@
     <Filter Include="ヘッダー ファイル\04_Game\02_Character\Character_00">
       <UniqueIdentifier>{2bd36819-b618-46b2-a756-32f7465490a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\04_Game\04_Stage\Stage_00">
+      <UniqueIdentifier>{833dbf51-51f5-438d-a951-dbada05c7668}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\04_Stage\Stage_00">
+      <UniqueIdentifier>{100ce985-cf6f-4aa5-8e0e-f3b7c3ffd8c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BlendState.cpp">
@@ -216,6 +222,9 @@
     <ClCompile Include="00_CameraDebug.cpp">
       <Filter>ソース ファイル\04_Game\01_Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Stage_00.cpp">
+      <Filter>ソース ファイル\04_Game\04_Stage\Stage_00</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -310,6 +319,9 @@
     </ClInclude>
     <ClInclude Include="00_CameraDebug.h">
       <Filter>ヘッダー ファイル\04_Game\01_Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage_00.h">
+      <Filter>ヘッダー ファイル\04_Game\04_Stage\Stage_00</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

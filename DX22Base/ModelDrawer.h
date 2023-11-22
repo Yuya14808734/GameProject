@@ -18,7 +18,7 @@ public:
 public:
 	static void InitModels();
 	static void UninitModels();
-	static bool LoadModel(const char* FilePath, const std::string& ModelName);
+	static bool LoadModel(const char* FilePath, const std::string& ModelName ,float Scale = 1.0f);
 	static bool LoadAnime(const char* FilePath, const std::string& AnimeName, const std::string& ModelName);
 	static Model* GetModel(const std::string& ModelName);
 	static void DrawModel(const std::string& ModelName, const CVector3& pos, const CVector3& scale, const CVector3& rotate);
@@ -31,8 +31,10 @@ private:
 	static VertexShader* m_pVertexShader;
 
 public:
+	ModelDrawer();
+	~ModelDrawer();
 	void Draw();
-	void SetModel(const std::string ModelName);
+	void SetModel(const std::string& ModelName);
 	ModelInformation* GetModel();
 	void PlayAnime(const std::string& AnimeName,bool Loop);
 	void SetAnimeTime(float time);
@@ -40,9 +42,12 @@ public:
 	float GetAnimeTime();
 	float GetAnimeEndTime();
 	void SetPosition(const CVector3& pos);
+	const CVector3& GetPosition();
 	void SetScale(const CVector3& scale);
+	const CVector3& GetScale();
 	void SetRotate(const CQuaternion& rotate);
 	void SetRotate(const CVector3& rotate);
+	const CQuaternion& GetRotate();
 
 private:
 	ModelInformation* m_pModelInfo = nullptr;
@@ -51,4 +56,6 @@ private:
 	CQuaternion m_rotate;
 	Model::AnimeNo m_NowPlayAnimeNo = 0;
 	float m_AnimTime = 0.0f;
+	bool m_AnimeNow = false;
+	bool m_AnimeLoop = false;
 };

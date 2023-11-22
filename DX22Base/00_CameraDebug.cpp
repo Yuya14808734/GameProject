@@ -3,6 +3,7 @@
 
 CameraDebug::CameraDebug()
 {
+	m_pos.z = -10.0f;
 }
 
 CameraDebug::~CameraDebug()
@@ -11,22 +12,22 @@ CameraDebug::~CameraDebug()
 
 void CameraDebug::Update()
 {
-	if(IsKeyPress(VK_UP))
+	if(IsKeyPress('W'))
 	{
 		m_pos.z += 1.0f;
 	}
 
-	if (IsKeyPress(VK_DOWN))
+	if (IsKeyPress('S'))
 	{
 		m_pos.z -= 1.0f;
 	}
 
-	if (IsKeyPress(VK_RIGHT))
+	if (IsKeyPress('D'))
 	{
 		m_pos.x += 1.0f;
 	}
 
-	if (IsKeyPress(VK_LEFT))
+	if (IsKeyPress('A'))
 	{
 		m_pos.x -= 1.0f;
 	}

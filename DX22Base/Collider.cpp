@@ -1,17 +1,21 @@
 #include "Collider.h"
+#include "Geometory.h"
 
 //=====================================================================
 //四角当たり判定
 
 BoxCollider::BoxCollider()
-	:type(BoxCollider::BOXTYPE::CENTER)
+	:BoxCollider(CVector3(0.0f,0.0f,0.0f),CVector3(1.0f,1.0f,1.0f))
 {
-	SetBox(CVector3::GetZero(), CVector3(1.0f, 1.0f, 1.0f));
+	
 }
 
 BoxCollider::BoxCollider(const CVector3& p, const CVector3& s)
+	:m_pos(p),
+	m_size(s),
+	m_type(BoxCollider::BOXTYPE::CENTER)
 {
-	SetBox(p, s);
+
 }
 
 BoxCollider::~BoxCollider()
@@ -19,11 +23,63 @@ BoxCollider::~BoxCollider()
 
 }
 
-void BoxCollider::SetBox(const CVector3& p, const CVector3& s)
+void BoxCollider::SetPos(const CVector3& pos)
 {
-	pos = p;
-	size = s;
+	switch (m_type)
+	{
+	case BoxCollider::BOXTYPE::CENTER:
+		m_pos = pos;
+		break;
+	case BoxCollider::BOXTYPE::FOOT:
+		m_pos = pos;
+		m_pos.y += m_size.y * 0.5f;
+		break;
+	case BoxCollider::BOXTYPE::MAX:
+		break;
+	default:
+		break;
+	}
 }
+
+const CVector3& BoxCollider::GetPos() const
+{
+	return m_pos;
+}
+
+void BoxCollider::SetSize(const CVector3& size)
+{
+	switch (m_type)
+	{
+	case BoxCollider::BOXTYPE::CENTER:
+		m_size = size;
+		break;
+	case BoxCollider::BOXTYPE::FOOT:
+		m_pos.y -= m_size.y * 0.5f;	//一度足元に位置を戻す
+		m_size = size;				//サイズを設定
+		m_pos.y += m_size.y * 0.5f;	//真ん中にする
+		break;
+	case BoxCollider::BOXTYPE::MAX:
+		break;
+	default:
+		break;
+	}
+}
+
+const CVector3& BoxCollider::GetSize() const
+{
+	return m_size;
+}
+
+void BoxCollider::SetType(BoxCollider::BOXTYPE type)
+{
+	m_type = type;
+}
+
+BoxCollider::BOXTYPE BoxCollider::GetType() const
+{
+	return m_type;
+}
+
 
 bool BoxCollider::CollisionBox(const BoxCollider& Box)
 {
@@ -32,37 +88,9 @@ bool BoxCollider::CollisionBox(const BoxCollider& Box)
 	CVector3 NowDistance;
 	CVector3 ColliderHarfSize;
 
-	CVector3 CenterPos_A = this->pos;
-	CVector3 CenterPos_B = Box.pos;
-
-	//自分の位置を相手の位置を真ん中にする
-	switch (this->type)
-	{
-	case BoxCollider::BOXTYPE::CENTER:
-		break;
-	case BoxCollider::BOXTYPE::FOOT:
-		CenterPos_A.y -= this->size.y * 0.5f;
-		break;
-	}
-
-	switch (Box.type)
-	{
-	case BoxCollider::BOXTYPE::CENTER:
-		break;
-	case BoxCollider::BOXTYPE::FOOT:
-		CenterPos_B.y -= Box.size.y * 0.5f;
-		break;
-	}
-	
-	NowDistance = CenterPos_B - CenterPos_A;
-
-	NowDistance.x = fabsf(NowDistance.x);
-	NowDistance.y = fabsf(NowDistance.y);
-	NowDistance.z = fabsf(NowDistance.z);
-
-	ColliderHarfSize.x = (this->size.x + Box.size.x) * 0.5f;
-	ColliderHarfSize.y = (this->size.y + Box.size.y) * 0.5f;
-	ColliderHarfSize.z = (this->size.z + Box.size.z) * 0.5f;
+	NowDistance = Box.GetPos() - this->GetPos();
+	NowDistance = NowDistance.Abs();
+	ColliderHarfSize = (this->GetSize() + Box.GetSize()) * 0.5f;
 
 	if (ColliderHarfSize.x > NowDistance.x &&
 		ColliderHarfSize.y > NowDistance.y &&
@@ -72,6 +100,14 @@ bool BoxCollider::CollisionBox(const BoxCollider& Box)
 	}
 
 	return temp;
+}
+
+void BoxCollider::DrawCollider()
+{
+	SetGeometoryTranslate(m_pos.x, m_pos.y, m_pos.z);
+	SetGeometoryRotation(0.0f, 0.0f, 0.0f);
+	SetGeometoryScaling(m_size.x, m_size.y, m_size.z);
+	DrawBox();
 }
 
 //=====================================================================

@@ -11,6 +11,7 @@ public:
 	void Stage_Uninit();	//キャラクターの終了処理
 	void Stage_Update();	//キャラクターの更新
 	void Stage_Draw();		//キャラクターの描画
+	void StageColliderDraw();	//ステージのコライダーの描画
 	std::vector<BoxCollider>* GetStageCollider() const;
 
 protected:
@@ -26,6 +27,6 @@ protected:
 
 protected:
 	std::vector<BoxCollider> m_StageCollider;
-	ModelDrawer m_ModelDrawer;
+	std::vector<ModelDrawer> m_ModelDrawer;
 
 };

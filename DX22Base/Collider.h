@@ -16,7 +16,9 @@ class Ray;
 
 class BoxCollider
 {
-private:
+public:
+	//タイプがあるにはあるけど
+	//中身は全部真ん中で処理をする
 	enum class BOXTYPE
 	{
 		CENTER = 0,
@@ -24,18 +26,24 @@ private:
 		MAX,
 	};
 
-public:
-	CVector3 pos;
-	CVector3 size;
-	BOXTYPE type = BOXTYPE::CENTER;
+private:
+	CVector3 m_pos;
+	CVector3 m_size;
+	BOXTYPE m_type = BOXTYPE::CENTER;
 
 
 public:
 	BoxCollider();
 	BoxCollider(const CVector3& p, const CVector3& s);
 	~BoxCollider();
-	void SetBox(const CVector3& p, const CVector3& s);
+	void SetPos(const CVector3& pos);
+	const CVector3& GetPos() const;
+	void SetSize(const CVector3& size);
+	const CVector3& GetSize() const;
+	void SetType(BoxCollider::BOXTYPE type);
+	BoxCollider::BOXTYPE GetType() const;
 	bool CollisionBox(const BoxCollider& Box);
+	void DrawCollider();
 };
 
 class SphereCollider

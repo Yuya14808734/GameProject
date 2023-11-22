@@ -6,7 +6,7 @@ void Character::IdleUpdate()
 {
 	//---行ける状態---
 	//ジャンプ
-	//攻撃
+	//攻撃(一フレームのみ,横強などはWalkに任せる)
 	//歩く
 	//走る
 	
@@ -26,6 +26,17 @@ void Character::IdleUpdate()
 	{
 		m_State = Character::STATE::ATTACK;
 	}
+
+	m_Velocity.y += m_Gravity;
+
+	//一応重力制御も書いておく
+	if (m_Velocity.y < m_MaxFallSpeed)
+	{
+		m_Velocity.y = m_MaxFallSpeed;
+	}
+
+	m_pos += m_MoveVector;
+	m_pos += m_Velocity;
 }
 
 void Character::WalkUpdate()
@@ -327,5 +338,5 @@ void Character::DownUpdate()
 //地面に当たった時に呼ばれる
 void Character::HitGround()
 {
-	
+	m_Velocity.y = 0.0f;
 }

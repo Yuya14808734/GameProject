@@ -2,33 +2,39 @@
 #include "CameraManager.h"
 #include "00_CameraDebug.h"
 #include "ModelDrawer.h"
+#include "Geometory.h"
+#include "Input.h"
+#include "Stage_00.h"
+#include "Character_00.h"
 
-ModelDrawer pModel1;
-ModelDrawer pModel2;
-float animeTime = 0.0f;
+bool ColliderDraw = false;
 
 void SceneGame::Init()
 {
 	CameraManager::GetInstance().CreateCamera(new CameraDebug(),"DebugCamera");
 	CameraManager::GetInstance().SetSceneCamera("DebugCamera");
-	ModelDrawer::LoadModel("Assets/unitychan/unitychan.fbx","UnityChan");
+	ModelDrawer::LoadModel("Assets/unitychan/unitychan.fbx","UnityChan",0.003f);
 	ModelDrawer::LoadAnime("Assets/unitychan/walk.fbx","Walk", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/run.fbx","Run", "UnityChan");
-	pModel1.SetModel("UnityChan");
-	pModel1.PlayAnime("Walk", true);
-	pModel1.SetAnimeTime(0.0f);
-	pModel1.SetPosition(CVector3(0.0f, 0.0f, 0.0f));
-	pModel1.SetScale(CVector3(5.0f, 5.0f, 5.0f));
 
-	pModel2.SetModel("UnityChan");
-	pModel2.PlayAnime("Run", true);
-	pModel2.SetAnimeTime(0.0f);
-	pModel2.SetPosition(CVector3(100.0f, 0.0f, 0.0f));
-	pModel2.SetScale(CVector3(5.0f, 5.0f, 5.0f));
+	m_pStage = new Stage00();
+	m_pStage->Stage_Init();
+
+	m_Characters.push_back(new Character_00());
+	m_Characters[0]->Character_Init();
 }
 
 void SceneGame::Uninit()
 {
+	for (auto it = m_Characters.begin(); it != m_Characters.end();)
+	{
+		(*it)->Character_Uninit();
+		delete (*it);
+		it = m_Characters.erase(it);
+	}
+
+	m_pStage->Stage_Uninit();
+	delete m_pStage;
 	CameraManager::GetInstance().DestroyCamera("DebugCamera", true);
 }
 
@@ -62,13 +68,13 @@ void SceneGame::Update()
 			}
 
 			//めり込んだ半分の位置で移動してやる
-			float NowHarfDistanceX = (pFirstCollider->pos.x - pSecondCollider->pos.x) * 0.5f;
-			CVector3 CenterPos = pSecondCollider->pos + CVector3(NowHarfDistanceX,0.0f,0.0f);
+			float NowHarfDistanceX = (pFirstCollider->GetPos().x - pSecondCollider->GetPos().x) * 0.5f;
+			CVector3 CenterPos = pSecondCollider->GetPos() + CVector3(NowHarfDistanceX,0.0f,0.0f);
 
 			float Direct = NowHarfDistanceX < 0.0f ? -1.0f : 1.0f;
 
-			(*it_first)->SetPos(CenterPos + CVector3(pFirstCollider->size.x * Direct,0.0f,0.0f));
-			(*it_second)->SetPos(CenterPos + CVector3(pFirstCollider->size.x * Direct, 0.0f, 0.0f));
+			(*it_first)->SetPos(CenterPos + CVector3(pFirstCollider->GetSize().x * Direct,0.0f,0.0f));
+			(*it_second)->SetPos(CenterPos + CVector3(pFirstCollider->GetSize().x * Direct, 0.0f, 0.0f));
 		}
 	}	
 
@@ -94,12 +100,12 @@ void SceneGame::Update()
 			it_Stage != pStageCollider->end(); it_Stage++)
 		{
 			CVector3 DiffPos = (*it_Character)->GetPos() - (*it_Character)->GetOldPos();		//前の位置から今の位置まで移動したベクトル
-			CVector3 HitSize = (pCharacterCollider->size - (*it_Stage).size) * 0.5f;
-			float NowDistanceX =  pCharacterCollider->pos.x - (*it_Stage).pos.x;
+			CVector3 HitSize = (pCharacterCollider->GetSize() + (*it_Stage).GetSize()) * 0.5f;
+			float NowDistanceX =  pCharacterCollider->GetPos().x - (*it_Stage).GetPos().x;
 			float AbsNowDistanceX = fabsf(NowDistanceX);
-			float OldDistanceY = (pCharacterCollider->pos.y - DiffPos.y) - (*it_Stage).pos.y;
+			float OldDistanceY = (pCharacterCollider->GetPos().y - DiffPos.y) - (*it_Stage).GetPos().y;
 			float AbsOldDistanceY = fabsf(OldDistanceY);
-			float OldDistanceZ = (pCharacterCollider->pos.z - DiffPos.z) - (*it_Stage).pos.z;
+			float OldDistanceZ = (pCharacterCollider->GetPos().z - DiffPos.z) - (*it_Stage).GetPos().z;
 			float AbsOldDistanceZ = fabsf(OldDistanceZ);
 			
 			//Xの移動だけして当たっていたら
@@ -108,7 +114,8 @@ void SceneGame::Update()
 				AbsOldDistanceZ < HitSize.z)
 			{
 				CVector3 newPos = (*it_Character)->GetPos();
-				newPos.x = (*it_Stage).pos.x + NowDistanceX < 0.0f ? -HitSize.x : HitSize.x;
+				float MoveDist = DiffPos.x < 0.0f ? HitSize.x : -HitSize.x;
+				newPos.x = (*it_Stage).GetPos().x + MoveDist;
 				(*it_Character)->SetPos(newPos);
 			}
 		}
@@ -118,22 +125,26 @@ void SceneGame::Update()
 			it_Stage != pStageCollider->end(); it_Stage++)
 		{
 			CVector3 DiffPos = (*it_Character)->GetPos() - (*it_Character)->GetOldPos();		//前の位置から今の位置まで移動したベクトル
-			CVector3 HitSize = (pCharacterCollider->size - (*it_Stage).size) * 0.5f;
-			float NowDistanceX = pCharacterCollider->pos.x - (*it_Stage).pos.x;
+			CVector3 HitSize = (pCharacterCollider->GetSize() + (*it_Stage).GetSize()) * 0.5f;
+			float NowDistanceX = pCharacterCollider->GetPos().x - (*it_Stage).GetPos().x;
 			float AbsNowDistanceX = fabsf(NowDistanceX);
-			float NowDistanceY = pCharacterCollider->pos.y - (*it_Stage).pos.y;
+			float NowDistanceY = pCharacterCollider->GetPos().y - (*it_Stage).GetPos().y;
 			float AbsNowDistanceY = fabsf(NowDistanceY);
-			float OldDistanceZ = (pCharacterCollider->pos.z - DiffPos.z) - (*it_Stage).pos.z;
+			float OldDistanceZ = (pCharacterCollider->GetPos().z - DiffPos.z) - (*it_Stage).GetPos().z;
 			float AbsOldDistanceZ = fabsf(OldDistanceZ);
 
-			//Xの移動だけして当たっていたら
+			//Yの移動だけして当たっていたら
 			if (AbsNowDistanceX < HitSize.x &&
 				AbsNowDistanceY < HitSize.y &&
 				AbsOldDistanceZ < HitSize.z)
 			{
 				CVector3 newPos = (*it_Character)->GetPos();
-				newPos.y = (*it_Stage).pos.y + NowDistanceY < 0.0f ? -HitSize.y : HitSize.y;
+				float MoveDist = DiffPos.y < 0.0f ?
+					HitSize.y - (pCharacterCollider->GetSize().y * 0.5f):	//上からあたった
+					-HitSize.y;	//下からあたった
+				newPos.y = (*it_Stage).GetPos().y + MoveDist;
 				(*it_Character)->SetPos(newPos);
+				(*it_Character)->Character_HitGround();
 			}
 		}
 
@@ -142,21 +153,22 @@ void SceneGame::Update()
 			it_Stage != pStageCollider->end(); it_Stage++)
 		{
 			CVector3 DiffPos = (*it_Character)->GetPos() - (*it_Character)->GetOldPos();		//前の位置から今の位置まで移動したベクトル
-			CVector3 HitSize = (pCharacterCollider->size - (*it_Stage).size) * 0.5f;
-			float NowDistanceX = pCharacterCollider->pos.x - (*it_Stage).pos.x;
+			CVector3 HitSize = (pCharacterCollider->GetSize() + (*it_Stage).GetSize()) * 0.5f;
+			float NowDistanceX = pCharacterCollider->GetPos().x - (*it_Stage).GetPos().x;
 			float AbsNowDistanceX = fabsf(NowDistanceX);
-			float NowDistanceY = pCharacterCollider->pos.y - (*it_Stage).pos.y;
+			float NowDistanceY = pCharacterCollider->GetPos().y - (*it_Stage).GetPos().y;
 			float AbsNowDistanceY = fabsf(NowDistanceY);
-			float NowDistanceZ = pCharacterCollider->pos.z - DiffPos.z - (*it_Stage).pos.z;
+			float NowDistanceZ = pCharacterCollider->GetPos().z - DiffPos.z - (*it_Stage).GetPos().z;
 			float AbsNowDistanceZ = fabsf(NowDistanceZ);
 
-			//Xの移動だけして当たっていたら
+			//Zの移動だけして当たっていたら
 			if (AbsNowDistanceX < HitSize.x &&
 				AbsNowDistanceY < HitSize.y &&
 				AbsNowDistanceZ < HitSize.z)
 			{
-				CVector3 newPos = (*it_Character)->GetPos();
-				newPos.z = (*it_Stage).pos.z + NowDistanceZ < 0.0f ? -HitSize.z : HitSize.z;
+				CVector3 newPos = (*it_Character)->GetPos(); 
+				float MoveDist = DiffPos.z < 0.0f ? HitSize.z : -HitSize.z;
+				newPos.z = (*it_Stage).GetPos().z + MoveDist;
 				(*it_Character)->SetPos(newPos);
 			}
 		}
@@ -167,17 +179,26 @@ void SceneGame::Update()
 
 void SceneGame::Draw()
 {
-	Model* pModelData = ModelDrawer::GetModel("UnityChan");
-	animeTime += 1.0f / 60.0f;
-	pModel1.PlayAnime("Walk", true);
-	pModel1.SetAnimeTime(animeTime);
-	//pModelData->SetAnimeTime(WalkNo,animeTime);	//アニメーションの時間設定
-	pModelData->Step(1.0f / 60.0f);
-	pModel1.Draw();
+	m_pStage->Stage_Draw();
 
-	pModel2.PlayAnime("Run",true);
-	pModel2.SetAnimeTime(animeTime);
-	//pModelData->SetAnimeTime(RunNo,animeTime);	//アニメーションの時間設定
-	pModelData->Step(1.0f / 60.0f);
-	pModel2.Draw();
+	for (Character* copy : m_Characters)
+	{
+		copy->Character_Draw();
+	}
+
+	if (IsKeyTrigger(VK_RETURN))
+	{
+		ColliderDraw = !ColliderDraw;
+	}
+
+	if (ColliderDraw)
+	{
+		m_pStage->StageColliderDraw();
+
+		for (Character* copy : m_Characters)
+		{
+			copy->DrawCollider();
+		}
+	}
+
 }

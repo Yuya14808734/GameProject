@@ -29,20 +29,20 @@ void ModelDrawer::UninitModels()
 	m_pVertexShader = nullptr;
 }
 
-bool ModelDrawer::LoadModel(const char* FilePath, const std::string& ModelName)
+bool ModelDrawer::LoadModel(const char* FilePath, const std::string& ModelName, float Scale)
 {
 	//モデルがあるかを探す
 	std::map<std::string, ModelInformation*>::iterator it = m_Models.find(ModelName);
 
 	if (it != m_Models.end())
 	{
-		return false;
+		return true;
 	}
 
 	ModelInformation* ModelInfo = new ModelInformation();
 	ModelInfo->model = new Model();
 
-	if (!ModelInfo->model->Load(FilePath,0.003f, false))
+	if (!ModelInfo->model->Load(FilePath,Scale, false))
 	{
 		//MessageBox(nullptr, "モデル読み込みエラー", ModelName.c_str(), MB_OK);
 		//delete ModelInfo;
@@ -86,9 +86,7 @@ bool ModelDrawer::LoadAnime(const char* FilePath, const std::string& AnimeName, 
 	//設定したいアニメーションがもう設定されていれば
 	if (anime_it != pModelInfo->animation.end())
 	{
-		std::string ErrorTitle = ModelName + "/" + AnimeName;
-		MessageBox(nullptr, "その名前でモーションが設定してあります", ErrorTitle.c_str(), MB_OK);
-		return false;
+		return true;
 	}
 
 	//ここでアニメーションを追加する
@@ -189,6 +187,22 @@ void ModelDrawer::DestroyAllModel(bool MemoryDelete)
 	m_Models.clear();
 }
 
+ModelDrawer::ModelDrawer()
+	:m_pModelInfo(nullptr),
+	m_pos(CVector3(0.0f,0.0f,0.0f)),
+	m_scale(CVector3(1.0f,1.0f,1.0f)),
+	m_rotate(CVector3(0.0f,0.0f,0.0f)),
+	m_NowPlayAnimeNo(0),
+	m_AnimTime(0.0f),
+	m_AnimeNow(false),
+	m_AnimeLoop(false)
+{
+}
+
+ModelDrawer::~ModelDrawer()
+{
+}
+
 void ModelDrawer::Draw()
 {
 	CameraBase* pCamera = CameraManager::GetInstance().GetSceneCamera();
@@ -209,11 +223,11 @@ void ModelDrawer::Draw()
 	}
 
 	DirectX::XMFLOAT4X4 mat[3];
-	DirectX::XMMATRIX scalemat, rotmat, transmat;
-	scalemat = DirectX::XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
-	rotmat = DirectX::XMMatrixRotationQuaternion(m_rotate.v);
-	transmat = DirectX::XMMatrixTranslation(m_pos.x, m_pos.y, m_pos.z);
-	DirectX::XMStoreFloat4x4(&mat[0], scalemat * rotmat * transmat);
+	DirectX::XMMATRIX worldmat;
+	worldmat  = DirectX::XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
+	worldmat *= DirectX::XMMatrixRotationQuaternion(m_rotate.v);
+	worldmat *= DirectX::XMMatrixTranslation(m_pos.x, m_pos.y, m_pos.z);
+	DirectX::XMStoreFloat4x4(&mat[0], DirectX::XMMatrixTranspose(worldmat));
 	mat[1] = pCamera->GetViewMatrix();		//カメラの情報が分かり次第実装
 	mat[2] = pCamera->GetProjectionMatrix();		//カメラの情報が分かり次第実装
 
@@ -221,10 +235,17 @@ void ModelDrawer::Draw()
 	m_pConstantBuffer->Write(mat);
 	m_pConstantBuffer->BindVS(0);
 
+	//アニメーションの設定
+	if (m_AnimeNow)
+	{
+		m_pModelInfo->model->Play(m_NowPlayAnimeNo, m_AnimeLoop);
+		m_pModelInfo->model->SetAnimeTime(m_NowPlayAnimeNo, m_AnimTime);
+	}
+
 	m_pModelInfo->model->Draw();
 }
 
-void ModelDrawer::SetModel(std::string ModelName)
+void ModelDrawer::SetModel(const std::string& ModelName)
 {
 	std::map<std::string, ModelInformation*>::iterator
 		model_it = m_Models.find(ModelName);
@@ -267,13 +288,14 @@ void ModelDrawer::PlayAnime(const std::string& AnimeName,bool Loop)
 	}
 
 	//アニメーションの再生
-	m_pModelInfo->model->Play((*it).second, Loop);
 	m_NowPlayAnimeNo = (*it).second;
+	m_AnimeNow = true;
+	m_AnimeLoop = Loop;
 }
 
 void ModelDrawer::SetAnimeTime(float time)
 {
-	m_pModelInfo->model->SetAnimeTime(m_NowPlayAnimeNo, time);
+	m_AnimTime = time;
 }
 
 void ModelDrawer::SetAnimeLerp(float value)
@@ -309,9 +331,19 @@ void ModelDrawer::SetPosition(const CVector3& pos)
 	m_pos = pos;
 }
 
+const CVector3& ModelDrawer::GetPosition()
+{
+	return m_pos;
+}
+
 void ModelDrawer::SetScale(const CVector3& scale)
 {
 	m_scale = scale;
+}
+
+const CVector3& ModelDrawer::GetScale()
+{
+	return m_scale;
 }
 
 void ModelDrawer::SetRotate(const CQuaternion& rotate)
@@ -325,4 +357,9 @@ void ModelDrawer::SetRotate(const CVector3& rotate)
 		DirectX::XMConvertToRadians(rotate.x), 
 		DirectX::XMConvertToRadians(rotate.y),
 		DirectX::XMConvertToRadians(rotate.z));
+}
+
+const CQuaternion& ModelDrawer::GetRotate()
+{
+	return m_rotate;
 }

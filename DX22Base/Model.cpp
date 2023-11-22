@@ -205,11 +205,51 @@ void Model::Step(float tick)
 
 void Model::SetAnimeTime(AnimeNo no, float time)
 {
-	Animation& anime = m_animes[no];
-	anime.time = time;
-	if (anime.isLoop)
-		while(anime.time >= anime.totalTime)
-			anime.time -= anime.totalTime;
+	//==========================================
+	//よくわからないのでメモ
+	//SetAnimeTimeでアニメーションの時間を設定しても
+	//step呼ばないと動かなかったので、
+	//stepに似せました。
+	//が、ブレンドたぶんできない気がする
+	//==========================================
+
+	if (no == ANIME_NONE) { return; }
+
+	UpdateAnimeTime(m_playNo, time);
+
+	if (no == ANIME_PARAMETRIC || m_blendNo == ANIME_PARAMETRIC)
+	{
+		CalcAnime(ANIME_TRANSFORM_PARAMETRIC0, m_parametric[0]);
+		CalcAnime(ANIME_TRANSFORM_PARAMETRIC1, m_parametric[1]);
+	}
+	if (no != ANIME_NONE && no != ANIME_PARAMETRIC)
+	{
+		CalcAnime(ANIME_TRANSFORM_MAIN, no);
+	}
+	if (m_blendNo != ANIME_NONE && m_blendNo != ANIME_PARAMETRIC)
+	{
+		CalcAnime(ANIME_TRANSFORM_BLEND, m_blendNo);
+	}
+
+	CalcBones(0, DirectX::XMMatrixIdentity());
+
+	if (m_blendNo != ANIME_NONE)
+	{
+		UpdateAnimeTime(m_blendNo, time);
+		m_blendTime += 1.0f / 60.0f;
+		if (m_blendTotalTime <= m_blendTime)
+		{
+			m_blendTime = 0.0f;
+			m_blendTotalTime = 0.0f;
+			m_playNo = m_blendNo;
+			m_blendNo = ANIME_NONE;
+		}
+	}
+	if (m_playNo == ANIME_PARAMETRIC || m_blendNo == ANIME_PARAMETRIC)
+	{
+		UpdateAnimeTime(m_parametric[0], time);
+		UpdateAnimeTime(m_parametric[1], time);
+	}
 }
 
 void Model::Play(AnimeNo no, bool loop)
@@ -481,6 +521,7 @@ void Model::InitAnime(AnimeNo no)
 	anime.speed = 1.0f;
 	anime.isLoop = false;
 }
+
 void Model::UpdateAnime(AnimeNo no, float tick)
 {
 	if (no == ANIME_PARAMETRIC) { return; }
@@ -490,6 +531,16 @@ void Model::UpdateAnime(AnimeNo no, float tick)
 		while (anime.time >= anime.totalTime)
 			anime.time = anime.StartTime;
 }
+
+void Model::UpdateAnimeTime(AnimeNo no, float time)
+{
+	Animation& anime = m_animes[no];
+	anime.time = time;
+	if (anime.isLoop)
+		while (anime.time >= anime.totalTime)
+			anime.time -= anime.totalTime;
+}
+
 void Model::CalcBones(NodeIndex index, DirectX::XMMATRIX parent)
 {
 	//--- アニメーションごとのパラメータを合成
