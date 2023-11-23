@@ -3,7 +3,7 @@
 
 void Character_00::Init()
 {
-	SetParameter(3.0f / 60.0f, 1.5f / 60.0f, 1.0f, 2, 1.66f, -0.0066f, -0.5f, 0.98f, 0.98f);
+	SetParameter(3.0f / 60.0f, 5.0f / 60.0f, 3.0f / 60.0f, 2, 0.5f, -0.04f, -0.1f, 0.65f, 0.65f);
 	ModelDrawer::LoadModel("Assets/unitychan/unitychan.fbx", "UnityChan", 0.003f);
 	ModelDrawer::LoadAnime("Assets/unitychan/walk.fbx", "Walk", "UnityChan");
 	m_CharacterModel.SetModel("UnityChan");
@@ -42,4 +42,8 @@ void Character_00::Draw()
 void Character_00::HitGround()
 {
 	m_Velocity.y = 0.0f;
+	if (m_State == Character::STATE::AIRMOVE || m_State == Character::STATE::JUMP)
+	{
+		m_State = Character::STATE::IDLE;
+	}
 }

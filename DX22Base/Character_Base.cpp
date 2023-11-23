@@ -28,9 +28,13 @@ void Character::Character_Uninit()
 void Character::Character_Update()
 {
 	m_oldPos = m_pos;
+	Character::STATE BeforeState = m_State;
 
 	Update();
 
+	//========================================
+	// 各ステータスのアップデート
+	//========================================
 	switch (m_State)
 	{
 	case Character::STATE::IDLE:
@@ -45,14 +49,14 @@ void Character::Character_Update()
 	case Character::STATE::ATTACK:
 		AttackUpdate();
 		break;
-	case Character::STATE::BLOWOFF:
-		BlowOffUpdate();
+	case Character::STATE::SMASH:
+		SmashUpdate();
 		break;
 	case Character::STATE::JUMP:
 		JumpUpdate();
 		break;
-	case Character::STATE::FALL:
-		FallUpdate();
+	case Character::STATE::AIRMOVE:
+		AirMoveUpdate();
 		break;
 	case Character::STATE::DOWN:
 		DownUpdate();
@@ -61,6 +65,83 @@ void Character::Character_Update()
 		break;
 	default:
 		break;
+	}
+
+	//========================================
+	// 各ステータスが切り替わっていたら
+	//========================================
+	if (m_State != BeforeState)
+	{
+		//========================================
+		//終了処理
+		//========================================
+		switch (BeforeState)
+		{
+		case Character::STATE::IDLE:
+			IdleUninit();
+			break;
+		case Character::STATE::WALK:
+			WalkUninit();
+			break;
+		case Character::STATE::DASH:
+			DashUninit();
+			break;
+		case Character::STATE::ATTACK:
+			AttackUninit();
+			break;
+		case Character::STATE::SMASH:
+			SmashUninit();
+			break;
+		case Character::STATE::JUMP:
+			JumpUninit();
+			break;
+		case Character::STATE::AIRMOVE:
+			AirMoveUninit();
+			break;
+		case Character::STATE::DOWN:
+			DownUninit();
+			break;
+		case Character::STATE::MAX:
+			break;
+		default:
+			break;
+		}
+
+		//========================================
+		// 初期化
+		//========================================
+		switch (m_State)
+		{
+		case Character::STATE::IDLE:
+			IdleInit();
+			break;
+		case Character::STATE::WALK:
+			WalkInit();
+			break;
+		case Character::STATE::DASH:
+			DashInit();
+			break;
+		case Character::STATE::ATTACK:
+			AttackInit();
+			break;
+		case Character::STATE::SMASH:
+			SmashInit();
+			break;
+		case Character::STATE::JUMP:
+			JumpInit();
+			break;
+		case Character::STATE::AIRMOVE:
+			AirMoveInit();
+			break;
+		case Character::STATE::DOWN:
+			DownInit();
+			break;
+		case Character::STATE::MAX:
+			break;
+		default:
+			break;
+		}
+
 	}
 
 	m_CharacterModel.SetPosition(m_pos);
@@ -77,7 +158,7 @@ int Character::GetPlayerBit()
 	return m_PlayerBit;
 }
 
-const Character::STATE & Character::GetState() const
+const Character::STATE& Character::GetState() const
 {
 	return m_State;
 }
@@ -87,7 +168,7 @@ ModelDrawer* Character::GetModel() const
 	return const_cast<ModelDrawer*>(&m_CharacterModel);
 }
 
-const CVector3 & Character::GetPos() const
+const CVector3& Character::GetPos() const
 {
 	return m_pos;
 }
@@ -96,6 +177,7 @@ void Character::SetPos(const CVector3 & pos)
 {
 	m_pos = pos;
 	m_CharacterCollider.SetPos(pos);
+	m_CharacterModel.SetPosition(pos);
 }
 
 const CVector3& Character::GetOldPos() const
@@ -166,9 +248,21 @@ BoxCollider* Character::GetCharacterCollider() const
 	return const_cast<BoxCollider*>(&m_CharacterCollider);
 }
 
+void Character::Character_HitRoof()
+{
+	HitRoof();
+}
+
 void Character::Character_HitGround()
 {
+	m_Velocity.y = 0.0f;
+	m_JumpCount = 0;
 	HitGround();
+}
+
+void Character::Character_HitWall()
+{
+	HitWall();
 }
 
 void Character::DrawCollider()

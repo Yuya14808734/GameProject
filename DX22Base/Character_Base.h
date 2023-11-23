@@ -15,9 +15,9 @@ public:
 		WALK,		//歩く
 		DASH,		//走る
 		ATTACK,		//攻撃
-		BLOWOFF,	//吹っ飛ばす
+		SMASH,		//吹っ飛ばす
 		JUMP,		//ジャンプ
-		FALL,		//落下
+		AIRMOVE,	//落下
 		DOWN,		//倒れる
 
 		MAX,
@@ -57,7 +57,9 @@ public:
 	void AddDamage(float damage);						//ダメージの加算
 	void SetDamage(float damage);						//ダメージの設定
 	BoxCollider* GetCharacterCollider() const;			//キャラクター、ステージ当たり判定の取得
-	void Character_HitGround();							//地面に当たった時
+	void Character_HitRoof();							//天井に当たった	
+	void Character_HitGround();							//地面に当たった
+	void Character_HitWall();							//壁に当たった
 	void DrawCollider();								//コライダーの描画
 
 protected:
@@ -80,21 +82,56 @@ protected:
 	virtual void Update() {};		//継承先の更新
 	virtual void Draw() {};			//継承先の描画
 
+	//==========================================================================
+	virtual void IdleInit();		//止まっているときの初期化
+	virtual void IdleUninit();		//止まっているときの終了処理
 	virtual void IdleUpdate();		//止まっているときのアップデート
+	//==========================================================================
+	virtual void WalkInit();		//歩く時の初期化
+	virtual void WalkUninit();		//歩く時の終了処理
 	virtual void WalkUpdate();		//歩く時のアップデート
+	//==========================================================================
+	virtual void DashInit();		//走るときの初期化
+	virtual void DashUninit();		//走るときの終了処理
 	virtual void DashUpdate();		//走るときのアップデート
-	virtual void AttackUpdate();	//攻撃のアップデート
-	virtual void BlowOffUpdate();	//吹っ飛ばしのアップデート
-	virtual void JumpUpdate();		//浮かんでいるときのアップデート
-	virtual void FallUpdate();		//落ちているときのアップデート
+	//==========================================================================
+	virtual void AttackInit();		//攻撃するときの初期化
+	virtual void AttackUninit();	//攻撃するときの終了処理
+	virtual void AttackUpdate();	//攻撃するときのアップデート
+	//==========================================================================
+	virtual void SmashInit();		//吹っ飛ばすの初期化
+	virtual void SmashUninit();		//吹っ飛ばしの終了処理
+	virtual void SmashUpdate();		//吹っ飛ばしのアップデート
+	//==========================================================================
+	virtual void JumpInit();		//ジャンプしたときの初期化
+	virtual void JumpUninit();		//ジャンプしたときの終了処理
+	virtual void JumpUpdate();		//ジャンプしたときのアップデート
+	//==========================================================================
+	virtual void AirMoveInit();		//空中にいるときの初期化
+	virtual void AirMoveUninit();	//空中にいるときの終了処理
+	virtual void AirMoveUpdate();	//落ちているときのアップデート
+	//==========================================================================
+	virtual void DownInit();		//倒れた時の初期化
+	virtual void DownUninit();		//倒れた時の終了処理
 	virtual void DownUpdate();		//倒れている状態のアップデート
 	
-	virtual void HitGround();		//地面に当たった時に呼ばれる
+	//======================================================
+	//スマブラと同じような名前にしています
+	//https://www.youtube.com/watch?v=V40sMUAE5ek
 
-protected:
-	//攻撃の基底関数
-	//virtual void 
+	virtual void Attack11() {};		//弱1
+	virtual void Attack12() {};		//弱2
+	virtual void Attack13() {};		//弱3
+	virtual void AttackS2() {};		//横強
+	virtual void AttackS4() {};		//横スマッシュ
+	virtual void AttackAirN() {};	//空N
+	virtual void SpecialN() {};		//通常必殺技
+	virtual void SpecialAirN() {};	//通常必殺技(空中)
 
+
+	virtual void HitRoof() {};		//天井に当たった時に呼ぶ
+	virtual void HitGround() {};	//地面に当たった時に呼ばれる
+	virtual void HitWall() {};		//壁に当たった時に呼ぶ
 
 private:
 	//======================================================

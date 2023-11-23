@@ -29,7 +29,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		state = UpdateWindow();
 		if (state == APP_STATE_WAIT && UpdateTimer())
 		{
-			MainProcess();
+			MainLoop();
 		}
 	}
 

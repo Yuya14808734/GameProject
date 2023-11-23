@@ -82,38 +82,62 @@
     <Filter Include="ソース ファイル\04_Game\02_Character">
       <UniqueIdentifier>{a02cd7d7-6396-4334-acdb-06f00dba8cd6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\04_Game\03_Attack">
-      <UniqueIdentifier>{1f600c55-a4a2-40b1-8c0f-4cbca805a4b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\04_Game\04_Stage">
-      <UniqueIdentifier>{db577238-41ce-43ee-89d6-c4bbc6cd6831}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\04_Game\02_Character">
       <UniqueIdentifier>{067bdd2c-52c4-41f8-9c24-1d6542679dca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\03_Attack">
-      <UniqueIdentifier>{8c6ba7ab-21a2-45f4-a8f4-d7e61bc3315e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\04_Stage">
-      <UniqueIdentifier>{0a11127a-f7bd-4096-a1fb-49a1a150a1c7}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\04_Game\02_Character\Character_00">
       <UniqueIdentifier>{efc5da23-9735-40db-8956-45e57cc47dd8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\04_Game\05_Effect">
-      <UniqueIdentifier>{5c0d8d6b-c36f-4e29-9964-ade6148289e5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\05_Effect">
-      <UniqueIdentifier>{f1eb7697-a67b-476c-bfbd-72af7b47bdc6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\04_Game\02_Character\Character_00">
       <UniqueIdentifier>{2bd36819-b618-46b2-a756-32f7465490a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\04_Game\04_Stage\Stage_00">
+    <Filter Include="ソース ファイル\04_Game\03_Stage">
+      <UniqueIdentifier>{db577238-41ce-43ee-89d6-c4bbc6cd6831}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\03_Stage\Stage_00">
       <UniqueIdentifier>{833dbf51-51f5-438d-a951-dbada05c7668}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\04_Stage\Stage_00">
+    <Filter Include="ソース ファイル\04_Game\04_Effect">
+      <UniqueIdentifier>{5c0d8d6b-c36f-4e29-9964-ade6148289e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\05_Base">
+      <UniqueIdentifier>{9100d977-a04e-46ff-b0cf-273cf067d7fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\05_Base\02_Stage">
+      <UniqueIdentifier>{d5d82284-2b32-42fe-9fa8-746dceeac89c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\05_Base\00_Character">
+      <UniqueIdentifier>{c0782d59-a471-4294-91f5-eb647c37443e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\05_Base\00_Character\00_State">
+      <UniqueIdentifier>{7c58496e-fcde-468b-a9ba-c2a5f19e4b63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\05_Base\00_Character\01_Attack">
+      <UniqueIdentifier>{a5b8584f-7582-43e0-bb7a-5d172fdd8091}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\05_Base\01_Attack">
+      <UniqueIdentifier>{3f17e47b-c812-47b7-827a-8e56be76482b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\03_Stage">
+      <UniqueIdentifier>{0a11127a-f7bd-4096-a1fb-49a1a150a1c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\03_Stage\Stage_00">
       <UniqueIdentifier>{100ce985-cf6f-4aa5-8e0e-f3b7c3ffd8c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\04_Effect">
+      <UniqueIdentifier>{f1eb7697-a67b-476c-bfbd-72af7b47bdc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\05_Base">
+      <UniqueIdentifier>{83065f8b-6d0f-43b8-a1e3-479b3cccb0bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\05_Base\00_Character">
+      <UniqueIdentifier>{830d77a3-51fa-4890-b786-bfdf1462d361}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\05_Base\01_Attack">
+      <UniqueIdentifier>{893b0301-9a90-470f-9666-6b9f9f490e2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\05_Base\02_Stage">
+      <UniqueIdentifier>{6cdf03b3-0004-46fc-9c5a-64d707114d04}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -204,18 +228,6 @@
     <ClCompile Include="Collider.cpp">
       <Filter>ソース ファイル\02_System</Filter>
     </ClCompile>
-    <ClCompile Include="Attack_Base.cpp">
-      <Filter>ソース ファイル\04_Game\03_Attack</Filter>
-    </ClCompile>
-    <ClCompile Include="Character_Base.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Stage_Base.cpp">
-      <Filter>ソース ファイル\04_Game\04_Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="Character_Base_State.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character</Filter>
-    </ClCompile>
     <ClCompile Include="Character_00.cpp">
       <Filter>ソース ファイル\04_Game\02_Character\Character_00</Filter>
     </ClCompile>
@@ -223,7 +235,43 @@
       <Filter>ソース ファイル\04_Game\01_Camera</Filter>
     </ClCompile>
     <ClCompile Include="Stage_00.cpp">
-      <Filter>ソース ファイル\04_Game\04_Stage\Stage_00</Filter>
+      <Filter>ソース ファイル\04_Game\03_Stage\Stage_00</Filter>
+    </ClCompile>
+    <ClCompile Include="XboxKeyboard.cpp">
+      <Filter>ソース ファイル\02_System</Filter>
+    </ClCompile>
+    <ClCompile Include="Character_Base.cpp">
+      <Filter>ソース ファイル\04_Game\05_Base\00_Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage_Base.cpp">
+      <Filter>ソース ファイル\04_Game\05_Base\02_Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack_Base.cpp">
+      <Filter>ソース ファイル\04_Game\05_Base\01_Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Character_IdleState.cpp">
+      <Filter>ソース ファイル\04_Game\05_Base\00_Character\00_State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character_WalkState.cpp">
+      <Filter>ソース ファイル\04_Game\05_Base\00_Character\00_State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character_DashState.cpp">
+      <Filter>ソース ファイル\04_Game\05_Base\00_Character\00_State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character_JumpState.cpp">
+      <Filter>ソース ファイル\04_Game\05_Base\00_Character\00_State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character_AirMoveState.cpp">
+      <Filter>ソース ファイル\04_Game\05_Base\00_Character\00_State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character_AttackState.cpp">
+      <Filter>ソース ファイル\04_Game\05_Base\00_Character\00_State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character_SmashState.cpp">
+      <Filter>ソース ファイル\04_Game\05_Base\00_Character\00_State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character_DownState.cpp">
+      <Filter>ソース ファイル\04_Game\05_Base\00_Character\00_State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -284,12 +332,6 @@
     <ClInclude Include="Polyline.h">
       <Filter>ヘッダー ファイル\01_DirectX</Filter>
     </ClInclude>
-    <ClInclude Include="Character_Base.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Attack_Base.h">
-      <Filter>ヘッダー ファイル\04_Game\03_Attack</Filter>
-    </ClInclude>
     <ClInclude Include="Calculation.h">
       <Filter>ヘッダー ファイル\02_System</Filter>
     </ClInclude>
@@ -308,20 +350,29 @@
     <ClInclude Include="00_SceneGame.h">
       <Filter>ヘッダー ファイル\04_Game\00__Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Stage_Base.h">
-      <Filter>ヘッダー ファイル\04_Game\04_Stage</Filter>
-    </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>ヘッダー ファイル\02_System</Filter>
-    </ClInclude>
-    <ClInclude Include="Character_00.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00</Filter>
     </ClInclude>
     <ClInclude Include="00_CameraDebug.h">
       <Filter>ヘッダー ファイル\04_Game\01_Camera</Filter>
     </ClInclude>
     <ClInclude Include="Stage_00.h">
-      <Filter>ヘッダー ファイル\04_Game\04_Stage\Stage_00</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Stage\Stage_00</Filter>
+    </ClInclude>
+    <ClInclude Include="XboxKeyboard.h">
+      <Filter>ヘッダー ファイル\02_System</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage_Base.h">
+      <Filter>ヘッダー ファイル\04_Game\05_Base\02_Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Attack_Base.h">
+      <Filter>ヘッダー ファイル\04_Game\05_Base\01_Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Character_00.h">
+      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00</Filter>
+    </ClInclude>
+    <ClInclude Include="Character_Base.h">
+      <Filter>ヘッダー ファイル\04_Game\05_Base\00_Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

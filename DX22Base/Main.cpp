@@ -9,6 +9,7 @@
 #include "Sound.h"
 #include "Effect_Manager.h"
 #include "CameraManager.h"
+#include "XboxKeyboard.h"
 
 //--- 定数定義
 const unsigned int SCREEN_WIDTH = 1280;
@@ -64,12 +65,13 @@ void MainUninit()
 	UninitTexture();
 	UninitDX();
 }
-void MainProcess()
+void MainLoop()
 {
 	//====================================================
 	//アップデート
 	//====================================================
 	UpdateInput();
+	UpdateGamePad();
 	g_pGame->Update();
 
 	//====================================================

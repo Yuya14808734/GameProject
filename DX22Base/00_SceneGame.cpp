@@ -140,7 +140,7 @@ void SceneGame::Update()
 			{
 				CVector3 newPos = (*it_Character)->GetPos();
 				float MoveDist = DiffPos.y < 0.0f ?
-					HitSize.y - (pCharacterCollider->GetSize().y * 0.5f):	//ã‚©‚ç‚ ‚½‚Á‚½
+					HitSize.y - (pCharacterCollider->GetType() == BoxCollider::BOXTYPE::FOOT ? (pCharacterCollider->GetSize().y * 0.5f) : 0.0f) :	//ã‚©‚ç‚ ‚½‚Á‚½
 					-HitSize.y;	//‰º‚©‚ç‚ ‚½‚Á‚½
 				newPos.y = (*it_Stage).GetPos().y + MoveDist;
 				(*it_Character)->SetPos(newPos);

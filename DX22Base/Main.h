@@ -7,6 +7,6 @@ unsigned int GetAppHeight();
 
 void MainInit();
 void MainUninit();
-void MainProcess();
+void MainLoop();
 
 #endif // __MAIN_H__

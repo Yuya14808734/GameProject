@@ -160,8 +160,15 @@
     <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="Character_00.cpp" />
+    <ClCompile Include="Character_AirMoveState.cpp" />
+    <ClCompile Include="Character_AttackState.cpp" />
     <ClCompile Include="Character_Base.cpp" />
-    <ClCompile Include="Character_Base_State.cpp" />
+    <ClCompile Include="Character_DashState.cpp" />
+    <ClCompile Include="Character_DownState.cpp" />
+    <ClCompile Include="Character_IdleState.cpp" />
+    <ClCompile Include="Character_JumpState.cpp" />
+    <ClCompile Include="Character_SmashState.cpp" />
+    <ClCompile Include="Character_WalkState.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
     <ClCompile Include="DirectX.cpp" />
@@ -187,6 +194,7 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Image2D.cpp" />
     <ClCompile Include="WinUtil.cpp" />
+    <ClCompile Include="XboxKeyboard.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="00_CameraDebug.h" />
@@ -221,6 +229,7 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Image2D.h" />
     <ClInclude Include="WinUtil.h" />
+    <ClInclude Include="XboxKeyboard.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="ModelVS.hlsl">
