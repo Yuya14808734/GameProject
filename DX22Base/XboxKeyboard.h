@@ -40,8 +40,12 @@ int InputPressKey(PadButton key);                          //ƒvƒŒƒXƒL[‚Ì“ü—ÍŠÖ
 int InputTriggerKey(PadButton key);                        //ƒgƒŠƒK[ƒL[‚Ì“ü—ÍŠÖ”
 int InputReleaseKey(PadButton key);                        //ƒŠƒŠ[ƒXƒL[‚Ì“ü—ÍŠÖ”
 DirectX::XMFLOAT2 GetPressStick();                   //ƒvƒŒƒX‚³‚ê‚Ä‚¢‚éƒXƒeƒBƒbƒN‚Ì’l‚ğ•Ô‚·ŠÖ”(DirectX::Float2Œ^‚Å‚·A•Ô‚µ‚½’l‚É•âŠ®‚µ‚½‚¢’l‚ğŠ|‚¯‚Ü‚µ‚å‚¤)
-DirectX::XMFLOAT2 GetPressRightStick();
-DirectX::XMFLOAT2 GetPressLeftStick();
+const DirectX::XMFLOAT2& GetPressRightStick();
+const DirectX::XMFLOAT2& GetPressLeftStick();
+void SetPressRightStick();
+void SetPressLeftStick();
+bool GetRightSmash(float SmashValue);
+bool GetLeftSmash(float SmashValue);
 float GetPressTrigger();                             //ƒvƒŒƒX‚³‚ê‚Ä‚¢‚éƒgƒŠƒK[‚Ì’l‚ğ•Ô‚·
 DirectX::XMFLOAT2 GetTriggerStick();                 //ƒgƒŠƒK[ó‘Ô‚ÌƒXƒeƒBƒbƒN‚Ì’l‚ğ•Ô‚·(ŠëŒ¯!o—ˆ‚é‚¾‚¯GetPressStick()‚Å‘ã—p‚µ‚Ü‚µ‚å‚¤)              
 float GetTriggerTrigger();                           //ƒgƒŠƒK[ó‘Ô‚ÌƒgƒŠƒK[‚Ì’l‚ğ•Ô‚·

@@ -2,6 +2,7 @@
 #include "Input.h"
 #include "Attack_Base.h"
 #include "XboxKeyboard.h"
+#include "Input.h"
 
 //---行ける状態---
 //ジャンプ
@@ -14,44 +15,56 @@ void Character::IdleInit()
 
 }
 
+void Character::IdleUninit()
+{
+
+}
 
 void Character::IdleUpdate()
 {
-	
-
-
-	if (GetPressLeftStick().x != 0.0f)
+	//地面に当たっていなければ
+	if (!m_HitGround)
 	{
-		m_State = Character::STATE::WALK;
+		ChangeState(Character::STATE::AIRMOVE);
 	}
 
-	if (IsKeyPress(VK_UP))
+	CVector2 LeftStick = GetPressLeftStick();
+
+	//移動開始
+	if (LeftStick.x != 0.0f || IsKeyPress(VK_RIGHT) || IsKeyPress(VK_LEFT))
 	{
-		m_State = Character::STATE::JUMP;
+		if (GetLeftSmash(0.4f))
+		{
+			ChangeState(Character::STATE::DASH);
+		}
+		else
+		{
+			ChangeState(Character::STATE::WALK);
+		}
+	}
+
+	//ジャンプ
+	if (InputTriggerKey(PadButton::RIGHT_SHOULDER) || IsKeyTrigger(VK_UP))
+	{
+		ChangeState(Character::STATE::JUMP);
 		m_Velocity.y = m_JumpPower;
 	}
 
 	//攻撃
 	if (false)
 	{
-		m_State = Character::STATE::ATTACK;
+		ChangeState(Character::STATE::ATTACK);
 	}
 
 	m_Velocity.y += m_Gravity;
 	m_Velocity.x *= m_Friction;
 
 	//一応重力制御も書いておく
-	if (m_Velocity.y < m_MaxFallSpeed)
+	if (m_Velocity.y < m_DefaultMaxFallSpeed)
 	{
-		m_Velocity.y = m_MaxFallSpeed;
+		m_Velocity.y = m_DefaultMaxFallSpeed;
 	}
 
 	m_pos += m_MoveVector;
 	m_pos += m_Velocity;
 }
-
-void Character::IdleUninit()
-{
-
-}
-

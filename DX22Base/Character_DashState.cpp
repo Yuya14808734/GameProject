@@ -15,15 +15,21 @@ void Character::DashUninit()
 
 void Character::DashUpdate()
 {
-	//---s‚¯‚éó‘Ô---
-	//
-	//UŒ‚
-	//•à‚­
-	//‘–‚é
+	//’n–Ê‚É“–‚½‚Á‚Ä‚¢‚È‚¯‚ê‚Î
+	if (!m_HitGround)
+	{
+		ChangeState(Character::STATE::AIRMOVE);
+	}
 
 	bool NoButton = true;
+	float InputX = GetPressLeftStick().x * m_WalkSpeed;
 
-	if (IsKeyPress(VK_RIGHT))
+	if (InputX != 0.0f)
+	{
+		m_MoveVector.x = InputX;
+	}
+
+	if (InputX || IsKeyPress(VK_RIGHT))
 	{
 		if (m_MoveVector.x < -0.01f)
 		{
@@ -63,7 +69,7 @@ void Character::DashUpdate()
 		if (m_MoveVector.x < 0.01f || m_MoveVector.x > -0.01f)
 		{
 			m_MoveVector.x = 0.0f;
-			m_State = Character::STATE::IDLE;
+			m_NowState = Character::STATE::IDLE;
 		}
 	}
 
@@ -72,15 +78,15 @@ void Character::DashUpdate()
 	{
 		m_Velocity.x = m_MoveVector.x;
 		m_Velocity.y = m_JumpPower;
-		m_State = Character::STATE::JUMP;
+		m_NowState = Character::STATE::JUMP;
 	}
 
 	m_Velocity.y += m_Gravity;
 
 	//ˆê‰d—Í§Œä‚à‘‚¢‚Ä‚¨‚­
-	if (m_Velocity.y < m_MaxFallSpeed)
+	if (m_Velocity.y < m_DefaultMaxFallSpeed)
 	{
-		m_Velocity.y = m_MaxFallSpeed;
+		m_Velocity.y = m_DefaultMaxFallSpeed;
 	}
 
 	m_pos += m_MoveVector;

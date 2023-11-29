@@ -28,14 +28,13 @@ void Character::Character_Uninit()
 void Character::Character_Update()
 {
 	m_oldPos = m_pos;
-	Character::STATE BeforeState = m_State;
 
 	Update();
 
 	//========================================
 	// 各ステータスのアップデート
 	//========================================
-	switch (m_State)
+	switch (m_NowState)
 	{
 	case Character::STATE::IDLE:
 		IdleUpdate();
@@ -70,12 +69,14 @@ void Character::Character_Update()
 	//========================================
 	// 各ステータスが切り替わっていたら
 	//========================================
-	if (m_State != BeforeState)
+	if (m_ChangeState)
 	{
+		m_ChangeState = false;
+
 		//========================================
 		//終了処理
 		//========================================
-		switch (BeforeState)
+		switch (m_NowState)
 		{
 		case Character::STATE::IDLE:
 			IdleUninit();
@@ -110,7 +111,7 @@ void Character::Character_Update()
 		//========================================
 		// 初期化
 		//========================================
-		switch (m_State)
+		switch (m_NextState)
 		{
 		case Character::STATE::IDLE:
 			IdleInit();
@@ -142,6 +143,8 @@ void Character::Character_Update()
 			break;
 		}
 
+		m_NowState = m_NextState;
+
 	}
 
 	m_CharacterModel.SetPosition(m_pos);
@@ -160,7 +163,7 @@ int Character::GetPlayerBit()
 
 const Character::STATE& Character::GetState() const
 {
-	return m_State;
+	return m_NowState;
 }
 
 ModelDrawer* Character::GetModel() const
@@ -248,20 +251,28 @@ BoxCollider* Character::GetCharacterCollider() const
 	return const_cast<BoxCollider*>(&m_CharacterCollider);
 }
 
-void Character::Character_HitRoof()
+void Character::Character_ColliderInit()
 {
-	HitRoof();
+	m_HitCeiling = m_HitGround = m_HitWall = false;
+}
+
+void Character::Character_HitCeiling()
+{
+	m_HitCeiling = true;
+	HitCeiling();
 }
 
 void Character::Character_HitGround()
 {
 	m_Velocity.y = 0.0f;
 	m_JumpCount = 0;
+	m_HitGround = true;
 	HitGround();
 }
 
 void Character::Character_HitWall()
 {
+	m_HitWall = true;
 	HitWall();
 }
 
@@ -270,7 +281,7 @@ void Character::DrawCollider()
 	m_CharacterCollider.DrawCollider();
 }
 
-void Character::SetParameter(float WalkSpeed, float DashSpeed, float FallSideMoveSpeed, int MaxJumpCount, float JumpPower, float GravityScale, float MaxFallSpeed, float Friction, float AirResistance)
+void Character::SetParameter(float WalkSpeed, float DashSpeed, float  FallSideMoveSpeed,	int MaxJumpCount, float JumpPower, float GravityScale,float DefaultFallMaxSpeed, float UpFallMaxSpeed, float Friction, float AirResistance)
 {
 	m_PlayerBit = GetNewPlayerBit();
 	m_WalkSpeed = WalkSpeed;
@@ -279,7 +290,8 @@ void Character::SetParameter(float WalkSpeed, float DashSpeed, float FallSideMov
 	m_MaxJumpCount = MaxJumpCount;
 	m_JumpPower = JumpPower;
 	m_Gravity = GravityScale;
-	m_MaxFallSpeed = MaxFallSpeed;
+	m_DefaultMaxFallSpeed = DefaultFallMaxSpeed;
+	m_UpMaxFallSpeed = UpFallMaxSpeed;
 	m_Friction = Friction;
 	m_AirResistance = AirResistance;
 }
@@ -296,7 +308,13 @@ void Character::SetAttack(Attack* pAttack)
 	if (m_pNowAttack != nullptr)
 	{
 		m_pNowAttack->Attack_Init();
-		m_State = Character::STATE::ATTACK;
+		m_NowState = Character::STATE::ATTACK;
 	}
+}
+
+void Character::ChangeState(Character::STATE state)
+{
+	m_NextState = state;
+	m_ChangeState = true;
 }
 

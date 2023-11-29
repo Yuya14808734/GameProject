@@ -57,7 +57,8 @@ public:
 	void AddDamage(float damage);						//ダメージの加算
 	void SetDamage(float damage);						//ダメージの設定
 	BoxCollider* GetCharacterCollider() const;			//キャラクター、ステージ当たり判定の取得
-	void Character_HitRoof();							//天井に当たった	
+	void Character_ColliderInit();
+	void Character_HitCeiling();						//天井に当たった	
 	void Character_HitGround();							//地面に当たった
 	void Character_HitWall();							//壁に当たった
 	void DrawCollider();								//コライダーの描画
@@ -69,8 +70,9 @@ protected:
 	void SetParameter(
 	float WalkSpeed,float DashSpeed,float  FallSideMoveSpeed,
 		int MaxJumpCount,float JumpPower,float GravityScale,
-		float MaxFallSpeed,float Friction,	float AirResistance);
+		float DefaultFallMaxSpeed,float UpFallMaxSpeed ,float Friction,	float AirResistance);
 	void SetAttack(Attack* pAttack);
+	void ChangeState(Character::STATE state);
 
 protected:
 
@@ -129,7 +131,7 @@ protected:
 	virtual void SpecialAirN() {};	//通常必殺技(空中)
 
 
-	virtual void HitRoof() {};		//天井に当たった時に呼ぶ
+	virtual void HitCeiling() {};		//天井に当たった時に呼ぶ
 	virtual void HitGround() {};	//地面に当たった時に呼ばれる
 	virtual void HitWall() {};		//壁に当たった時に呼ぶ
 
@@ -137,18 +139,23 @@ private:
 	//======================================================
 	//最初に設定するパラメータ
 	int		m_PlayerBit = 0x00;				//このキャラクターが何番なのかを入れる
+
+protected:
 	float	m_WalkSpeed			= 0.0f;		//歩くスピード
 	float	m_DashSpeed			= 0.0f;		//走るスピード
 	float	m_FallSideMoveSpeed = 0.0f;		//落ちているときの横移動のスピード
 	int		m_MaxJumpCount		= 0;		//ジャンプできる最大数
 	float	m_JumpPower			= 0.0f;		//ジャンプするときの力
 	float	m_Gravity			= 0.0f;		//重力
-	float	m_MaxFallSpeed		= 0.0f;		//最大落下速度
+	float	m_DefaultMaxFallSpeed = 0.0f;	//最大落下速度
+	float	m_UpMaxFallSpeed	= 0.0f;		//落下中に下を押した場合の落下量
 	float	m_Friction			= 0.0f;		//摩擦量
 	float	m_AirResistance		= 0.0f;		//空気抵抗
 
 protected:
-	Character::STATE m_State = STATE::MAX;	//キャラクターの状態
+	Character::STATE m_NowState	 = STATE::MAX;	//キャラクターの状態
+	Character::STATE m_NextState = STATE::MAX;	//キャラクターの状態
+	bool	m_ChangeState		= false;
 	ModelDrawer m_CharacterModel;			//キャラクターのモデル
 	CVector3 m_pos;							//座標
 	CVector3 m_oldPos;						//前の座標
@@ -160,4 +167,7 @@ protected:
 	Attack* m_pNowAttack = nullptr;			//攻撃情報
 	BoxCollider m_CharacterCollider;		//プレイヤーの当たり判定
 	int m_JumpCount = 0;
+	bool m_HitGround = false;
+	bool m_HitCeiling = false;
+	bool m_HitWall = false;
 };

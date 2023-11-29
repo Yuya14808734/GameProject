@@ -40,16 +40,16 @@ void SceneGame::Uninit()
 
 void SceneGame::Update()
 {
-	//キャラクターのアップデート
+	//=====<キャラクターのアップデート>=====
 	//ここで攻撃や移動などのアップデートを行う
 	for(std::vector<Character*>::iterator it = m_Characters.begin();
 	it != m_Characters.end(); it++)
 	{
-		(*it)->Character_Update();
+		(*it)->Character_Update();				//キャラクターのアップデートを行う
+		(*it)->Character_ColliderInit();		//コライダーの情報を初期化してやる
 	}
 
-	//キャラクター同士の当たり判定
-	//四角と四角
+	//=====<キャラクター同士の当たり判定>=====
 	for (std::vector<Character*>::iterator it_first = m_Characters.begin();
 		it_first != m_Characters.end();it_first++)
 	{
@@ -78,22 +78,19 @@ void SceneGame::Update()
 		}
 	}	
 
-	//キャラクターの攻撃の当たり判定
-	//上で求めた攻撃の当たり判定を使って
+	//=====<キャラクターの攻撃の当たり判定>=====
+	//上で設定した攻撃の当たり判定を使って
 	//キャラクター同士の攻撃の当たり判定を行う
-	//円と円
 
 
-	//キャラクターとステージの当たり判定
-	//点と四角
+
+	//=====<キャラクターとステージの当たり判定>=====
 	std::vector<BoxCollider>* pStageCollider = m_pStage->GetStageCollider();
 	
 	for (std::vector<Character*>::iterator it_Character = m_Characters.begin();
 		it_Character != m_Characters.end(); it_Character++)
 	{
 		BoxCollider* pCharacterCollider = (*it_Character)->GetCharacterCollider();
-
-		//当たり判定を取る
 
 		//Xの移動だけの当たり判定
 		for (std::vector<BoxCollider>::iterator it_Stage = pStageCollider->begin();
@@ -117,6 +114,8 @@ void SceneGame::Update()
 				float MoveDist = DiffPos.x < 0.0f ? HitSize.x : -HitSize.x;
 				newPos.x = (*it_Stage).GetPos().x + MoveDist;
 				(*it_Character)->SetPos(newPos);
+				
+				(*it_Character)->Character_HitWall();
 			}
 		}
 
@@ -144,7 +143,15 @@ void SceneGame::Update()
 					-HitSize.y;	//下からあたった
 				newPos.y = (*it_Stage).GetPos().y + MoveDist;
 				(*it_Character)->SetPos(newPos);
-				(*it_Character)->Character_HitGround();
+
+				if (DiffPos.y < 0.0f)
+				{
+					(*it_Character)->Character_HitGround();
+				}
+				else
+				{
+					(*it_Character)->Character_HitCeiling();
+				}
 			}
 		}
 
@@ -173,8 +180,6 @@ void SceneGame::Update()
 			}
 		}
 	}
-
-
 }
 
 void SceneGame::Draw()

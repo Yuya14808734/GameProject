@@ -5,7 +5,8 @@
 
 void Character::WalkInit()
 {
-
+	m_MoveVector.x = 0.0f;
+	m_Velocity.x = 0.0f;
 }
 
 void Character::WalkUninit()
@@ -15,46 +16,42 @@ void Character::WalkUninit()
 
 void Character::WalkUpdate()
 {
-	//---行ける状態---
-	//ジャンプ
-	//攻撃
-	//歩く
-	//走る
+	//地面に当たっていなければ
+	if (!m_HitGround)
+	{
+		ChangeState(Character::STATE::AIRMOVE);
+	}
 
 	bool NoButton = true;
 
-	m_MoveVector.x = GetPressLeftStick().x * m_FallSideMoveSpeed;
+	m_MoveVector.x = GetPressLeftStick().x * m_WalkSpeed;
+
+	if (IsKeyPress(VK_RIGHT))
+	{
+		m_MoveVector.x = m_WalkSpeed;
+	}
+
+	if (IsKeyPress(VK_LEFT))
+	{
+		m_MoveVector.x = -m_WalkSpeed;
+	}
 
 	if (m_MoveVector.x != 0.0f)
 	{
 		NoButton = false;
 	}
 
-	if (IsKeyPress(VK_RIGHT))
-	{
-		m_MoveVector.x = m_WalkSpeed;
-
-		NoButton = false;
-	}
-
-	if (IsKeyPress(VK_LEFT))
-	{
-		m_MoveVector.x = -m_WalkSpeed;
-
-		NoButton = false;
-	}
-
 	//ボタンが何も押されていなければ
 	if (NoButton)
 	{
-		m_State = Character::STATE::IDLE;
+		ChangeState(Character::STATE::IDLE);
 	}
 
 	//ジャンプ
-	if (IsKeyPress(VK_UP))
+	if (InputTriggerKey(PadButton::RIGHT_SHOULDER) || IsKeyTrigger(VK_UP))
 	{
+		ChangeState(Character::STATE::JUMP);
 		m_Velocity.y = m_JumpPower;
-		m_State = Character::STATE::JUMP;
 	}
 
 	//しゃがみがあれば
@@ -64,13 +61,11 @@ void Character::WalkUpdate()
 	}
 
 	m_Velocity.y += m_Gravity;
-	m_Velocity.x *= m_Friction;
-
 
 	//一応重力制御も書いておく
-	if (m_Velocity.y < m_MaxFallSpeed)
+	if (m_Velocity.y < m_DefaultMaxFallSpeed)
 	{
-		m_Velocity.y = m_MaxFallSpeed;
+		m_Velocity.y = m_DefaultMaxFallSpeed;
 	}
 
 	m_pos += m_MoveVector;

@@ -1,4 +1,5 @@
 #include "XboxKeyboard.h"
+#include <math.h>
 
 #define RightStickDeadZone (5000)
 
@@ -9,6 +10,13 @@ XINPUT_STATE oldstate;
 XINPUT_VIBRATION vibration;
 int Vibtime = 0;
 bool Stop = false;
+
+DirectX::XMFLOAT2 NowRightStickValue = DirectX::XMFLOAT2(0.0f,0.0f);
+DirectX::XMFLOAT2 OldRightStickValue = DirectX::XMFLOAT2(0.0f, 0.0f);
+DirectX::XMFLOAT2 NowLeftStickValue = DirectX::XMFLOAT2(0.0f, 0.0f);
+DirectX::XMFLOAT2 OldLeftStickValue = DirectX::XMFLOAT2(0.0f, 0.0f);
+float RightStickMoveValue = 0.0f;
+float LeftStickMoveValue = 0.0f;
 
 //====================================================================
 //用途　：コントローラーの状態を取得(更新)
@@ -21,6 +29,10 @@ void UpdateGamePad()
 	ZeroMemory(&oldstate, sizeof(XINPUT_STATE));
 	oldstate = state;
 	static int Count = 0;
+
+	//前のフレームでスティックの倒した量
+	OldRightStickValue = GetPressRightStick();
+	OldLeftStickValue = GetPressLeftStick();
 
 	for (DWORD i = 0; i < 1; i++)
 	{		                      
@@ -46,6 +58,19 @@ void UpdateGamePad()
 			Stop = false;
 		}
 	}
+
+	//今のスティックの倒した量を設定
+	SetPressRightStick();
+	SetPressLeftStick();
+
+	//スティックが前のフレームからどれくらい動いたのかを設定
+	float leftmoveX = NowLeftStickValue.x - OldLeftStickValue.x;
+	float leftmoveY = NowLeftStickValue.y - OldLeftStickValue.y;
+	LeftStickMoveValue = sqrtf(leftmoveX * leftmoveX + leftmoveY * leftmoveY);
+
+	float rightmoveX = NowRightStickValue.x - OldRightStickValue.x;
+	float rightmoveY = NowRightStickValue.y - OldRightStickValue.y;
+	RightStickMoveValue = sqrtf(rightmoveX * rightmoveX + rightmoveY * rightmoveY);
 }
 
 //====================================================================
@@ -320,7 +345,28 @@ DirectX::XMFLOAT2 GetPressStick()
 //使い方：プレイヤーの座標更新などにおすすめです
 //注意点：-1.0～1.0の値で返します
 //=====================================================================
-DirectX::XMFLOAT2 GetPressRightStick()
+const DirectX::XMFLOAT2& GetPressRightStick()
+{
+	return NowRightStickValue;
+}
+
+//====================================================================
+//用途　：左スティックを傾けた時の値を返す(Press)
+//戻り値：XMFLOAT2型
+//使い方：プレイヤーの座標更新などにおすすめです
+//注意点：-1.0～1.0の値で返します
+//=====================================================================
+const DirectX::XMFLOAT2& GetPressLeftStick()
+{
+	return NowLeftStickValue;
+}
+
+//====================================================================
+//用途　：右スティックを傾けた時の値を設定
+//戻り値：なし
+// 注意点：呼ぶな
+//=====================================================================
+void SetPressRightStick()
 {
 	DirectX::XMFLOAT2 normalized(0, 0);
 	float normalizedMagnitude = 0;              //0.0～1.0に補正した大きさベクトルを格納する変数
@@ -353,16 +399,15 @@ DirectX::XMFLOAT2 GetPressRightStick()
 
 	normalized.x *= normalizedMagnitude;
 	normalized.y *= normalizedMagnitude;
-	return normalized;
+	NowRightStickValue = normalized;
 }
 
 //====================================================================
-//用途　：左スティックを傾けた時の値を返す(Press)
-//戻り値：XMFLOAT2型
-//使い方：プレイヤーの座標更新などにおすすめです
-//注意点：-1.0～1.0の値で返します
+//用途　：左スティックを傾けた時の値を設定
+//戻り値：なし
+//注意点：呼ぶな
 //=====================================================================
-DirectX::XMFLOAT2 GetPressLeftStick()
+void SetPressLeftStick()
 {
 	DirectX::XMFLOAT2 normalized(0, 0);
 	float normalizedMagnitude = 0;              //0.0～1.0に補正した大きさベクトルを格納する変数
@@ -395,7 +440,17 @@ DirectX::XMFLOAT2 GetPressLeftStick()
 
 	normalized.x *= normalizedMagnitude;
 	normalized.y *= normalizedMagnitude;
-	return normalized;
+	NowLeftStickValue = normalized;
+}
+
+bool GetRightSmash(float SmashValue)
+{
+	return (RightStickMoveValue > SmashValue);
+}
+
+bool GetLeftSmash(float SmashValue)
+{
+	return (LeftStickMoveValue > SmashValue);
 }
 
 //====================================================================
