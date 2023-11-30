@@ -305,6 +305,10 @@ void Character::Character_HitGround()
 	m_Velocity.y = 0.0f;
 	m_JumpCount = 0;
 	m_HitGround = true;
+	if (m_NowState == Character::STATE::AIRMOVE || m_NowState == Character::STATE::JUMP)
+	{
+		ChangeState(Character::STATE::IDLE);
+	}
 	HitGround();
 }
 

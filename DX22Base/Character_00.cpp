@@ -5,6 +5,7 @@ void Character_00::Init()
 {
 	SetParameter(3.0f / 60.0f, 5.0f / 60.0f, 3.0f / 60.0f, 2, 0.5f, -0.04f, -0.1f,-0.2f, 0.65f, 0.65f);
 	ModelDrawer::LoadModel("Assets/unitychan/unitychan.fbx", "UnityChan", 0.003f);
+	ModelDrawer::LoadAnime("Assets/unitychan/walk.fbx", "Idle", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/walk.fbx", "Walk", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/run.fbx", "Dash", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/jump.fbx", "Jump", "UnityChan");
@@ -41,7 +42,7 @@ void Character_00::Draw()
 void Character_00::IdleInit()
 {
 	Character::IdleInit();
-	m_CharacterModel.PlayAnime("Jump", true);
+	m_CharacterModel.PlayAnime("Idle", true);
 	m_AnimeTime = 0.0f;
 }
 
@@ -99,8 +100,5 @@ void Character_00::DashUpdate()
 void Character_00::HitGround()
 {
 	m_Velocity.y = 0.0f;
-	if (m_NowState == Character::STATE::AIRMOVE || m_NowState == Character::STATE::JUMP)
-	{
-		m_NowState = Character::STATE::IDLE;
-	}
+	
 }

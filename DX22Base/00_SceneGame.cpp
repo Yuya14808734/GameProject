@@ -8,14 +8,16 @@
 #include "Character_00.h"
 
 bool ColliderDraw = false;
+ModelDrawer modeldrawer;
 
 void SceneGame::Init()
 {
-	CameraManager::GetInstance().CreateCamera(new CameraDebug(),"DebugCamera");
+	CameraManager::GetInstance().CreateCamera(new CameraDebug(), "DebugCamera");
 	CameraManager::GetInstance().SetSceneCamera("DebugCamera");
-	ModelDrawer::LoadModel("Assets/unitychan/unitychan.fbx","UnityChan",0.003f);
-	ModelDrawer::LoadAnime("Assets/unitychan/walk.fbx","Walk", "UnityChan");
-	ModelDrawer::LoadAnime("Assets/unitychan/run.fbx","Run", "UnityChan");
+	modeldrawer.LoadModel("Assets/Character00/Model03.fbx", "Character00");
+	modeldrawer.SetModel("Character00");
+	modeldrawer.SetPosition(CVector3::GetZero());
+	modeldrawer.SetScale({ 0.1f, 0.1f, 0.1f });
 
 	m_pStage = new Stage00();
 	m_pStage->Stage_Init();
@@ -205,4 +207,6 @@ void SceneGame::Draw()
 			copy->DrawCollider();
 		}
 	}
+
+	modeldrawer.Draw();
 }
