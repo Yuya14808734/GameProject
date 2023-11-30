@@ -205,5 +205,4 @@ void SceneGame::Draw()
 			copy->DrawCollider();
 		}
 	}
-
 }

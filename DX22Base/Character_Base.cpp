@@ -18,6 +18,42 @@ int Character::GetNewPlayerBit()
 void Character::Character_Init()
 {
 	Init();
+
+	m_ChangeState = false;
+	m_JumpCount = 0;
+	m_HitGround = m_HitCeiling = m_HitWall = false;
+
+	switch (m_NowState)
+	{
+	case Character::STATE::IDLE:
+		IdleInit();
+		break;
+	case Character::STATE::WALK:
+		WalkInit();
+		break;
+	case Character::STATE::DASH:
+		DashInit();
+		break;
+	case Character::STATE::ATTACK:
+		AttackInit();
+		break;
+	case Character::STATE::SMASH:
+		SmashInit();
+		break;
+	case Character::STATE::JUMP:
+		JumpInit();
+		break;
+	case Character::STATE::AIRMOVE:
+		AirMoveInit();
+		break;
+	case Character::STATE::DOWN:
+		DownInit();
+		break;
+	case Character::STATE::MAX:
+		break;
+	default:
+		break;
+	}
 }
 
 void Character::Character_Uninit()
@@ -147,13 +183,16 @@ void Character::Character_Update()
 
 	}
 
-	m_CharacterModel.SetPosition(m_pos);
 	m_CharacterCollider.SetPos(m_pos);
 }
 
 void Character::Character_Draw()
 {
 	Draw();
+
+	m_CharacterModel.SetPosition(m_pos);
+	m_CharacterModel.SetRotate(m_rotate);
+	m_CharacterModel.Draw();
 }
 
 int Character::GetPlayerBit()
@@ -180,7 +219,6 @@ void Character::SetPos(const CVector3 & pos)
 {
 	m_pos = pos;
 	m_CharacterCollider.SetPos(pos);
-	m_CharacterModel.SetPosition(pos);
 }
 
 const CVector3& Character::GetOldPos() const

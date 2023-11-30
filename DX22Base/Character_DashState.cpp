@@ -22,14 +22,9 @@ void Character::DashUpdate()
 	}
 
 	bool NoButton = true;
-	float InputX = GetPressLeftStick().x * m_WalkSpeed;
+	float NowX = GetPressLeftStick().x * m_WalkSpeed;
 
-	if (InputX != 0.0f)
-	{
-		m_MoveVector.x = InputX;
-	}
-
-	if (InputX || IsKeyPress(VK_RIGHT))
+	if(NowX > 0.0f || IsKeyPress(VK_RIGHT))
 	{
 		if (m_MoveVector.x < -0.01f)
 		{
@@ -44,7 +39,7 @@ void Character::DashUpdate()
 		NoButton = false;
 	}
 
-	if (IsKeyPress(VK_LEFT))
+	if(NowX < 0.0f || IsKeyPress(VK_LEFT))
 	{
 		if (m_MoveVector.x > 0.01f)
 		{
@@ -53,7 +48,7 @@ void Character::DashUpdate()
 		}
 		else
 		{
-			m_MoveVector.x = m_DashSpeed;
+			m_MoveVector.x = -m_DashSpeed;
 		}
 
 		NoButton = false;
@@ -69,7 +64,7 @@ void Character::DashUpdate()
 		if (m_MoveVector.x < 0.01f || m_MoveVector.x > -0.01f)
 		{
 			m_MoveVector.x = 0.0f;
-			m_NowState = Character::STATE::IDLE;
+			ChangeState(Character::STATE::IDLE);
 		}
 	}
 
@@ -78,7 +73,7 @@ void Character::DashUpdate()
 	{
 		m_Velocity.x = m_MoveVector.x;
 		m_Velocity.y = m_JumpPower;
-		m_NowState = Character::STATE::JUMP;
+		ChangeState(Character::STATE::JUMP);
 	}
 
 	m_Velocity.y += m_Gravity;

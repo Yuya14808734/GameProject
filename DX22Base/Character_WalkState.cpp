@@ -26,12 +26,12 @@ void Character::WalkUpdate()
 
 	m_MoveVector.x = GetPressLeftStick().x * m_WalkSpeed;
 
-	if (IsKeyPress(VK_RIGHT))
+	if(IsKeyPress(VK_RIGHT))
 	{
 		m_MoveVector.x = m_WalkSpeed;
 	}
 
-	if (IsKeyPress(VK_LEFT))
+	if(IsKeyPress(VK_LEFT))
 	{
 		m_MoveVector.x = -m_WalkSpeed;
 	}
@@ -39,6 +39,18 @@ void Character::WalkUpdate()
 	if (m_MoveVector.x != 0.0f)
 	{
 		NoButton = false;
+
+		if (m_MoveVector.x > 0.0f)
+		{
+			//右に行っている
+			m_rotate = CQuaternion::AngleAxis(CVector3::GetUp(), 90.0f);
+		}
+		else
+		{
+			//左に行っている
+			m_rotate = CQuaternion::AngleAxis(CVector3::GetUp(), -90.0f);
+		}
+
 	}
 
 	//ボタンが何も押されていなければ
