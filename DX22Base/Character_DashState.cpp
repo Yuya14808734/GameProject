@@ -36,6 +36,9 @@ void Character::DashUpdate()
 			m_MoveVector.x = m_DashSpeed;
 		}
 
+		//右に行っている
+		m_rotate = CQuaternion::AngleAxis(CVector3::GetUp(), 90.0f);
+
 		NoButton = false;
 	}
 
@@ -50,6 +53,9 @@ void Character::DashUpdate()
 		{
 			m_MoveVector.x = -m_DashSpeed;
 		}
+
+		//左に行っている
+		m_rotate = CQuaternion::AngleAxis(CVector3::GetUp(), -90.0f);
 
 		NoButton = false;
 	}
@@ -69,7 +75,7 @@ void Character::DashUpdate()
 	}
 
 	//ジャンプ
-	if (IsKeyPress(VK_UP))
+	if (InputTriggerKey(PadButton::RIGHT_SHOULDER) || IsKeyPress(VK_UP))
 	{
 		m_Velocity.x = m_MoveVector.x;
 		m_Velocity.y = m_JumpPower;

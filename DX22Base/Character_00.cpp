@@ -88,6 +88,8 @@ void Character_00::DashInit()
 
 void Character_00::DashUpdate()
 {
+	Character::DashUpdate();
+
 	m_AnimeTime += 0.015f;
 	if (m_AnimeTime > 1.0f)
 	{

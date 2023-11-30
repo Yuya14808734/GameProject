@@ -44,8 +44,8 @@ const DirectX::XMFLOAT2& GetPressRightStick();
 const DirectX::XMFLOAT2& GetPressLeftStick();
 void SetPressRightStick();
 void SetPressLeftStick();
-bool GetRightSmash(float SmashValue);
-bool GetLeftSmash(float SmashValue);
+bool GetRightSmash(float SmashValue = 0.25f);
+bool GetLeftSmash(float SmashValue = 0.25f);
 float GetPressTrigger();                             //プレスされているトリガーの値を返す
 DirectX::XMFLOAT2 GetTriggerStick();                 //トリガー状態のスティックの値を返す(危険!出来るだけGetPressStick()で代用しましょう)              
 float GetTriggerTrigger();                           //トリガー状態のトリガーの値を返す

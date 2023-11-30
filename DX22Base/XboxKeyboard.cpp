@@ -66,11 +66,11 @@ void UpdateGamePad()
 	//スティックが前のフレームからどれくらい動いたのかを設定
 	float leftmoveX = NowLeftStickValue.x - OldLeftStickValue.x;
 	float leftmoveY = NowLeftStickValue.y - OldLeftStickValue.y;
-	LeftStickMoveValue = sqrtf(leftmoveX * leftmoveX + leftmoveY * leftmoveY);
+	LeftStickMoveValue = sqrtf((leftmoveX * leftmoveX) + (leftmoveY * leftmoveY));
 
 	float rightmoveX = NowRightStickValue.x - OldRightStickValue.x;
 	float rightmoveY = NowRightStickValue.y - OldRightStickValue.y;
-	RightStickMoveValue = sqrtf(rightmoveX * rightmoveX + rightmoveY * rightmoveY);
+	RightStickMoveValue = sqrtf((rightmoveX * rightmoveX) + (rightmoveY * rightmoveY));
 }
 
 //====================================================================

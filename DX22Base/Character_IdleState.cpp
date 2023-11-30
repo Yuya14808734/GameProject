@@ -33,10 +33,17 @@ void Character::IdleUpdate()
 
 	CVector2 LeftStick = GetPressLeftStick();
 
+	//デットゾーンの設定
+	if (LeftStick.x * LeftStick.x + LeftStick.y * LeftStick.y < 0.15f * 0.15f)
+	{
+		LeftStick.x = LeftStick.y = 0.0f;
+	}
+
+
 	//移動開始
 	if (LeftStick.x != 0.0f || IsKeyPress(VK_RIGHT) || IsKeyPress(VK_LEFT))
 	{
-		if (GetLeftSmash(0.4f))
+		if (GetLeftSmash(0.25f))
 		{
 			ChangeState(Character::STATE::DASH);
 		}
