@@ -41,6 +41,12 @@ public:
 		MAX
 	};
 
+	struct AttackParam
+	{
+		bool m_Use = false;
+		BoxCollider m_BoxCollider;
+	};
+
 public:
 	static void InitPlayerBit();	//下の関数でもらえる番号を初期化する
 protected:
@@ -75,7 +81,7 @@ public:
 	void AddDamage(float damage);						//ダメージの加算
 	void SetDamage(float damage);						//ダメージの設定
 	BoxCollider* GetCharacterCollider() const;			//キャラクター、ステージ当たり判定の取得
-	std::vector<BoxCollider>& GetAttackCollider();		//攻撃コライダーの取得
+	std::vector<AttackParam>& GetAttackCollider();		//攻撃コライダーの取得
 	void Character_ColliderInit();
 	void Character_HitCeiling();						//天井に当たった	
 	void Character_HitGround();							//地面に当たった
@@ -198,7 +204,7 @@ protected:
 	Character::STATE m_NowState	 = STATE::MAX;	//キャラクターの状態
 	Character::STATE m_NextState = STATE::MAX;	//キャラクターの状態
 	Character::ATTACK m_NowAttack = ATTACK::MAX;	//プレイヤーがしている攻撃
-	Character::LOOKDIR m_NowLook = LOOKDIR::MAX;	//プレイヤーが見ている方向
+	Character::LOOKDIR m_NowLookDir = LOOKDIR::MAX;	//プレイヤーが見ている方向
 	bool	m_ChangeState		= false;
 	ModelDrawer m_CharacterModel;			//キャラクターのモデル
 	CVector3 m_pos;							//座標
@@ -209,7 +215,7 @@ protected:
 	CVector3 m_MoveVector;					//コントローラーの移動量
 	float m_DamagePercentage = 0.0f;		//ダメージの量
 	BoxCollider m_CharacterCollider;		//プレイヤーの当たり判定
-	std::vector<BoxCollider> m_AttackCollider;	//攻撃したときの当たり判定
+	std::vector<AttackParam> m_AttackCollider;	//攻撃したときの当たり判定
 	int m_JumpCount = 0;					//今ジャンプした回数
 	bool m_HitGround = false;				//前のフレームで地面に当たったか
 	bool m_HitCeiling = false;				//前のフレームで天井に当たったか

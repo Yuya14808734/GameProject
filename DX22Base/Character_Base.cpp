@@ -17,6 +17,8 @@ int Character::GetNewPlayerBit()
 
 void Character::Character_Init()
 {
+	m_PlayerBit = GetNewPlayerBit();
+
 	Init();
 
 	m_ChangeState = false;
@@ -289,7 +291,7 @@ BoxCollider* Character::GetCharacterCollider() const
 	return const_cast<BoxCollider*>(&m_CharacterCollider);
 }
 
-std::vector<BoxCollider>& Character::GetAttackCollider()
+std::vector<Character::AttackParam>& Character::GetAttackCollider()
 {
 	return m_AttackCollider;
 }

@@ -23,13 +23,13 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{fac33454-6bfc-4c9c-9a76-69d40070ed6a}</ProjectGuid>
     <RootNamespace>DX22Base</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -42,13 +42,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -121,7 +121,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>Default</LanguageStandard>
       <AdditionalIncludeDirectories>C:\Users\s-yuy\Desktop\二年生\DX22\冬休みDXβ\DX22Base\DX22Base\DX22Base\install_msvc2017\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -153,12 +153,12 @@
   <ItemGroup>
     <ClCompile Include="00_CameraDebug.cpp" />
     <ClCompile Include="00_SceneGame.cpp" />
-    <ClCompile Include="Attack01.cpp" />
-    <ClCompile Include="Attack02.cpp" />
-    <ClCompile Include="Attack03.cpp" />
-    <ClCompile Include="AttackAirN.cpp" />
-    <ClCompile Include="AttackS2.cpp" />
-    <ClCompile Include="AttackS4.cpp" />
+    <ClCompile Include="Character00_Attack01.cpp" />
+    <ClCompile Include="Character00_Attack02.cpp" />
+    <ClCompile Include="Character00_Attack03.cpp" />
+    <ClCompile Include="Character00_AttackAirN.cpp" />
+    <ClCompile Include="Character00_AttackS2.cpp" />
+    <ClCompile Include="Character00_AttackS4.cpp" />
     <ClCompile Include="Attack_Base.cpp" />
     <ClCompile Include="BGM.cpp" />
     <ClCompile Include="BlendState.cpp" />
@@ -193,8 +193,8 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SE.cpp" />
     <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="SpecialAirN.cpp" />
-    <ClCompile Include="SpecialN.cpp" />
+    <ClCompile Include="Character00_SpecialAirN.cpp" />
+    <ClCompile Include="Character00_SpecialN.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Stage_00.cpp" />
     <ClCompile Include="Stage_Base.cpp" />

@@ -55,5 +55,6 @@ private:
 	void HitGround() override;
 private:
 
+	int m_AttackTime = 0;
 	float m_AnimeTime = 0.0f;
 };
