@@ -57,6 +57,34 @@ bool ModelDrawer::LoadModel(const char* FilePath, const std::string& ModelName, 
 	return true;
 }
 
+bool ModelDrawer::LoadModelAndTexture(const char * ModelFilePath, const char * TextureFilePath, const std::string & ModelName, float Scale)
+{
+	//モデルがあるかを探す
+	std::map<std::string, ModelInformation*>::iterator it = m_Models.find(ModelName);
+
+	if (it != m_Models.end())
+	{
+		return true;
+	}
+
+	ModelInformation* ModelInfo = new ModelInformation();
+	ModelInfo->model = new Model();
+
+		if (!ModelInfo->model->LoadAndTexture(ModelFilePath, TextureFilePath, Scale, false))
+	{
+		//MessageBox(nullptr, "モデル読み込みエラー", ModelName.c_str(), MB_OK);
+		//delete ModelInfo;
+		//return false;
+	}
+
+	ModelInfo->model->SetVertexShader(m_pVertexShader);
+
+	//モデル情報の設定
+	m_Models.insert(std::make_pair(ModelName, ModelInfo));
+
+	return true;
+}
+
 bool ModelDrawer::LoadAnime(const char* FilePath, const std::string& AnimeName, const std::string& ModelName)
 {
 	//まず設定したいモデルがあるのか

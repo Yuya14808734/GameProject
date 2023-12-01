@@ -4,7 +4,7 @@
 void Character_00::Init()
 {
 	SetParameter(3.0f / 60.0f, 5.0f / 60.0f, 3.0f / 60.0f, 2, 0.5f, -0.04f, -0.1f,-0.2f, 0.65f, 0.65f);
-	ModelDrawer::LoadModel("Assets/unitychan/unitychan.fbx", "UnityChan", 0.003f);
+	ModelDrawer::LoadModel("Assets/unitychan.fbx", "UnityChan", 0.003f);
 	ModelDrawer::LoadAnime("Assets/unitychan/walk.fbx", "Idle", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/walk.fbx", "Walk", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/run.fbx", "Dash", "UnityChan");

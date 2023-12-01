@@ -712,7 +712,9 @@ Texture2D tex : register(t0);
 SamplerState samp : register(s0);
 float4 main(PS_IN pin) : SV_TARGET
 {
-	return tex.Sample(samp, pin.uv);
+	float4 color = tex.Sample(samp, pin.uv);
+	color.a = 1.0f;
+	return color;
 })EOT";
 	*vs = new VertexShader();
 	(*vs)->Compile(ModelVS);

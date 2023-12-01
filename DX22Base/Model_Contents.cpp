@@ -21,6 +21,7 @@ bool Model::Load(const char* file, float scale, bool flip)
 	const aiScene* pScene = importer.ReadFile(file, flag);
 	if (!pScene)
 	{
+		MessageBox(NULL, importer.GetErrorString(), "ModelError", MB_OK);
 		return false;
 	}
 
@@ -122,16 +123,16 @@ bool Model::Load(const char* file, float scale, bool flip)
 					if(*fileIt == '/') 
 					{
 						*fileIt = '\\'; 
-						continue;	//ここを付け足した
+						continue;	//ここを付け足しました
 					}
 
 					file = file.substr(file.find_last_of('\\') + 1);
 					file = dir + file;
 					hr = LoadTextureFromFile(file.c_str(), &m_pMaterials[i].pTexture);
 					
-					if(!FAILED(hr))//ここを付け足した
+					if(!FAILED(hr))//ここを付け足しました
 					{
-						break;	//ここを付け足した
+						break;	//ここを付け足しました
 					}
 				}
 			}

@@ -289,6 +289,11 @@ BoxCollider* Character::GetCharacterCollider() const
 	return const_cast<BoxCollider*>(&m_CharacterCollider);
 }
 
+std::vector<BoxCollider>& Character::GetAttackCollider()
+{
+	return m_AttackCollider;
+}
+
 void Character::Character_ColliderInit()
 {
 	m_HitCeiling = m_HitGround = m_HitWall = false;
@@ -338,20 +343,10 @@ void Character::SetParameter(float WalkSpeed, float DashSpeed, float  FallSideMo
 	m_AirResistance = AirResistance;
 }
 
-void Character::SetAttack(Attack* pAttack)
+void Character::SetAttack(Character::ATTACK attack)
 {
-	if (m_pNowAttack != nullptr)
-	{
-		m_pNowAttack->Attack_Uninit();
-		delete m_pNowAttack;
-	}
-
-	m_pNowAttack = pAttack;
-	if (m_pNowAttack != nullptr)
-	{
-		m_pNowAttack->Attack_Init();
-		m_NowState = Character::STATE::ATTACK;
-	}
+	ChangeState(Character::STATE::ATTACK);
+	m_NowAttack = attack;
 }
 
 void Character::ChangeState(Character::STATE state)

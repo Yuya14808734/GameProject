@@ -23,6 +23,13 @@ BoxCollider::~BoxCollider()
 
 }
 
+void BoxCollider::CreateBox(BoxCollider::BOXTYPE type, const CVector3 & pos, const CVector3 & size)
+{
+	SetType(type);
+	SetPos(pos);
+	SetSize(size);
+}
+
 void BoxCollider::SetPos(const CVector3& pos)
 {
 	switch (m_type)

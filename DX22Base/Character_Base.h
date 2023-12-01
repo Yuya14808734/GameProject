@@ -4,12 +4,10 @@
 #include "ModelDrawer.h"
 #include <vector>
 
-class Attack;
-
 class Character
 {
 public:
-	enum class STATE
+	enum class STATE : int
 	{
 		IDLE = 0,	//待機
 		WALK,		//歩く
@@ -19,8 +17,28 @@ public:
 		JUMP,		//ジャンプ
 		AIRMOVE,	//落下
 		DOWN,		//倒れる
-
 		MAX,
+	};
+	enum class ATTACK : int
+	{
+		ATTACK_11,		//弱1
+		ATTACK_12,		//弱2
+		ATTACK_13,		//弱3
+		ATTACK_S2,		//横強
+		ATTACK_S4,		//横スマッシュ
+		ATTACK_AIRN,	//空N
+		SPECIAL_N,		//必殺技普通
+		SPECIAL_AIRN,	//空中必殺技
+		MAX,
+	};
+
+	enum class LOOKDIR : int
+	{
+		RIGHT = 0,
+		LEFT,
+		UP,
+		DOWN,
+		MAX
 	};
 
 public:
@@ -57,6 +75,7 @@ public:
 	void AddDamage(float damage);						//ダメージの加算
 	void SetDamage(float damage);						//ダメージの設定
 	BoxCollider* GetCharacterCollider() const;			//キャラクター、ステージ当たり判定の取得
+	std::vector<BoxCollider>& GetAttackCollider();		//攻撃コライダーの取得
 	void Character_ColliderInit();
 	void Character_HitCeiling();						//天井に当たった	
 	void Character_HitGround();							//地面に当たった
@@ -71,7 +90,7 @@ protected:
 	float WalkSpeed,float DashSpeed,float  FallSideMoveSpeed,
 		int MaxJumpCount,float JumpPower,float GravityScale,
 		float DefaultFallMaxSpeed,float UpFallMaxSpeed ,float Friction,	float AirResistance);
-	void SetAttack(Attack* pAttack);
+	void SetAttack(Character::ATTACK attack);
 	void ChangeState(Character::STATE state);
 
 protected:
@@ -101,7 +120,7 @@ protected:
 	virtual void AttackUninit();	//攻撃するときの終了処理
 	virtual void AttackUpdate();	//攻撃するときのアップデート
 	//==========================================================================
-	virtual void SmashInit();		//吹っ飛ばすの初期化
+	virtual void SmashInit();		//吹っ飛ばされる時の初期化
 	virtual void SmashUninit();		//吹っ飛ばしの終了処理
 	virtual void SmashUpdate();		//吹っ飛ばしのアップデート
 	//==========================================================================
@@ -117,27 +136,50 @@ protected:
 	virtual void DownUninit();		//倒れた時の終了処理
 	virtual void DownUpdate();		//倒れている状態のアップデート
 	
-	//======================================================
+	//==========================================================================
 	//スマブラと同じような名前にしています
 	//https://www.youtube.com/watch?v=V40sMUAE5ek
-
-	virtual void Attack11() {};		//弱1
-	virtual void Attack12() {};		//弱2
-	virtual void Attack13() {};		//弱3
-	virtual void AttackS2() {};		//横強
-	virtual void AttackS4() {};		//横スマッシュ
-	virtual void AttackAirN() {};	//空N
-	virtual void SpecialN() {};		//通常必殺技
-	virtual void SpecialAirN() {};	//通常必殺技(空中)
+	//==========================================================================
+	virtual void Attack11_Init() {};		//弱1
+	virtual void Attack11_Update() {};		//弱1
+	virtual void Attack11_Uninit() {};		//弱1
+	//==========================================================================
+	virtual void Attack12_Init() {};		//弱2
+	virtual void Attack12_Update() {};		//弱2
+	virtual void Attack12_Uninit() {};		//弱2
+	//==========================================================================
+	virtual void Attack13_Init() {};		//弱3
+	virtual void Attack13_Update() {};		//弱3
+	virtual void Attack13_Uninit() {};		//弱3
+	//==========================================================================
+	virtual void AttackS2_Init() {};		//横強
+	virtual void AttackS2_Update() {};		//横強
+	virtual void AttackS2_Uninit() {};		//横強
+	//==========================================================================
+	virtual void AttackS4_Init() {};		//横スマッシュ
+	virtual void AttackS4_Update() {};		//横スマッシュ
+	virtual void AttackS4_Uninit() {};		//横スマッシュ
+	//==========================================================================
+	virtual void AttackAirN_Init() {};		//空N
+	virtual void AttackAirN_Update() {};	//空N
+	virtual void AttackAirN_Uninit() {};	//空N
+	//==========================================================================
+	virtual void SpecialN_Init() {};		//通常必殺技
+	virtual void SpecialN_Update() {};		//通常必殺技
+	virtual void SpecialN_Uninit() {};		//通常必殺技
+	//==========================================================================
+	virtual void SpecialAirN_Init() {};		//通常必殺技(空中)
+	virtual void SpecialAirN_Update() {};	//通常必殺技(空中)
+	virtual void SpecialAirN_Uninit() {};	//通常必殺技(空中)
 
 
 	virtual void HitCeiling() {};		//天井に当たった時に呼ぶ
 	virtual void HitGround() {};	//地面に当たった時に呼ばれる
 	virtual void HitWall() {};		//壁に当たった時に呼ぶ
 
-private:
 	//======================================================
 	//最初に設定するパラメータ
+private:
 	int		m_PlayerBit = 0x00;				//このキャラクターが何番なのかを入れる
 
 protected:
@@ -155,6 +197,8 @@ protected:
 protected:
 	Character::STATE m_NowState	 = STATE::MAX;	//キャラクターの状態
 	Character::STATE m_NextState = STATE::MAX;	//キャラクターの状態
+	Character::ATTACK m_NowAttack = ATTACK::MAX;	//プレイヤーがしている攻撃
+	Character::LOOKDIR m_NowLook = LOOKDIR::MAX;	//プレイヤーが見ている方向
 	bool	m_ChangeState		= false;
 	ModelDrawer m_CharacterModel;			//キャラクターのモデル
 	CVector3 m_pos;							//座標
@@ -164,10 +208,10 @@ protected:
 	CVector3 m_Velocity;					//重力など
 	CVector3 m_MoveVector;					//コントローラーの移動量
 	float m_DamagePercentage = 0.0f;		//ダメージの量
-	Attack* m_pNowAttack = nullptr;			//攻撃情報
 	BoxCollider m_CharacterCollider;		//プレイヤーの当たり判定
-	int m_JumpCount = 0;
-	bool m_HitGround = false;
-	bool m_HitCeiling = false;
-	bool m_HitWall = false;
+	std::vector<BoxCollider> m_AttackCollider;	//攻撃したときの当たり判定
+	int m_JumpCount = 0;					//今ジャンプした回数
+	bool m_HitGround = false;				//前のフレームで地面に当たったか
+	bool m_HitCeiling = false;				//前のフレームで天井に当たったか
+	bool m_HitWall = false;					//前のフレームで壁に当たったか
 };

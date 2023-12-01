@@ -19,6 +19,7 @@ public:
 	static void InitModels();
 	static void UninitModels();
 	static bool LoadModel(const char* FilePath, const std::string& ModelName ,float Scale = 1.0f);
+	static bool LoadModelAndTexture(const char* ModelFilePath,const char* TextureFilePath, const std::string& ModelName ,float Scale = 1.0f);
 	static bool LoadAnime(const char* FilePath, const std::string& AnimeName, const std::string& ModelName);
 	static Model* GetModel(const std::string& ModelName);
 	static void DrawModel(const std::string& ModelName, const CVector3& pos, const CVector3& scale, const CVector3& rotate);

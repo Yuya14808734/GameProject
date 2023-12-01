@@ -36,6 +36,7 @@ public:
 	BoxCollider();
 	BoxCollider(const CVector3& p, const CVector3& s);
 	~BoxCollider();
+	void CreateBox(BoxCollider::BOXTYPE type, const CVector3& pos, const CVector3& size);
 	void SetPos(const CVector3& pos);
 	const CVector3& GetPos() const;
 	void SetSize(const CVector3& size);

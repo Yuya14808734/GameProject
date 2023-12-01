@@ -8,22 +8,41 @@
 #include "Character_00.h"
 
 bool ColliderDraw = false;
-ModelDrawer modeldrawer;
+ModelDrawer errorModel;
+ModelDrawer UnityChanModel;
+float AnimeTime = 0.0f;
 
 void SceneGame::Init()
 {
+#if 1
 	CameraManager::GetInstance().CreateCamera(new CameraDebug(), "DebugCamera");
 	CameraManager::GetInstance().SetSceneCamera("DebugCamera");
-	modeldrawer.LoadModel("Assets/Character00/Model03.fbx", "Character00");
-	modeldrawer.SetModel("Character00");
-	modeldrawer.SetPosition(CVector3::GetZero());
-	modeldrawer.SetScale({ 0.1f, 0.1f, 0.1f });
 
 	m_pStage = new Stage00();
 	m_pStage->Stage_Init();
-
 	m_Characters.push_back(new Character_00());
 	m_Characters[0]->Character_Init();
+
+#else
+
+	//モデルデバッグ用
+	//ユニティちゃんの読み込み
+	ModelDrawer::LoadModel("Assets/unitychan/unitychan.fbx", "UnityChan", 0.003f);
+	ModelDrawer::LoadAnime("Assets/unitychan/walk.fbx", "Walk", "UnityChan");
+	ModelDrawer::LoadModel("Assets/Character00/Model02.fbx", "Character00", 0.001f);
+	//エラーが出るというか描画してくれないモデルの描画
+	errorModel.SetModel("Character00");
+	errorModel.SetPosition(CVector3::GetZero());
+	errorModel.SetScale({ 1.0f, 1.0f, 1.0f });
+	//ユニティちゃんの描画
+	UnityChanModel.SetModel("UnityChan");
+	UnityChanModel.PlayAnime("Walk", true);
+	AnimeTime = 0.0f;
+	UnityChanModel.SetPosition(CVector3(1.0f, 0.0f, 0.0f));
+	UnityChanModel.SetScale(CVector3(5.0f, 5.0f, 5.0f));
+	UnityChanModel.SetRotate(CVector3(0.0f,180.0f,0.0f));
+
+#endif // 1
 }
 
 void SceneGame::Uninit()
@@ -186,27 +205,35 @@ void SceneGame::Update()
 
 void SceneGame::Draw()
 {
-	m_pStage->Stage_Draw();
 
+#if 1
+	m_pStage->Stage_Draw();
 	for (Character* copy : m_Characters)
 	{
 		copy->Character_Draw();
 	}
-
 	if (IsKeyTrigger(VK_RETURN))
 	{
 		ColliderDraw = !ColliderDraw;
 	}
-
 	if (ColliderDraw)
 	{
 		m_pStage->StageColliderDraw();
-
 		for (Character* copy : m_Characters)
 		{
 			copy->DrawCollider();
 		}
 	}
 
-	modeldrawer.Draw();
+#else
+	//モデルデバッグ用
+	errorModel.Draw();
+	AnimeTime += 0.01f;
+	if (AnimeTime > 1.0f)
+	{
+		AnimeTime -= 1.0f;
+	}
+	UnityChanModel.SetAnimeLerp(AnimeTime);
+	UnityChanModel.Draw();
+#endif // 0	
 }

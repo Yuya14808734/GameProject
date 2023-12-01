@@ -52,7 +52,18 @@ void Stage00::Init()
 				);
 
 				ModelDrawer tempModelDrawer;
-				tempModelDrawer.SetModel("ConcreteBlock");
+				
+				switch (1)
+				{
+				case 1:
+					tempModelDrawer.SetModel("ConcreteBlock");
+					break;
+				case 2:
+					tempModelDrawer.SetModel("LeafBlock");
+					break;
+				default:
+					break;
+				}
 				tempModelDrawer.SetPosition(BlockPos);
 				tempModelDrawer.SetScale(BlockSize);
 				m_ModelDrawer.push_back(tempModelDrawer);
@@ -73,12 +84,15 @@ void Stage00::Init()
 
 void Stage00::Uninit()
 {
+
 }
 
 void Stage00::Update()
 {
+
 }
 
 void Stage00::Draw()
 {
+
 }

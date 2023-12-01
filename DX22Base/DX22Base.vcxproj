@@ -153,6 +153,12 @@
   <ItemGroup>
     <ClCompile Include="00_CameraDebug.cpp" />
     <ClCompile Include="00_SceneGame.cpp" />
+    <ClCompile Include="Attack01.cpp" />
+    <ClCompile Include="Attack02.cpp" />
+    <ClCompile Include="Attack03.cpp" />
+    <ClCompile Include="AttackAirN.cpp" />
+    <ClCompile Include="AttackS2.cpp" />
+    <ClCompile Include="AttackS4.cpp" />
     <ClCompile Include="Attack_Base.cpp" />
     <ClCompile Include="BGM.cpp" />
     <ClCompile Include="BlendState.cpp" />
@@ -187,6 +193,8 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SE.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="SpecialAirN.cpp" />
+    <ClCompile Include="SpecialN.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Stage_00.cpp" />
     <ClCompile Include="Stage_Base.cpp" />

@@ -9,6 +9,7 @@ private:
 	void Update() override;
 	void Draw() override;
 
+
 	void IdleInit() override;
 	void IdleUpdate() override;
 
@@ -17,6 +18,39 @@ private:
 
 	void DashInit() override;
 	void DashUpdate() override;
+	//=====================================================
+	void Attack11_Init() {};
+	void Attack11_Update() {};
+	void Attack11_Uninit() {};
+	//=====================================================
+	void Attack12_Init() {};
+	void Attack12_Update() {};
+	void Attack12_Uninit() {};
+	//=====================================================
+	void Attack13_Init() {};
+	void Attack13_Update() {};
+	void Attack13_Uninit() {};
+	//=====================================================
+	void AttackS2_Init();
+	void AttackS2_Update();
+	void AttackS2_Uninit();
+	//=====================================================
+	void AttackS4_Init() {};
+	void AttackS4_Update() {};
+	void AttackS4_Uninit() {};
+	//=====================================================
+	void AttackAirN_Init() {};
+	void AttackAirN_Update() {};
+	void AttackAirN_Uninit() {};
+	//=====================================================
+	void SpecialN_Init() {};
+	void SpecialN_Update() {};
+	void SpecialN_Uninit() {};
+	//=====================================================
+	void SpecialAirN_Init() {};
+	void SpecialAirN_Update() {};
+	void SpecialAirN_Uninit() {};
+
 
 	void HitGround() override;
 private:
