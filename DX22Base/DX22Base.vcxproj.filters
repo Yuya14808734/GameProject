@@ -300,6 +300,9 @@
     <ClCompile Include="Character00_SpecialAirN.cpp">
       <Filter>ソース ファイル\04_Game\02_Character\Character_00\Attack</Filter>
     </ClCompile>
+    <ClCompile Include="Character_JumpInState.cpp">
+      <Filter>ソース ファイル\04_Game\05_Base\00_CharacterBase\00_State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">

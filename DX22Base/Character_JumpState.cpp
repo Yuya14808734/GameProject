@@ -17,6 +17,12 @@ void Character::JumpUninit()
 
 void Character::JumpUpdate()
 {
+	if (m_HitGround)
+	{
+		ChangeState(Character::STATE::IDLE);
+	}
+
+
 	bool OnButton = false;
 
 	m_Velocity.x =  GetPressLeftStick().x * m_WalkSpeed;

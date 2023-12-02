@@ -12,6 +12,8 @@ public:
 	void Uninit() override;
 	void Update() override;
 	void Draw() override;
+	std::vector<Character*>& GetCharacter();
+	Stage* GetStage();
 
 private:
 	std::vector<Character*> m_Characters;	//キャラクターの情報

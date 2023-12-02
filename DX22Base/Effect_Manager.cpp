@@ -101,8 +101,8 @@ void Effect_Manager::Draw_Effect(CameraBase* pCamera)
 
 	static int Time = 0;
 
-	DirectX::XMFLOAT3 Camera_Pos = pCamera->GetPos();
-	DirectX::XMFLOAT3 Camera_Look = pCamera->GetLook();
+	DirectX::XMFLOAT3 Camera_Pos = pCamera->GetPos_xmfloat();
+	DirectX::XMFLOAT3 Camera_Look = pCamera->GetLook_xmfloat();
 
 	//---effekseer‚Ì•`‰æ
 

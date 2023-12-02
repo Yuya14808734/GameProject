@@ -21,7 +21,7 @@ void Character_00::Init()
 
 	m_CharacterCollider.SetType(BoxCollider::BOXTYPE::FOOT);
 	m_CharacterCollider.SetPos(m_pos);
-	m_CharacterCollider.SetSize(CVector3(1.0f,3.0f,1.0f));
+	m_CharacterCollider.SetSize(CVector3(1.0f,2.0f,1.0f));
 }
 
 void Character_00::Uninit()
@@ -97,6 +97,57 @@ void Character_00::DashUpdate()
 	}
 
 	m_CharacterModel.SetAnimeLerp(m_AnimeTime);
+}
+
+void Character_00::JumpInInit()
+{
+	Character::JumpInInit();
+	m_CharacterModel.PlayAnime("Jump", false);
+	m_AnimeTime = 0.0f;
+}
+
+void Character_00::JumpInUpdate()
+{
+	Character::JumpInUpdate();
+	m_AnimeTime = (static_cast<float>(m_JumpCharageCount) / 3.0f) * 0.05f + 0.1f;
+
+	m_CharacterModel.SetAnimeTime(m_AnimeTime);
+}
+
+void Character_00::JumpInit()
+{
+	Character::JumpInit();
+}
+
+void Character_00::JumpUpdate()
+{
+	Character::JumpUpdate();
+
+	m_AnimeTime = (1.0f - (m_Velocity.y / m_JumpPower)) * 0.93f + 0.15f;
+
+	m_CharacterModel.SetAnimeTime(m_AnimeTime);
+}
+
+void Character_00::AirMoveInit()
+{
+	Character::AirMoveInit();
+
+	if (m_NowState == Character::STATE::WALK ||
+		m_NowState == Character::STATE::DASH ||
+		m_NowState == Character::STATE::IDLE)
+	{
+		m_CharacterModel.PlayAnime("Jump", false);
+	}
+}
+
+void Character_00::AirMoveUpdate()
+{
+	Character::AirMoveUpdate();
+
+	m_AnimeTime = sinf(m_pos.y) * 0.03f + 1.08f;
+
+	m_CharacterModel.SetAnimeTime(m_AnimeTime);
+
 }
 
 void Character_00::HitGround()

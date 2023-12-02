@@ -38,6 +38,7 @@ void Character::DashUpdate()
 
 		//âEÇ…çsÇ¡ÇƒÇ¢ÇÈ
 		m_rotate = CQuaternion::AngleAxis(CVector3::GetUp(), 90.0f);
+		m_NowLookDir = Character::LOOKDIR::RIGHT;
 
 		NoButton = false;
 	}
@@ -56,6 +57,7 @@ void Character::DashUpdate()
 
 		//ç∂Ç…çsÇ¡ÇƒÇ¢ÇÈ
 		m_rotate = CQuaternion::AngleAxis(CVector3::GetUp(), -90.0f);
+		m_NowLookDir = Character::LOOKDIR::LEFT;
 
 		NoButton = false;
 	}
@@ -78,8 +80,7 @@ void Character::DashUpdate()
 	if (InputTriggerKey(PadButton::RIGHT_SHOULDER) || IsKeyPress(VK_UP))
 	{
 		m_Velocity.x = m_MoveVector.x;
-		m_Velocity.y = m_JumpPower;
-		ChangeState(Character::STATE::JUMP);
+		ChangeState(Character::STATE::JUMPIN);
 	}
 
 	m_Velocity.y += m_Gravity;

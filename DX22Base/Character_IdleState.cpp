@@ -56,14 +56,14 @@ void Character::IdleUpdate()
 	//ÉWÉÉÉìÉv
 	if (InputTriggerKey(PadButton::RIGHT_SHOULDER) || IsKeyTrigger(VK_UP))
 	{
-		ChangeState(Character::STATE::JUMP);
-		m_Velocity.y = m_JumpPower;
+		ChangeState(Character::STATE::JUMPIN);
 	}
 
 	//çUåÇ
 	if (false)
+		//IsKeyTrigger('K') || InputTriggerKey(PadButton::A_BUTTON))
 	{
-		ChangeState(Character::STATE::ATTACK);
+		ChangeAttack(Character::ATTACK::ATTACK_11);	//é„ÇÃê›íË
 	}
 
 	m_Velocity.y += m_Gravity;

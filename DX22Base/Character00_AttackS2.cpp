@@ -2,17 +2,19 @@
 
 void Character_00::AttackS2_Init()
 {
-	//ìñÇΩÇËîªíËÇÃçÏê¨
+	m_AttackTime = 0;
 
-	CVector3 ColliderPos = m_pos;
+
+	//ìñÇΩÇËîªíËÇÃçÏê¨
+	CVector3 ColliderPos = m_pos + CVector3::GetUp() * (m_CharacterCollider.GetSize().y * 0.5f);
 
 	switch (m_NowLookDir)
 	{
 	case Character::LOOKDIR::RIGHT:
-		ColliderPos = ColliderPos + CVector3::GetRight() * 0.5f;
+		ColliderPos = ColliderPos + CVector3::GetRight() * 1.5f;
 		break;
 	case Character::LOOKDIR::LEFT:
-		ColliderPos = ColliderPos + CVector3::GetRight() * -0.5f;
+		ColliderPos = ColliderPos + CVector3::GetRight() * -1.5f;
 		break;
 	default:
 		break;
@@ -20,8 +22,8 @@ void Character_00::AttackS2_Init()
 
 	AttackParam Attack;
 	Attack.m_Use = false;
-	Attack.m_BoxCollider.CreateBox(BoxCollider::BOXTYPE::FOOT, 
-		ColliderPos	, CVector3(2.0f, 2.0f, 2.0f));
+	Attack.m_BoxCollider.CreateBox(BoxCollider::BOXTYPE::CENTER, 
+		ColliderPos	, CVector3(1.7f, 1.7f, 1.0f));
 
 	m_AttackCollider.push_back(Attack);
 }

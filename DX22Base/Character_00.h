@@ -18,6 +18,18 @@ private:
 
 	void DashInit() override;
 	void DashUpdate() override;
+
+	void JumpInInit() override;
+	void JumpInUpdate() override;
+
+	void JumpInit() override;
+	void JumpUpdate() override;
+
+	void AirMoveInit() override;
+	void AirMoveUpdate() override;
+
+
+	//攻撃のアップデート
 	//=====================================================
 	void Attack11_Init() {};
 	void Attack11_Update() {};

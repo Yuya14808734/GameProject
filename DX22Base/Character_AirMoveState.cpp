@@ -15,6 +15,11 @@ void Character::AirMoveUninit()
 
 void Character::AirMoveUpdate()
 {
+	if (m_HitGround)
+	{
+		ChangeState(Character::STATE::IDLE);
+	}
+
 	bool OnButton = false;
 
 	float LeftStickX = GetPressLeftStick().x * m_WalkSpeed;
@@ -37,7 +42,7 @@ void Character::AirMoveUpdate()
 		{
 			m_JumpCount++;
 			m_Velocity.y = m_JumpPower;
-			m_NowState = Character::STATE::JUMP;
+			ChangeState(Character::STATE::JUMP);
 		}
 	}
 

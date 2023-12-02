@@ -44,11 +44,13 @@ void Character::WalkUpdate()
 		{
 			//右に行っている
 			m_rotate = CQuaternion::AngleAxis(CVector3::GetUp(), 90.0f);
+			m_NowLookDir = Character::LOOKDIR::RIGHT;
 		}
 		else
 		{
 			//左に行っている
 			m_rotate = CQuaternion::AngleAxis(CVector3::GetUp(), -90.0f);
+			m_NowLookDir = Character::LOOKDIR::LEFT;
 		}
 
 	}
@@ -59,11 +61,16 @@ void Character::WalkUpdate()
 		ChangeState(Character::STATE::IDLE);
 	}
 
+	//攻撃
+	if (IsKeyTrigger('K') || InputTriggerKey(PadButton::A_BUTTON))
+	{
+		ChangeAttack(Character::ATTACK::ATTACK_S2);	//横強の設定
+	}
+
 	//ジャンプ
 	if (InputTriggerKey(PadButton::RIGHT_SHOULDER) || IsKeyTrigger(VK_UP))
 	{
-		ChangeState(Character::STATE::JUMP);
-		m_Velocity.y = m_JumpPower;
+		ChangeState(Character::STATE::JUMPIN);
 	}
 
 	//しゃがみがあれば

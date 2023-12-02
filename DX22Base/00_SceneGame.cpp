@@ -102,8 +102,39 @@ void SceneGame::Update()
 	//=====<キャラクターの攻撃の当たり判定>=====
 	//上で設定した攻撃の当たり判定を使って
 	//キャラクター同士の攻撃の当たり判定を行う
+	for (Character* AttackCharacter : m_Characters)
+	{
+		//攻撃しているキャラクターから攻撃の当たり判定を取ってくる
+		std::vector<Character::AttackParam>& attackParamVector = AttackCharacter->GetAttackCollider();
 
+		if (AttackCharacter->GetState() != Character::STATE::ATTACK)
+		{
+			continue;
+		}
 
+		//配列の頭から攻撃を見ていく
+		for (Character::AttackParam& Character_Attack : attackParamVector)
+		{
+			if(!Character_Attack.m_Use)
+			{
+				continue;
+			}
+
+			for (Character* ReceiveCharacter : m_Characters)
+			{
+				//攻撃しているキャラクターと受けるキャラクターが同じ場合
+				if(AttackCharacter == ReceiveCharacter)
+				{
+					continue;
+				}
+
+				//攻撃と受けるキャラクターの当たり判定
+				Character_Attack.m_BoxCollider.CollisionBox(
+					*ReceiveCharacter->GetCharacterCollider()
+				);
+			}
+		}
+	}
 
 	//=====<キャラクターとステージの当たり判定>=====
 	std::vector<BoxCollider>* pStageCollider = m_pStage->GetStageCollider();
@@ -219,9 +250,23 @@ void SceneGame::Draw()
 	if (ColliderDraw)
 	{
 		m_pStage->StageColliderDraw();
-		for (Character* copy : m_Characters)
+		for (Character* CharacterCopy : m_Characters)
 		{
-			copy->DrawCollider();
+			CharacterCopy->DrawCollider();
+			
+			if (CharacterCopy->GetState() != Character::STATE::ATTACK)
+			{
+				continue;
+			}
+
+			std::vector<Character::AttackParam>& attackVector
+				= CharacterCopy->GetAttackCollider();
+
+			for (Character::AttackParam& AttackCopy : attackVector)
+			{
+				AttackCopy.m_BoxCollider.DrawCollider();
+			}
+
 		}
 	}
 
@@ -236,4 +281,14 @@ void SceneGame::Draw()
 	UnityChanModel.SetAnimeLerp(AnimeTime);
 	UnityChanModel.Draw();
 #endif // 0	
+}
+
+std::vector<Character*>& SceneGame::GetCharacter()
+{
+	return m_Characters;
+}
+
+Stage* SceneGame::GetStage()
+{
+	return m_pStage;
 }

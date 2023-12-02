@@ -14,6 +14,7 @@ public:
 		DASH,		//走る
 		ATTACK,		//攻撃
 		SMASH,		//吹っ飛ばす
+		JUMPIN,		//ジャンプの入り
 		JUMP,		//ジャンプ
 		AIRMOVE,	//落下
 		DOWN,		//倒れる
@@ -96,7 +97,7 @@ protected:
 	float WalkSpeed,float DashSpeed,float  FallSideMoveSpeed,
 		int MaxJumpCount,float JumpPower,float GravityScale,
 		float DefaultFallMaxSpeed,float UpFallMaxSpeed ,float Friction,	float AirResistance);
-	void SetAttack(Character::ATTACK attack);
+	void ChangeAttack(Character::ATTACK attack);
 	void ChangeState(Character::STATE state);
 
 protected:
@@ -129,6 +130,10 @@ protected:
 	virtual void SmashInit();		//吹っ飛ばされる時の初期化
 	virtual void SmashUninit();		//吹っ飛ばしの終了処理
 	virtual void SmashUpdate();		//吹っ飛ばしのアップデート
+	//==========================================================================
+	virtual void JumpInInit();		//ジャンプ始めの初期化
+	virtual void JumpInUpdate();	//ジャンプ始めのアップデート
+	virtual void JumpInUninit();	//ジャンプ始めの終了処理
 	//==========================================================================
 	virtual void JumpInit();		//ジャンプしたときの初期化
 	virtual void JumpUninit();		//ジャンプしたときの終了処理
@@ -217,6 +222,7 @@ protected:
 	BoxCollider m_CharacterCollider;		//プレイヤーの当たり判定
 	std::vector<AttackParam> m_AttackCollider;	//攻撃したときの当たり判定
 	int m_JumpCount = 0;					//今ジャンプした回数
+	int m_JumpCharageCount = 0;
 	bool m_HitGround = false;				//前のフレームで地面に当たったか
 	bool m_HitCeiling = false;				//前のフレームで天井に当たったか
 	bool m_HitWall = false;					//前のフレームで壁に当たったか

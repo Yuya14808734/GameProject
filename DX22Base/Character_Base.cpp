@@ -42,6 +42,9 @@ void Character::Character_Init()
 	case Character::STATE::SMASH:
 		SmashInit();
 		break;
+	case Character::STATE::JUMPIN:
+		JumpInInit();
+		break;
 	case Character::STATE::JUMP:
 		JumpInit();
 		break;
@@ -89,6 +92,9 @@ void Character::Character_Update()
 	case Character::STATE::SMASH:
 		SmashUpdate();
 		break;
+	case Character::STATE::JUMPIN:
+		JumpInUpdate();
+		break;
 	case Character::STATE::JUMP:
 		JumpUpdate();
 		break;
@@ -131,6 +137,9 @@ void Character::Character_Update()
 		case Character::STATE::SMASH:
 			SmashUninit();
 			break;
+		case Character::STATE::JUMPIN:
+			JumpInUninit();
+			break;
 		case Character::STATE::JUMP:
 			JumpUninit();
 			break;
@@ -165,6 +174,9 @@ void Character::Character_Update()
 			break;
 		case Character::STATE::SMASH:
 			SmashInit();
+			break;
+		case Character::STATE::JUMPIN:
+			JumpInInit();
 			break;
 		case Character::STATE::JUMP:
 			JumpInit();
@@ -312,10 +324,6 @@ void Character::Character_HitGround()
 	m_Velocity.y = 0.0f;
 	m_JumpCount = 0;
 	m_HitGround = true;
-	if (m_NowState == Character::STATE::AIRMOVE || m_NowState == Character::STATE::JUMP)
-	{
-		ChangeState(Character::STATE::IDLE);
-	}
 	HitGround();
 }
 
@@ -345,7 +353,7 @@ void Character::SetParameter(float WalkSpeed, float DashSpeed, float  FallSideMo
 	m_AirResistance = AirResistance;
 }
 
-void Character::SetAttack(Character::ATTACK attack)
+void Character::ChangeAttack(Character::ATTACK attack)
 {
 	ChangeState(Character::STATE::ATTACK);
 	m_NowAttack = attack;

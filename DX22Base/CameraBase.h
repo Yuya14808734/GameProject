@@ -2,6 +2,7 @@
 #ifndef CAMERABASE
 #define CAMERABASE
 #include <DirectXMath.h>
+#include "Calculation.h"
 
 //マクロ
 #define PI (3.141592f)
@@ -12,7 +13,7 @@ class CameraBase {
 public :
 	CameraBase()
 		:m_pos(0.0f, 0.0f, 0.0f), m_look(0.0f, 0.0f, 1.0f), m_up(0.0f, 1.0f, 0.0f),
-		m_fovy(80.0f), m_aspect(16.0f / 9.0f), m_near(0.2f), m_far(100.0f)
+		m_fovy(100.0f), m_aspect(16.0f / 9.0f), m_near(0.2f), m_far(100.0f)
 	{};
 
 	virtual ~CameraBase() {}
@@ -51,20 +52,22 @@ public :
 		return mat;
 	}
 
-	DirectX::XMFLOAT3 GetPos()
+	DirectX::XMFLOAT3 GetPos_xmfloat()
 	{
-		return m_pos;
+		return m_pos.f;
 	}
 
-	DirectX::XMFLOAT3 GetLook()
+	DirectX::XMFLOAT3 GetLook_xmfloat()
 	{
-		return m_look;
+		return m_look.f;
 	}
 
 private:
 
 protected:
-	DirectX::XMFLOAT3 m_pos, m_look, m_up;	//ビュー行列の設定に必要な変数
+	CVector3 m_pos;
+	CVector3 m_look;
+	CVector3 m_up;	//ビュー行列の設定に必要な変数
 	float m_fovy, m_aspect, m_near, m_far;	//プロジェクション行列の設定に必要な変数
 };
 
