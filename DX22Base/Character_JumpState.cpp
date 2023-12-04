@@ -25,17 +25,17 @@ void Character::JumpUpdate()
 
 	bool OnButton = false;
 
-	m_Velocity.x =  GetPressLeftStick().x * m_WalkSpeed;
+	m_Velocity.x =  GetPressLeftStick().x * m_AirSideMoveSpeed;
 
 	if (IsKeyPress(VK_RIGHT))
 	{
-		m_Velocity.x = m_FallSideMoveSpeed;
+		m_Velocity.x = m_AirSideMoveSpeed;
 		
 	}
 
 	if (IsKeyPress(VK_LEFT))
 	{
-		m_Velocity.x = -m_FallSideMoveSpeed;
+		m_Velocity.x = -m_AirSideMoveSpeed;
 	}
 
 

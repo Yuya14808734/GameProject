@@ -343,7 +343,7 @@ void Character::SetParameter(float WalkSpeed, float DashSpeed, float  FallSideMo
 	m_PlayerBit = GetNewPlayerBit();
 	m_WalkSpeed = WalkSpeed;
 	m_DashSpeed = DashSpeed;
-	m_FallSideMoveSpeed = FallSideMoveSpeed;
+	m_AirSideMoveSpeed = FallSideMoveSpeed;
 	m_MaxJumpCount = MaxJumpCount;
 	m_JumpPower = JumpPower;
 	m_Gravity = GravityScale;

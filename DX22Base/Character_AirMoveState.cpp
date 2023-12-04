@@ -27,12 +27,12 @@ void Character::AirMoveUpdate()
 
 	if (IsKeyPress(VK_RIGHT))
 	{
-		m_Velocity.x = m_FallSideMoveSpeed;
+		m_Velocity.x = m_AirSideMoveSpeed;
 	}
 
 	if (IsKeyPress(VK_LEFT))
 	{
-		m_Velocity.x = -m_FallSideMoveSpeed;
+		m_Velocity.x = -m_AirSideMoveSpeed;
 	}
 
 	//‚à‚¤ˆê“xƒWƒƒƒ“ƒv‚ª‚Å‚«‚é

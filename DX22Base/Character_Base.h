@@ -196,7 +196,7 @@ private:
 protected:
 	float	m_WalkSpeed			= 0.0f;		//歩くスピード
 	float	m_DashSpeed			= 0.0f;		//走るスピード
-	float	m_FallSideMoveSpeed = 0.0f;		//落ちているときの横移動のスピード
+	float	m_AirSideMoveSpeed = 0.0f;		//落ちているときの横移動のスピード
 	int		m_MaxJumpCount		= 0;		//ジャンプできる最大数
 	float	m_JumpPower			= 0.0f;		//ジャンプするときの力
 	float	m_Gravity			= 0.0f;		//重力
