@@ -34,11 +34,11 @@ enum class PadButton
 	RIGHT_STICK				    //右スティック
 };
 
-
+bool IsPadConnect();
 void UpdateGamePad();                                //Xboxコントローラーの情報を取得する関数(Updateの初めの方に書きましょう) 
-int InputPressKey(PadButton key);                          //プレスキーの入力関数
-int InputTriggerKey(PadButton key);                        //トリガーキーの入力関数
-int InputReleaseKey(PadButton key);                        //リリースキーの入力関数
+int InputPressKey(PadButton key);                    //プレスキーの入力関数
+int InputTriggerKey(PadButton key);                  //トリガーキーの入力関数
+int InputReleaseKey(PadButton key);                  //リリースキーの入力関数
 DirectX::XMFLOAT2 GetPressStick();                   //プレスされているスティックの値を返す関数(DirectX::Float2型です、返した値に補完したい値を掛けましょう)
 const DirectX::XMFLOAT2& GetPressRightStick();
 const DirectX::XMFLOAT2& GetPressLeftStick();

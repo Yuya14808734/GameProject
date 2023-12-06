@@ -18,6 +18,18 @@ DirectX::XMFLOAT2 OldLeftStickValue = DirectX::XMFLOAT2(0.0f, 0.0f);
 float RightStickMoveValue = 0.0f;
 float LeftStickMoveValue = 0.0f;
 
+
+
+bool IsPadConnect()
+{
+	bool Connect = false;
+	if (dwResult == ERROR_SUCCESS)
+	{
+		Connect = (dwResult != ERROR_DEVICE_NOT_CONNECTED);
+	}
+	return Connect;
+}
+
 //====================================================================
 //用途　：コントローラーの状態を取得(更新)
 //戻り値：なし

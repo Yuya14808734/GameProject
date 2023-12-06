@@ -209,7 +209,7 @@ void Character::Character_Draw()
 	m_CharacterModel.Draw();
 }
 
-int Character::GetPlayerBit()
+int Character::GetCharacterBit()
 {
 	return m_PlayerBit;
 }
@@ -217,6 +217,11 @@ int Character::GetPlayerBit()
 const Character::STATE& Character::GetState() const
 {
 	return m_NowState;
+}
+
+const Character::ATTACK& Character::GetAttack() const
+{
+	return m_NowAttack;
 }
 
 ModelDrawer* Character::GetModel() const
@@ -345,10 +350,10 @@ void Character::SetParameter(float WalkSpeed, float DashSpeed, float  FallSideMo
 	m_DashSpeed = DashSpeed;
 	m_AirSideMoveSpeed = FallSideMoveSpeed;
 	m_MaxJumpCount = MaxJumpCount;
-	m_JumpPower = JumpPower;
+	m_FirstJumpPower = JumpPower;
 	m_Gravity = GravityScale;
-	m_DefaultMaxFallSpeed = DefaultFallMaxSpeed;
-	m_UpMaxFallSpeed = UpFallMaxSpeed;
+	m_DefaultFallSpeed = DefaultFallMaxSpeed;
+	m_SpeedUpFallSpeed = UpFallMaxSpeed;
 	m_Friction = Friction;
 	m_AirResistance = AirResistance;
 }

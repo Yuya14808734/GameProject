@@ -44,15 +44,18 @@ public:
 
 	struct AttackParam
 	{
-		bool m_Use = false;
-		BoxCollider m_BoxCollider;
+		bool m_Use = false;									//この攻撃の当たり判定を行うか
+		BoxCollider m_BoxCollider;							//攻撃の当たり判定
+		unsigned int m_HitCharacterBit = 0x00;				//前のフレームで当たったキャラクターのビット番号が入る
+		unsigned int m_CanAttackCharacterBit = 0x00;		//当たることが出来るキャラクターのビット番号
+		unsigned int m_haveHitCharacterBit = 0x00;			//今までで当たったことがあるキャラクタービット番号
 	};
 
 public:
 	static void InitPlayerBit();	//下の関数でもらえる番号を初期化する
 protected:
 	static int GetNewPlayerBit();	//新しいプレイヤーの番号(2進数)を受け取る
-									//変なところで呼ぶと番号がずれてしまう
+									//変なところで呼ぶと番号がずれてしまうのでInit以外で呼ばないように
 private:
 	static int m_NewPlayerBit;		//新しいプレイヤーのビット番号
 
@@ -64,8 +67,9 @@ public:
 	void Character_Uninit();							//キャラクターの終了処理
 	void Character_Update();							//キャラクターの更新
 	void Character_Draw();								//キャラクターの描画
-	int GetPlayerBit();									//キャラクター番号の取得
+	int GetCharacterBit();								//キャラクター番号の取得
 	const Character::STATE& GetState() const;			//今の状態の取得
+	const Character::ATTACK& GetAttack() const;			//今している攻撃情報
 	ModelDrawer* GetModel() const;						//モデル情報の取得
 	const CVector3& GetPos() const;						//位置の取得
 	void SetPos(const CVector3& pos);					//位置の設定
@@ -90,20 +94,10 @@ public:
 	void DrawCollider();								//コライダーの描画
 
 protected:
-
-	/*引数(歩くスピード, 走るスピード, 落ちているときの横に動くスピード, 
-	ジャンプできる回数, ジャンプする力, 重力, 落ちる速さ, 摩擦量, 空気抵抗)*/
-	void SetParameter(
-	float WalkSpeed,float DashSpeed,float  FallSideMoveSpeed,
-		int MaxJumpCount,float JumpPower,float GravityScale,
-		float DefaultFallMaxSpeed,float UpFallMaxSpeed ,float Friction,	float AirResistance);
 	void ChangeAttack(Character::ATTACK attack);
 	void ChangeState(Character::STATE state);
 
 protected:
-
-	//======================================================
-	//多分操作などがほぼ同じになるため上の関数を使うことになりそう
 
 	virtual void Init() {};			//継承先の初期化
 	virtual void Uninit() {};		//継承先の終了処理
@@ -183,46 +177,119 @@ protected:
 	virtual void SpecialAirN_Update() {};	//通常必殺技(空中)
 	virtual void SpecialAirN_Uninit() {};	//通常必殺技(空中)
 
+public:
+	virtual void Attack11_Hit(Character* HitCharacter) {};			//弱1
+	virtual void Attack12_Hit(Character* HitCharacter) {};			//弱2
+	virtual void Attack13_Hit(Character* HitCharacter) {};			//弱3
+	virtual void AttackS2_Hit(Character* HitCharacter) {};			//横強
+	virtual void AttackS4_Hit(Character* HitCharacter) {};			//横スマッシュ
+	virtual void AttackAirN_Hit(Character* HitCharacter) {};		//空N
+	virtual void SpecialN_Hit(Character* HitCharacter) {};			//通常必殺技
+	virtual void SpecialAirN_Hit(Character* HitCharacter) {};		//通常必殺技(空中)
+
+
+protected:
 
 	virtual void HitCeiling() {};		//天井に当たった時に呼ぶ
 	virtual void HitGround() {};	//地面に当たった時に呼ばれる
 	virtual void HitWall() {};		//壁に当たった時に呼ぶ
 
-	//======================================================
-	//最初に設定するパラメータ
-private:
-	int		m_PlayerBit = 0x00;				//このキャラクターが何番なのかを入れる
-
 protected:
+	//===============================================================================
+	// パラメータ一覧
+	//===============================================================================
+	//設定関数
+	/*引数(歩くスピード, 走るスピード, 落ちているときの横に動くスピード,
+	ジャンプできる回数, ジャンプする力, 重力, 落ちる速さ, 摩擦量, 空気抵抗)*/
+	void SetParameter(
+		float WalkSpeed, float DashSpeed, float  FallSideMoveSpeed,
+		int MaxJumpCount, float JumpPower, float GravityScale,
+		float DefaultFallMaxSpeed, float UpFallMaxSpeed, float Friction, float AirResistance);
+	
+	//-------------------------------------------------------------------------------
+	// 横移動に関するパラメータ
+	//-------------------------------------------------------------------------------
 	float	m_WalkSpeed			= 0.0f;		//歩くスピード
 	float	m_DashSpeed			= 0.0f;		//走るスピード
 	float	m_AirSideMoveSpeed = 0.0f;		//落ちているときの横移動のスピード
+	//-------------------------------------------------------------------------------
+	// ジャンプに関するパラメータ
+	//-------------------------------------------------------------------------------
 	int		m_MaxJumpCount		= 0;		//ジャンプできる最大数
-	float	m_JumpPower			= 0.0f;		//ジャンプするときの力
+	float	m_FirstMiniJumpPower = 0.0f;	//小ジャンプをするときの力
+	float	m_FirstJumpPower	= 0.0f;		//ジャンプするときの力
+	float	m_SecondJumpPower	= 0.0f;		//二回目のジャンプの力
 	float	m_Gravity			= 0.0f;		//重力
-	float	m_DefaultMaxFallSpeed = 0.0f;	//最大落下速度
-	float	m_UpMaxFallSpeed	= 0.0f;		//落下中に下を押した場合の落下量
+	float	m_DefaultFallSpeed = 0.0f;		//最大落下速度
+	float	m_SpeedUpFallSpeed	= 0.0f;		//落下中に下を押した場合の落下量
+
+	//-------------------------------------------------------------------------------
+	// 移動スピードの減衰に関するパラメータ
+	//-------------------------------------------------------------------------------
 	float	m_Friction			= 0.0f;		//摩擦量
 	float	m_AirResistance		= 0.0f;		//空気抵抗
 
-protected:
+	//-------------------------------------------------------------------------------
+	// 吹っ飛ばされた時に関するパラメータ
+	//-------------------------------------------------------------------------------
+	float m_SmashMitigation = 0.0f;			//吹っ飛ばされた時にどれくらい弱くしていくか
+	float m_VectorChangePower = 0.0f;		//吹っ飛ばされた時にベクトル変更する割合
+
+
+
+
+
+
+
+
+
+
+	//===============================================================================
+	// 変数一覧
+	//===============================================================================
+protected:	
+	int		m_PlayerBit = 0x00;				//このキャラクターが何番なのかを入れる
+	
+	//-------------------------------------------------------------------------------
+	// プレイヤーステートに関する変数
+	//-------------------------------------------------------------------------------
 	Character::STATE m_NowState	 = STATE::MAX;	//キャラクターの状態
 	Character::STATE m_NextState = STATE::MAX;	//キャラクターの状態
 	Character::ATTACK m_NowAttack = ATTACK::MAX;	//プレイヤーがしている攻撃
 	Character::LOOKDIR m_NowLookDir = LOOKDIR::MAX;	//プレイヤーが見ている方向
 	bool	m_ChangeState		= false;
+	
+	//-------------------------------------------------------------------------------
+	// モデルに関する変数
+	//-------------------------------------------------------------------------------
 	ModelDrawer m_CharacterModel;			//キャラクターのモデル
+	
+	//-------------------------------------------------------------------------------
+	// 座標に関するパラメータ
+	//-------------------------------------------------------------------------------
 	CVector3 m_pos;							//座標
 	CVector3 m_oldPos;						//前の座標
 	CVector3 m_scale;						//大きさ
 	CQuaternion m_rotate;					//回転量
 	CVector3 m_Velocity;					//重力など
 	CVector3 m_MoveVector;					//コントローラーの移動量
-	float m_DamagePercentage = 0.0f;		//ダメージの量
+		
+	//-------------------------------------------------------------------------------
+	// 当たり判定に関するパラメータ
+	//-------------------------------------------------------------------------------
 	BoxCollider m_CharacterCollider;		//プレイヤーの当たり判定
 	std::vector<AttackParam> m_AttackCollider;	//攻撃したときの当たり判定
+	float m_DamagePercentage = 0.0f;		//ダメージの量
+
+	//-------------------------------------------------------------------------------
+	// ジャンプに関するパラメータ
+	//-------------------------------------------------------------------------------
 	int m_JumpCount = 0;					//今ジャンプした回数
-	int m_JumpCharageCount = 0;
+	int m_JumpCharageCount = 0;				//ジャンプをチャージする時のカウント
+
+	//-------------------------------------------------------------------------------
+	//ステージに当たった時の情報
+	//-------------------------------------------------------------------------------
 	bool m_HitGround = false;				//前のフレームで地面に当たったか
 	bool m_HitCeiling = false;				//前のフレームで天井に当たったか
 	bool m_HitWall = false;					//前のフレームで壁に当たったか

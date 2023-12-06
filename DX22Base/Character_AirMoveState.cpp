@@ -41,7 +41,7 @@ void Character::AirMoveUpdate()
 		if (InputTriggerKey(PadButton::RIGHT_SHOULDER) || IsKeyTrigger(VK_UP))
 		{
 			m_JumpCount++;
-			m_Velocity.y = m_JumpPower;
+			m_Velocity.y = m_FirstJumpPower;
 			ChangeState(Character::STATE::JUMP);
 		}
 	}
@@ -54,9 +54,9 @@ void Character::AirMoveUpdate()
 	m_Velocity.y += m_Gravity;			//d—Í‚ğŠ|‚¯‚é
 
 	//d—Í§Œä(Å‘å‚Ì—‰º‘¬“x‚É‚È‚Á‚½‚ç)
-	if (m_Velocity.y < m_DefaultMaxFallSpeed)
+	if (m_Velocity.y < m_DefaultFallSpeed)
 	{
-		m_Velocity.y = m_DefaultMaxFallSpeed;
+		m_Velocity.y = m_DefaultFallSpeed;
 	}
 
 	m_pos += m_MoveVector;

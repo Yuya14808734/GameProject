@@ -5,7 +5,7 @@
 
 void Character::JumpInit()
 {
-	m_Velocity.y = m_JumpPower;
+	m_Velocity.y = m_FirstJumpPower;
 	m_MoveVector = CVector3::GetZero();
 	m_JumpCount++;
 }
@@ -56,9 +56,9 @@ void Character::JumpUpdate()
 	m_Velocity.y += m_Gravity;		//重力を掛ける
 
 	//重力制御(最大の落下速度になったら)
-	if (m_Velocity.y < m_DefaultMaxFallSpeed)
+	if (m_Velocity.y < m_DefaultFallSpeed)
 	{
-		m_Velocity.y = m_DefaultMaxFallSpeed;
+		m_Velocity.y = m_DefaultFallSpeed;
 	}
 
 	//落下し始めたら

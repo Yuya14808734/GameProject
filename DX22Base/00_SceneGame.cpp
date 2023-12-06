@@ -115,23 +115,66 @@ void SceneGame::Update()
 		//配列の頭から攻撃を見ていく
 		for (Character::AttackParam& Character_Attack : attackParamVector)
 		{
+			Character_Attack.m_HitCharacterBit = 0x00;
+
 			if(!Character_Attack.m_Use)
 			{
 				continue;
 			}
 
-			for (Character* ReceiveCharacter : m_Characters)
+			//攻撃を受けるキャラクター
+			for (Character* HitCharacter : m_Characters)
 			{
 				//攻撃しているキャラクターと受けるキャラクターが同じ場合
-				if(AttackCharacter == ReceiveCharacter)
+				if(AttackCharacter == HitCharacter)
 				{
 					continue;
 				}
 
 				//攻撃と受けるキャラクターの当たり判定
-				Character_Attack.m_BoxCollider.CollisionBox(
-					*ReceiveCharacter->GetCharacterCollider()
-				);
+				if (Character_Attack.m_BoxCollider.CollisionBox(*HitCharacter->GetCharacterCollider()))
+				{
+					//当たったキャラクターの情報を入れる
+					Character_Attack.m_HitCharacterBit |= HitCharacter->GetCharacterBit();
+					Character_Attack.m_haveHitCharacterBit |= HitCharacter->GetCharacterBit();
+
+					//当たるキャラクターの場合
+					if ((HitCharacter->GetCharacterBit() & Character_Attack.m_CanAttackCharacterBit) != 0x00)
+					{
+						//当たった時の処理をする
+						switch (AttackCharacter->GetAttack())
+						{
+						case Character::ATTACK::ATTACK_11:
+							AttackCharacter->Attack11_Hit(HitCharacter);
+							break;
+						case Character::ATTACK::ATTACK_12:
+							AttackCharacter->Attack12_Hit(HitCharacter);
+							break;
+						case Character::ATTACK::ATTACK_13:
+							AttackCharacter->Attack13_Hit(HitCharacter);
+							break;
+						case Character::ATTACK::ATTACK_S2:
+							AttackCharacter->AttackS2_Hit(HitCharacter);
+							break;
+						case Character::ATTACK::ATTACK_S4:
+							AttackCharacter->AttackS4_Hit(HitCharacter);
+							break;
+						case Character::ATTACK::ATTACK_AIRN:
+							AttackCharacter->AttackAirN_Hit(HitCharacter);
+							break;
+						case Character::ATTACK::SPECIAL_N:
+							AttackCharacter->SpecialN_Hit(HitCharacter);
+							break;
+						case Character::ATTACK::SPECIAL_AIRN:
+							AttackCharacter->SpecialAirN_Hit(HitCharacter);
+							break;
+						case Character::ATTACK::MAX:
+							break;
+						default:
+							break;
+						}
+					}
+				}
 			}
 		}
 	}

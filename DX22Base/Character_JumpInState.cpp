@@ -24,7 +24,7 @@ void Character::JumpInUpdate()
 	{
 		ChangeState(Character::STATE::JUMP);
 		m_Velocity.x = m_MoveVector.x;
-		m_Velocity.y = m_JumpPower;
+		m_Velocity.y = m_FirstJumpPower;
 	}
 	m_pos += m_MoveVector;
 	m_pos += m_Velocity;

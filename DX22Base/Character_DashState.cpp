@@ -86,9 +86,9 @@ void Character::DashUpdate()
 	m_Velocity.y += m_Gravity;
 
 	//ˆê‰d—Í§Œä‚à‘‚¢‚Ä‚¨‚­
-	if (m_Velocity.y < m_DefaultMaxFallSpeed)
+	if (m_Velocity.y < m_DefaultFallSpeed)
 	{
-		m_Velocity.y = m_DefaultMaxFallSpeed;
+		m_Velocity.y = m_DefaultFallSpeed;
 	}
 
 	m_pos += m_MoveVector;

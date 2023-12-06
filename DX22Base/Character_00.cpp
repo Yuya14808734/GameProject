@@ -123,7 +123,7 @@ void Character_00::JumpUpdate()
 {
 	Character::JumpUpdate();
 
-	m_AnimeTime = (1.0f - (m_Velocity.y / m_JumpPower)) * 0.93f + 0.15f;
+	m_AnimeTime = (1.0f - (m_Velocity.y / m_FirstJumpPower)) * 0.93f + 0.15f;
 
 	m_CharacterModel.SetAnimeTime(m_AnimeTime);
 }

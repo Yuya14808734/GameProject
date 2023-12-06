@@ -43,7 +43,7 @@ void Character::IdleUpdate()
 	//ˆÚ“®ŠJn
 	if (LeftStick.x != 0.0f || IsKeyPress(VK_RIGHT) || IsKeyPress(VK_LEFT))
 	{
-		if (GetLeftSmash(0.35f))
+		if (GetLeftSmash(0.35f) || IsKeyPress('K'))
 		{
 			ChangeState(Character::STATE::DASH);
 		}
@@ -70,9 +70,9 @@ void Character::IdleUpdate()
 	m_Velocity.x *= m_Friction;
 
 	//ˆê‰d—Í§Œä‚à‘‚¢‚Ä‚¨‚­
-	if (m_Velocity.y < m_DefaultMaxFallSpeed)
+	if (m_Velocity.y < m_DefaultFallSpeed)
 	{
-		m_Velocity.y = m_DefaultMaxFallSpeed;
+		m_Velocity.y = m_DefaultFallSpeed;
 	}
 
 	m_pos += m_MoveVector;
