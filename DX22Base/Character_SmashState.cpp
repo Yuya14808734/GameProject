@@ -72,16 +72,23 @@ void Character::SmashUpdate()
 
 	bool NoButton = true;
 
-	m_Velocity.x *= 0.85f;
+	m_Velocity.x *= m_SmashMitigation;
 	if (m_Velocity.y > 0.0f)
 	{
-		m_Velocity.y *= 0.85f;
+		m_Velocity.y *= m_SmashMitigation;
 	}
 	else
 	{
 		m_Velocity.y += m_Gravity;
 	}
-		
-	m_pos += m_Velocity;
+	
+	float SmashNowLength = m_Velocity.length();
+	
+	//‚ ‚é’ö“x’Z‚­‚È‚Á‚½‚ç
+	if (SmashNowLength < m_MinimumSmashLength)
+	{
+		ChangeState(Character::STATE::AIRMOVE);
+	}
 
+	m_pos += m_Velocity;
 }

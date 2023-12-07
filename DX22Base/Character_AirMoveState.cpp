@@ -48,7 +48,7 @@ void Character::AirMoveUpdate()
 
 	if (!OnButton)
 	{
-		m_Velocity.x *= m_AirResistance;	//‹ó‹C’ïR‚ğŠ|‚¯‚é
+		m_Velocity.x *= m_AirDrag;	//‹ó‹C’ïR‚ğŠ|‚¯‚é
 	}
 
 	m_Velocity.y += m_Gravity;			//d—Í‚ğŠ|‚¯‚é

@@ -20,12 +20,24 @@ void Character::JumpInUpdate()
 {
 	m_JumpCharageCount++;
 
-	if (m_JumpCharageCount > 3)
+	//ジャンプボタンの押している長さによってジャンプしている力を変えてやる
+	if (InputPressKey(PadButton::RIGHT_SHOULDER) || IsKeyPress(VK_UP))
+	{
+		if (m_JumpCharageCount >= m_MiniJumpEndCount)
+		{
+			//大ジャンプ
+			m_Velocity.y = m_FirstJumpPower;
+		}
+		else
+		{
+			//小ジャンプ
+			m_Velocity.y = m_FirstMiniJumpPower;
+		}
+	}
+
+	if(m_JumpCharageCount > m_ChargeJumpStartCount)
 	{
 		ChangeState(Character::STATE::JUMP);
-		m_Velocity.x = m_MoveVector.x;
-		m_Velocity.y = m_FirstJumpPower;
+		m_Velocity.x = m_MoveVector.x;	
 	}
-	m_pos += m_MoveVector;
-	m_pos += m_Velocity;
 }

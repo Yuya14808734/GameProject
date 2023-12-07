@@ -198,56 +198,72 @@ protected:
 	//===============================================================================
 	// パラメータ一覧
 	//===============================================================================
-	//設定関数
-	/*引数(歩くスピード, 走るスピード, 落ちているときの横に動くスピード,
-	ジャンプできる回数, ジャンプする力, 重力, 落ちる速さ, 摩擦量, 空気抵抗)*/
-	void SetParameter(
-		float WalkSpeed, float DashSpeed, float  FallSideMoveSpeed,
-		int MaxJumpCount, float JumpPower, float GravityScale,
-		float DefaultFallMaxSpeed, float UpFallMaxSpeed, float Friction, float AirResistance);
 	
 	//-------------------------------------------------------------------------------
 	// 横移動に関するパラメータ
 	//-------------------------------------------------------------------------------
+	void SetMoveParameter(float WalkSpeed, float DashSpeed, float AirSideMoveSpeed)
+	{
+		m_WalkSpeed = WalkSpeed;
+		m_DashSpeed = DashSpeed;
+		m_AirSideMoveSpeed = AirSideMoveSpeed;
+	}
+
 	float	m_WalkSpeed			= 0.0f;		//歩くスピード
 	float	m_DashSpeed			= 0.0f;		//走るスピード
 	float	m_AirSideMoveSpeed = 0.0f;		//落ちているときの横移動のスピード
 	//-------------------------------------------------------------------------------
 	// ジャンプに関するパラメータ
 	//-------------------------------------------------------------------------------
-	int		m_MaxJumpCount		= 0;		//ジャンプできる最大数
-	float	m_FirstMiniJumpPower = 0.0f;	//小ジャンプをするときの力
-	float	m_FirstJumpPower	= 0.0f;		//ジャンプするときの力
-	float	m_SecondJumpPower	= 0.0f;		//二回目のジャンプの力
-	float	m_Gravity			= 0.0f;		//重力
-	float	m_DefaultFallSpeed = 0.0f;		//最大落下速度
-	float	m_SpeedUpFallSpeed	= 0.0f;		//落下中に下を押した場合の落下量
+	void SetjumpParameter(int MaxJumpCount, int MiniJumpEndCount, int ChargeJumpStartCount,
+		float FirstMiniJumpPower, float FirstJumpPower, float SecondJumpPower,
+		float Gravity, float DefaultFallSpeed, float SpeedupFallSpeed)
+	{
+		m_MaxJumpCount = MaxJumpCount;
+		m_MiniJumpEndCount = MiniJumpEndCount;
+		m_ChargeJumpStartCount = ChargeJumpStartCount;
+		m_FirstMiniJumpPower = FirstMiniJumpPower;
+		m_FirstJumpPower = FirstJumpPower;
+		m_SecondJumpPower = SecondJumpPower;
+		m_Gravity = Gravity;
+		m_DefaultFallSpeed = DefaultFallSpeed;
+		m_SpeedUpFallSpeed = SpeedupFallSpeed;
+	}
+
+	int		m_MaxJumpCount			= 0;	//ジャンプできる最大数
+	int		m_MiniJumpEndCount		= 0;	//小ジャンプするときのフレーム
+	int		m_ChargeJumpStartCount	= 0;		//ジャンプするまでのチャージ時間
+	float	m_FirstMiniJumpPower	= 0.0f;	//小ジャンプをするときの力
+	float	m_FirstJumpPower		= 0.0f;		//ジャンプするときの力
+	float	m_SecondJumpPower		= 0.0f;		//二回目のジャンプの力
+	float	m_Gravity				= 0.0f;		//重力
+	float	m_DefaultFallSpeed		= 0.0f;		//最大落下速度
+	float	m_SpeedUpFallSpeed		= 0.0f;		//落下中に下を押した場合の落下量
 
 	//-------------------------------------------------------------------------------
 	// 移動スピードの減衰に関するパラメータ
 	//-------------------------------------------------------------------------------
-	float	m_Friction			= 0.0f;		//摩擦量
-	float	m_AirResistance		= 0.0f;		//空気抵抗
+	void SetResistance(float Friction, float AirDrag)
+	{
+		m_Friction = Friction;
+		m_AirDrag = AirDrag;
+	}
+
+	float	m_Friction	= 0.0f;		//摩擦量
+	float	m_AirDrag	= 0.0f;		//空気抵抗
 
 	//-------------------------------------------------------------------------------
 	// 吹っ飛ばされた時に関するパラメータ
 	//-------------------------------------------------------------------------------
 	float m_SmashMitigation = 0.0f;			//吹っ飛ばされた時にどれくらい弱くしていくか
 	float m_VectorChangePower = 0.0f;		//吹っ飛ばされた時にベクトル変更する割合
-
-
-
-
-
-
-
-
+	float m_MinimumSmashLength = 0.0f;		//吹っ飛んでいると判定する最低距離
 
 
 	//===============================================================================
 	// 変数一覧
 	//===============================================================================
-protected:	
+protected:
 	int		m_PlayerBit = 0x00;				//このキャラクターが何番なのかを入れる
 	
 	//-------------------------------------------------------------------------------
@@ -260,12 +276,12 @@ protected:
 	bool	m_ChangeState		= false;
 	
 	//-------------------------------------------------------------------------------
-	// モデルに関する変数
+	// モデル描画に関する変数
 	//-------------------------------------------------------------------------------
 	ModelDrawer m_CharacterModel;			//キャラクターのモデル
 	
 	//-------------------------------------------------------------------------------
-	// 座標に関するパラメータ
+	// 座標に関する変数
 	//-------------------------------------------------------------------------------
 	CVector3 m_pos;							//座標
 	CVector3 m_oldPos;						//前の座標
@@ -275,20 +291,20 @@ protected:
 	CVector3 m_MoveVector;					//コントローラーの移動量
 		
 	//-------------------------------------------------------------------------------
-	// 当たり判定に関するパラメータ
+	// 当たり判定に関する変数
 	//-------------------------------------------------------------------------------
 	BoxCollider m_CharacterCollider;		//プレイヤーの当たり判定
 	std::vector<AttackParam> m_AttackCollider;	//攻撃したときの当たり判定
 	float m_DamagePercentage = 0.0f;		//ダメージの量
 
 	//-------------------------------------------------------------------------------
-	// ジャンプに関するパラメータ
+	// ジャンプに関する変数
 	//-------------------------------------------------------------------------------
 	int m_JumpCount = 0;					//今ジャンプした回数
 	int m_JumpCharageCount = 0;				//ジャンプをチャージする時のカウント
 
 	//-------------------------------------------------------------------------------
-	//ステージに当たった時の情報
+	//ステージに当たった判定に使う変数
 	//-------------------------------------------------------------------------------
 	bool m_HitGround = false;				//前のフレームで地面に当たったか
 	bool m_HitCeiling = false;				//前のフレームで天井に当たったか

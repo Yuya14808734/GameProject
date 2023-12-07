@@ -5,7 +5,17 @@
 
 void Character::JumpInit()
 {
-	m_Velocity.y = m_FirstJumpPower;
+	if (m_JumpCount == 0)
+	{
+		//最初のジャンプだった場合
+		m_Velocity.y = m_FirstJumpPower;
+	}
+	else
+	{
+		//二回目のジャンプだった場合
+		m_Velocity.y = m_SecondJumpPower;
+	}
+
 	m_MoveVector = CVector3::GetZero();
 	m_JumpCount++;
 }
@@ -30,7 +40,6 @@ void Character::JumpUpdate()
 	if (IsKeyPress(VK_RIGHT))
 	{
 		m_Velocity.x = m_AirSideMoveSpeed;
-		
 	}
 
 	if (IsKeyPress(VK_LEFT))
@@ -41,7 +50,7 @@ void Character::JumpUpdate()
 
 	if (m_Velocity.x == 0.0f)
 	{
-		m_Velocity.x *= m_AirResistance;	//空気抵抗を掛ける
+		m_Velocity.x *= m_AirDrag;	//空気抵抗を掛ける
 	}
 
 	//もう一度ジャンプができる

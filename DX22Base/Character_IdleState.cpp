@@ -43,7 +43,7 @@ void Character::IdleUpdate()
 	//ˆÚ“®ŠJŽn
 	if (LeftStick.x != 0.0f || IsKeyPress(VK_RIGHT) || IsKeyPress(VK_LEFT))
 	{
-		if (GetLeftSmash(0.35f) || IsKeyPress('K'))
+		if (GetLeftSmash(0.35f) || IsKeyPress('L'))
 		{
 			ChangeState(Character::STATE::DASH);
 		}

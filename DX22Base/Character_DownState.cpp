@@ -3,6 +3,10 @@
 #include "Attack_Base.h"
 #include "XboxKeyboard.h"
 
+
+//後回しにします！
+//アニメーションないし
+
 void Character::DownInit()
 {
 

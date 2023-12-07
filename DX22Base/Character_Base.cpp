@@ -343,21 +343,6 @@ void Character::DrawCollider()
 	m_CharacterCollider.DrawCollider();
 }
 
-void Character::SetParameter(float WalkSpeed, float DashSpeed, float  FallSideMoveSpeed,	int MaxJumpCount, float JumpPower, float GravityScale,float DefaultFallMaxSpeed, float UpFallMaxSpeed, float Friction, float AirResistance)
-{
-	m_PlayerBit = GetNewPlayerBit();
-	m_WalkSpeed = WalkSpeed;
-	m_DashSpeed = DashSpeed;
-	m_AirSideMoveSpeed = FallSideMoveSpeed;
-	m_MaxJumpCount = MaxJumpCount;
-	m_FirstJumpPower = JumpPower;
-	m_Gravity = GravityScale;
-	m_DefaultFallSpeed = DefaultFallMaxSpeed;
-	m_SpeedUpFallSpeed = UpFallMaxSpeed;
-	m_Friction = Friction;
-	m_AirResistance = AirResistance;
-}
-
 void Character::ChangeAttack(Character::ATTACK attack)
 {
 	ChangeState(Character::STATE::ATTACK);
