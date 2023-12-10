@@ -215,13 +215,13 @@ protected:
 	//-------------------------------------------------------------------------------
 	// ジャンプに関するパラメータ
 	//-------------------------------------------------------------------------------
-	void SetjumpParameter(int MaxJumpCount, int MiniJumpEndCount, int ChargeJumpStartCount,
+	void SetjumpParameter(int MaxJumpCount, int MiniJumpPushButtonCount, int JumpChargeCount,
 		float FirstMiniJumpPower, float FirstJumpPower, float SecondJumpPower,
 		float Gravity, float DefaultFallSpeed, float SpeedupFallSpeed)
 	{
 		m_MaxJumpCount = MaxJumpCount;
-		m_MiniJumpEndCount = MiniJumpEndCount;
-		m_ChargeJumpStartCount = ChargeJumpStartCount;
+		m_MiniJumpPushButtonCount = MiniJumpPushButtonCount;
+		m_JumpChargeCount = JumpChargeCount;
 		m_FirstMiniJumpPower = FirstMiniJumpPower;
 		m_FirstJumpPower = FirstJumpPower;
 		m_SecondJumpPower = SecondJumpPower;
@@ -230,10 +230,10 @@ protected:
 		m_SpeedUpFallSpeed = SpeedupFallSpeed;
 	}
 
-	int		m_MaxJumpCount			= 0;	//ジャンプできる最大数
-	int		m_MiniJumpEndCount		= 0;	//小ジャンプするときのフレーム
-	int		m_ChargeJumpStartCount	= 0;		//ジャンプするまでのチャージ時間
-	float	m_FirstMiniJumpPower	= 0.0f;	//小ジャンプをするときの力
+	int		m_MaxJumpCount			= 0;		//ジャンプできる最大数
+	int		m_MiniJumpPushButtonCount = 0;		//小ジャンプするときのフレーム
+	int		m_JumpChargeCount	= 0;		//ジャンプするまでのチャージ時間
+	float	m_FirstMiniJumpPower	= 0.0f;		//小ジャンプをするときの力
 	float	m_FirstJumpPower		= 0.0f;		//ジャンプするときの力
 	float	m_SecondJumpPower		= 0.0f;		//二回目のジャンプの力
 	float	m_Gravity				= 0.0f;		//重力
@@ -243,7 +243,7 @@ protected:
 	//-------------------------------------------------------------------------------
 	// 移動スピードの減衰に関するパラメータ
 	//-------------------------------------------------------------------------------
-	void SetResistance(float Friction, float AirDrag)
+	void SetResistanceParameter(float Friction, float AirDrag)
 	{
 		m_Friction = Friction;
 		m_AirDrag = AirDrag;

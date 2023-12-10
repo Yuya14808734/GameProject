@@ -24,25 +24,26 @@ void CameraDebug::Update()
 
 	if(IsKeyPress('W'))
 	{
-		m_AddPos.z += 1.0f;
+		m_AddPos.z += 1.0f / 60.0f;
 	}
 
 	if (IsKeyPress('S'))
 	{
-		m_AddPos.z -= 1.0f;
+		m_AddPos.z -= 1.0f / 60.0f;
 	}
 
 	if (IsKeyPress('D'))
 	{
-		m_AddPos.x += 1.0f;
+		m_AddPos.x += 1.0f / 60.0f;
 	}
 
 	if (IsKeyPress('A'))
 	{
-		m_AddPos.x -= 1.0f;
+		m_AddPos.x -= 1.0f / 60.0f;
 	}
 
-	m_look = m_pos + m_AddPos;
+	m_pos = m_pos + m_AddPos;
+	m_look = m_pos;
 	m_look.z += 1.0f;
 
 	if (m_pCharacter == nullptr)

@@ -3,7 +3,10 @@
 
 void Character_00::Init()
 {
-	SetParameter(3.0f / 60.0f, 7.0f / 60.0f, 3.0f / 60.0f, 2, 0.5f, -0.04f, -0.1f,-0.2f, 0.65f, 0.95f);
+	//SetParameter(3.0f / 60.0f, 7.0f / 60.0f, 3.0f / 60.0f, 2, 0.5f, -0.04f, -0.1f,-0.2f, 0.65f, 0.95f);
+	SetMoveParameter(3.0f / 60.0f, 7.0f / 60.0f, 3.0f / 60.0f);
+	SetjumpParameter(2, 2, 3, 0.3f, 0.5f, 0.7f, -0.04f, -0.1f, -0.3f);
+	SetResistanceParameter(0.65f, 0.98f);
 	ModelDrawer::LoadModel("Assets/unitychan/unitychan.fbx", "UnityChan", 0.003f);
 	ModelDrawer::LoadAnime("Assets/unitychan/walk.fbx", "Idle", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/walk.fbx", "Walk", "UnityChan");
