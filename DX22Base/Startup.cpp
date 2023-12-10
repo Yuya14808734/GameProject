@@ -5,7 +5,7 @@
 #include "Scene.h"
 
 //--- 定数定義
-const char* APP_TITLE = "ジュエリスト";
+const char* APP_TITLE = "吹っ飛びキラー";
 const Frame DEFAULT_FPS = 60;
 
 /*
