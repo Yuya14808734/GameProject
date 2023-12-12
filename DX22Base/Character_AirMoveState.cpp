@@ -51,7 +51,7 @@ void Character::AirMoveUpdate()
 		m_Velocity.x *= m_AirDrag;	//空気抵抗を掛ける
 	}
 
-	m_Velocity.y += m_Gravity;			//重力を掛ける
+	m_Velocity.y += m_FallDownGravity;			//重力を掛ける
 
 	//重力制御(最大の落下速度になったら)
 	if (m_Velocity.y < m_DefaultFallSpeed)

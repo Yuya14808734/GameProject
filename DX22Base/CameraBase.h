@@ -52,6 +52,16 @@ public :
 		return mat;
 	}
 
+	const CVector3& GetPos()
+	{
+		return m_pos;
+	}
+
+	const CVector3& GetLookPos()
+	{
+		return m_look;
+	}
+
 	DirectX::XMFLOAT3 GetPos_xmfloat()
 	{
 		return m_pos.f;
@@ -61,6 +71,27 @@ public :
 	{
 		return m_look.f;
 	}
+
+	float GetFovAngle()
+	{
+		return m_fovy;
+	}
+
+	float GetAspect()
+	{
+		return m_aspect;
+	}
+
+	float GetNearLength()
+	{
+		return m_near;
+	}
+
+	float GetFarLength()
+	{
+		return m_far;
+	}
+
 
 private:
 

@@ -1,15 +1,15 @@
 #include "Effect_Manager.h"
-#include <Effekseer.h>//インクルードディレクトリを変更した後これを書く
-#include <EffekseerRendererDX11.h>
+#include "Scene.h"
+#include "CameraManager.h"
 #include "DirectX.h"
+#include "main.h"
 
 //実体づくり
-Effekseer::ManagerRef Effect_Manager::m_efkManager;
-EffekseerRendererDX11::RendererRef Effect_Manager::m_efkRenderer;
-std::map<std::string, Effect_Manager::Effect_Info> Effect_Manager::m_Effect;
+Effekseer::ManagerRef EffectManager::m_efkManager;
+EffekseerRendererDX11::RendererRef EffectManager::m_efkRenderer;
+std::map<std::string, Effekseer::EffectRef> EffectManager::m_Effect;
 
-
-void Effect_Manager::Effect_Init()
+void EffectManager::EffectInit()
 {
 	//EffeckSeerの初期化
 	m_efkManager = Effekseer::Manager::Create(1000);
@@ -31,75 +31,65 @@ void Effect_Manager::Effect_Init()
 	m_efkManager->SetMaterialLoader(m_efkRenderer->CreateMaterialLoader());
 	m_efkManager->SetCurveLoader(Effekseer::MakeRefPtr<Effekseer::CurveLoader>());
 
-	Add_Effect("KIRAKIRA", u"Assets/Effect/Kirakira.efkefc");
+	//===============================================================================
+	//エフェクトの追加
+	EffectManager::Add_Effect("LaserEffect", u"Asset/Effect/Laser01.efkefc");
+	EffectManager::Add_Effect("RingEffect", u"Asset/Effect/ShiningRing.efkefc");
+	EffectManager::Add_Effect("C00_S2", u"Assets/Effect/Character00/Character00_AttackS2.efkefc");
 
+	//===============================================================================
 }
-void Effect_Manager::Effect_Uninit()
+
+void EffectManager::EffectUninit()
 {
 	//EffeckSeerの終了処理
 	for (auto copy : m_Effect)
 	{
-		copy.second.effect.Reset();
+		copy.second.Reset();
 	}
 	m_Effect.clear();
-	
+
 	m_efkRenderer.Reset();
 	m_efkManager.Reset();
-	//-----------------------------------------
 }
 
-Effekseer::ManagerRef Effect_Manager::GetManager()
+Effekseer::ManagerRef& EffectManager::GetManager()
 {
 	return m_efkManager;
 }
 
-Effekseer::EffectRef Effect_Manager::GetEffect(std::string EffectName)
+Effekseer::EffectRef EffectManager::GetEffect(std::string EffectName)
 {
-	return m_Effect[EffectName].effect;
+	return m_Effect[EffectName];
 }
 
-void Effect_Manager::Add_Effect(std::string EffectName, const char16_t* FileName)
+void EffectManager::Add_Effect(std::string name, const char16_t* filePath)
 {
-	std::map<std::string, Effect_Info>::iterator it = m_Effect.find(EffectName);
+	std::map<std::string, Effekseer::EffectRef>::iterator it = m_Effect.find(name);
 
 	//見つかった場合
 	if (it != m_Effect.end()) {
-		//MessageBox(nullptr, "もうその名前で作られています", "Error", MB_OK);
 		return;
 	}
 	//追加
-	m_Effect.insert(std::make_pair(EffectName, Effect_Info{}));
+	m_Effect.insert(std::make_pair(name, Effekseer::EffectRef{}));
 
-	Effekseer::ManagerRef n_efkManager;
-	m_Effect[EffectName].effect = 
-		Effekseer::Effect::Create(m_efkManager,FileName);
+	m_Effect[name] =
+		Effekseer::Effect::Create(m_efkManager, filePath);
 }
 
-//エフェクトを再生する
-void Effect_Manager::Play_Effect(std::string EffectName,DirectX::XMFLOAT3 Position)
+void EffectManager::Draw()
 {
-	m_Effect[EffectName].Handle = m_efkManager->Play(m_Effect[EffectName].effect, Position.x, -Position.y, Position.z);
-}
+	//カメラを持ってくる
+	CameraBase* pCamera = CameraManager::GetInstance().GetSceneCamera();
 
-void Effect_Manager::Play_Effect(std::string EffectName, DirectX::XMFLOAT3 Position, DirectX::XMFLOAT3 Size)
-{
-	m_Effect[EffectName].Handle = m_efkManager->Play(m_Effect[EffectName].effect, Position.x, Position.y, Position.z);
-	m_efkManager->SetScale(m_Effect[EffectName].Handle, Size.x, Size.y, Size.z);
-}
+	if(pCamera == nullptr)
+	{
+		return;
+	}
 
-void Effect_Manager::Stop_Effect(std::string EffectName)
-{
-	m_efkManager->StopEffect(m_Effect[EffectName].Handle);
-}
-
-//エフェクトを描画する
-void Effect_Manager::Draw_Effect(CameraBase* pCamera)
-{
 	//EffekSeer-------------------------------------------------------------------------
-	const unsigned int SCREEN_WIDTH = 1280;
-	const unsigned int SCREEN_HEIGHT = 720;
-
-	static int Time = 0;
+	static unsigned int Time = 0;
 
 	DirectX::XMFLOAT3 Camera_Pos = pCamera->GetPos_xmfloat();
 	DirectX::XMFLOAT3 Camera_Look = pCamera->GetLook_xmfloat();
@@ -107,18 +97,18 @@ void Effect_Manager::Draw_Effect(CameraBase* pCamera)
 	//---effekseerの描画
 
 	//視点位置を設定
-	auto viewrPosition = Effekseer::Vector3D(Camera_Pos.x,Camera_Pos.y, -Camera_Pos.z);
+	auto viewrPosition = Effekseer::Vector3D(Camera_Pos.x, Camera_Pos.y, -Camera_Pos.z);
 	auto lookPosition = Effekseer::Vector3D(Camera_Look.x, Camera_Look.y, -Camera_Look.z);
 
 	//投影行列を設定(作成)
 	Effekseer::Matrix44 projectMatrix;
 	projectMatrix.PerspectiveFovRH(
-		80.0f / 180.0f * 3.14f, (float)SCREEN_WIDTH / SCREEN_HEIGHT,
-		1.0f, 500.0f);
+		pCamera->GetFovAngle() / 180.0f * 3.14f, static_cast<float>(GetAppWidth()) / static_cast<float>(GetAppHeight()),
+		pCamera->GetNearLength(), pCamera->GetFarLength());
 
 	//カメラ行列を設定(作成)
 	Effekseer::Matrix44 cameraMatrix;
-	cameraMatrix.LookAtRH(viewrPosition,lookPosition,Effekseer::Vector3D(0.0f, 1.0f, 0.0f));
+	cameraMatrix.LookAtRH(viewrPosition, lookPosition, Effekseer::Vector3D(0.0f, 1.0f, 0.0f));
 
 	//レイヤーパラメータの設定
 	Effekseer::Manager::LayerParameter layerParameter;
@@ -126,7 +116,7 @@ void Effect_Manager::Draw_Effect(CameraBase* pCamera)
 	m_efkManager->SetLayerParameter(0, layerParameter);
 
 	//時間を更新する
-	m_efkRenderer->SetTime(static_cast<float>(Time));
+	m_efkRenderer->SetTime(Time);
 
 	//マネージャーの更新
 	Effekseer::Manager::UpdateParameter updateParameter;
@@ -140,13 +130,13 @@ void Effect_Manager::Draw_Effect(CameraBase* pCamera)
 	//エフェクトの描画開始処理を行う
 	m_efkRenderer->BeginRendering();
 
-		//エフェクトの描画を行う
-		Effekseer::Manager::DrawParameter drawParameter;
-		drawParameter.ZNear = 0.0f;
-		drawParameter.ZFar = 1.0f;
-		drawParameter.ViewProjectionMatrix =
-			m_efkRenderer->GetCameraProjectionMatrix();
-		m_efkManager->Draw(drawParameter);
+	//エフェクトの描画を行う
+	Effekseer::Manager::DrawParameter drawParameter;
+	drawParameter.ZNear = 0.0f;
+	drawParameter.ZFar = 1.0f;
+	drawParameter.ViewProjectionMatrix =
+		m_efkRenderer->GetCameraProjectionMatrix();
+	m_efkManager->Draw(drawParameter);
 
 	//エフェクトの描画終了処理を行う
 	m_efkRenderer->EndRendering();

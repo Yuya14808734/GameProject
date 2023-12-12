@@ -79,7 +79,7 @@ void Character::WalkUpdate()
 
 	}
 
-	m_Velocity.y += m_Gravity;
+	m_Velocity.y += m_FallDownGravity;
 
 	//ˆê‰d—Í§Œä‚à‘‚¢‚Ä‚¨‚­
 	if (m_Velocity.y < m_DefaultFallSpeed)

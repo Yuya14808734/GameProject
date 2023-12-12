@@ -79,7 +79,7 @@ void Character::SmashUpdate()
 	}
 	else
 	{
-		m_Velocity.y += m_Gravity;
+		m_Velocity.y += m_FallDownGravity;
 	}
 	
 	float SmashNowLength = m_Velocity.length();

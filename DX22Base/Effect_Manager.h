@@ -1,39 +1,31 @@
 //#pragma once
 #ifndef EFFECT_MANAGER_H
 #define EFFECT_MANAGER_H
+
+#if _DEBUG
+#pragma comment(lib,"Effekseerd.lib")
+#pragma comment(lib,"EffekseerRendererDX11d.lib")
+#else
+#pragma comment(lib,"Effekseer.lib")
+#pragma comment(lib,"EffekseerRendererDX11.lib")
+#endif
+
 #include <Effekseer.h>
 #include <EffekseerRendererDX11.h>
-#include <map>
-#include <string>
-#include "CameraBase.h"
-#include <DirectXMath.h>
 
-class Effect_Manager
+class EffectManager
 {
 public:
-	typedef struct 
-	{
-		Effekseer::EffectRef effect;
-		Effekseer::Handle Handle;
-		float time;
-	}Effect_Info;
-
-public:
-	static void Effect_Init();
-	static void Effect_Uninit();
-	static Effekseer::ManagerRef GetManager();
-	static Effekseer::EffectRef GetEffect(std::string EffectName);
+	static void EffectInit();
+	static void EffectUninit();
+	static Effekseer::ManagerRef& GetManager();
 	static void Add_Effect(std::string EffectName, const char16_t* FileName);	//エフェクト情報の追加
-	static void Play_Effect(std::string EffectName,DirectX::XMFLOAT3 Position);	//エフェクトを再生
-	static void Play_Effect(std::string EffectName,DirectX::XMFLOAT3 Position, DirectX::XMFLOAT3 Size);	//エフェクトを再生
-	static void Stop_Effect(std::string EffectName);
-	static void Draw_Effect(CameraBase* pCamera);	//エフェクトを描画
-
+	static Effekseer::EffectRef GetEffect(std::string EffectName);
+	static void Draw();
 private:
 	static Effekseer::ManagerRef m_efkManager;
 	static EffekseerRendererDX11::RendererRef m_efkRenderer;
-	static std::map<std::string, Effect_Manager::Effect_Info> m_Effect;
+	static std::map<std::string, Effekseer::EffectRef> m_Effect;
 };
-
 
 #endif // !EFFECT_MANAGER_H

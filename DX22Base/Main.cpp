@@ -50,14 +50,14 @@ void MainInit()
 	{
 		
 	}
-	Effect_Manager::Effect_Init();
+	EffectManager::EffectInit();
 
 	g_pGame = new Game3D();
 }
 void MainUninit()
 {
 	delete g_pGame;
-	Effect_Manager::Effect_Uninit();
+	EffectManager::EffectUninit();
 	UninitXAudio2();
 	Sprite::Uninit();
 	UninitGeometory();
@@ -86,6 +86,8 @@ void MainLoop()
 			CameraManager::GetInstance().GetSceneCamera()->GetProjectionMatrix());
 	}
 	g_pGame->Draw();
+
+	EffectManager::Draw();
 	EndDrawDX();
 
 	//====================================================

@@ -307,6 +307,10 @@ void SceneGame::Draw()
 
 			for (Character::AttackParam& AttackCopy : attackVector)
 			{
+				if (!AttackCopy.m_Use)
+				{
+					continue;
+				}
 				AttackCopy.m_BoxCollider.DrawCollider();
 			}
 

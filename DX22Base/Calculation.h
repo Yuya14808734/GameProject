@@ -25,6 +25,7 @@ public:
 public:
 	CVector2();
 	CVector2(const CVector2&);
+	CVector2(const CVector3&);
 	CVector2(const DirectX::XMFLOAT2&);
 	CVector2(float x, float y);
 	CVector2(int x, int y);
@@ -59,6 +60,8 @@ public:
 	static const CVector2& GetUp();
 	static const CVector2& GetRight();
 	static const CVector2& GetZero();
+	static const CVector2& GetRotateRadius(float Radius);
+	static const CVector2& GetAngleVector(float Angle);
 
 private: 
 	static const CVector2 m_Right;
@@ -82,6 +85,7 @@ public:
 public:
 	CVector3();
 	CVector3(const CVector3&);
+	CVector3(const CVector2&);
 	CVector3(const CVector3*);
 	CVector3(const DirectX::XMFLOAT3&);
 	CVector3(float x, float y, float z);

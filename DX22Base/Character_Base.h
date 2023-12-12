@@ -63,14 +63,18 @@ private:
 public:
 	Character() {};
 	~Character() {};
+
+	//==========================================================================
 	void Character_Init();								//キャラクターの初期化
 	void Character_Uninit();							//キャラクターの終了処理
 	void Character_Update();							//キャラクターの更新
 	void Character_Draw();								//キャラクターの描画
+	//==========================================================================
 	int GetCharacterBit();								//キャラクター番号の取得
 	const Character::STATE& GetState() const;			//今の状態の取得
 	const Character::ATTACK& GetAttack() const;			//今している攻撃情報
 	ModelDrawer* GetModel() const;						//モデル情報の取得
+	//==========================================================================
 	const CVector3& GetPos() const;						//位置の取得
 	void SetPos(const CVector3& pos);					//位置の設定
 	const CVector3& GetOldPos() const;					//前の座標を取得
@@ -80,11 +84,13 @@ public:
 	const CQuaternion& GetRotate() const;				//回転量の取得
 	void SetRotate(const CQuaternion& rotate);			//回転量の設定(Quaternion)
 	void SetRotate(const CVector3& rotate);				//回転量の設定(度数法)
+	//==========================================================================
 	void AddForce(const CVector3& force);				//力を足してやる
 	void SetForce(const CVector3& force);				//力を設定
 	float GetDamage() const;							//ダメージの取得
 	void AddDamage(float damage);						//ダメージの加算
 	void SetDamage(float damage);						//ダメージの設定
+	//==========================================================================
 	BoxCollider* GetCharacterCollider() const;			//キャラクター、ステージ当たり判定の取得
 	std::vector<AttackParam>& GetAttackCollider();		//攻撃コライダーの取得
 	void Character_ColliderInit();
@@ -216,8 +222,8 @@ protected:
 	// ジャンプに関するパラメータ
 	//-------------------------------------------------------------------------------
 	void SetjumpParameter(int MaxJumpCount, int MiniJumpPushButtonCount, int JumpChargeCount,
-		float FirstMiniJumpPower, float FirstJumpPower, float SecondJumpPower,
-		float Gravity, float DefaultFallSpeed, float SpeedupFallSpeed)
+		float FirstMiniJumpPower, float FirstJumpPower, float SecondJumpPower,float JumpUpGravity,
+		float FallDownGravity, float DefaultFallSpeed, float SpeedupFallSpeed)
 	{
 		m_MaxJumpCount = MaxJumpCount;
 		m_MiniJumpPushButtonCount = MiniJumpPushButtonCount;
@@ -225,18 +231,20 @@ protected:
 		m_FirstMiniJumpPower = FirstMiniJumpPower;
 		m_FirstJumpPower = FirstJumpPower;
 		m_SecondJumpPower = SecondJumpPower;
-		m_Gravity = Gravity;
+		m_JumpUpGravity = JumpUpGravity;
+		m_FallDownGravity = FallDownGravity;
 		m_DefaultFallSpeed = DefaultFallSpeed;
 		m_SpeedUpFallSpeed = SpeedupFallSpeed;
 	}
 
 	int		m_MaxJumpCount			= 0;		//ジャンプできる最大数
 	int		m_MiniJumpPushButtonCount = 0;		//小ジャンプするときのフレーム
-	int		m_JumpChargeCount	= 0;		//ジャンプするまでのチャージ時間
+	int		m_JumpChargeCount		= 0;		//ジャンプするまでのチャージ時間
 	float	m_FirstMiniJumpPower	= 0.0f;		//小ジャンプをするときの力
 	float	m_FirstJumpPower		= 0.0f;		//ジャンプするときの力
 	float	m_SecondJumpPower		= 0.0f;		//二回目のジャンプの力
-	float	m_Gravity				= 0.0f;		//重力
+	float	m_JumpUpGravity			= 0.0f;		//ジャンプして上に上がるときの重力
+	float	m_FallDownGravity		= 0.0f;		//ジャンプし終わって下に下がるときの重力
 	float	m_DefaultFallSpeed		= 0.0f;		//最大落下速度
 	float	m_SpeedUpFallSpeed		= 0.0f;		//落下中に下を押した場合の落下量
 

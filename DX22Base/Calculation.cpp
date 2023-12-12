@@ -20,6 +20,12 @@ CVector2::CVector2(const CVector2& v)
 	y = v.y;
 }
 
+CVector2::CVector2(const CVector3& v)
+{
+	x = v.x;
+	y = v.y;
+}
+
 CVector2::CVector2(const DirectX::XMFLOAT2& v)
 {
 	this->x = v.x;
@@ -183,6 +189,16 @@ const CVector2& CVector2::GetZero()
 	return m_Zero;
 }
 
+const CVector2& CVector2::GetRotateRadius(float Radius)
+{
+	return CVector2(0.0f, 1.0f).rotateRadius(Radius);
+}
+
+const CVector2& CVector2::GetAngleVector(float Angle)
+{
+	return CVector2(0.0f, 1.0f).rotateAngle(Angle);
+}
+
 //--------------------------
 // 3D Vector
 //--------------------------
@@ -203,6 +219,13 @@ CVector3::CVector3(const CVector3& v)
 	x = v.x;
 	y = v.y;
 	z = v.z;
+}
+
+CVector3::CVector3(const CVector2& v)
+{
+	x = v.x;
+	y = v.y;
+	z = 0.0f;
 }
 
 CVector3::CVector3(const CVector3* p)

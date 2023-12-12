@@ -66,7 +66,7 @@ void Character::IdleUpdate()
 		ChangeAttack(Character::ATTACK::ATTACK_11);	//ã‚Ìİ’è
 	}
 
-	m_Velocity.y += m_Gravity;
+	m_Velocity.y += m_FallDownGravity;
 	m_Velocity.x *= m_Friction;
 
 	//ˆê‰d—Í§Œä‚à‘‚¢‚Ä‚¨‚­

@@ -40,4 +40,6 @@ void Character::JumpInUpdate()
 		ChangeState(Character::STATE::JUMP);
 		m_Velocity.x = m_MoveVector.x;	
 	}
+
+	m_pos += m_Velocity;
 }
