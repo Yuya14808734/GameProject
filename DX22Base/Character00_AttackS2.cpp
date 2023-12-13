@@ -3,7 +3,7 @@
 void Character_00::AttackS2_Init()
 {
 	m_AttackTime = 0;
-
+	m_AnimeTime = 0.332f;
 
 	//ìñÇΩÇËîªíËÇÃçÏê¨
 	CVector3 ColliderPos = m_pos + CVector3::GetUp() * (m_CharacterCollider.GetSize().y * 0.5f);
@@ -38,12 +38,14 @@ void Character_00::AttackS2_Init()
 		Rotate
 		,0.0f);
 
-
+	m_CharacterModel.PlayAnime("Umatobi", true);
 }
 
 void Character_00::AttackS2_Update()
 {
 	m_AttackTime++;
+	float AnimeAllTime = 0.938f - 0.332f;
+	m_AnimeTime = static_cast<float>(m_AttackTime) / 24.0f  * AnimeAllTime + 0.332f;
 
 	if (m_AttackTime == 6)
 	{
@@ -61,6 +63,12 @@ void Character_00::AttackS2_Update()
 		ChangeState(Character::STATE::IDLE);
 	}
 
+	if (m_AnimeTime > 0.938f)
+	{
+		m_AnimeTime = 0.938f;
+	}
+
+	m_CharacterModel.SetAnimeTime(m_AnimeTime);
 }
 
 void Character_00::AttackS2_Uninit()

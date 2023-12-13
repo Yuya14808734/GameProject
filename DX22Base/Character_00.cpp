@@ -7,7 +7,10 @@ void Character_00::Init()
 	SetjumpParameter(2, 2, 3, 0.3f, 1.0f, 1.0f, -0.1f,-0.05f ,-0.1f, -0.3f);
 	SetResistanceParameter(0.65f, 0.98f);
 	ModelDrawer::LoadModel("Assets/unitychan/unitychan.fbx", "UnityChan", 0.003f);
+	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_ARpose2.fbx", "Pose2", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_WAIT00.fbx", "Idle", "UnityChan");
+	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_UMATOBI00.fbx", "Umatobi", "UnityChan");
+	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_WAIT04.fbx", "WAIT04", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/walk.fbx", "Walk", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/run.fbx", "Dash", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/jump.fbx", "Jump", "UnityChan");
@@ -136,7 +139,8 @@ void Character_00::AirMoveInit()
 
 	if (m_NowState == Character::STATE::WALK ||
 		m_NowState == Character::STATE::DASH ||
-		m_NowState == Character::STATE::IDLE)
+		m_NowState == Character::STATE::IDLE ||
+		m_NowAttack == Character::ATTACK::ATTACK_AIRN)
 	{
 		m_CharacterModel.PlayAnime("Jump", false);
 	}

@@ -153,9 +153,9 @@
   <ItemGroup>
     <ClCompile Include="00_CameraDebug.cpp" />
     <ClCompile Include="00_SceneGame.cpp" />
-    <ClCompile Include="Character00_Attack01.cpp" />
-    <ClCompile Include="Character00_Attack02.cpp" />
-    <ClCompile Include="Character00_Attack03.cpp" />
+    <ClCompile Include="Character00_Attack11.cpp" />
+    <ClCompile Include="Character00_Attack12.cpp" />
+    <ClCompile Include="Character00_Attack13.cpp" />
     <ClCompile Include="Character00_AttackAirN.cpp" />
     <ClCompile Include="Character00_AttackS2.cpp" />
     <ClCompile Include="Character00_AttackS4.cpp" />

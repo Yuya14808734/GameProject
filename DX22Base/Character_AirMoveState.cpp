@@ -46,6 +46,12 @@ void Character::AirMoveUpdate()
 		}
 	}
 
+	//UŒ‚
+	if (IsKeyPress('K') || InputPressKey(PadButton::A_BUTTON))
+	{
+		ChangeAttack(Character::ATTACK::ATTACK_AIRN);	//ã‚Ìİ’è
+	}
+
 	if (!OnButton)
 	{
 		m_Velocity.x *= m_AirDrag;	//‹ó‹C’ïR‚ğŠ|‚¯‚é

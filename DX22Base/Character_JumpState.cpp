@@ -58,6 +58,12 @@ void Character::JumpUpdate()
 		}
 	}
 
+	//UŒ‚
+	if (IsKeyPress('K') || InputPressKey(PadButton::A_BUTTON))
+	{
+		ChangeAttack(Character::ATTACK::ATTACK_AIRN);	//ã‚Ìİ’è
+	}
+
 	m_Velocity.y += m_JumpUpGravity;		//d—Í‚ğŠ|‚¯‚é
 
 	//d—Í§Œä(Å‘å‚Ì—‰º‘¬“x‚É‚È‚Á‚½‚ç)

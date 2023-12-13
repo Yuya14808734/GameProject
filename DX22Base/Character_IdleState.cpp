@@ -60,8 +60,7 @@ void Character::IdleUpdate()
 	}
 
 	//UŒ‚
-	if (false)
-		//IsKeyTrigger('K') || InputTriggerKey(PadButton::A_BUTTON))
+	if (IsKeyPress('K') || InputPressKey(PadButton::A_BUTTON))
 	{
 		ChangeAttack(Character::ATTACK::ATTACK_11);	//ã‚Ìİ’è
 	}

@@ -36,6 +36,7 @@ void EffectManager::EffectInit()
 	EffectManager::Add_Effect("LaserEffect", u"Asset/Effect/Laser01.efkefc");
 	EffectManager::Add_Effect("RingEffect", u"Asset/Effect/ShiningRing.efkefc");
 	EffectManager::Add_Effect("C00_S2", u"Assets/Effect/Character00/Character00_AttackS2.efkefc");
+	EffectManager::Add_Effect("C00_AirN", u"Assets/Effect/Character00/Character00_AttackAirN.efkefc");
 
 	//===============================================================================
 }
