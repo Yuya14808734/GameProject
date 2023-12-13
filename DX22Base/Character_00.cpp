@@ -7,7 +7,7 @@ void Character_00::Init()
 	SetjumpParameter(2, 2, 3, 0.3f, 1.0f, 1.0f, -0.1f,-0.05f ,-0.1f, -0.3f);
 	SetResistanceParameter(0.65f, 0.98f);
 	ModelDrawer::LoadModel("Assets/unitychan/unitychan.fbx", "UnityChan", 0.003f);
-	ModelDrawer::LoadAnime("Assets/unitychan/walk.fbx", "Idle", "UnityChan");
+	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_WAIT00.fbx", "Idle", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/walk.fbx", "Walk", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/run.fbx", "Dash", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/jump.fbx", "Jump", "UnityChan");
