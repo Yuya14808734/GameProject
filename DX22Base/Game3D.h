@@ -14,6 +14,7 @@ public:
 	~Game3D();
 	void Update();
 	void Draw();
+	void MiniWindowUpdate();
 
 private:
 	BlendState* m_pBlend;

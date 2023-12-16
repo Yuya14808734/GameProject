@@ -21,6 +21,7 @@ public :
 	virtual void Uninit();
 	virtual void Update();
 	virtual void Draw();
+	virtual void MiniWindowUpdate();
 };
 
 template<typename T>

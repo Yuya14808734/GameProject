@@ -45,3 +45,8 @@ void Game3D::Draw()
 {
 	CScene::GetScene()->Draw();
 }
+
+void Game3D::MiniWindowUpdate()
+{
+	CScene::GetScene()->MiniWindowUpdate();
+}

@@ -20,6 +20,11 @@ void CScene::Draw()
 
 }
 
+void CScene::MiniWindowUpdate()
+{
+
+}
+
 CScene * CScene::GetScene()
 {
 	return m_pNowScene;

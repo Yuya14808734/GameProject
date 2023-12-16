@@ -65,13 +65,13 @@ void Character::IdleUpdate()
 		ChangeAttack(Character::ATTACK::ATTACK_11);	//ã‚Ìİ’è
 	}
 
-	m_Velocity.y += m_FallDownGravity;
-	m_Velocity.x *= m_Friction;
+	m_Velocity.y += m_JumpParameter.m_FallDownGravity;
+	m_Velocity.x *= m_MoveParameter.m_Friction;
 
 	//ˆê‰d—Í§Œä‚à‘‚¢‚Ä‚¨‚­
-	if (m_Velocity.y < m_DefaultFallSpeed)
+	if (m_Velocity.y < m_JumpParameter.m_DefaultFallSpeed)
 	{
-		m_Velocity.y = m_DefaultFallSpeed;
+		m_Velocity.y = m_JumpParameter.m_DefaultFallSpeed;
 	}
 
 	m_pos += m_MoveVector;

@@ -22,18 +22,18 @@ void Character::DashUpdate()
 	}
 
 	bool NoButton = true;
-	float NowX = GetPressLeftStick().x * m_WalkSpeed;
+	float NowX = GetPressLeftStick().x * m_MoveParameter.m_WalkSpeed;
 
 	if(NowX > 0.0f || IsKeyPress(VK_RIGHT))
 	{
 		if (m_MoveVector.x < -0.01f)
 		{
 			//左に行っていた場合、摩擦を掛ける
-			m_MoveVector.x *= m_Friction;
+			m_MoveVector.x *= m_MoveParameter.m_Friction;
 		}
 		else
 		{
-			m_MoveVector.x = m_DashSpeed;
+			m_MoveVector.x = m_MoveParameter.m_DashSpeed;
 		}
 
 		//右に行っている
@@ -48,11 +48,11 @@ void Character::DashUpdate()
 		if (m_MoveVector.x > 0.01f)
 		{
 			//右に行っていた場合、摩擦を掛ける
-			m_MoveVector.x *= m_Friction;
+			m_MoveVector.x *= m_MoveParameter.m_Friction;
 		}
 		else
 		{
-			m_MoveVector.x = -m_DashSpeed;
+			m_MoveVector.x = -m_MoveParameter.m_DashSpeed;
 		}
 
 		//左に行っている
@@ -66,7 +66,7 @@ void Character::DashUpdate()
 	if (NoButton)
 	{
 		//止まる
-		m_MoveVector.x *= m_Friction;
+		m_MoveVector.x *= m_MoveParameter.m_Friction;
 
 		//ある程度遅くなったら
 		if (m_MoveVector.x < 0.01f || m_MoveVector.x > -0.01f)
@@ -83,12 +83,12 @@ void Character::DashUpdate()
 		ChangeState(Character::STATE::JUMPIN);
 	}
 
-	m_Velocity.y += m_FallDownGravity;
+	m_Velocity.y += m_JumpParameter.m_FallDownGravity;
 
 	//一応重力制御も書いておく
-	if (m_Velocity.y < m_DefaultFallSpeed)
+	if (m_Velocity.y < m_JumpParameter.m_DefaultFallSpeed)
 	{
-		m_Velocity.y = m_DefaultFallSpeed;
+		m_Velocity.y = m_JumpParameter.m_DefaultFallSpeed;
 	}
 
 	m_pos += m_MoveVector;

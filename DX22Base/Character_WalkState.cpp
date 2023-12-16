@@ -24,16 +24,16 @@ void Character::WalkUpdate()
 
 	bool NoButton = true;
 
-	m_MoveVector.x = GetPressLeftStick().x * m_WalkSpeed;
+	m_MoveVector.x = GetPressLeftStick().x * m_MoveParameter.m_WalkSpeed;
 
 	if(IsKeyPress(VK_RIGHT))
 	{
-		m_MoveVector.x = m_WalkSpeed;
+		m_MoveVector.x = m_MoveParameter.m_WalkSpeed;
 	}
 
 	if(IsKeyPress(VK_LEFT))
 	{
-		m_MoveVector.x = -m_WalkSpeed;
+		m_MoveVector.x = -m_MoveParameter.m_WalkSpeed;
 	}
 
 	if (m_MoveVector.x != 0.0f)
@@ -79,12 +79,12 @@ void Character::WalkUpdate()
 
 	}
 
-	m_Velocity.y += m_FallDownGravity;
+	m_Velocity.y += m_JumpParameter.m_FallDownGravity;
 
 	//àÍâûèdóÕêßå‰Ç‡èëÇ¢ÇƒÇ®Ç≠
-	if (m_Velocity.y < m_DefaultFallSpeed)
+	if (m_Velocity.y < m_JumpParameter.m_DefaultFallSpeed)
 	{
-		m_Velocity.y = m_DefaultFallSpeed;
+		m_Velocity.y = m_JumpParameter.m_DefaultFallSpeed;
 	}
 
 	m_pos += m_MoveVector;

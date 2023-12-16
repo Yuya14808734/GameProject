@@ -13,7 +13,7 @@ public:
 		WALK,		//歩く
 		DASH,		//走る
 		ATTACK,		//攻撃
-		SMASH,		//吹っ飛ばす
+		BLOWAWAY,		//吹っ飛ばす
 		JUMPIN,		//ジャンプの入り
 		JUMP,		//ジャンプ
 		AIRMOVE,	//落下
@@ -49,6 +49,36 @@ public:
 		unsigned int m_HitCharacterBit = 0x00;				//前のフレームで当たったキャラクターのビット番号が入る
 		unsigned int m_CanAttackCharacterBit = 0x00;		//当たることが出来るキャラクターのビット番号
 		unsigned int m_haveHitCharacterBit = 0x00;			//今までで当たったことがあるキャラクタービット番号
+	};
+
+	struct MOVEPARAMETER
+	{
+		float	m_WalkSpeed = 0.0f;		//歩くスピード
+		float	m_DashSpeed = 0.0f;		//走るスピード
+		float	m_AirSideMoveSpeed = 0.0f;		//落ちているときの横移動のスピード
+		float	m_Friction = 0.0f;		//摩擦量
+		float	m_AirDrag = 0.0f;		//空気抵抗
+	};
+
+	struct JUMPPARAMETER
+	{
+		int		m_MaxJumpCount = 0;		//ジャンプできる最大数
+		int		m_MiniJumpPushButtonCount = 0;		//小ジャンプするときのフレーム
+		int		m_JumpChargeCount = 0;		//ジャンプするまでのチャージ時間
+		float	m_FirstMiniJumpPower = 0.0f;		//小ジャンプをするときの力
+		float	m_FirstJumpPower = 0.0f;		//ジャンプするときの力
+		float	m_SecondJumpPower = 0.0f;		//二回目のジャンプの力
+		float	m_JumpUpGravity = 0.0f;		//ジャンプして上に上がるときの重力
+		float	m_FallDownGravity = 0.0f;		//ジャンプし終わって下に下がるときの重力
+		float	m_DefaultFallSpeed = 0.0f;		//最大落下速度
+		float	m_SpeedUpFallSpeed = 0.0f;		//落下中に下を押した場合の落下量
+	};
+
+	struct BLOWAWAYPARAMETER
+	{
+		float m_SmashMitigation = 0.0f;			//吹っ飛ばされた時にどれくらい弱くしていくか
+		float m_VectorChangePower = 0.0f;		//吹っ飛ばされた時にベクトル変更する割合
+		float m_MinimumSmashLength = 0.0f;		//吹っ飛んでいると判定する最低距離速度
 	};
 
 public:
@@ -127,9 +157,9 @@ protected:
 	virtual void AttackUninit();	//攻撃するときの終了処理
 	virtual void AttackUpdate();	//攻撃するときのアップデート
 	//==========================================================================
-	virtual void SmashInit();		//吹っ飛ばされる時の初期化
-	virtual void SmashUninit();		//吹っ飛ばしの終了処理
-	virtual void SmashUpdate();		//吹っ飛ばしのアップデート
+	virtual void BlowAwayInit();		//吹っ飛ばされる時の初期化
+	virtual void BlowAwayUninit();		//吹っ飛ばしの終了処理
+	virtual void BlowAwayUpdate();		//吹っ飛ばしのアップデート
 	//==========================================================================
 	virtual void JumpInInit();		//ジャンプ始めの初期化
 	virtual void JumpInUpdate();	//ジャンプ始めのアップデート
@@ -208,70 +238,55 @@ protected:
 	//-------------------------------------------------------------------------------
 	// 横移動に関するパラメータ
 	//-------------------------------------------------------------------------------
-	void SetMoveParameter(float WalkSpeed, float DashSpeed, float AirSideMoveSpeed)
+
+	MOVEPARAMETER m_MoveParameter;
+
+	void SetMoveParameter(const MOVEPARAMETER& MoveParameter)
 	{
-		m_WalkSpeed = WalkSpeed;
-		m_DashSpeed = DashSpeed;
-		m_AirSideMoveSpeed = AirSideMoveSpeed;
+		m_MoveParameter = MoveParameter;
 	}
 
-	float	m_WalkSpeed			= 0.0f;		//歩くスピード
-	float	m_DashSpeed			= 0.0f;		//走るスピード
-	float	m_AirSideMoveSpeed = 0.0f;		//落ちているときの横移動のスピード
+	const MOVEPARAMETER& GetMoveParameter()
+	{
+		return m_MoveParameter;
+	}
+
 	//-------------------------------------------------------------------------------
 	// ジャンプに関するパラメータ
 	//-------------------------------------------------------------------------------
-	void SetjumpParameter(int MaxJumpCount, int MiniJumpPushButtonCount, int JumpChargeCount,
-		float FirstMiniJumpPower, float FirstJumpPower, float SecondJumpPower,float JumpUpGravity,
-		float FallDownGravity, float DefaultFallSpeed, float SpeedupFallSpeed)
+
+	JUMPPARAMETER m_JumpParameter;
+
+	void SetjumpParameter(const JUMPPARAMETER& JumpParameter)
 	{
-		m_MaxJumpCount = MaxJumpCount;
-		m_MiniJumpPushButtonCount = MiniJumpPushButtonCount;
-		m_JumpChargeCount = JumpChargeCount;
-		m_FirstMiniJumpPower = FirstMiniJumpPower;
-		m_FirstJumpPower = FirstJumpPower;
-		m_SecondJumpPower = SecondJumpPower;
-		m_JumpUpGravity = JumpUpGravity;
-		m_FallDownGravity = FallDownGravity;
-		m_DefaultFallSpeed = DefaultFallSpeed;
-		m_SpeedUpFallSpeed = SpeedupFallSpeed;
+		m_JumpParameter	= JumpParameter;
 	}
 
-	int		m_MaxJumpCount			= 0;		//ジャンプできる最大数
-	int		m_MiniJumpPushButtonCount = 0;		//小ジャンプするときのフレーム
-	int		m_JumpChargeCount		= 0;		//ジャンプするまでのチャージ時間
-	float	m_FirstMiniJumpPower	= 0.0f;		//小ジャンプをするときの力
-	float	m_FirstJumpPower		= 0.0f;		//ジャンプするときの力
-	float	m_SecondJumpPower		= 0.0f;		//二回目のジャンプの力
-	float	m_JumpUpGravity			= 0.0f;		//ジャンプして上に上がるときの重力
-	float	m_FallDownGravity		= 0.0f;		//ジャンプし終わって下に下がるときの重力
-	float	m_DefaultFallSpeed		= 0.0f;		//最大落下速度
-	float	m_SpeedUpFallSpeed		= 0.0f;		//落下中に下を押した場合の落下量
-
-	//-------------------------------------------------------------------------------
-	// 移動スピードの減衰に関するパラメータ
-	//-------------------------------------------------------------------------------
-	void SetResistanceParameter(float Friction, float AirDrag)
+	const JUMPPARAMETER& GetJumpParameter()
 	{
-		m_Friction = Friction;
-		m_AirDrag = AirDrag;
+		return m_JumpParameter;
 	}
-
-	float	m_Friction	= 0.0f;		//摩擦量
-	float	m_AirDrag	= 0.0f;		//空気抵抗
 
 	//-------------------------------------------------------------------------------
 	// 吹っ飛ばされた時に関するパラメータ
 	//-------------------------------------------------------------------------------
-	float m_SmashMitigation = 0.0f;			//吹っ飛ばされた時にどれくらい弱くしていくか
-	float m_VectorChangePower = 0.0f;		//吹っ飛ばされた時にベクトル変更する割合
-	float m_MinimumSmashLength = 0.0f;		//吹っ飛んでいると判定する最低距離
+	
+	BLOWAWAYPARAMETER m_BlowAwayParameter;
 
+	void SetBlowAwayParameter(const BLOWAWAYPARAMETER& BlowAwayParameter)
+	{
+		m_BlowAwayParameter = BlowAwayParameter;
+	}
 
+	const BLOWAWAYPARAMETER& GetBlowAwayParameter()
+	{
+		return m_BlowAwayParameter;
+	}
+
+protected:
 	//===============================================================================
 	// 変数一覧
 	//===============================================================================
-protected:
 	int		m_PlayerBit = 0x00;				//このキャラクターが何番なのかを入れる
 	
 	//-------------------------------------------------------------------------------

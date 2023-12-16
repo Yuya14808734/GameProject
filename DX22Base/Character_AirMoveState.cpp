@@ -22,26 +22,26 @@ void Character::AirMoveUpdate()
 
 	bool OnButton = false;
 
-	float LeftStickX = GetPressLeftStick().x * m_WalkSpeed;
+	float LeftStickX = GetPressLeftStick().x * m_MoveParameter.m_WalkSpeed;
 	m_Velocity.x = fabsf(LeftStickX) > fabsf(m_Velocity.x) ? LeftStickX : m_Velocity.x;
 
 	if (IsKeyPress(VK_RIGHT))
 	{
-		m_Velocity.x = m_AirSideMoveSpeed;
+		m_Velocity.x = m_MoveParameter.m_AirSideMoveSpeed;
 	}
 
 	if (IsKeyPress(VK_LEFT))
 	{
-		m_Velocity.x = -m_AirSideMoveSpeed;
+		m_Velocity.x = -m_MoveParameter.m_AirSideMoveSpeed;
 	}
 
 	//‚à‚¤ˆê“xƒWƒƒƒ“ƒv‚ª‚Å‚«‚é
-	if (m_JumpCount < m_MaxJumpCount)
+	if (m_JumpCount < m_JumpParameter.m_MaxJumpCount)
 	{
 		if (InputTriggerKey(PadButton::RIGHT_SHOULDER) || IsKeyTrigger(VK_UP))
 		{
 			m_JumpCount++;
-			m_Velocity.y = m_FirstJumpPower;
+			m_Velocity.y = m_JumpParameter.m_FirstJumpPower;
 			ChangeState(Character::STATE::JUMP);
 		}
 	}
@@ -54,15 +54,15 @@ void Character::AirMoveUpdate()
 
 	if (!OnButton)
 	{
-		m_Velocity.x *= m_AirDrag;	//‹ó‹C’ïR‚ðŠ|‚¯‚é
+		m_Velocity.x *= m_MoveParameter.m_AirDrag;	//‹ó‹C’ïR‚ðŠ|‚¯‚é
 	}
 
-	m_Velocity.y += m_FallDownGravity;			//d—Í‚ðŠ|‚¯‚é
+	m_Velocity.y += m_JumpParameter.m_FallDownGravity;			//d—Í‚ðŠ|‚¯‚é
 
 	//d—Í§Œä(Å‘å‚Ì—Ž‰º‘¬“x‚É‚È‚Á‚½‚ç)
-	if (m_Velocity.y < m_DefaultFallSpeed)
+	if (m_Velocity.y < m_JumpParameter.m_DefaultFallSpeed)
 	{
-		m_Velocity.y = m_DefaultFallSpeed;
+		m_Velocity.y = m_JumpParameter.m_DefaultFallSpeed;
 	}
 
 	m_pos += m_MoveVector;

@@ -1,11 +1,38 @@
 #include "Character_00.h"
 #include "Input.h"
+#include "MiniWindow.h"
 
 void Character_00::Init()
 {
-	SetMoveParameter(4.0f / 60.0f, 8.0f / 60.0f, 4.0f / 60.0f);
-	SetjumpParameter(2, 2, 3, 0.3f, 1.0f, 1.0f, -0.1f,-0.05f ,-0.1f, -0.3f);
-	SetResistanceParameter(0.65f, 0.98f);
+	m_stateWindow.Init_MiniWindow();
+
+	MOVEPARAMETER moveParameter;
+	moveParameter.m_WalkSpeed = 4.0f / 60.0f;
+	moveParameter.m_DashSpeed = 8.0f / 60.0f;
+	moveParameter.m_AirSideMoveSpeed = 4.0f / 60.0f;
+	moveParameter.m_Friction = 0.65f;
+	moveParameter.m_AirDrag = 0.98f;
+	SetMoveParameter(moveParameter);
+
+	JUMPPARAMETER jumpParameter;
+	jumpParameter.m_MaxJumpCount = 2;
+	jumpParameter.m_MiniJumpPushButtonCount = 2;
+	jumpParameter.m_JumpChargeCount = 3;
+	jumpParameter.m_FirstMiniJumpPower = 0.3f;
+	jumpParameter.m_FirstJumpPower = 2.0f;
+	jumpParameter.m_SecondJumpPower = 0.7f;
+	jumpParameter.m_JumpUpGravity = -0.05f;
+	jumpParameter.m_FallDownGravity = -0.1f;
+	jumpParameter.m_DefaultFallSpeed = -0.2f;
+	jumpParameter.m_SpeedUpFallSpeed = -0.3f;
+	SetjumpParameter(jumpParameter);
+
+	BLOWAWAYPARAMETER blowAwayParameter;
+	blowAwayParameter.m_SmashMitigation = 0.85f;
+	blowAwayParameter.m_VectorChangePower = 0.02f;
+	blowAwayParameter.m_MinimumSmashLength = 0.3f;
+	SetBlowAwayParameter(blowAwayParameter);
+
 	ModelDrawer::LoadModel("Assets/unitychan/unitychan.fbx", "UnityChan", 0.003f);
 	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_ARpose2.fbx", "Pose2", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_WAIT00.fbx", "Idle", "UnityChan");
@@ -31,7 +58,7 @@ void Character_00::Init()
 
 void Character_00::Uninit()
 {
-
+	m_stateWindow.Uninit_MiniWindow();
 }
 
 void Character_00::Update()
@@ -128,7 +155,7 @@ void Character_00::JumpUpdate()
 {
 	Character::JumpUpdate();
 
-	m_AnimeTime = (1.0f - (m_Velocity.y / m_FirstJumpPower)) * 0.93f + 0.15f;
+	m_AnimeTime = (1.0f - (m_Velocity.y / m_JumpParameter.m_FirstJumpPower)) * 0.93f + 0.15f;
 
 	m_CharacterModel.SetAnimeTime(m_AnimeTime);
 }

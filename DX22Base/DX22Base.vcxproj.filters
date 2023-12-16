@@ -145,6 +145,12 @@
     <Filter Include="リソース ファイル\imgui">
       <UniqueIdentifier>{897bffab-2655-48cf-8c8f-35ca51306cc4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\04_Game\06_MiniWindow">
+      <UniqueIdentifier>{e5078f30-bcf9-4e5c-b58d-3d125f3ccac1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\06_MiniWindow">
+      <UniqueIdentifier>{4cfb9f31-4633-42e9-bc80-4905c869e09c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BlendState.cpp">
@@ -330,6 +336,9 @@
     <ClCompile Include="MiniWindow.cpp">
       <Filter>ソース ファイル\02_System</Filter>
     </ClCompile>
+    <ClCompile Include="CharacterStateWindow.cpp">
+      <Filter>ソース ファイル\04_Game\06_MiniWindow</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -457,6 +466,9 @@
     </ClInclude>
     <ClInclude Include="MiniWindow.h">
       <Filter>ヘッダー ファイル\02_System</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterStateWindow.h">
+      <Filter>ヘッダー ファイル\04_Game\06_MiniWindow</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

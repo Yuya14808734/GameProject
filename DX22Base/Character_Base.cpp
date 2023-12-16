@@ -39,8 +39,8 @@ void Character::Character_Init()
 	case Character::STATE::ATTACK:
 		AttackInit();
 		break;
-	case Character::STATE::SMASH:
-		SmashInit();
+	case Character::STATE::BLOWAWAY:
+		BlowAwayInit();
 		break;
 	case Character::STATE::JUMPIN:
 		JumpInInit();
@@ -89,8 +89,8 @@ void Character::Character_Update()
 	case Character::STATE::ATTACK:
 		AttackUpdate();
 		break;
-	case Character::STATE::SMASH:
-		SmashUpdate();
+	case Character::STATE::BLOWAWAY:
+		BlowAwayUpdate();
 		break;
 	case Character::STATE::JUMPIN:
 		JumpInUpdate();
@@ -134,8 +134,8 @@ void Character::Character_Update()
 		case Character::STATE::ATTACK:
 			AttackUninit();
 			break;
-		case Character::STATE::SMASH:
-			SmashUninit();
+		case Character::STATE::BLOWAWAY:
+			BlowAwayUninit();
 			break;
 		case Character::STATE::JUMPIN:
 			JumpInUninit();
@@ -172,8 +172,8 @@ void Character::Character_Update()
 		case Character::STATE::ATTACK:
 			AttackInit();
 			break;
-		case Character::STATE::SMASH:
-			SmashInit();
+		case Character::STATE::BLOWAWAY:
+			BlowAwayInit();
 			break;
 		case Character::STATE::JUMPIN:
 			JumpInInit();

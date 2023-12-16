@@ -1,6 +1,7 @@
 #pragma once
 #include "Character_Base.h"
 #include "Effect_Manager.h"
+#include "CharacterStateWindow.h"
 
 class Character_00 : public Character
 {
@@ -78,7 +79,7 @@ private:
 
 	int m_AttackTime = 0;
 	float m_AnimeTime = 0.0f;
-
+	CharacterStateWindow m_stateWindow;
 
 	//エフェクトの変数
 	Effekseer::Handle m_SwordHandle;

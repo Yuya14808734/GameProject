@@ -10,6 +10,7 @@
 #include "Effect_Manager.h"
 #include "CameraManager.h"
 #include "XboxKeyboard.h"
+#include "MiniWindow.h"
 
 //--- ’è”’è‹`
 const unsigned int SCREEN_WIDTH = 1280;
@@ -50,6 +51,8 @@ void MainInit()
 	{
 		
 	}
+
+	MiniWindow::WindowInit();
 	EffectManager::EffectInit();
 
 	g_pGame = new Game3D();
@@ -58,6 +61,7 @@ void MainUninit()
 {
 	delete g_pGame;
 	EffectManager::EffectUninit();
+	MiniWindow::WindowUninit();
 	UninitXAudio2();
 	Sprite::Uninit();
 	UninitGeometory();
@@ -72,6 +76,7 @@ void MainLoop()
 	//====================================================
 	UpdateInput();
 	UpdateGamePad();
+
 	g_pGame->Update();
 
 	//====================================================
@@ -88,6 +93,10 @@ void MainLoop()
 	g_pGame->Draw();
 
 	EffectManager::Draw();
+
+	MiniWindow::WindowDrawUpdate();
+	g_pGame->MiniWindowUpdate();
+
 	EndDrawDX();
 
 	//====================================================

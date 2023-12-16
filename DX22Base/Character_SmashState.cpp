@@ -9,7 +9,7 @@
 //===========================================================
 
 
-void Character::SmashInit()
+void Character::BlowAwayInit()
 {
 	CVector3 ChangeVector;
 
@@ -50,19 +50,19 @@ void Character::SmashInit()
 		
 	m_Velocity = CQuaternion::RadianAxis(
 		NormalVelocityVector.cross(NormalChangeVector),	//回す軸
-		RotateRadian * m_VectorChangePower				//回す弧度				
+		RotateRadian * m_BlowAwayParameter.m_VectorChangePower				//回す弧度				
 	).RotateVector(m_Velocity);							//回すベクトル
 
 
 	m_MoveVector = CVector3::GetZero();
 }
 
-void Character::SmashUninit()
+void Character::BlowAwayUninit()
 {
 
 }
 
-void Character::SmashUpdate()
+void Character::BlowAwayUpdate()
 {
 	//地面に当たっていなければ
 	if (m_HitGround)
@@ -72,20 +72,20 @@ void Character::SmashUpdate()
 
 	bool NoButton = true;
 
-	m_Velocity.x *= m_SmashMitigation;
+	m_Velocity.x *= m_BlowAwayParameter.m_SmashMitigation;
 	if (m_Velocity.y > 0.0f)
 	{
-		m_Velocity.y *= m_SmashMitigation;
+		m_Velocity.y *= m_BlowAwayParameter.m_SmashMitigation;
 	}
 	else
 	{
-		m_Velocity.y += m_FallDownGravity;
+		m_Velocity.y += m_JumpParameter.m_FallDownGravity;
 	}
 	
 	float SmashNowLength = m_Velocity.length();
 	
 	//ある程度短くなったら
-	if (SmashNowLength < m_MinimumSmashLength)
+	if (SmashNowLength < m_BlowAwayParameter.m_MinimumSmashLength)
 	{
 		ChangeState(Character::STATE::AIRMOVE);
 	}
