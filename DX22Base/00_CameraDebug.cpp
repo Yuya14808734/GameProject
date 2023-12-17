@@ -5,7 +5,10 @@
 
 CameraDebug::CameraDebug()
 {
-	m_pos = m_AddPos = CVector3::GetZero();
+	m_pos = m_look = CVector3::GetZero();
+
+	m_pos.y = m_look.y = 3.0f;
+	m_pos.z = -30.0f;
 }
 
 CameraDebug::~CameraDebug()
@@ -14,46 +17,7 @@ CameraDebug::~CameraDebug()
 
 void CameraDebug::Update()
 {
-	Character* copyCharacter = static_cast<SceneGame*>(CScene::GetScene())->GetCharacter()[0];
-	if (copyCharacter != nullptr)
-	{
-		m_pos = copyCharacter->GetPos();
-		m_pos.z -= 5.0f;
-		m_pos.y += copyCharacter->GetCharacterCollider()->GetSize().y * 0.5f;
-	}
-
-	if(IsKeyPress('W'))
-	{
-		m_AddPos.z += 1.0f / 60.0f;
-	}
-
-	if (IsKeyPress('S'))
-	{
-		m_AddPos.z -= 1.0f / 60.0f;
-	}
-
-	if (IsKeyPress('D'))
-	{
-		m_AddPos.x += 1.0f / 60.0f;
-	}
-
-	if (IsKeyPress('A'))
-	{
-		m_AddPos.x -= 1.0f / 60.0f;
-	}
-
-	m_pos = m_pos + m_AddPos;
-	m_look = m_pos;
-	m_look.z += 1.0f;
-
-	if (m_pCharacter == nullptr)
-	{
-		return;
-	}
-	m_look = m_pos = m_pCharacter->GetPos().f;
-	m_pos.z -= 10.0f;
-	m_pos.y -= 10.0f;
-	m_look.y -= -10.0f;
+	
 }
 
 void CameraDebug::ChangeInit()

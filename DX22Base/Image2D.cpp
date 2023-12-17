@@ -1,20 +1,26 @@
 #include "Image2D.h"
 #include "Main.h"
 
-
 Image2D::Image2D()
 	:m_pTexture(nullptr)
-	, m_pos({0.0f,0.0f,0.0f})
-	,m_size({ 1.0f,1.0f})
-	,m_UVpos({ 0.0f,0.0f})
-	,m_UVsize({ 1.0f,1.0f})
+	, m_pVertexShader(nullptr)
+	, m_pPixelShader(nullptr)
+	, m_pos({ 0.0f,0.0f,0.0f })
+	, m_size({ 1.0f,1.0f })
+	, m_UVpos({ 0.0f,0.0f })
+	, m_UVsize({ 1.0f,1.0f })
+	, m_color({ 1.0f,1.0f,1.0f,1.0f })
 {
 
 }
 
 Image2D::~Image2D()
 {
-
+	if (m_pTexture != nullptr)
+	{
+		m_pTexture->Release();
+		m_pTexture = nullptr;
+	}
 }
 
 void Image2D::Update()
@@ -22,8 +28,33 @@ void Image2D::Update()
 
 }
 
+void Image2D::PrevDraw()
+{
+}
+
 void Image2D::Draw()
 {
+	PrevDraw();
+
+	//シェーダーの変更
+	if (m_pVertexShader != nullptr)
+	{
+		Sprite::SetVertexShader(m_pVertexShader);
+	}
+	else
+	{
+		Sprite::SetDefaultVertexShader();
+	}
+
+	if (m_pPixelShader != nullptr)
+	{
+		Sprite::SetPixelShader(m_pPixelShader);
+	}
+	else
+	{
+		Sprite::SetDefaultPixelShader();
+	}
+
 	DirectX::XMFLOAT4X4 fView;
 	DirectX::XMStoreFloat4x4(&fView,
 		DirectX::XMMatrixIdentity());
@@ -55,18 +86,81 @@ void Image2D::Draw()
 	Sprite::SetWorld(fWorld);
 	Sprite::SetView(fView);
 	Sprite::SetProjection(fProj);
-	Sprite::SetSize(m_size);
-	Sprite::SetUVPos(m_UVpos);
-	Sprite::SetUVScale(m_UVsize);
+	Sprite::SetSize(m_size.f);
+	Sprite::SetUVPos(m_UVpos.f);
+	Sprite::SetUVScale(m_UVsize.f);
 	Sprite::SetTexture(m_pTexture);
+	Sprite::SetColor(m_color);
 	Sprite::Draw();
 }
 
-void Image2D::SetPos(DirectX::XMFLOAT3 pos)
+void Image2D::SetTexture(const char* FilePath)
+{
+	if (m_pTexture != nullptr)
+	{
+		m_pTexture->Release();
+		m_pTexture = nullptr;
+	}
+
+	LoadTextureFromFile(FilePath, &m_pTexture);
+}
+
+void Image2D::SetPos(DirectX::XMFLOAT3& pos)
+{
+	m_pos.f = pos;
+}
+void Image2D::SetPos(CVector2& pos)
 {
 	m_pos = pos;
 }
-void Image2D::SetSize(DirectX::XMFLOAT2 size)
+void Image2D::SetSize(DirectX::XMFLOAT2& size)
+{
+	m_size.f = size;
+}
+
+void Image2D::SetSize(CVector2& size)
 {
 	m_size = size;
+}
+
+void Image2D::SetUVPos(DirectX::XMFLOAT2& uvpos)
+{
+	m_UVpos.f = uvpos;
+}
+
+void Image2D::SetUVPos(CVector2& uvpos)
+{
+	m_UVpos = uvpos;
+}
+
+void Image2D::SetUVSize(DirectX::XMFLOAT2& uvsize)
+{
+	m_UVsize.f = uvsize;
+}
+
+void Image2D::SetUVSize(CVector2& uvsize)
+{
+	m_UVsize = uvsize;
+}
+
+void Image2D::SetVertexShader(VertexShader* pVS)
+{
+	if (m_pVertexShader != nullptr)
+	{
+		delete m_pVertexShader;
+		m_pVertexShader = nullptr;
+	}
+
+	m_pVertexShader = pVS;
+}
+
+void Image2D::SetPixelShader(PixelShader* pPS)
+{
+	if (m_pPixelShader != nullptr)
+	{
+		delete m_pPixelShader;
+		m_pPixelShader = nullptr;
+	}
+
+	m_pPixelShader = pPS;
 }

@@ -78,7 +78,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)\imgui;$(ProjectDir)\install_msvc2017\include\EffekseerRendererDX11;$(ProjectDir)\install_msvc2017\include\Effekseer;$(ProjectDir);$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)imgui;$(ProjectDir)\install_msvc2017\include\EffekseerRendererDX11;$(ProjectDir)\install_msvc2017\include\Effekseer;$(ProjectDir);$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjcetDir)\install_msvc2017\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -122,7 +122,7 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp14</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\s-yuy\Desktop\二年生\DX22\冬休みDXβ\DX22Base\DX22Base\DX22Base\install_msvc2017\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -170,6 +170,7 @@
     <ClCompile Include="Character_AirMoveState.cpp" />
     <ClCompile Include="Character_AttackState.cpp" />
     <ClCompile Include="Character_Base.cpp" />
+    <ClCompile Include="Character_DamageUI.cpp" />
     <ClCompile Include="Character_DashState.cpp" />
     <ClCompile Include="Character_DownState.cpp" />
     <ClCompile Include="Character_IdleState.cpp" />
@@ -225,6 +226,7 @@
     <ClInclude Include="CharacterStateWindow.h" />
     <ClInclude Include="Character_00.h" />
     <ClInclude Include="Character_Base.h" />
+    <ClInclude Include="Character_DamageUI.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="DirectX.h" />

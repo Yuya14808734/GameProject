@@ -64,7 +64,7 @@ void Character::JumpUpdate()
 		ChangeAttack(Character::ATTACK::ATTACK_AIRN);	//弱の設定
 	}
 
-	m_Velocity.y += m_JumpParameter.m_JumpUpGravity;		//重力を掛ける
+	m_Velocity.y *= m_JumpParameter.m_JumpUpReduction;		//重力を掛ける
 
 	//重力制御(最大の落下速度になったら)
 	if (m_Velocity.y < m_JumpParameter.m_DefaultFallSpeed)
@@ -73,7 +73,7 @@ void Character::JumpUpdate()
 	}
 
 	//落下し始めたら
-	if (m_Velocity.y < 0.1f)
+	if (m_Velocity.y < m_JumpParameter.m_ChangeFallSpeed)
 	{
 		ChangeState(Character::STATE::AIRMOVE);
 	}

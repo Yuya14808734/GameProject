@@ -62,16 +62,17 @@ public:
 
 	struct JUMPPARAMETER
 	{
-		int		m_MaxJumpCount = 0;		//ジャンプできる最大数
-		int		m_MiniJumpPushButtonCount = 0;		//小ジャンプするときのフレーム
-		int		m_JumpChargeCount = 0;		//ジャンプするまでのチャージ時間
-		float	m_FirstMiniJumpPower = 0.0f;		//小ジャンプをするときの力
+		int		m_MaxJumpCount = 0;				//ジャンプできる最大数
+		int		m_MiniJumpPushButtonCount = 0;	//小ジャンプするときのフレーム
+		int		m_JumpChargeCount = 0;			//ジャンプするまでのチャージ時間
+		float	m_FirstMiniJumpPower = 0.0f;	//小ジャンプをするときの力
 		float	m_FirstJumpPower = 0.0f;		//ジャンプするときの力
 		float	m_SecondJumpPower = 0.0f;		//二回目のジャンプの力
-		float	m_JumpUpGravity = 0.0f;		//ジャンプして上に上がるときの重力
+		float	m_JumpUpReduction = 0.0f;		//ジャンプして上に上がるときの重力
 		float	m_FallDownGravity = 0.0f;		//ジャンプし終わって下に下がるときの重力
 		float	m_DefaultFallSpeed = 0.0f;		//最大落下速度
 		float	m_SpeedUpFallSpeed = 0.0f;		//落下中に下を押した場合の落下量
+		float	m_ChangeFallSpeed = 0.0f;		//落下に変わるときのスピード
 	};
 
 	struct BLOWAWAYPARAMETER
@@ -230,7 +231,7 @@ protected:
 	virtual void HitGround() {};	//地面に当たった時に呼ばれる
 	virtual void HitWall() {};		//壁に当たった時に呼ぶ
 
-protected:
+public:
 	//===============================================================================
 	// パラメータ一覧
 	//===============================================================================

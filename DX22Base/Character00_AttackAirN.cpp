@@ -24,7 +24,6 @@ void Character_00::AttackAirN_Init()
 	m_CharacterModel.PlayAnime("WAIT04", true);
 
 	m_MoveVector = CVector3::GetZero();
-	m_Velocity.y = 0.5f;
 }
 
 void Character_00::AttackAirN_Update()

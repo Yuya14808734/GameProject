@@ -124,9 +124,6 @@
     <Filter Include="ソース ファイル\04_Game\05_Base\00_CharacterBase\00_State">
       <UniqueIdentifier>{7c58496e-fcde-468b-a9ba-c2a5f19e4b63}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\04_Game\05_Base\00_CharacterBase\01_Attack">
-      <UniqueIdentifier>{a5b8584f-7582-43e0-bb7a-5d172fdd8091}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\04_Game\05_Base\02_StageBase">
       <UniqueIdentifier>{d5d82284-2b32-42fe-9fa8-746dceeac89c}</UniqueIdentifier>
     </Filter>
@@ -151,6 +148,18 @@
     <Filter Include="ヘッダー ファイル\04_Game\06_MiniWindow">
       <UniqueIdentifier>{4cfb9f31-4633-42e9-bc80-4905c869e09c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\04_Game\05_Base\00_CharacterBase\01_UI">
+      <UniqueIdentifier>{17e7d51e-7c35-478b-8878-1123591835b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\05_Base\00_CharacterBase\01_UI">
+      <UniqueIdentifier>{f154daf0-9f8c-4eed-823e-956135b06a58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\VertexShader">
+      <UniqueIdentifier>{5db16706-fd10-4598-8ef5-99f7d34e7e7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\PixelShader">
+      <UniqueIdentifier>{b3215dd2-0df8-4d44-b6cf-044763a2b681}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BlendState.cpp">
@@ -164,9 +173,6 @@
     </ClCompile>
     <ClCompile Include="DirectXTex\Texture.cpp">
       <Filter>ソース ファイル\01_DirectX</Filter>
-    </ClCompile>
-    <ClCompile Include="WinUtil.cpp">
-      <Filter>ソース ファイル\02_System</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>ソース ファイル\02_System</Filter>
@@ -339,6 +345,12 @@
     <ClCompile Include="CharacterStateWindow.cpp">
       <Filter>ソース ファイル\04_Game\06_MiniWindow</Filter>
     </ClCompile>
+    <ClCompile Include="WinUtil.cpp">
+      <Filter>ソース ファイル\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Character_DamageUI.cpp">
+      <Filter>ソース ファイル\04_Game\05_Base\00_CharacterBase\01_UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -470,11 +482,9 @@
     <ClInclude Include="CharacterStateWindow.h">
       <Filter>ヘッダー ファイル\04_Game\06_MiniWindow</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="ModelVS.hlsl">
-      <Filter>ソース ファイル\03_Assets\Model</Filter>
-    </FxCompile>
+    <ClInclude Include="Character_DamageUI.h">
+      <Filter>ヘッダー ファイル\04_Game\05_Base\00_CharacterBase\01_UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui\imgui.natstepfilter">
@@ -485,5 +495,10 @@
     <Natvis Include="imgui\imgui.natvis">
       <Filter>リソース ファイル\imgui</Filter>
     </Natvis>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="ModelVS.hlsl">
+      <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

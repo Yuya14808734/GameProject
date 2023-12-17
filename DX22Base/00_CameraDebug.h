@@ -14,5 +14,4 @@ public:
 
 private:
 	Character* m_pCharacter = nullptr;
-	CVector3 m_AddPos;
 };
