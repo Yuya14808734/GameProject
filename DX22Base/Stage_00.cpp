@@ -12,6 +12,7 @@ void Stage00::Init()
 	const int StageDepthZ = 1;
 	CVector3 BlockSize = CVector3(2.0f, 2.0f, 2.0f);
 
+	//ステージ情報
 	int stage[StageWidthX * StageHeightY] =
 	{
 		1,1,1,1,1,1,1,1,1,1,
@@ -31,6 +32,7 @@ void Stage00::Init()
 		0.0f
 	);
 
+	//ブロック一つ一つの位置の設定
 	for (int x = 0; x < StageWidthX; x++)
 	{
 		for (int y = 0; y < StageHeightY; y++)
@@ -80,6 +82,17 @@ void Stage00::Init()
 			}
 		}
 	}
+
+
+	//キャラクターの最初の位置の設定
+	CVector3 characterstartpos;
+	characterstartpos = CVector3(-5.0f, 0.0f, 0.0f);
+	m_CharacterStartPos.push_back(characterstartpos);
+	characterstartpos = CVector3(5.0f, 0.0f, 0.0f);
+	m_CharacterStartPos.push_back(characterstartpos);
+	characterstartpos = CVector3(0.0f, 0.0f, 0.0f);
+	m_CharacterStartPos.push_back(characterstartpos);
+
 }
 
 void Stage00::Uninit()

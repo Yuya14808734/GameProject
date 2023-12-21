@@ -1,7 +1,9 @@
 #include "Character_Base.h"
 #include "Attack_Base.h"
+#include "Scene.h"
+#include "00_SceneGame.h"
 
-int Character::m_NewPlayerBit = 0x00;
+int Character::m_NewPlayerBit = 0x01;
 
 void Character::InitPlayerBit()
 {
@@ -18,7 +20,12 @@ int Character::GetNewPlayerBit()
 void Character::Character_Init()
 {
 	m_PlayerBit = GetNewPlayerBit();
+	int PlayerNum = static_cast<int>(log2f(static_cast<float>(m_PlayerBit))) + 1;
 
+	//キャラクターの番号によってステージの場所を変える
+	std::vector<CVector3>* startPosV = static_cast<SceneGame*>(CScene::GetScene())->GetStage()->GetCharacterStartPos();
+	m_pos = (*startPosV)[PlayerNum - 1];
+	
 	Init();
 
 	m_ChangeState = false;
@@ -198,6 +205,9 @@ void Character::Character_Update()
 	}
 
 	m_CharacterCollider.SetPos(m_pos);
+
+	m_DamageUI.GetDamageUI()->SetNumber(static_cast<int>(m_DamagePercentage));
+	m_DamageUI.Update();
 }
 
 void Character::Character_Draw()
@@ -207,6 +217,11 @@ void Character::Character_Draw()
 	m_CharacterModel.SetPosition(m_pos);
 	m_CharacterModel.SetRotate(m_rotate);
 	m_CharacterModel.Draw();
+}
+
+void Character::Character_UIDraw()
+{
+	m_DamageUI.Draw();
 }
 
 int Character::GetCharacterBit()

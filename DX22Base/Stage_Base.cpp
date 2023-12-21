@@ -42,3 +42,8 @@ std::vector<BoxCollider>* Stage::GetStageCollider() const
 {
 	return const_cast<std::vector<BoxCollider>*>(&m_StageCollider);
 }
+
+std::vector<CVector3>* Stage::GetCharacterStartPos() const
+{
+	return const_cast<std::vector<CVector3>*>(&m_CharacterStartPos);
+}

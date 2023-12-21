@@ -50,8 +50,6 @@ void Character_00::Init()
 
 	m_NowState = Character::STATE::IDLE;
 
-	m_pos = CVector3(0.0f, 3.0f, 0.0f);
-
 	m_CharacterCollider.SetType(BoxCollider::BOXTYPE::FOOT);
 	m_CharacterCollider.SetPos(m_pos);
 	m_CharacterCollider.SetSize(CVector3(1.0f,2.0f,1.0f));
@@ -59,6 +57,9 @@ void Character_00::Init()
 	m_stateWindow.SetCharacter(this);
 
 	m_FrameCount = 0;
+
+	m_DamageUI.GetCharacterIconUI()->SetIconTexture("Assets/CharacterImage/UnitychanImage.png");
+
 }
 
 void Character_00::Uninit()
@@ -68,7 +69,7 @@ void Character_00::Uninit()
 
 void Character_00::Update()
 {
-	m_FrameCount++;
+
 }
 
 void Character_00::Draw()

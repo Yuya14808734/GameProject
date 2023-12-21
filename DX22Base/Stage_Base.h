@@ -13,6 +13,7 @@ public:
 	void Stage_Draw();		//キャラクターの描画
 	void StageColliderDraw();	//ステージのコライダーの描画
 	std::vector<BoxCollider>* GetStageCollider() const;
+	std::vector<CVector3>* GetCharacterStartPos() const;
 
 protected:
 
@@ -27,6 +28,7 @@ protected:
 
 protected:
 	std::vector<BoxCollider> m_StageCollider;
+	std::vector<CVector3> m_CharacterStartPos;
 	std::vector<ModelDrawer> m_ModelDrawer;
 
 };

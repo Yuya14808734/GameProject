@@ -34,6 +34,11 @@ void Image2D::PrevDraw()
 
 void Image2D::Draw()
 {
+	if (m_pTexture == nullptr)
+	{
+		return;
+	}
+
 	PrevDraw();
 
 	//シェーダーの変更
@@ -105,42 +110,61 @@ void Image2D::SetTexture(const char* FilePath)
 	LoadTextureFromFile(FilePath, &m_pTexture);
 }
 
-void Image2D::SetPos(DirectX::XMFLOAT3& pos)
+void Image2D::SetPos(const DirectX::XMFLOAT3& pos)
 {
 	m_pos.f = pos;
 }
-void Image2D::SetPos(CVector2& pos)
+void Image2D::SetPos(const CVector2& pos)
 {
 	m_pos = pos;
 }
-void Image2D::SetSize(DirectX::XMFLOAT2& size)
+const CVector2& Image2D::GetPos()
+{
+	return m_pos;
+}
+void Image2D::SetSize(const DirectX::XMFLOAT2& size)
 {
 	m_size.f = size;
 }
 
-void Image2D::SetSize(CVector2& size)
+void Image2D::SetSize(const CVector2& size)
 {
 	m_size = size;
 }
 
-void Image2D::SetUVPos(DirectX::XMFLOAT2& uvpos)
+const CVector2& Image2D::GetSize()
+{
+	return m_size;
+}
+
+void Image2D::SetUVPos(const DirectX::XMFLOAT2& uvpos)
 {
 	m_UVpos.f = uvpos;
 }
 
-void Image2D::SetUVPos(CVector2& uvpos)
+void Image2D::SetUVPos(const CVector2& uvpos)
 {
 	m_UVpos = uvpos;
 }
 
-void Image2D::SetUVSize(DirectX::XMFLOAT2& uvsize)
+const CVector2& Image2D::GetUVPos()
+{
+	return m_UVpos;
+}
+
+void Image2D::SetUVSize(const DirectX::XMFLOAT2& uvsize)
 {
 	m_UVsize.f = uvsize;
 }
 
-void Image2D::SetUVSize(CVector2& uvsize)
+void Image2D::SetUVSize(const CVector2& uvsize)
 {
 	m_UVsize = uvsize;
+}
+
+const CVector2& Image2D::GetUVSize()
+{
+	return m_UVsize;
 }
 
 void Image2D::SetVertexShader(VertexShader* pVS)

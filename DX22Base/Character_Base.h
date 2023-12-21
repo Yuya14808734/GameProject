@@ -3,6 +3,7 @@
 #include "Collider.h"
 #include "ModelDrawer.h"
 #include <vector>
+#include "Character_DamageUI.h"
 
 class Character
 {
@@ -100,6 +101,7 @@ public:
 	void Character_Uninit();							//キャラクターの終了処理
 	void Character_Update();							//キャラクターの更新
 	void Character_Draw();								//キャラクターの描画
+	void Character_UIDraw();
 	//==========================================================================
 	int GetCharacterBit();								//キャラクター番号の取得
 	const Character::STATE& GetState() const;			//今の状態の取得
@@ -333,4 +335,9 @@ protected:
 	bool m_HitGround = false;				//前のフレームで地面に当たったか
 	bool m_HitCeiling = false;				//前のフレームで天井に当たったか
 	bool m_HitWall = false;					//前のフレームで壁に当たったか
+
+	//-------------------------------------------------------------------------------
+	//ステージに当たった判定に使う変数
+	//-------------------------------------------------------------------------------
+	Character_DamageUI m_DamageUI;
 };

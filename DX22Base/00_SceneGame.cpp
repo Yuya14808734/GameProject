@@ -8,45 +8,31 @@
 #include "Character_00.h"
 
 bool ColliderDraw = false;
-ModelDrawer errorModel;
-ModelDrawer UnityChanModel;
-float AnimeTime = 0.0f;
 
 void SceneGame::Init()
 {
-#if 1
+	//=====<カメラの生成>=====
 	CameraManager::GetInstance().CreateCamera(new CameraDebug(), "DebugCamera");
 	CameraManager::GetInstance().SetSceneCamera("DebugCamera");
 
+	//=====<ステージの作成>=====
 	m_pStage = new Stage00();
 	m_pStage->Stage_Init();
+
+	//=====<キャラクターの生成>=====
+	Character::InitPlayerBit();
 	m_Characters.push_back(new Character_00());
-	m_Characters[0]->Character_Init();
+	m_Characters.push_back(new Character_00());
 
-#else
-
-	//モデルデバッグ用
-	//ユニティちゃんの読み込み
-	ModelDrawer::LoadModel("Assets/unitychan/unitychan.fbx", "UnityChan", 0.003f);
-	ModelDrawer::LoadAnime("Assets/unitychan/walk.fbx", "Walk", "UnityChan");
-	ModelDrawer::LoadModel("Assets/Character00/Model02.fbx", "Character00", 0.001f);
-	//エラーが出るというか描画してくれないモデルの描画
-	errorModel.SetModel("Character00");
-	errorModel.SetPosition(CVector3::GetZero());
-	errorModel.SetScale({ 1.0f, 1.0f, 1.0f });
-	//ユニティちゃんの描画
-	UnityChanModel.SetModel("UnityChan");
-	UnityChanModel.PlayAnime("Walk", true);
-	AnimeTime = 0.0f;
-	UnityChanModel.SetPosition(CVector3(1.0f, 0.0f, 0.0f));
-	UnityChanModel.SetScale(CVector3(5.0f, 5.0f, 5.0f));
-	UnityChanModel.SetRotate(CVector3(0.0f,180.0f,0.0f));
-
-#endif // 1
+	for (Character* pCharacter : m_Characters)
+	{
+		pCharacter->Character_Init();
+	}
 }
 
 void SceneGame::Uninit()
 {
+	//=====<キャラクターの削除>=====
 	for (auto it = m_Characters.begin(); it != m_Characters.end();)
 	{
 		(*it)->Character_Uninit();
@@ -54,8 +40,11 @@ void SceneGame::Uninit()
 		it = m_Characters.erase(it);
 	}
 
+	//=====<ステージの削除>=====
 	m_pStage->Stage_Uninit();
 	delete m_pStage;
+
+	//=====<カメラの削除>=====
 	CameraManager::GetInstance().DestroyCamera("DebugCamera", true);
 }
 
@@ -74,6 +63,7 @@ void SceneGame::Update()
 	for (std::vector<Character*>::iterator it_first = m_Characters.begin();
 		it_first != m_Characters.end();it_first++)
 	{
+		break;
 		std::vector<Character*>::iterator it_second = it_first + 1;
 		for (; it_second != m_Characters.end(); it_second++)
 		{
@@ -279,13 +269,16 @@ void SceneGame::Update()
 
 void SceneGame::Draw()
 {
-
-#if 1
+	//=====<ステージの描画>=====
 	m_pStage->Stage_Draw();
+
+	//=====<キャラクターの描画>=====
 	for (Character* copy : m_Characters)
 	{
 		copy->Character_Draw();
 	}
+
+	//=====<当たり判定の描画>=====
 	if (IsKeyTrigger(VK_RETURN))
 	{
 		ColliderDraw = !ColliderDraw;
@@ -317,17 +310,15 @@ void SceneGame::Draw()
 		}
 	}
 
-#else
-	//モデルデバッグ用
-	errorModel.Draw();
-	AnimeTime += 0.01f;
-	if (AnimeTime > 1.0f)
+	//=====<UIの描画>=====
+	EnableDepth(false);
+
+	for (Character* copy : m_Characters)
 	{
-		AnimeTime -= 1.0f;
+		copy->Character_UIDraw();
 	}
-	UnityChanModel.SetAnimeLerp(AnimeTime);
-	UnityChanModel.Draw();
-#endif // 0	
+
+	EnableDepth(true);
 }
 
 std::vector<Character*>& SceneGame::GetCharacter()

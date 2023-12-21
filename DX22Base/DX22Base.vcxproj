@@ -199,6 +199,7 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelDrawer.cpp" />
     <ClCompile Include="Model_Contents.cpp" />
+    <ClCompile Include="Number2D.cpp" />
     <ClCompile Include="Polyline.cpp" />
     <ClCompile Include="SamplerState.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -248,6 +249,7 @@
     <ClInclude Include="MiniWindow.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelDrawer.h" />
+    <ClInclude Include="Number2D.h" />
     <ClInclude Include="Polyline.h" />
     <ClInclude Include="SamplerState.h" />
     <ClInclude Include="Scene.h" />

@@ -118,26 +118,11 @@
     <Filter Include="ソース ファイル\04_Game\02_Character\Character_00\Attack">
       <UniqueIdentifier>{1389c4e0-7b3c-4bfe-ad5e-f034843aa51d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\04_Game\05_Base\00_CharacterBase">
-      <UniqueIdentifier>{c0782d59-a471-4294-91f5-eb647c37443e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\04_Game\05_Base\00_CharacterBase\00_State">
-      <UniqueIdentifier>{7c58496e-fcde-468b-a9ba-c2a5f19e4b63}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\04_Game\05_Base\02_StageBase">
-      <UniqueIdentifier>{d5d82284-2b32-42fe-9fa8-746dceeac89c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\04_Game\05_Base\01_AttackBase">
       <UniqueIdentifier>{3f17e47b-c812-47b7-827a-8e56be76482b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\05_Base\00_CharacterBase">
-      <UniqueIdentifier>{830d77a3-51fa-4890-b786-bfdf1462d361}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\04_Game\05_Base\01_AttackBase">
       <UniqueIdentifier>{893b0301-9a90-470f-9666-6b9f9f490e2a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\05_Base\02_StageBase">
-      <UniqueIdentifier>{6cdf03b3-0004-46fc-9c5a-64d707114d04}</UniqueIdentifier>
     </Filter>
     <Filter Include="リソース ファイル\imgui">
       <UniqueIdentifier>{897bffab-2655-48cf-8c8f-35ca51306cc4}</UniqueIdentifier>
@@ -148,17 +133,32 @@
     <Filter Include="ヘッダー ファイル\04_Game\06_MiniWindow">
       <UniqueIdentifier>{4cfb9f31-4633-42e9-bc80-4905c869e09c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\04_Game\05_Base\00_CharacterBase\01_UI">
-      <UniqueIdentifier>{17e7d51e-7c35-478b-8878-1123591835b2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\05_Base\00_CharacterBase\01_UI">
-      <UniqueIdentifier>{f154daf0-9f8c-4eed-823e-956135b06a58}</UniqueIdentifier>
-    </Filter>
     <Filter Include="リソース ファイル\VertexShader">
       <UniqueIdentifier>{5db16706-fd10-4598-8ef5-99f7d34e7e7d}</UniqueIdentifier>
     </Filter>
     <Filter Include="リソース ファイル\PixelShader">
       <UniqueIdentifier>{b3215dd2-0df8-4d44-b6cf-044763a2b681}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\02_Character\CharacterBase">
+      <UniqueIdentifier>{c0782d59-a471-4294-91f5-eb647c37443e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\02_Character\CharacterBase\00_State">
+      <UniqueIdentifier>{7c58496e-fcde-468b-a9ba-c2a5f19e4b63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\02_Character\CharacterBase\01_UI">
+      <UniqueIdentifier>{17e7d51e-7c35-478b-8878-1123591835b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\02_Character\CharacterBase">
+      <UniqueIdentifier>{830d77a3-51fa-4890-b786-bfdf1462d361}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\02_Character\CharacterBase\01_UI">
+      <UniqueIdentifier>{f154daf0-9f8c-4eed-823e-956135b06a58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\03_Stage\StageBase">
+      <UniqueIdentifier>{6cdf03b3-0004-46fc-9c5a-64d707114d04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\03_Stage\StageBase">
+      <UniqueIdentifier>{d5d82284-2b32-42fe-9fa8-746dceeac89c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -259,37 +259,37 @@
       <Filter>ソース ファイル\02_System</Filter>
     </ClCompile>
     <ClCompile Include="Character_Base.cpp">
-      <Filter>ソース ファイル\04_Game\05_Base\00_CharacterBase</Filter>
+      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase</Filter>
     </ClCompile>
     <ClCompile Include="Stage_Base.cpp">
-      <Filter>ソース ファイル\04_Game\05_Base\02_StageBase</Filter>
+      <Filter>ソース ファイル\04_Game\03_Stage\StageBase</Filter>
     </ClCompile>
     <ClCompile Include="Attack_Base.cpp">
       <Filter>ソース ファイル\04_Game\05_Base\01_AttackBase</Filter>
     </ClCompile>
     <ClCompile Include="Character_IdleState.cpp">
-      <Filter>ソース ファイル\04_Game\05_Base\00_CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="Character_WalkState.cpp">
-      <Filter>ソース ファイル\04_Game\05_Base\00_CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="Character_DashState.cpp">
-      <Filter>ソース ファイル\04_Game\05_Base\00_CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="Character_JumpState.cpp">
-      <Filter>ソース ファイル\04_Game\05_Base\00_CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="Character_AirMoveState.cpp">
-      <Filter>ソース ファイル\04_Game\05_Base\00_CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="Character_AttackState.cpp">
-      <Filter>ソース ファイル\04_Game\05_Base\00_CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="Character_SmashState.cpp">
-      <Filter>ソース ファイル\04_Game\05_Base\00_CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="Character_DownState.cpp">
-      <Filter>ソース ファイル\04_Game\05_Base\00_CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="Character00_Attack11.cpp">
       <Filter>ソース ファイル\04_Game\02_Character\Character_00\Attack</Filter>
@@ -316,7 +316,7 @@
       <Filter>ソース ファイル\04_Game\02_Character\Character_00\Attack</Filter>
     </ClCompile>
     <ClCompile Include="Character_JumpInState.cpp">
-      <Filter>ソース ファイル\04_Game\05_Base\00_CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="imgui\imgui.cpp">
       <Filter>リソース ファイル\imgui</Filter>
@@ -349,7 +349,10 @@
       <Filter>ソース ファイル\00_Main</Filter>
     </ClCompile>
     <ClCompile Include="Character_DamageUI.cpp">
-      <Filter>ソース ファイル\04_Game\05_Base\00_CharacterBase\01_UI</Filter>
+      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\01_UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Number2D.cpp">
+      <Filter>ソース ファイル\03_Assets\2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -441,7 +444,7 @@
       <Filter>ヘッダー ファイル\02_System</Filter>
     </ClInclude>
     <ClInclude Include="Stage_Base.h">
-      <Filter>ヘッダー ファイル\04_Game\05_Base\02_StageBase</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Stage\StageBase</Filter>
     </ClInclude>
     <ClInclude Include="Attack_Base.h">
       <Filter>ヘッダー ファイル\04_Game\05_Base\01_AttackBase</Filter>
@@ -450,7 +453,7 @@
       <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00</Filter>
     </ClInclude>
     <ClInclude Include="Character_Base.h">
-      <Filter>ヘッダー ファイル\04_Game\05_Base\00_CharacterBase</Filter>
+      <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase</Filter>
     </ClInclude>
     <ClInclude Include="imgui\imconfig.h">
       <Filter>リソース ファイル\imgui</Filter>
@@ -483,7 +486,10 @@
       <Filter>ヘッダー ファイル\04_Game\06_MiniWindow</Filter>
     </ClInclude>
     <ClInclude Include="Character_DamageUI.h">
-      <Filter>ヘッダー ファイル\04_Game\05_Base\00_CharacterBase\01_UI</Filter>
+      <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase\01_UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Number2D.h">
+      <Filter>ヘッダー ファイル\03_Assets\2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
