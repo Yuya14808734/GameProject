@@ -23,7 +23,7 @@ void Character_00::Attack13_Init()
 		break;
 	}
 
-	AttackParam Attack;
+	ATTACKPARAM Attack;
 	Attack.m_Use = false;
 	Attack.m_BoxCollider.CreateBox(BoxCollider::BOXTYPE::CENTER,
 		ColliderPos, CVector3(1.7f, 2.7f, 1.0f));

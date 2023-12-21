@@ -1,7 +1,5 @@
 #include "Character_Base.h"
-#include "Input.h"
 #include "Attack_Base.h"
-#include "XboxKeyboard.h"
 
 void Character::DashInit()
 {
@@ -22,9 +20,9 @@ void Character::DashUpdate()
 	}
 
 	bool NoButton = true;
-	float NowX = GetPressLeftStick().x * m_MoveParameter.m_WalkSpeed;
+	float NowX = m_Controller.GetMoveInput().x * m_MoveParameter.m_WalkSpeed;
 
-	if(NowX > 0.0f || IsKeyPress(VK_RIGHT))
+	if(NowX > 0.0f)
 	{
 		if (m_MoveVector.x < -0.01f)
 		{
@@ -43,7 +41,7 @@ void Character::DashUpdate()
 		NoButton = false;
 	}
 
-	if(NowX < 0.0f || IsKeyPress(VK_LEFT))
+	if(NowX < 0.0f)
 	{
 		if (m_MoveVector.x > 0.01f)
 		{
@@ -77,7 +75,7 @@ void Character::DashUpdate()
 	}
 
 	//ƒWƒƒƒ“ƒv
-	if (InputTriggerKey(PadButton::RIGHT_SHOULDER) || IsKeyPress(VK_UP))
+	if (m_Controller.GetJumpTrigger())
 	{
 		m_Velocity.x = m_MoveVector.x;
 		ChangeState(Character::STATE::JUMPIN);

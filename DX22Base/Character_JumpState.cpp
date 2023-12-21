@@ -1,7 +1,4 @@
 #include "Character_Base.h"
-#include "Input.h"
-#include "Attack_Base.h"
-#include "XboxKeyboard.h"
 
 void Character::JumpInit()
 {
@@ -35,31 +32,21 @@ void Character::JumpUpdate()
 
 	bool OnButton = false;
 
-	m_MoveVector.x =  GetPressLeftStick().x * m_MoveParameter.m_AirSideMoveSpeed;
-
-	if (IsKeyPress(VK_RIGHT))
-	{
-		m_MoveVector.x = m_MoveParameter.m_AirSideMoveSpeed;
-	}
-
-	if (IsKeyPress(VK_LEFT))
-	{
-		m_MoveVector.x = -m_MoveParameter.m_AirSideMoveSpeed;
-	}
+	m_MoveVector.x =  m_Controller.GetMoveInput().x * m_MoveParameter.m_AirSideMoveSpeed;
 
 	m_Velocity.x *= m_MoveParameter.m_AirDrag;	//‹ó‹C’ïR‚ğŠ|‚¯‚é
 
 	//‚à‚¤ˆê“xƒWƒƒƒ“ƒv‚ª‚Å‚«‚é
 	if (m_JumpCount < m_JumpParameter.m_MaxJumpCount)
 	{
-		if (InputTriggerKey(PadButton::RIGHT_SHOULDER) || IsKeyTrigger(VK_UP))
+		if (m_Controller.GetJumpTrigger())
 		{
 			ChangeState(Character::STATE::JUMP);
 		}
 	}
 
 	//UŒ‚
-	if (IsKeyPress('K') || InputPressKey(PadButton::A_BUTTON))
+	if (m_Controller.GetAttack())
 	{
 		ChangeAttack(Character::ATTACK::ATTACK_AIRN);	//ã‚Ìİ’è
 	}

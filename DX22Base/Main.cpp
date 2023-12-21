@@ -51,7 +51,7 @@ void MainInit()
 	{
 		
 	}
-
+	InputXPad::XpadInit();
 	MiniWindow::WindowInit();
 	EffectManager::EffectInit();
 
@@ -75,7 +75,7 @@ void MainLoop()
 	//アップデート
 	//====================================================
 	UpdateInput();
-	UpdateGamePad();
+	InputXPad::XpadUpdate();
 
 	g_pGame->Update();
 

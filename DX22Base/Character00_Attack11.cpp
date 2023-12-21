@@ -25,7 +25,7 @@ void Character_00::Attack11_Init()
 		break;
 	}
 
-	AttackParam Attack;
+	ATTACKPARAM Attack;
 	Attack.m_Use = false;
 	Attack.m_BoxCollider.CreateBox(BoxCollider::BOXTYPE::CENTER,
 		ColliderPos, CVector3(1.7f, 2.7f, 1.0f));
@@ -65,7 +65,7 @@ void Character_00::Attack11_Update()
 	if (m_AttackTime > 15 && m_AttackTime < EndFrame)
 	{
 		//UŒ‚
-		if (IsKeyPress('K') || InputPressKey(PadButton::A_BUTTON))
+		if (m_Controller.GetAttack())
 		{
 			ChangeAttack(Character::ATTACK::ATTACK_12);	//Žã‚ÌÝ’è
 		}

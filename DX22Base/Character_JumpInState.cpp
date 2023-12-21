@@ -21,7 +21,7 @@ void Character::JumpInUpdate()
 	m_JumpCharageCount++;
 
 	//ジャンプボタンの押している長さによってジャンプしている力を変えてやる
-	if (InputPressKey(PadButton::RIGHT_SHOULDER) || IsKeyPress(VK_UP))
+	if (m_Controller.GetJumpTrigger())
 	{
 		if (m_JumpCharageCount >= m_JumpParameter.m_MiniJumpPushButtonCount)
 		{

@@ -26,6 +26,22 @@ void Character::Character_Init()
 	std::vector<CVector3>* startPosV = static_cast<SceneGame*>(CScene::GetScene())->GetStage()->GetCharacterStartPos();
 	m_pos = (*startPosV)[PlayerNum - 1];
 	
+	if (PlayerNum == 1)
+	{
+		m_Controller.SetController(
+			PlayerController::PLAYCONTROLLERTYPE::KEYBOARD,
+			PlayerNum - 1
+		);
+	}
+	else
+	{
+		m_Controller.SetController(
+			PlayerController::PLAYCONTROLLERTYPE::GAMEPAD,
+			PlayerNum - 1
+		);
+	}
+
+
 	Init();
 
 	m_ChangeState = false;
@@ -323,7 +339,7 @@ BoxCollider* Character::GetCharacterCollider() const
 	return const_cast<BoxCollider*>(&m_CharacterCollider);
 }
 
-std::vector<Character::AttackParam>& Character::GetAttackCollider()
+std::vector<Character::ATTACKPARAM>& Character::GetAttackCollider()
 {
 	return m_AttackCollider;
 }

@@ -1,7 +1,4 @@
 #include "Character_Base.h"
-#include "Input.h"
-#include "Attack_Base.h"
-#include "XboxKeyboard.h"
 
 void Character::WalkInit()
 {
@@ -24,17 +21,7 @@ void Character::WalkUpdate()
 
 	bool NoButton = true;
 
-	m_MoveVector.x = GetPressLeftStick().x * m_MoveParameter.m_WalkSpeed;
-
-	if(IsKeyPress(VK_RIGHT))
-	{
-		m_MoveVector.x = m_MoveParameter.m_WalkSpeed;
-	}
-
-	if(IsKeyPress(VK_LEFT))
-	{
-		m_MoveVector.x = -m_MoveParameter.m_WalkSpeed;
-	}
+	m_MoveVector.x = m_Controller.GetMoveInput().x * m_MoveParameter.m_WalkSpeed;
 
 	if (m_MoveVector.x != 0.0f)
 	{
@@ -62,22 +49,22 @@ void Character::WalkUpdate()
 	}
 
 	//çUåÇ
-	if (IsKeyTrigger('K') || InputTriggerKey(PadButton::A_BUTTON))
+	if (m_Controller.GetAttack())
 	{
 		ChangeAttack(Character::ATTACK::ATTACK_S2);	//â°ã≠ÇÃê›íË
 	}
 
 	//ÉWÉÉÉìÉv
-	if (InputTriggerKey(PadButton::RIGHT_SHOULDER) || IsKeyTrigger(VK_UP))
+	if (m_Controller.GetJumpTrigger())
 	{
 		ChangeState(Character::STATE::JUMPIN);
 	}
 
 	//ÇµÇ·Ç™Ç›Ç™Ç†ÇÍÇŒ
-	if (IsKeyPress(VK_DOWN))
+	/*if (IsKeyPress(VK_DOWN))
 	{
 
-	}
+	}*/
 
 	m_Velocity.y += m_JumpParameter.m_FallDownGravity;
 

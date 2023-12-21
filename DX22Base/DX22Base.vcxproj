@@ -170,6 +170,7 @@
     <ClCompile Include="Character_AirMoveState.cpp" />
     <ClCompile Include="Character_AttackState.cpp" />
     <ClCompile Include="Character_Base.cpp" />
+    <ClCompile Include="Player_Controller.cpp" />
     <ClCompile Include="Character_DamageUI.cpp" />
     <ClCompile Include="Character_DashState.cpp" />
     <ClCompile Include="Character_DownState.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="CharacterStateWindow.h" />
     <ClInclude Include="Character_00.h" />
     <ClInclude Include="Character_Base.h" />
+    <ClInclude Include="Player_Controller.h" />
     <ClInclude Include="Character_DamageUI.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="ConstantBuffer.h" />

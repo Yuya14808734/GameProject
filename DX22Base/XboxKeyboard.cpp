@@ -2,30 +2,44 @@
 #include <math.h>
 
 #define RightStickDeadZone (5000)
+InputXPad InputXPad::m_XInputArray[4];
 
-DWORD dwResult;
-XINPUT_STATE state;     //XINPUT_STATE型の構造体宣言(コントローラーの変更があったか、現在の状態)
-XINPUT_STATE oldstate;
+//====================================================================
+//用途　：コントローラーの状態を取得(更新)
+//戻り値：Indexで入れた数字の番号を返します
+//注意：入れた番号のコントローラーがない場合nullptrが帰ってきます。
+//=====================================================================
+InputXPad* InputXPad::GetXPad(int index)
+{
+	return &m_XInputArray[index];
+}
 
-XINPUT_VIBRATION vibration;
-int Vibtime = 0;
-bool Stop = false;
+void InputXPad::XpadInit()
+{
+	m_XInputArray[0].m_ControllerNum = 0;
+	m_XInputArray[1].m_ControllerNum = 1;
+	m_XInputArray[2].m_ControllerNum = 2;
+	m_XInputArray[3].m_ControllerNum = 3;
+}
 
-DirectX::XMFLOAT2 NowRightStickValue = DirectX::XMFLOAT2(0.0f,0.0f);
-DirectX::XMFLOAT2 OldRightStickValue = DirectX::XMFLOAT2(0.0f, 0.0f);
-DirectX::XMFLOAT2 NowLeftStickValue = DirectX::XMFLOAT2(0.0f, 0.0f);
-DirectX::XMFLOAT2 OldLeftStickValue = DirectX::XMFLOAT2(0.0f, 0.0f);
-float RightStickMoveValue = 0.0f;
-float LeftStickMoveValue = 0.0f;
+void InputXPad::XpadUpdate()
+{
+	for (int i = 0; i < 4; i++)
+	{
+		m_XInputArray[i].UpdateGamePad();
+	}
+}
 
-
-
-bool IsPadConnect()
+//====================================================================
+//用途　：コントローラーの状態を取得
+//戻り値：パッドが繋がっているか
+//=====================================================================
+bool InputXPad::IsPadConnect()
 {
 	bool Connect = false;
-	if (dwResult == ERROR_SUCCESS)
+	if (m_dwResult == ERROR_SUCCESS)
 	{
-		Connect = (dwResult != ERROR_DEVICE_NOT_CONNECTED);
+		Connect = (m_dwResult != ERROR_DEVICE_NOT_CONNECTED);
 	}
 	return Connect;
 }
@@ -36,28 +50,25 @@ bool IsPadConnect()
 //使い方：main.cppかGame.cppのUpdate関数の初めのほうに書いてください
 //注意点：現在コントローラーは一台のみの設定にしてあります
 //=====================================================================
-void UpdateGamePad()
+void InputXPad::UpdateGamePad()
 {
-	ZeroMemory(&oldstate, sizeof(XINPUT_STATE));
-	oldstate = state;
+	ZeroMemory(&m_oldstate, sizeof(XINPUT_STATE));
+	m_oldstate = m_state;
 	static int Count = 0;
 
 	//前のフレームでスティックの倒した量
-	OldRightStickValue = GetPressRightStick();
-	OldLeftStickValue = GetPressLeftStick();
+	m_OldRightStickValue = GetPressRightStick();
+	m_OldLeftStickValue = GetPressLeftStick();
 
-	for (DWORD i = 0; i < 1; i++)
-	{		                      
-		ZeroMemory(&state, sizeof(XINPUT_STATE));      //XINPUT_STATE型のメモリ初期化
+	ZeroMemory(&m_state, sizeof(XINPUT_STATE));      //XINPUT_STATE型のメモリ初期化
 
-	    //XInputからコントローラの情報を取得(絶対消さないで)
-		dwResult = XInputGetState(i, &state);    //引数(コントローラーのインデックス、 XINPUT_STATE構造体へのポインタ)		
+    //XInputからコントローラの情報を取得(絶対消さないで)
+	m_dwResult = XInputGetState(m_ControllerNum, &m_state);    //引数(コントローラーのインデックス、 XINPUT_STATE構造体へのポインタ)		
 
-		//バイブレーションの設定
-		ZeroMemory(&vibration, sizeof(XINPUT_VIBRATION));
-		vibration.wLeftMotorSpeed = 0;                       //バイブレーションの強さ設定(とりあえず適当な値で初期化しています)
-		vibration.wRightMotorSpeed = 0;
-	}
+	//バイブレーションの設定
+	ZeroMemory(&vibration, sizeof(XINPUT_VIBRATION));
+	vibration.wLeftMotorSpeed = 0;                       //バイブレーションの強さ設定(とりあえず適当な値で初期化しています)
+	vibration.wRightMotorSpeed = 0;
 
 	if (Stop != false)
 	{
@@ -76,13 +87,13 @@ void UpdateGamePad()
 	SetPressLeftStick();
 
 	//スティックが前のフレームからどれくらい動いたのかを設定
-	float leftmoveX = NowLeftStickValue.x - OldLeftStickValue.x;
-	float leftmoveY = NowLeftStickValue.y - OldLeftStickValue.y;
-	LeftStickMoveValue = sqrtf((leftmoveX * leftmoveX) + (leftmoveY * leftmoveY));
+	float leftmoveX = m_NowLeftStickValue.x - m_OldLeftStickValue.x;
+	float leftmoveY = m_NowLeftStickValue.y - m_OldLeftStickValue.y;
+	m_LeftStickMoveValue = sqrtf((leftmoveX * leftmoveX) + (leftmoveY * leftmoveY));
 
-	float rightmoveX = NowRightStickValue.x - OldRightStickValue.x;
-	float rightmoveY = NowRightStickValue.y - OldRightStickValue.y;
-	RightStickMoveValue = sqrtf((rightmoveX * rightmoveX) + (rightmoveY * rightmoveY));
+	float rightmoveX = m_NowRightStickValue.x - m_OldRightStickValue.x;
+	float rightmoveY = m_NowRightStickValue.y - m_OldRightStickValue.y;
+	m_RightStickMoveValue = sqrtf((rightmoveX * rightmoveX) + (rightmoveY * rightmoveY));
 }
 
 //====================================================================
@@ -91,59 +102,59 @@ void UpdateGamePad()
 //使い方：if文で囲ってあげるとよろしいかと
 //注意点：なし
 //=====================================================================
-int InputPressKey(PadButton key)
+int InputXPad::InputPressKey(PadButton key)
 {
 	switch (key)
 	{
 	case PadButton::A_BUTTON:
-		return (state.Gamepad.wButtons & XINPUT_GAMEPAD_A);
+		return (m_state.Gamepad.wButtons & XINPUT_GAMEPAD_A);
 		break;
 	case PadButton::B_BUTTON:
-		return (state.Gamepad.wButtons & XINPUT_GAMEPAD_B);
+		return (m_state.Gamepad.wButtons & XINPUT_GAMEPAD_B);
 		break;
 	case PadButton::X_BUTTON:
-		return (state.Gamepad.wButtons & XINPUT_GAMEPAD_X);
+		return (m_state.Gamepad.wButtons & XINPUT_GAMEPAD_X);
 		break;
 	case PadButton::Y_BUTTON:
-		return (state.Gamepad.wButtons & XINPUT_GAMEPAD_Y);
+		return (m_state.Gamepad.wButtons & XINPUT_GAMEPAD_Y);
 		break;
 	case PadButton::START_BUTTON:
-		return (state.Gamepad.wButtons & XINPUT_GAMEPAD_START);
+		return (m_state.Gamepad.wButtons & XINPUT_GAMEPAD_START);
 		break;
 	case PadButton::BACK_BUTTON:
-		return (state.Gamepad.wButtons & XINPUT_GAMEPAD_BACK);
+		return (m_state.Gamepad.wButtons & XINPUT_GAMEPAD_BACK);
 		break;
 	case PadButton::LEFT_SHOULDER:
-		return (state.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER);
+		return (m_state.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER);
 		break;
 	case PadButton::RIGHT_SHOULDER:
-		return (state.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER);
+		return (m_state.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER);
 		break;
 	case PadButton::UP_BUTTON:
-		return (state.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP);
+		return (m_state.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP);
 		break;
 	case PadButton::DOWN_BUTTON:
-		return (state.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN);
+		return (m_state.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN);
 		break;
 	case PadButton::LEFT_BUTTON:
-		return (state.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT);
+		return (m_state.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT);
 		break;
 	case PadButton::RIGHT_BUTTON:
-		return (state.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT);
+		return (m_state.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT);
 		break;
 	case PadButton::LEFT_TRIGGER:
-		return (state.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
+		return (m_state.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
 		break;
 	case PadButton::RIGHT_TRIGGER:
-		return (state.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
+		return (m_state.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
 		break;
 	case PadButton::LEFT_STICK:
-		return (((state.Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) || (state.Gamepad.sThumbLX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE))
-			|| ((state.Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) || (state.Gamepad.sThumbLY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)));
+		return (((m_state.Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) || (m_state.Gamepad.sThumbLX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE))
+			|| ((m_state.Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) || (m_state.Gamepad.sThumbLY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)));
 		break;
 	case PadButton::RIGHT_STICK:
-		return (((state.Gamepad.sThumbRX > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) || (state.Gamepad.sThumbRX < -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE))
-			|| ((state.Gamepad.sThumbRY > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) || (state.Gamepad.sThumbRY < -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)));
+		return (((m_state.Gamepad.sThumbRX > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) || (m_state.Gamepad.sThumbRX < -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE))
+			|| ((m_state.Gamepad.sThumbRY > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) || (m_state.Gamepad.sThumbRY < -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)));
 		break;
 	default:
 		return 0;
@@ -157,7 +168,7 @@ int InputPressKey(PadButton key)
 //使い方：if文で囲ってあげるとよろしいかと
 //注意点：なし
 //=====================================================================
-int InputTriggerKey(PadButton key)
+int InputXPad::InputTriggerKey(PadButton key)
 {
 	switch (key)
 	{
@@ -198,22 +209,22 @@ int InputTriggerKey(PadButton key)
 		return TRIGGER & XINPUT_GAMEPAD_DPAD_RIGHT;
 		break;
 	case PadButton::LEFT_TRIGGER:
-		state.Gamepad.wButtons |= TriggerChangeButton(state.Gamepad.bLeftTrigger, XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
-		return (TRIGGER & state.Gamepad.wButtons && InputPressKey(PadButton::LEFT_TRIGGER));
+		m_state.Gamepad.wButtons |= TriggerChangeButton(m_state.Gamepad.bLeftTrigger, XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
+		return (TRIGGER & m_state.Gamepad.wButtons && InputPressKey(PadButton::LEFT_TRIGGER));
 		break;
 	case PadButton::RIGHT_TRIGGER:
-		state.Gamepad.wButtons |= TriggerChangeButton(state.Gamepad.bRightTrigger, XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
-		return (TRIGGER & state.Gamepad.wButtons) && InputPressKey(PadButton::RIGHT_TRIGGER);
+		m_state.Gamepad.wButtons |= TriggerChangeButton(m_state.Gamepad.bRightTrigger, XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
+		return (TRIGGER & m_state.Gamepad.wButtons) && InputPressKey(PadButton::RIGHT_TRIGGER);
 		break;
 	case PadButton::LEFT_STICK:
-		state.Gamepad.wButtons |= StickChangeButton(
-			state.Gamepad.sThumbLX, state.Gamepad.sThumbLY, XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
-		return (TRIGGER & state.Gamepad.wButtons && InputPressKey(PadButton::LEFT_STICK));
+		m_state.Gamepad.wButtons |= StickChangeButton(
+			m_state.Gamepad.sThumbLX, m_state.Gamepad.sThumbLY, XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
+		return (TRIGGER & m_state.Gamepad.wButtons && InputPressKey(PadButton::LEFT_STICK));
 		break;
 	case PadButton::RIGHT_STICK:
-		state.Gamepad.wButtons |= StickChangeButton(
-			state.Gamepad.sThumbRX, state.Gamepad.sThumbRY, XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
-		return (TRIGGER & state.Gamepad.wButtons && InputPressKey(PadButton::RIGHT_STICK));
+		m_state.Gamepad.wButtons |= StickChangeButton(
+			m_state.Gamepad.sThumbRX, m_state.Gamepad.sThumbRY, XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
+		return (TRIGGER & m_state.Gamepad.wButtons && InputPressKey(PadButton::RIGHT_STICK));
 		break;	
 	default:
 		return 0;
@@ -228,7 +239,7 @@ int InputTriggerKey(PadButton key)
 //注意点：スティックは対応しておりません(どうしても必要なら実装します)
 //        トリガーはすぐに離したりすると反応しないことがあります
 //=====================================================================
-int InputReleaseKey(PadButton key)
+int InputXPad::InputReleaseKey(PadButton key)
 {
 	switch (key)
 	{
@@ -269,14 +280,14 @@ int InputReleaseKey(PadButton key)
 		return RELEASE & XINPUT_GAMEPAD_DPAD_RIGHT;
 		break;
 	case PadButton::LEFT_TRIGGER:
-		state.Gamepad.wButtons |= TriggerChangeButtonReleaseVer(
-			state.Gamepad.bLeftTrigger, XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
-		return TRIGGER & state.Gamepad.wButtons && state.Gamepad.bLeftTrigger > 0.0f;
+		m_state.Gamepad.wButtons |= TriggerChangeButtonReleaseVer(
+			m_state.Gamepad.bLeftTrigger, XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
+		return TRIGGER & m_state.Gamepad.wButtons && m_state.Gamepad.bLeftTrigger > 0.0f;
 		break;
 	case PadButton::RIGHT_TRIGGER:
-		state.Gamepad.wButtons |= TriggerChangeButtonReleaseVer(
-			state.Gamepad.bRightTrigger, XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
-		return TRIGGER & state.Gamepad.wButtons && state.Gamepad.bRightTrigger > 0.0f;
+		m_state.Gamepad.wButtons |= TriggerChangeButtonReleaseVer(
+			m_state.Gamepad.bRightTrigger, XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
+		return TRIGGER & m_state.Gamepad.wButtons && m_state.Gamepad.bRightTrigger > 0.0f;
 		break;
 	default:
 		return 0;
@@ -290,15 +301,15 @@ int InputReleaseKey(PadButton key)
 //使い方：プレイヤーの座標更新などにおすすめです
 //注意点：-1.0～1.0の値で返します
 //=====================================================================
-DirectX::XMFLOAT2 GetPressStick()
+DirectX::XMFLOAT2 InputXPad::GetPressStick()
 {
 	DirectX::XMFLOAT2 normalized(0, 0);
 	float normalizedMagnitude = 0;              //0.0～1.0に補正した大きさベクトルを格納する変数
 
 	if(InputPressKey(PadButton::LEFT_STICK))
 	{
-		float LX = state.Gamepad.sThumbLX;    //左スティックのX軸
-		float LY = state.Gamepad.sThumbLY;    //左スティックのY軸
+		float LX = m_state.Gamepad.sThumbLX;    //左スティックのX軸
+		float LY = m_state.Gamepad.sThumbLY;    //左スティックのY軸
 
 		float magnitudeL = sqrt(LX * LX + LY * LY);  //スティックを傾けた方向のベクトルの大きさ
 
@@ -322,8 +333,8 @@ DirectX::XMFLOAT2 GetPressStick()
 	}
 	else if(InputPressKey(PadButton::RIGHT_STICK))
 	{
-		 float RX = state.Gamepad.sThumbRX;
-		float RY = state.Gamepad.sThumbRY;
+		 float RX = m_state.Gamepad.sThumbRX;
+		float RY = m_state.Gamepad.sThumbRY;
 
 		float magnitudeR = sqrt(RX * RX + RY * RY);
 
@@ -357,9 +368,9 @@ DirectX::XMFLOAT2 GetPressStick()
 //使い方：プレイヤーの座標更新などにおすすめです
 //注意点：-1.0～1.0の値で返します
 //=====================================================================
-const DirectX::XMFLOAT2& GetPressRightStick()
+const DirectX::XMFLOAT2& InputXPad::GetPressRightStick()
 {
-	return NowRightStickValue;
+	return m_NowRightStickValue;
 }
 
 //====================================================================
@@ -368,9 +379,9 @@ const DirectX::XMFLOAT2& GetPressRightStick()
 //使い方：プレイヤーの座標更新などにおすすめです
 //注意点：-1.0～1.0の値で返します
 //=====================================================================
-const DirectX::XMFLOAT2& GetPressLeftStick()
+const DirectX::XMFLOAT2& InputXPad::GetPressLeftStick()
 {
-	return NowLeftStickValue;
+	return m_NowLeftStickValue;
 }
 
 //====================================================================
@@ -378,15 +389,15 @@ const DirectX::XMFLOAT2& GetPressLeftStick()
 //戻り値：なし
 // 注意点：呼ぶな
 //=====================================================================
-void SetPressRightStick()
+void InputXPad::SetPressRightStick()
 {
 	DirectX::XMFLOAT2 normalized(0, 0);
 	float normalizedMagnitude = 0;              //0.0～1.0に補正した大きさベクトルを格納する変数
 
 	if (InputPressKey(PadButton::RIGHT_STICK))
 	{
-		float RX = state.Gamepad.sThumbRX;
-		float RY = state.Gamepad.sThumbRY;
+		float RX = m_state.Gamepad.sThumbRX;
+		float RY = m_state.Gamepad.sThumbRY;
 
 		float magnitudeR = sqrt(RX * RX + RY * RY);
 
@@ -411,7 +422,7 @@ void SetPressRightStick()
 
 	normalized.x *= normalizedMagnitude;
 	normalized.y *= normalizedMagnitude;
-	NowRightStickValue = normalized;
+	m_NowRightStickValue = normalized;
 }
 
 //====================================================================
@@ -419,15 +430,15 @@ void SetPressRightStick()
 //戻り値：なし
 //注意点：呼ぶな
 //=====================================================================
-void SetPressLeftStick()
+void InputXPad::SetPressLeftStick()
 {
 	DirectX::XMFLOAT2 normalized(0, 0);
 	float normalizedMagnitude = 0;              //0.0～1.0に補正した大きさベクトルを格納する変数
 
 	if (InputPressKey(PadButton::LEFT_STICK))
 	{
-		float LX = state.Gamepad.sThumbLX;    //左スティックのX軸
-		float LY = state.Gamepad.sThumbLY;    //左スティックのY軸
+		float LX = m_state.Gamepad.sThumbLX;    //左スティックのX軸
+		float LY = m_state.Gamepad.sThumbLY;    //左スティックのY軸
 
 		float magnitudeL = sqrt(LX * LX + LY * LY);  //スティックを傾けた方向のベクトルの大きさ
 
@@ -452,17 +463,17 @@ void SetPressLeftStick()
 
 	normalized.x *= normalizedMagnitude;
 	normalized.y *= normalizedMagnitude;
-	NowLeftStickValue = normalized;
+	m_NowLeftStickValue = normalized;
 }
 
-bool GetRightSmash(float SmashValue)
+bool InputXPad::GetRightSmash(float SmashValue)
 {
-	return (RightStickMoveValue > SmashValue);
+	return (m_RightStickMoveValue > SmashValue);
 }
 
-bool GetLeftSmash(float SmashValue)
+bool InputXPad::GetLeftSmash(float SmashValue)
 {
-	return (LeftStickMoveValue > SmashValue);
+	return (m_LeftStickMoveValue > SmashValue);
 }
 
 //====================================================================
@@ -471,14 +482,14 @@ bool GetLeftSmash(float SmashValue)
 //使い方：溜めの動作などにおすすめです
 //注意点：0～255の値で返します
 //=====================================================================
-float GetPressTrigger()
+float InputXPad::GetPressTrigger()
 {
 	float normalized = 0;
 	float normalizedMagnitude = 0;
 
 	if (InputPressKey(PadButton::LEFT_TRIGGER))
 	{
-		float LT = state.Gamepad.bLeftTrigger;
+		float LT = m_state.Gamepad.bLeftTrigger;
 		if (LT > XINPUT_GAMEPAD_TRIGGER_THRESHOLD)
 		{
 			if (LT > 255) LT = 255;
@@ -494,7 +505,7 @@ float GetPressTrigger()
 	}
 	else if (InputPressKey(PadButton::RIGHT_TRIGGER))
 	{
-		float RT = state.Gamepad.bRightTrigger;
+		float RT = m_state.Gamepad.bRightTrigger;
 		if (RT > XINPUT_GAMEPAD_TRIGGER_THRESHOLD)
 		{
 			if (RT > 255) RT = 255;
@@ -519,7 +530,7 @@ float GetPressTrigger()
 //注意点：使うとスティックの入力が変な感じになります
 //        (現在原因究明中！※出来るだけGetPressStick()で代用しましょう)
 //=====================================================================
-DirectX::XMFLOAT2 GetTriggerStick()
+DirectX::XMFLOAT2 InputXPad::GetTriggerStick()
 {
 	DirectX::XMFLOAT2 Clone(0.0f, 0.0f);
 
@@ -541,7 +552,7 @@ DirectX::XMFLOAT2 GetTriggerStick()
 //使い方：特になし
 //注意点：基本的にこの関数は使い道ないです(しかも押した瞬間だから返る値も小さすぎる)
 //=====================================================================
-float GetTriggerTrigger()
+float InputXPad::GetTriggerTrigger()
 {
 	float Clone = 0.0f;
 	if (InputTriggerKey(PadButton::LEFT_TRIGGER))
@@ -561,7 +572,7 @@ float GetTriggerTrigger()
 //使い方：if文で囲ってあげればよいかと
 //注意点：なし
 //=====================================================================
-int AllKeyTrigger()
+int InputXPad::AllKeyTrigger()
 {
 	if (InputTriggerKey(PadButton::A_BUTTON) || InputTriggerKey(PadButton::B_BUTTON) || InputTriggerKey(PadButton::X_BUTTON) || InputTriggerKey(PadButton::Y_BUTTON)
 		|| InputTriggerKey(PadButton::START_BUTTON) || InputTriggerKey(PadButton::BACK_BUTTON) || InputTriggerKey(PadButton::LEFT_SHOULDER)
@@ -583,7 +594,7 @@ int AllKeyTrigger()
 //使い方：if文で囲ってあげればよいかと(決定の操作で使えるかもしれない)
 //注意点：なし
 //=====================================================================
-int AlfaKeyTrigger()
+int InputXPad::AlfaKeyTrigger()
 {
 	if (InputTriggerKey(PadButton::A_BUTTON) || InputTriggerKey(PadButton::B_BUTTON)
 		|| InputTriggerKey(PadButton::X_BUTTON) || InputTriggerKey(PadButton::Y_BUTTON))
@@ -602,7 +613,7 @@ int AlfaKeyTrigger()
 //使い方：if文で囲ってあげればよいかと(決定の操作で使えるかもしれない)
 //注意点：なし
 //=====================================================================
-int AlfaKeyPress()
+int InputXPad::AlfaKeyPress()
 {
 	if (InputPressKey(PadButton::A_BUTTON) || InputPressKey(PadButton::B_BUTTON)
 		|| InputPressKey(PadButton::X_BUTTON) || InputPressKey(PadButton::Y_BUTTON))
@@ -621,7 +632,7 @@ int AlfaKeyPress()
 //使い方：キー入力にしてTriggerなどの判定に使う
 //注意点：基本的に別の関数内で使う用です(使わないでください)
 //=====================================================================
-WORD StickChangeButton(SHORT StickX, SHORT StickY, SHORT DeadZone)
+WORD InputXPad::StickChangeButton(SHORT StickX, SHORT StickY, SHORT DeadZone)
 {
 	WORD wButton = 0;
 	if (StickY >= DeadZone)
@@ -650,7 +661,7 @@ WORD StickChangeButton(SHORT StickX, SHORT StickY, SHORT DeadZone)
 //使い方：キー入力にしてTriggerなどの判定に使う
 //注意点：基本的に別の関数内で使う用です(使わないでください)
 //=====================================================================
-WORD TriggerChangeButton(BYTE Trigger, BYTE DeadZone)
+WORD InputXPad::TriggerChangeButton(BYTE Trigger, BYTE DeadZone)
 {
 	WORD wButton = 0;
 
@@ -668,7 +679,7 @@ WORD TriggerChangeButton(BYTE Trigger, BYTE DeadZone)
 //使い方：キー入力にしてReleaseなどの判定に使う
 //注意点：基本的に別の関数内で使う用です(使わないでください)
 //=====================================================================
-WORD TriggerChangeButtonReleaseVer(BYTE Trigger, BYTE DeadZone)
+WORD InputXPad::TriggerChangeButtonReleaseVer(BYTE Trigger, BYTE DeadZone)
 {
 	WORD wButton = 0;
 
@@ -698,7 +709,7 @@ WORD TriggerChangeButtonReleaseVer(BYTE Trigger, BYTE DeadZone)
 //注意点：強度は0～65535の間で設定してください(左右の強度は違っても大丈夫です)
 //        デフォルトは左(0),右(0)に設定してあります。
 //=====================================================================
-void SetPowerVibration(WORD LEFT, WORD RIGHT)  //強度0～65535
+void InputXPad::SetPowerVibration(WORD LEFT, WORD RIGHT)  //強度0～65535
 {
 	vibration.wLeftMotorSpeed = LEFT;
 	vibration.wRightMotorSpeed = RIGHT;
@@ -711,7 +722,7 @@ void SetPowerVibration(WORD LEFT, WORD RIGHT)  //強度0～65535
 //注意点：SetPowerVibration(引数)で強度を設定してからでないと揺れない
 //　　　　引数に振動させたいフレーム数を入力
 //=====================================================================
-void SetVibration(int num)
+void InputXPad::SetVibration(int num)
 {
 	XInputSetState(0, &vibration);
 	Vibtime = num;
@@ -724,7 +735,7 @@ void SetVibration(int num)
 //使い方：バイブレーションさせたいところで呼ぶ
 //注意点：SetPowerVibration(引数)で強度を設定してからでないと揺れない
 //=====================================================================
-void MoveVibration()
+void InputXPad::MoveVibration()
 {
 	XInputSetState(0, &vibration);
 }
@@ -735,7 +746,7 @@ void MoveVibration()
 //使い方：バイブレーション強制終了させたいところで呼ぶ
 //注意点：なし
 //=====================================================================
-void StopVibration()
+void InputXPad::StopVibration()
 {
 	SetPowerVibration(0, 0);
 	XInputSetState(0, &vibration);

@@ -1,8 +1,6 @@
 #include "Character_Base.h"
 #include "Input.h"
 #include "Attack_Base.h"
-#include "XboxKeyboard.h"
-#include "Input.h"
 
 //===========================================================
 //キャラクターが止まっているときの処理
@@ -31,19 +29,12 @@ void Character::IdleUpdate()
 		ChangeState(Character::STATE::AIRMOVE);
 	}
 
-	CVector2 LeftStick = GetPressLeftStick();
-
-	//デットゾーンの設定
-	if (LeftStick.x * LeftStick.x + LeftStick.y * LeftStick.y < 0.15f * 0.15f)
-	{
-		LeftStick.x = LeftStick.y = 0.0f;
-	}
-
+	CVector2 LeftStick = m_Controller.GetMoveInput();
 
 	//移動開始
-	if (LeftStick.x != 0.0f || IsKeyPress(VK_RIGHT) || IsKeyPress(VK_LEFT))
+	if (LeftStick.x != 0.0f)
 	{
-		if (GetLeftSmash(0.35f) || IsKeyPress('L'))
+		if (m_Controller.GetLeftSmash())
 		{
 			ChangeState(Character::STATE::DASH);
 		}
@@ -54,13 +45,13 @@ void Character::IdleUpdate()
 	}
 
 	//ジャンプ
-	if (InputTriggerKey(PadButton::RIGHT_SHOULDER) || IsKeyTrigger(VK_UP))
+	if (m_Controller.GetJumpTrigger())
 	{
 		ChangeState(Character::STATE::JUMPIN);
 	}
 
 	//攻撃
-	if (IsKeyPress('K') || InputPressKey(PadButton::A_BUTTON))
+	if (m_Controller.GetAttack())
 	{
 		ChangeAttack(Character::ATTACK::ATTACK_11);	//弱の設定
 	}

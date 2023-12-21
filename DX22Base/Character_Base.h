@@ -4,6 +4,8 @@
 #include "ModelDrawer.h"
 #include <vector>
 #include "Character_DamageUI.h"
+#include "XboxKeyboard.h"
+#include "Player_Controller.h"
 
 class Character
 {
@@ -43,7 +45,7 @@ public:
 		MAX
 	};
 
-	struct AttackParam
+	struct ATTACKPARAM
 	{
 		bool m_Use = false;									//この攻撃の当たり判定を行うか
 		BoxCollider m_BoxCollider;							//攻撃の当たり判定
@@ -125,12 +127,15 @@ public:
 	void SetDamage(float damage);						//ダメージの設定
 	//==========================================================================
 	BoxCollider* GetCharacterCollider() const;			//キャラクター、ステージ当たり判定の取得
-	std::vector<AttackParam>& GetAttackCollider();		//攻撃コライダーの取得
+	std::vector<ATTACKPARAM>& GetAttackCollider();		//攻撃コライダーの取得
 	void Character_ColliderInit();
 	void Character_HitCeiling();						//天井に当たった	
 	void Character_HitGround();							//地面に当たった
 	void Character_HitWall();							//壁に当たった
 	void DrawCollider();								//コライダーの描画
+	//==========================================================================
+	void SetCharacterController(PlayerController pController);
+
 
 protected:
 	void ChangeAttack(Character::ATTACK attack);
@@ -291,7 +296,8 @@ protected:
 	// 変数一覧
 	//===============================================================================
 	int		m_PlayerBit = 0x00;				//このキャラクターが何番なのかを入れる
-	
+	PlayerController m_Controller;		//キャラクターのコントローラー
+
 	//-------------------------------------------------------------------------------
 	// プレイヤーステートに関する変数
 	//-------------------------------------------------------------------------------
@@ -320,7 +326,7 @@ protected:
 	// 当たり判定に関する変数
 	//-------------------------------------------------------------------------------
 	BoxCollider m_CharacterCollider;		//プレイヤーの当たり判定
-	std::vector<AttackParam> m_AttackCollider;	//攻撃したときの当たり判定
+	std::vector<ATTACKPARAM> m_AttackCollider;	//攻撃したときの当たり判定
 	float m_DamagePercentage = 0.0f;		//ダメージの量
 
 	//-------------------------------------------------------------------------------

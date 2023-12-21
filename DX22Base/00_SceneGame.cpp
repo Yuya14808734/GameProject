@@ -6,11 +6,15 @@
 #include "Input.h"
 #include "Stage_00.h"
 #include "Character_00.h"
+#include "Player_Controller.h"
 
 bool ColliderDraw = false;
 
 void SceneGame::Init()
 {
+	//=====<コントローラーの初期化>=====
+	PlayerController::InitXPadNum();
+
 	//=====<カメラの生成>=====
 	CameraManager::GetInstance().CreateCamera(new CameraDebug(), "DebugCamera");
 	CameraManager::GetInstance().SetSceneCamera("DebugCamera");
@@ -57,13 +61,16 @@ void SceneGame::Update()
 	{
 		(*it)->Character_Update();				//キャラクターのアップデートを行う
 		(*it)->Character_ColliderInit();		//コライダーの情報を初期化してやる
+												//(当たり判定を行っていないので当たっていないことにする処理)
 	}
 
 	//=====<キャラクター同士の当たり判定>=====
+
+	//一人目のキャラクターを選択
 	for (std::vector<Character*>::iterator it_first = m_Characters.begin();
 		it_first != m_Characters.end();it_first++)
 	{
-		break;
+		//二人目のキャラクターを選択(一人目の次のキャラクター)
 		std::vector<Character*>::iterator it_second = it_first + 1;
 		for (; it_second != m_Characters.end(); it_second++)
 		{
@@ -75,17 +82,35 @@ void SceneGame::Update()
 			if (!pFirstCollider->CollisionBox(*pSecondCollider))
 			{
 				//当たっていない場合
-				return;
+				continue;
 			}
 
-			//めり込んだ半分の位置で移動してやる
+			//めり込んだ半分の位置で移動してやる(Xのみ)
 			float NowHarfDistanceX = (pFirstCollider->GetPos().x - pSecondCollider->GetPos().x) * 0.5f;
-			CVector3 CenterPos = pSecondCollider->GetPos() + CVector3(NowHarfDistanceX,0.0f,0.0f);
+			float CenterPosX = pSecondCollider->GetPos().x + NowHarfDistanceX;
+			float FirstDirect = NowHarfDistanceX < 0.0f ? -1.0f : 1.0f;	//pFirstColliderに向かう向き
+			//上の値がマイナスなら位置関係は
+			//pFirstCollider ・ pSecondColliderとなる
+			//上の値がプラスなら位置関係は
+			//pSecondCollider ・ pFirstColliderとなる
 
-			float Direct = NowHarfDistanceX < 0.0f ? -1.0f : 1.0f;
-
-			(*it_first)->SetPos(CenterPos + CVector3(pFirstCollider->GetSize().x * Direct,0.0f,0.0f));
-			(*it_second)->SetPos(CenterPos + CVector3(pFirstCollider->GetSize().x * Direct, 0.0f, 0.0f));
+			//一人目のキャラクターの位置設定
+			(*it_first)->SetPos(
+				CVector3(
+					CenterPosX + ( (pFirstCollider->GetSize().x * 0.5f) * FirstDirect),
+					(*it_first)->GetPos().y,
+					(*it_first)->GetPos().z
+				)
+			);
+			
+			//二人目のキャラクターの位置設定
+			(*it_second)->SetPos(
+				CVector3(
+					CenterPosX + ((pSecondCollider->GetSize().x * 0.5f) * -FirstDirect),
+					(*it_second)->GetPos().y,
+					(*it_second)->GetPos().z
+				)
+			);
 		}
 	}	
 
@@ -95,7 +120,7 @@ void SceneGame::Update()
 	for (Character* AttackCharacter : m_Characters)
 	{
 		//攻撃しているキャラクターから攻撃の当たり判定を取ってくる
-		std::vector<Character::AttackParam>& attackParamVector = AttackCharacter->GetAttackCollider();
+		std::vector<Character::ATTACKPARAM>& attackParamVector = AttackCharacter->GetAttackCollider();
 
 		if (AttackCharacter->GetState() != Character::STATE::ATTACK)
 		{
@@ -103,7 +128,7 @@ void SceneGame::Update()
 		}
 
 		//配列の頭から攻撃を見ていく
-		for (Character::AttackParam& Character_Attack : attackParamVector)
+		for (Character::ATTACKPARAM& Character_Attack : attackParamVector)
 		{
 			Character_Attack.m_HitCharacterBit = 0x00;
 
@@ -295,10 +320,10 @@ void SceneGame::Draw()
 				continue;
 			}
 
-			std::vector<Character::AttackParam>& attackVector
+			std::vector<Character::ATTACKPARAM>& attackVector
 				= CharacterCopy->GetAttackCollider();
 
-			for (Character::AttackParam& AttackCopy : attackVector)
+			for (Character::ATTACKPARAM& AttackCopy : attackVector)
 			{
 				if (!AttackCopy.m_Use)
 				{

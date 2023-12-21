@@ -10,7 +10,7 @@ void Character_00::AttackAirN_Init()
 	//“–‚½‚è”»’è‚Ìì¬
 	CVector3 ColliderPos = m_pos;
 
-	AttackParam Attack;
+	ATTACKPARAM Attack;
 	Attack.m_Use = false;
 	Attack.m_BoxCollider.CreateBox(BoxCollider::BOXTYPE::CENTER,
 		ColliderPos, CVector3(1.7f, 2.7f, 1.0f));
@@ -67,7 +67,7 @@ void Character_00::AttackAirN_Update()
 
 	bool OnButton = false;
 
-	float LeftStickX = GetPressLeftStick().x * m_MoveParameter.m_WalkSpeed;
+	float LeftStickX = m_Controller.GetMoveInput().x * m_MoveParameter.m_WalkSpeed;
 	m_Velocity.x = fabsf(LeftStickX) > fabsf(m_Velocity.x) ? LeftStickX : m_Velocity.x;
 
 	if (IsKeyPress(VK_RIGHT))

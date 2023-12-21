@@ -354,6 +354,9 @@
     <ClCompile Include="Number2D.cpp">
       <Filter>ソース ファイル\03_Assets\2D</Filter>
     </ClCompile>
+    <ClCompile Include="Player_Controller.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -490,6 +493,9 @@
     </ClInclude>
     <ClInclude Include="Number2D.h">
       <Filter>ヘッダー ファイル\03_Assets\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Player_Controller.h">
+      <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

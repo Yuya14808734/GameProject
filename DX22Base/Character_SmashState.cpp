@@ -11,35 +11,7 @@
 
 void Character::BlowAwayInit()
 {
-	CVector3 ChangeVector;
-
-	if (IsPadConnect())
-	{
-		ChangeVector.x = GetPressLeftStick().x;
-		ChangeVector.y = GetPressLeftStick().y;
-	}
-	else
-	{
-		if (IsKeyPress(VK_RIGHT))
-		{
-			ChangeVector.x = 1.0f;
-		}
-
-		if (IsKeyPress(VK_LEFT))
-		{
-			ChangeVector.x = -1.0f;
-		}
-
-		if (IsKeyPress(VK_DOWN))
-		{
-			ChangeVector.x = -1.0f;
-		}
-
-		if (IsKeyPress(VK_UP))
-		{
-			ChangeVector.x = 1.0f;
-		}
-	}
+	CVector3 ChangeVector = m_Controller.GetLeftInputVector();
 
 	//ê≥ãKâªÇµÇΩÉxÉNÉgÉãÇÃï€ë∂
 	CVector3 NormalChangeVector = ChangeVector.normalize();
