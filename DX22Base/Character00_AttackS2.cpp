@@ -23,10 +23,11 @@ void Character_00::AttackS2_Init()
 		break;
 	}
 
-	ATTACKPARAM Attack;
-	Attack.m_Use = false;
-	Attack.m_BoxCollider.CreateBox(BoxCollider::BOXTYPE::CENTER, 
+	ATTACKPARAM Attack;												//攻撃パラメーターの設定
+	Attack.m_Use = false;											//攻撃当たり判定するか
+	Attack.m_BoxCollider.CreateBox(BoxCollider::BOXTYPE::CENTER,	//当たり判定の範囲設定
 		ColliderPos	, CVector3(1.7f, 2.7f, 1.0f));
+	Attack.m_CanAttackCharacterBit = 0xffffffff;					//当たるキャラクターの設定
 
 	m_AttackCollider.push_back(Attack);
 
@@ -43,6 +44,9 @@ void Character_00::AttackS2_Init()
 
 void Character_00::AttackS2_Update()
 {
+	//今まで当たったことのあるキャラクターには当てない
+	m_AttackCollider[0].m_CanAttackCharacterBit = ~m_AttackCollider[0].m_haveHitCharacterBit;
+
 	m_AttackTime++;
 	float AnimeAllTime = 0.938f - 0.332f;
 	m_AnimeTime = static_cast<float>(m_AttackTime) / 24.0f  * AnimeAllTime + 0.332f;
@@ -82,9 +86,10 @@ void Character_00::AttackS2_Hit(Character* HitCharacter)
 {
 	HitCharacter->AddDamage(13.0f);											//ダメージの加算
 
-	float ForcePower = HitCharacter->GetDamage() / 100.0f * 10.0f;			//ダメージから吹っ飛ばすベクトルの計算
+	float ForcePower = HitCharacter->GetDamage() / 100.0f * 100.0f;			//ダメージから吹っ飛ばすベクトルの計算
 	CVector3 AddVec = CVector2::GetAngleVector(
 		m_NowLookDir == Character::LOOKDIR::RIGHT ? 60.0f : -60.0f
 	) * ForcePower;
 	HitCharacter->AddForce(AddVec);
+	HitCharacter->SetState(Character::STATE::BLOWAWAY);
 }

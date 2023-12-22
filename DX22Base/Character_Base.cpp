@@ -26,6 +26,7 @@ void Character::Character_Init()
 	std::vector<CVector3>* startPosV = static_cast<SceneGame*>(CScene::GetScene())->GetStage()->GetCharacterStartPos();
 	m_pos = (*startPosV)[PlayerNum - 1];
 	
+	//コントローラーの設定
 	if (PlayerNum == 1)
 	{
 		m_Controller.SetController(
@@ -40,6 +41,11 @@ void Character::Character_Init()
 			PlayerNum - 1
 		);
 	}
+
+	CVector2 BasePos(450.0f, 650.0f);
+	CVector2 PosDistance(400.0f, 0.0f);
+
+	m_DamageUI.SetPos(BasePos + (PosDistance * static_cast<float>(PlayerNum - 1)));
 
 
 	Init();
@@ -243,6 +249,89 @@ void Character::Character_UIDraw()
 int Character::GetCharacterBit()
 {
 	return m_PlayerBit;
+}
+
+void Character::SetState(Character::STATE state)
+{
+	//========================================
+	//終了処理
+	//========================================
+	switch (m_NowState)
+	{
+	case Character::STATE::IDLE:
+		IdleUninit();
+		break;
+	case Character::STATE::WALK:
+		WalkUninit();
+		break;
+	case Character::STATE::DASH:
+		DashUninit();
+		break;
+	case Character::STATE::ATTACK:
+		AttackUninit();
+		break;
+	case Character::STATE::BLOWAWAY:
+		BlowAwayUninit();
+		break;
+	case Character::STATE::JUMPIN:
+		JumpInUninit();
+		break;
+	case Character::STATE::JUMP:
+		JumpUninit();
+		break;
+	case Character::STATE::AIRMOVE:
+		AirMoveUninit();
+		break;
+	case Character::STATE::DOWN:
+		DownUninit();
+		break;
+	case Character::STATE::MAX:
+		break;
+	default:
+		break;
+	}
+
+	m_NowState = state;
+
+	//========================================
+	// 初期化
+	//========================================
+	switch (m_NowState)
+	{
+	case Character::STATE::IDLE:
+		IdleInit();
+		break;
+	case Character::STATE::WALK:
+		WalkInit();
+		break;
+	case Character::STATE::DASH:
+		DashInit();
+		break;
+	case Character::STATE::ATTACK:
+		AttackInit();
+		break;
+	case Character::STATE::BLOWAWAY:
+		BlowAwayInit();
+		break;
+	case Character::STATE::JUMPIN:
+		JumpInInit();
+		break;
+	case Character::STATE::JUMP:
+		JumpInit();
+		break;
+	case Character::STATE::AIRMOVE:
+		AirMoveInit();
+		break;
+	case Character::STATE::DOWN:
+		DownInit();
+		break;
+	case Character::STATE::MAX:
+		break;
+	default:
+		break;
+	}
+
+	m_NowState = m_NextState;
 }
 
 const Character::STATE& Character::GetState() const

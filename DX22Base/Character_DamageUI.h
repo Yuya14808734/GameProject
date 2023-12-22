@@ -46,6 +46,8 @@ public:
 	Character_DamageNumUI* GetDamageUI();
 	Character_CharacterIconUI* GetCharacterIconUI();
 	PercentUI* GetPercentUI();
+	void SetPos(const CVector2& pos);
+	void SetScale(float scale);
 
 private:
 	CVector2 m_pos;

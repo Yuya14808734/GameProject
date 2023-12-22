@@ -177,7 +177,7 @@
     <ClCompile Include="Character_IdleState.cpp" />
     <ClCompile Include="Character_JumpInState.cpp" />
     <ClCompile Include="Character_JumpState.cpp" />
-    <ClCompile Include="Character_SmashState.cpp" />
+    <ClCompile Include="Character_BlowAway.cpp" />
     <ClCompile Include="Character_WalkState.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />

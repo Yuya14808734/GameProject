@@ -44,7 +44,10 @@ void Character::BlowAwayUpdate()
 
 	bool NoButton = true;
 
+	//吹っ飛ばされたベクトルをどんどん短くしていく
 	m_Velocity.x *= m_BlowAwayParameter.m_SmashMitigation;
+
+	//上から下に向かうベクトルに変わったら
 	if (m_Velocity.y > 0.0f)
 	{
 		m_Velocity.y *= m_BlowAwayParameter.m_SmashMitigation;

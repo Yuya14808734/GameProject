@@ -106,6 +106,7 @@ public:
 	void Character_UIDraw();
 	//==========================================================================
 	int GetCharacterBit();								//キャラクター番号の取得
+	void SetState(Character::STATE state);				//キャラクターの状態変更 外部が呼ぶ関数
 	const Character::STATE& GetState() const;			//今の状態の取得
 	const Character::ATTACK& GetAttack() const;			//今している攻撃情報
 	ModelDrawer* GetModel() const;						//モデル情報の取得
@@ -138,8 +139,8 @@ public:
 
 
 protected:
-	void ChangeAttack(Character::ATTACK attack);
-	void ChangeState(Character::STATE state);
+	void ChangeAttack(Character::ATTACK attack);		//攻撃を設定する関数 Updateで呼ぶ関数
+	void ChangeState(Character::STATE state);			//状態を変更する関数 Updateで呼ぶ関数
 
 protected:
 

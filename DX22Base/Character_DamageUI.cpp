@@ -136,16 +136,8 @@ void PercentUI::PrevDraw()
 
 Character_DamageUI::Character_DamageUI()
 {
-	m_pos.x = 100.0f;
-	m_pos.y = 100.0f;
-	m_scale = 0.6f;
-
-	m_IconUI.SetSize(m_IconUI.GetSize() * m_scale);
-	m_DamageUI.SetSize(m_DamageUI.GetSize() * m_scale);
-	m_PercentUI.SetSize(m_PercentUI.GetSize() * m_scale);
-	m_IconUI.SetPos(m_pos - CVector2(50.0f, 25.0f) * m_scale);
-	m_DamageUI.SetPos(m_pos + CVector2(m_DamageUI.GetSize().x * 2.5f, 0.0f) * m_scale);
-	m_PercentUI.SetPos(m_pos + CVector2(m_DamageUI.GetSize().x * 3.7f, m_DamageUI.GetSize().y * 0.3f) * m_scale);
+	SetScale(1.0f);
+	SetPos(CVector2(100.0f, 100.0f));
 }
 
 Character_DamageUI::~Character_DamageUI()
@@ -178,6 +170,22 @@ Character_CharacterIconUI* Character_DamageUI::GetCharacterIconUI()
 PercentUI* Character_DamageUI::GetPercentUI()
 {
 	return &m_PercentUI;
+}
+
+void Character_DamageUI::SetPos(const CVector2& pos)
+{
+	m_pos = pos;
+	m_IconUI.SetPos(m_pos - CVector2(50.0f, 25.0f) * m_scale);
+	m_DamageUI.SetPos(m_pos + CVector2(m_DamageUI.GetSize().x * 2.5f, 0.0f) * m_scale);
+	m_PercentUI.SetPos(m_pos + CVector2(m_DamageUI.GetSize().x * 3.7f, m_DamageUI.GetSize().y * 0.3f) * m_scale);
+}
+
+void Character_DamageUI::SetScale(float scale)
+{
+	m_scale = scale;
+	m_IconUI.SetSize(m_IconUI.GetSize() * m_scale);
+	m_DamageUI.SetSize(m_DamageUI.GetSize() * m_scale);
+	m_PercentUI.SetSize(m_PercentUI.GetSize() * m_scale);
 }
 
 
