@@ -15,23 +15,24 @@ void Character::BlowAwayInit()
 
 	//正規化したベクトルの保存
 	CVector3 NormalChangeVector = ChangeVector.normalize();
+	NormalChangeVector.z = 0.0f;
 	CVector3 NormalVelocityVector = m_Velocity.normalize();
+	NormalVelocityVector.z = 0.0f;
 
 	//変えれるなら変えたい部分です
-	float RotateRadian = acosf(NormalVelocityVector.dot(NormalChangeVector));
-		
-	m_Velocity = CQuaternion::RadianAxis(
-		NormalVelocityVector.cross(NormalChangeVector),	//回す軸
-		RotateRadian * m_BlowAwayParameter.m_VectorChangePower				//回す弧度				
-	).RotateVector(m_Velocity);							//回すベクトル
-
+	//float RotateRadian = acosf(NormalVelocityVector.dot(NormalChangeVector));
+	//m_Velocity = CQuaternion::RadianAxis(
+	//	NormalVelocityVector.cross(NormalChangeVector),	//回す軸
+	//	RotateRadian * m_BlowAwayParameter.m_VectorChangePower				//回す弧度				
+	//).RotateVector(m_Velocity);							//回すベクトル
 
 	m_MoveVector = CVector3::GetZero();
 }
 
 void Character::BlowAwayUninit()
 {
-
+	int i = 0;
+	i++;
 }
 
 void Character::BlowAwayUpdate()
@@ -41,8 +42,6 @@ void Character::BlowAwayUpdate()
 	{
 		ChangeState(Character::STATE::DOWN);
 	}
-
-	bool NoButton = true;
 
 	//吹っ飛ばされたベクトルをどんどん短くしていく
 	m_Velocity.x *= m_BlowAwayParameter.m_SmashMitigation;

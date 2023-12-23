@@ -1,6 +1,11 @@
 #include "Calculation.h"
 #include <math.h>
 
+//わからないよーー
+//https://light11.hatenadiary.com/entry/2018/08/02/232835#Quaternion%E3%81%AE%E7%A9%8D
+//これです
+
+
 //--------------------------
 // 2D Vector
 //--------------------------
@@ -427,6 +432,8 @@ CQuaternion::CQuaternion(float AngleX, float AngleY, float AngleZ)
 		DirectX::XMConvertToRadians(AngleX),
 		DirectX::XMConvertToRadians(AngleY),
 		DirectX::XMConvertToRadians(AngleZ));
+
+	//inv_v =
 }
 
 CQuaternion::CQuaternion(CVector3 Angle)
@@ -446,6 +453,27 @@ CQuaternion CQuaternion::operator*(const CQuaternion& q)
 	CQuaternion r_q;
 	r_q.v = DirectX::XMQuaternionMultiply(this->v, q.v);
 	return r_q;
+
+	/*DirectX::XMFLOAT4 q1, q2;
+	q1 = this->GetValue();
+	q2 = q.GetValue();*/
+
+	/*return CQuaternion(
+		(q2.w * q1.x) - (q2.z * q1.y) + (q2.y * q1.z) + (q2.x * q1.w),
+		(q2.z * q1.x) + (q2.w * q1.y) - (q2.x * q1.z) + (q2.y * q1.w),
+		(-q2.y * q1.x) + (q2.x * q1.y) + (q2.w * q1.z) + (q2.z * q1.w),
+		(-q2.x * q1.x) - (q2.y * q1.y) - (q2.z * q1.z) + (q2.w * q1.w)
+	);*/
+
+	/*DirectX::XMFLOAT4 return_q(
+		(q2.w * q1.x) - (q2.z * q1.y) + (q2.y * q1.z) + (q2.x * q1.w),
+		(q2.z * q1.x) + (q2.w * q1.y) - (q2.x * q1.z) + (q2.y * q1.w),
+		(-q2.y * q1.x) + (q2.x * q1.y) + (q2.w * q1.z) + (q2.z * q1.w),
+		(-q2.x * q1.x) - (q2.y * q1.y) - (q2.z * q1.z) + (q2.w * q1.w)
+			);*/
+
+	//return rq;
+	//return CQuaternion(return_q);
 }
 
 CQuaternion CQuaternion::operator*=(const CQuaternion& q)
@@ -454,46 +482,60 @@ CQuaternion CQuaternion::operator*=(const CQuaternion& q)
 	return *this;
 }
 
-CVector3 CQuaternion::RotateVector(const CVector3& vec)
+const CVector3& CQuaternion::RotateVector(const CVector3& vec) const
 {
-	CQuaternion vq(vec.x,vec.y,vec.z,0.0f);
-	CQuaternion cq(-vec.x,-vec.y,-vec.z,0.0f);
-	CQuaternion mq = cq * vq * (*this);
+	CQuaternion Q = (*this);
+	CQuaternion vq(vec.x, vec.y, vec.z,1.0f);	//ベクトルをクォータニオンに置き換える
+	
+	DirectX::XMFLOAT4 inv_f;
+	DirectX::XMStoreFloat4(&inv_f, Q.v);
+	CQuaternion inv_q(-inv_f.x,-inv_f.y,-inv_f.z,inv_f.w);	//逆クォータニオン(共役)
+
+	//ベクトルの計算
+	CQuaternion mq;
+	mq = inv_q * vq;
+	mq = mq * Q;
+	
+	//値を抽出する
 	DirectX::XMFLOAT4 f4;
-	DirectX::XMStoreFloat4(&f4, this->v);
+	DirectX::XMStoreFloat4(&f4, mq.v);
 
 	return DirectX::XMFLOAT3(f4.x, f4.y, f4.z);
 }
 
-DirectX::XMFLOAT4 CQuaternion::GetValue()
+const DirectX::XMFLOAT4& CQuaternion::GetValue() const
 {
 	DirectX::XMFLOAT4 f;
 	DirectX::XMStoreFloat4(&f, this->v);
 	return f;
 }
 
-CQuaternion CQuaternion::AngleAxis(const CVector3& Axis, float Angle)
+const CQuaternion& CQuaternion::normalize() const
 {
-	CQuaternion r_q;
-	float radian = Angle * 3.14159265359f / 180.0f;
-	DirectX::XMVECTOR axis_v = DirectX::XMLoadFloat3(&Axis.f);
+	CQuaternion normalq;
+	normalq.v = DirectX::XMQuaternionNormalize(this->v);
+	return normalq;
+}
 
-	r_q.v = DirectX::XMQuaternionRotationAxis(axis_v, radian);
+CQuaternion& CQuaternion::AngleAxis(const CVector3& Axis, float Angle)
+{
+	float radian = DirectX::XMConvertToRadians(Angle);
+	return RadianAxis(Axis, radian);
+}
+
+CQuaternion& CQuaternion::RadianAxis(const CVector3& Axis, float Radian)
+{
+	CQuaternion r_q; 
+	CVector3 NormalAxis = Axis.normalize();
+	DirectX::XMVECTOR axis_v = DirectX::XMLoadFloat3(&NormalAxis.f);
+
+	r_q.v = DirectX::XMQuaternionRotationNormal(axis_v, Radian);
 
 	return r_q;
 }
 
-CQuaternion CQuaternion::RadianAxis(const CVector3& Axis, float Radian)
+CQuaternion& CQuaternion::LookAt(const CVector3& Pos)
 {
-	CQuaternion r_q;
-	DirectX::XMVECTOR axis_v = DirectX::XMLoadFloat3(&Axis.f);
-
-	r_q.v = DirectX::XMQuaternionRotationAxis(axis_v, Radian);
-
-	return r_q;
-}
-
-CQuaternion CQuaternion::LookAt(const CVector3& Pos)
-{
-	return CQuaternion();
+	CQuaternion q;
+	return q;
 }

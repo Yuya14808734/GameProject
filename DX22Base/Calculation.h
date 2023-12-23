@@ -140,14 +140,15 @@ public:
 	CQuaternion(float x,float y,float z,float w);
 	CQuaternion(float AngleX, float AngleY, float AngleZ);
 	CQuaternion(CVector3 Angle);
-	CQuaternion(const DirectX::XMFLOAT4&);
-	CQuaternion operator*  (const CQuaternion&);
-	CQuaternion operator*= (const CQuaternion&);
-	CVector3 RotateVector(const CVector3&);
-	DirectX::XMFLOAT4 GetValue();
+	CQuaternion(const DirectX::XMFLOAT4& f);
+	CQuaternion operator*  (const CQuaternion& q);
+	CQuaternion operator*= (const CQuaternion& q);
+	const CVector3& RotateVector(const CVector3& vec) const;
+	const DirectX::XMFLOAT4& GetValue() const;
+	const CQuaternion& normalize() const;
 
 public:
-	static CQuaternion AngleAxis(const CVector3& Axis, float Angle);
-	static CQuaternion RadianAxis(const CVector3& Axis, float Radian);
-	static CQuaternion LookAt(const CVector3& Pos);
+	static CQuaternion& AngleAxis(const CVector3& Axis, float Angle);
+	static CQuaternion& RadianAxis(const CVector3& Axis, float Radian);
+	static CQuaternion& LookAt(const CVector3& Pos);
 };

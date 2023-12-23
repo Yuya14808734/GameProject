@@ -285,7 +285,7 @@
     <ClCompile Include="Character_AttackState.cpp">
       <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
     </ClCompile>
-    <ClCompile Include="Character_BlowAway.cpp">
+    <ClCompile Include="Character_BlowAwayState.cpp">
       <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="Character_DownState.cpp">
@@ -356,6 +356,9 @@
     </ClCompile>
     <ClCompile Include="Player_Controller.cpp">
       <Filter>ソース ファイル\04_Game\02_Character\CharacterBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Character_HitStopState.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -40,12 +40,44 @@ void Character_00::AttackS2_Init()
 		,0.0f);
 
 	m_CharacterModel.PlayAnime("Umatobi", true);
+
+	m_HitAttackStopCount = 0;
+}
+
+void Character_00::AttackS2_Uninit()
+{
+	m_HitAttackStopCount = 0;
+
+	EffectManager::GetManager()->StopEffect(m_SwordHandle);
+
+	m_AttackCollider.clear();
 }
 
 void Character_00::AttackS2_Update()
 {
 	//今まで当たったことのあるキャラクターには当てない
 	m_AttackCollider[0].m_CanAttackCharacterBit = ~m_AttackCollider[0].m_haveHitCharacterBit;
+
+	//前のフレームで誰かに当たった場合
+	if (m_AttackCollider[0].m_HitTriggerCharacterBit != 0x00)
+	{
+		m_HitAttackStopCount = 30;
+		EffectManager::GetManager()->SetPaused(m_SwordHandle, true);
+	}
+
+	//攻撃を当てたヒットストップが終わるまで動かない
+	if (m_HitAttackStopCount > 0)
+	{
+		m_HitAttackStopCount--;
+
+		//攻撃が当たった時のストップが消える
+		if (m_HitAttackStopCount == 0)
+		{
+			EffectManager::GetManager()->SetPaused(m_SwordHandle, false);
+		}
+
+		return;
+	}
 
 	m_AttackTime++;
 	float AnimeAllTime = 0.938f - 0.332f;
@@ -75,21 +107,15 @@ void Character_00::AttackS2_Update()
 	m_CharacterModel.SetAnimeTime(m_AnimeTime);
 }
 
-void Character_00::AttackS2_Uninit()
-{
-	EffectManager::GetManager()->StopEffect(m_SwordHandle);
-
-	m_AttackCollider.clear();
-}
-
 void Character_00::AttackS2_Hit(Character* HitCharacter)
 {
 	HitCharacter->AddDamage(13.0f);											//ダメージの加算
 
-	float ForcePower = HitCharacter->GetDamage() / 100.0f * 100.0f;			//ダメージから吹っ飛ばすベクトルの計算
+	float ForcePower = (HitCharacter->GetDamage() / 100.0f) + 0.7f;			//ダメージから吹っ飛ばすベクトルの計算
 	CVector3 AddVec = CVector2::GetAngleVector(
-		m_NowLookDir == Character::LOOKDIR::RIGHT ? 60.0f : -60.0f
+		m_NowLookDir == Character::LOOKDIR::RIGHT ? -70.0f : 70.0f
 	) * ForcePower;
 	HitCharacter->AddForce(AddVec);
-	HitCharacter->SetState(Character::STATE::BLOWAWAY);
+	HitCharacter->SetHitStop(30,Character::STATE::BLOWAWAY);
+	HitCharacter->SetShake(true);
 }

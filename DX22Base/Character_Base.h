@@ -21,6 +21,7 @@ public:
 		JUMP,		//ジャンプ
 		AIRMOVE,	//落下
 		DOWN,		//倒れる
+		HITSTOP,	//ヒットストップ
 		MAX,
 	};
 	enum class ATTACK : int
@@ -52,6 +53,7 @@ public:
 		unsigned int m_HitCharacterBit = 0x00;				//前のフレームで当たったキャラクターのビット番号が入る
 		unsigned int m_CanAttackCharacterBit = 0x00;		//当たることが出来るキャラクターのビット番号
 		unsigned int m_haveHitCharacterBit = 0x00;			//今までで当たったことがあるキャラクタービット番号
+		unsigned int m_HitTriggerCharacterBit = 0x00;		//前のフレームで初めて当たった事があるキャラクターのビット番号
 	};
 
 	struct MOVEPARAMETER
@@ -107,6 +109,7 @@ public:
 	//==========================================================================
 	int GetCharacterBit();								//キャラクター番号の取得
 	void SetState(Character::STATE state);				//キャラクターの状態変更 外部が呼ぶ関数
+	void SetHitStop(int HitStopCount,Character::STATE NextState);	//ヒットストップを設定	 外部が呼ぶ関数
 	const Character::STATE& GetState() const;			//今の状態の取得
 	const Character::ATTACK& GetAttack() const;			//今している攻撃情報
 	ModelDrawer* GetModel() const;						//モデル情報の取得
@@ -120,6 +123,8 @@ public:
 	const CQuaternion& GetRotate() const;				//回転量の取得
 	void SetRotate(const CQuaternion& rotate);			//回転量の設定(Quaternion)
 	void SetRotate(const CVector3& rotate);				//回転量の設定(度数法)
+	void SetShake(bool shake);							//キャラクターを揺らすか							
+	bool GetShake();									//キャラクターを揺らす							
 	//==========================================================================
 	void AddForce(const CVector3& force);				//力を足してやる
 	void SetForce(const CVector3& force);				//力を設定
@@ -139,8 +144,9 @@ public:
 
 
 protected:
-	void ChangeAttack(Character::ATTACK attack);		//攻撃を設定する関数 Updateで呼ぶ関数
-	void ChangeState(Character::STATE state);			//状態を変更する関数 Updateで呼ぶ関数
+	void ChangeAttack(Character::ATTACK attack);		//攻撃を設定する関数 内部で呼ぶ関数
+	void ChangeState(Character::STATE state);			//状態を変更する関数 内部で呼ぶ関数
+	void ChangeHitStop(int HitStopCount, Character::STATE NextState);				//状態を変更する関数 内部で呼ぶ関数
 
 protected:
 
@@ -185,6 +191,10 @@ protected:
 	virtual void DownInit();		//倒れた時の初期化
 	virtual void DownUninit();		//倒れた時の終了処理
 	virtual void DownUpdate();		//倒れている状態のアップデート
+	//==========================================================================
+	virtual void HitStopInit();		//ヒットストップの初期化
+	virtual void HitStopUninit();	//ヒットストップの終了処理
+	virtual void HitStopUpdate();	//ヒットストップ状態のアップデート
 	
 	//==========================================================================
 	//スマブラと同じような名前にしています
@@ -317,6 +327,7 @@ protected:
 	// 座標に関する変数
 	//-------------------------------------------------------------------------------
 	CVector3 m_pos;							//座標
+	CVector3 m_AddDrawPos;					//描画するときにずらす座標
 	CVector3 m_oldPos;						//前の座標
 	CVector3 m_scale;						//大きさ
 	CQuaternion m_rotate;					//回転量
@@ -347,4 +358,12 @@ protected:
 	//ステージに当たった判定に使う変数
 	//-------------------------------------------------------------------------------
 	Character_DamageUI m_DamageUI;
+
+	//-------------------------------------------------------------------------------
+	// ヒットストップに関する変数
+	//-------------------------------------------------------------------------------
+	bool m_Shake = false;					//プレイヤーを揺らすか
+	unsigned int m_HitStopCount = 0;		//ヒットストップする時間
+	Character::STATE m_HitStopNextState;	//ヒットストップ後の状態
+
 };

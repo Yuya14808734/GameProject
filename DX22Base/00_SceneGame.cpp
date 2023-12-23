@@ -130,7 +130,9 @@ void SceneGame::Update()
 		//配列の頭から攻撃を見ていく
 		for (Character::ATTACKPARAM& Character_Attack : attackParamVector)
 		{
+			//前のフレームに依存しないビットはここで0にしておく
 			Character_Attack.m_HitCharacterBit = 0x00;
+			Character_Attack.m_HitTriggerCharacterBit = 0x00;
 
 			if(!Character_Attack.m_Use)
 			{
@@ -151,11 +153,17 @@ void SceneGame::Update()
 				{
 					//当たったキャラクターの情報を入れる
 					Character_Attack.m_HitCharacterBit |= HitCharacter->GetCharacterBit();
+					Character_Attack.m_HitTriggerCharacterBit = ~Character_Attack.m_haveHitCharacterBit & HitCharacter->GetCharacterBit();
 					Character_Attack.m_haveHitCharacterBit |= HitCharacter->GetCharacterBit();
 
-					//当たるキャラクターの場合
+					//攻撃を当てるの判定
 					if ((HitCharacter->GetCharacterBit() & Character_Attack.m_CanAttackCharacterBit) != 0x00)
 					{
+						//====<当たった時の処理>====
+						CVector3 HitCharacterPos = HitCharacter->GetPos();
+						HitCharacterPos.y += 0.01f;			//少し浮かさないと下で地面に当たってしまう
+						HitCharacter->SetPos(HitCharacterPos);
+
 						//当たった時の処理をする
 						switch (AttackCharacter->GetAttack())
 						{
@@ -203,16 +211,16 @@ void SceneGame::Update()
 		BoxCollider* pCharacterCollider = (*it_Character)->GetCharacterCollider();
 
 		//Xの移動だけの当たり判定
-		for (std::vector<BoxCollider>::iterator it_Stage = pStageCollider->begin();
-			it_Stage != pStageCollider->end(); it_Stage++)
+		for (std::vector<BoxCollider>::iterator it_StageCollider = pStageCollider->begin();
+			it_StageCollider != pStageCollider->end(); it_StageCollider++)
 		{
 			CVector3 DiffPos = (*it_Character)->GetPos() - (*it_Character)->GetOldPos();		//前の位置から今の位置まで移動したベクトル
-			CVector3 HitSize = (pCharacterCollider->GetSize() + (*it_Stage).GetSize()) * 0.5f;
-			float NowDistanceX =  pCharacterCollider->GetPos().x - (*it_Stage).GetPos().x;
+			CVector3 HitSize = (pCharacterCollider->GetSize() + (*it_StageCollider).GetSize()) * 0.5f;
+			float NowDistanceX =  pCharacterCollider->GetPos().x - (*it_StageCollider).GetPos().x;
 			float AbsNowDistanceX = fabsf(NowDistanceX);
-			float OldDistanceY = (pCharacterCollider->GetPos().y - DiffPos.y) - (*it_Stage).GetPos().y;
+			float OldDistanceY = (pCharacterCollider->GetPos().y - DiffPos.y) - (*it_StageCollider).GetPos().y;
 			float AbsOldDistanceY = fabsf(OldDistanceY);
-			float OldDistanceZ = (pCharacterCollider->GetPos().z - DiffPos.z) - (*it_Stage).GetPos().z;
+			float OldDistanceZ = (pCharacterCollider->GetPos().z - DiffPos.z) - (*it_StageCollider).GetPos().z;
 			float AbsOldDistanceZ = fabsf(OldDistanceZ);
 			
 			//Xの移動だけして当たっていたら
@@ -222,7 +230,7 @@ void SceneGame::Update()
 			{
 				CVector3 newPos = (*it_Character)->GetPos();
 				float MoveDist = DiffPos.x < 0.0f ? HitSize.x : -HitSize.x;
-				newPos.x = (*it_Stage).GetPos().x + MoveDist;
+				newPos.x = (*it_StageCollider).GetPos().x + MoveDist;
 				(*it_Character)->SetPos(newPos);
 				
 				(*it_Character)->Character_HitWall();
@@ -254,6 +262,7 @@ void SceneGame::Update()
 				newPos.y = (*it_Stage).GetPos().y + MoveDist;
 				(*it_Character)->SetPos(newPos);
 
+				//上から移動したか下から移動したかで判定
 				if (DiffPos.y < 0.0f)
 				{
 					(*it_Character)->Character_HitGround();

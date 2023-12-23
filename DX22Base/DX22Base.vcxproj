@@ -170,6 +170,7 @@
     <ClCompile Include="Character_AirMoveState.cpp" />
     <ClCompile Include="Character_AttackState.cpp" />
     <ClCompile Include="Character_Base.cpp" />
+    <ClCompile Include="Character_HitStopState.cpp" />
     <ClCompile Include="Player_Controller.cpp" />
     <ClCompile Include="Character_DamageUI.cpp" />
     <ClCompile Include="Character_DashState.cpp" />
@@ -177,7 +178,7 @@
     <ClCompile Include="Character_IdleState.cpp" />
     <ClCompile Include="Character_JumpInState.cpp" />
     <ClCompile Include="Character_JumpState.cpp" />
-    <ClCompile Include="Character_BlowAway.cpp" />
+    <ClCompile Include="Character_BlowAwayState.cpp" />
     <ClCompile Include="Character_WalkState.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />

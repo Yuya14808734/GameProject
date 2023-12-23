@@ -60,6 +60,8 @@ void Character_00::Init()
 
 	m_DamageUI.GetCharacterIconUI()->SetIconTexture("Assets/CharacterImage/UnitychanImage.png");
 
+	//m_rotate = CQuaternion::AngleAxis(CVector3(0.0f, 0.0f, 1.0f).normalize(), 45.0f);
+
 }
 
 void Character_00::Uninit()

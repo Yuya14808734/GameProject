@@ -83,6 +83,9 @@ void Character::Character_Init()
 	case Character::STATE::DOWN:
 		DownInit();
 		break;
+	case Character::STATE::HITSTOP:
+		HitStopInit();
+		break;
 	case Character::STATE::MAX:
 		break;
 	default:
@@ -133,6 +136,9 @@ void Character::Character_Update()
 	case Character::STATE::DOWN:
 		DownUpdate();
 		break;
+	case Character::STATE::HITSTOP:
+		HitStopUpdate();
+		break;
 	case Character::STATE::MAX:
 		break;
 	default:
@@ -178,6 +184,9 @@ void Character::Character_Update()
 		case Character::STATE::DOWN:
 			DownUninit();
 			break;
+		case Character::STATE::HITSTOP:
+			HitStopUninit();
+			break;
 		case Character::STATE::MAX:
 			break;
 		default:
@@ -216,6 +225,9 @@ void Character::Character_Update()
 		case Character::STATE::DOWN:
 			DownInit();
 			break;
+		case Character::STATE::HITSTOP:
+			HitStopInit();
+			break;
 		case Character::STATE::MAX:
 			break;
 		default:
@@ -236,7 +248,8 @@ void Character::Character_Draw()
 {
 	Draw();
 
-	m_CharacterModel.SetPosition(m_pos);
+	m_CharacterModel.SetPosition(
+		m_Shake ? m_pos + m_AddDrawPos : m_pos);
 	m_CharacterModel.SetRotate(m_rotate);
 	m_CharacterModel.Draw();
 }
@@ -285,6 +298,9 @@ void Character::SetState(Character::STATE state)
 	case Character::STATE::DOWN:
 		DownUninit();
 		break;
+	case Character::STATE::HITSTOP:
+		HitStopUninit();
+		break;
 	case Character::STATE::MAX:
 		break;
 	default:
@@ -330,8 +346,13 @@ void Character::SetState(Character::STATE state)
 	default:
 		break;
 	}
+}
 
-	m_NowState = m_NextState;
+void Character::SetHitStop(int HitStopCount, Character::STATE NextState)
+{
+	SetState(Character::STATE::HITSTOP);
+	m_HitStopCount = HitStopCount;
+	m_HitStopNextState = NextState;
 }
 
 const Character::STATE& Character::GetState() const
@@ -396,6 +417,16 @@ void Character::SetRotate(const CVector3 & rotate)
 		DirectX::XMConvertToRadians(rotate.x),
 		DirectX::XMConvertToRadians(rotate.y),
 		DirectX::XMConvertToRadians(rotate.z));
+}
+
+void Character::SetShake(bool shake)
+{
+	m_Shake = shake;
+}
+
+bool Character::GetShake()
+{
+	return m_Shake;
 }
 
 void Character::AddForce(const CVector3 & force)
@@ -473,5 +504,12 @@ void Character::ChangeState(Character::STATE state)
 {
 	m_NextState = state;
 	m_ChangeState = true;
+}
+
+void Character::ChangeHitStop(int HitStopCount, Character::STATE NextState)
+{
+	ChangeState(Character::STATE::HITSTOP);
+	m_HitStopCount = HitStopCount;
+	m_HitStopNextState = NextState;
 }
 

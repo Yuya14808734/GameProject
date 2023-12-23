@@ -82,6 +82,7 @@ private:
 	float m_AnimeTime = 0.0f;
 	CharacterStateWindow m_stateWindow;
 	unsigned int m_FrameCount = 0;
+	int m_HitAttackStopCount = 0;
 
 	//エフェクトの変数
 	Effekseer::Handle m_SwordHandle;
