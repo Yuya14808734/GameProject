@@ -54,7 +54,63 @@ void Character::Character_Init()
 	m_JumpCount = 0;
 	m_HitGround = m_HitCeiling = m_HitWall = false;
 
-	switch (m_NowState)
+	StateInit(m_NowState);
+}
+
+void Character::Character_Uninit()
+{
+	Uninit();
+}
+
+void Character::Character_Update()
+{
+	m_oldPos = m_pos;
+
+	Update();
+
+	//========================================
+	// 各ステータスのアップデート
+	//========================================
+	StateUpdate(m_NowState);
+
+	//========================================
+	// 各ステータスが切り替わっていたら
+	//========================================
+	if (m_ChangeState)
+	{
+		m_ChangeState = false;
+
+		SetState(m_NextState);
+
+	}
+
+	m_CharacterCollider.SetPos(m_pos);
+
+	m_DamageUI.GetDamageUI()->SetNumber(static_cast<int>(m_DamagePercentage));
+	m_DamageUI.Update();
+}
+
+void Character::Character_Draw()
+{
+	Draw();
+
+	m_CharacterModel.SetPosition(
+		m_Shake ? m_pos + m_AddDrawPos : m_pos);
+	m_CharacterModel.SetRotate(m_rotate);
+	m_CharacterModel.Draw();
+}
+
+void Character::Character_UIDraw()
+{
+	m_DamageUI.Draw();
+}
+
+void Character::StateInit(Character::STATE state)
+{
+	//========================================
+	// 初期化
+	//========================================
+	switch (state)
 	{
 	case Character::STATE::IDLE:
 		IdleInit();
@@ -80,12 +136,12 @@ void Character::Character_Init()
 	case Character::STATE::AIRMOVE:
 		AirMoveInit();
 		break;
+	case Character::STATE::FALLDOWN:
+		FallDownInit();
+		break;
 	case Character::STATE::DOWN:
 		DownInit();
 		break;
-	case Character::STATE::HITSTOP:
-		HitStopInit();
-		break;
 	case Character::STATE::MAX:
 		break;
 	default:
@@ -93,183 +149,12 @@ void Character::Character_Init()
 	}
 }
 
-void Character::Character_Uninit()
-{
-	Uninit();
-}
-
-void Character::Character_Update()
-{
-	m_oldPos = m_pos;
-
-	Update();
-
-	//========================================
-	// 各ステータスのアップデート
-	//========================================
-	switch (m_NowState)
-	{
-	case Character::STATE::IDLE:
-		IdleUpdate();
-		break;
-	case Character::STATE::WALK:
-		WalkUpdate();
-		break;
-	case Character::STATE::DASH:
-		DashUpdate();
-		break;
-	case Character::STATE::ATTACK:
-		AttackUpdate();
-		break;
-	case Character::STATE::BLOWAWAY:
-		BlowAwayUpdate();
-		break;
-	case Character::STATE::JUMPIN:
-		JumpInUpdate();
-		break;
-	case Character::STATE::JUMP:
-		JumpUpdate();
-		break;
-	case Character::STATE::AIRMOVE:
-		AirMoveUpdate();
-		break;
-	case Character::STATE::DOWN:
-		DownUpdate();
-		break;
-	case Character::STATE::HITSTOP:
-		HitStopUpdate();
-		break;
-	case Character::STATE::MAX:
-		break;
-	default:
-		break;
-	}
-
-	//========================================
-	// 各ステータスが切り替わっていたら
-	//========================================
-	if (m_ChangeState)
-	{
-		m_ChangeState = false;
-
-		//========================================
-		//終了処理
-		//========================================
-		switch (m_NowState)
-		{
-		case Character::STATE::IDLE:
-			IdleUninit();
-			break;
-		case Character::STATE::WALK:
-			WalkUninit();
-			break;
-		case Character::STATE::DASH:
-			DashUninit();
-			break;
-		case Character::STATE::ATTACK:
-			AttackUninit();
-			break;
-		case Character::STATE::BLOWAWAY:
-			BlowAwayUninit();
-			break;
-		case Character::STATE::JUMPIN:
-			JumpInUninit();
-			break;
-		case Character::STATE::JUMP:
-			JumpUninit();
-			break;
-		case Character::STATE::AIRMOVE:
-			AirMoveUninit();
-			break;
-		case Character::STATE::DOWN:
-			DownUninit();
-			break;
-		case Character::STATE::HITSTOP:
-			HitStopUninit();
-			break;
-		case Character::STATE::MAX:
-			break;
-		default:
-			break;
-		}
-
-		//========================================
-		// 初期化
-		//========================================
-		switch (m_NextState)
-		{
-		case Character::STATE::IDLE:
-			IdleInit();
-			break;
-		case Character::STATE::WALK:
-			WalkInit();
-			break;
-		case Character::STATE::DASH:
-			DashInit();
-			break;
-		case Character::STATE::ATTACK:
-			AttackInit();
-			break;
-		case Character::STATE::BLOWAWAY:
-			BlowAwayInit();
-			break;
-		case Character::STATE::JUMPIN:
-			JumpInInit();
-			break;
-		case Character::STATE::JUMP:
-			JumpInit();
-			break;
-		case Character::STATE::AIRMOVE:
-			AirMoveInit();
-			break;
-		case Character::STATE::DOWN:
-			DownInit();
-			break;
-		case Character::STATE::HITSTOP:
-			HitStopInit();
-			break;
-		case Character::STATE::MAX:
-			break;
-		default:
-			break;
-		}
-
-		m_NowState = m_NextState;
-
-	}
-
-	m_CharacterCollider.SetPos(m_pos);
-
-	m_DamageUI.GetDamageUI()->SetNumber(static_cast<int>(m_DamagePercentage));
-	m_DamageUI.Update();
-}
-
-void Character::Character_Draw()
-{
-	Draw();
-
-	m_CharacterModel.SetPosition(
-		m_Shake ? m_pos + m_AddDrawPos : m_pos);
-	m_CharacterModel.SetRotate(m_rotate);
-	m_CharacterModel.Draw();
-}
-
-void Character::Character_UIDraw()
-{
-	m_DamageUI.Draw();
-}
-
-int Character::GetCharacterBit()
-{
-	return m_PlayerBit;
-}
-
-void Character::SetState(Character::STATE state)
+void Character::StateUninit(Character::STATE state)
 {
 	//========================================
 	//終了処理
 	//========================================
-	switch (m_NowState)
+	switch (state)
 	{
 	case Character::STATE::IDLE:
 		IdleUninit();
@@ -295,6 +180,9 @@ void Character::SetState(Character::STATE state)
 	case Character::STATE::AIRMOVE:
 		AirMoveUninit();
 		break;
+	case Character::STATE::FALLDOWN:
+		FallDownUninit();
+		break;
 	case Character::STATE::DOWN:
 		DownUninit();
 		break;
@@ -306,46 +194,73 @@ void Character::SetState(Character::STATE state)
 	default:
 		break;
 	}
+}
 
-	m_NowState = state;
-
+void Character::StateUpdate(Character::STATE state)
+{
 	//========================================
-	// 初期化
+	// 各ステータスのアップデート
 	//========================================
-	switch (m_NowState)
+	switch (state)
 	{
 	case Character::STATE::IDLE:
-		IdleInit();
+		IdleUpdate();
 		break;
 	case Character::STATE::WALK:
-		WalkInit();
+		WalkUpdate();
 		break;
 	case Character::STATE::DASH:
-		DashInit();
+		DashUpdate();
 		break;
 	case Character::STATE::ATTACK:
-		AttackInit();
+		AttackUpdate();
 		break;
 	case Character::STATE::BLOWAWAY:
-		BlowAwayInit();
+		BlowAwayUpdate();
 		break;
 	case Character::STATE::JUMPIN:
-		JumpInInit();
+		JumpInUpdate();
 		break;
 	case Character::STATE::JUMP:
-		JumpInit();
+		JumpUpdate();
 		break;
 	case Character::STATE::AIRMOVE:
-		AirMoveInit();
+		AirMoveUpdate();
+		break;
+	case Character::STATE::FALLDOWN:
+		FallDownUpdate();
 		break;
 	case Character::STATE::DOWN:
-		DownInit();
+		DownUpdate();
+		break;
+	case Character::STATE::HITSTOP:
+		HitStopUpdate();
 		break;
 	case Character::STATE::MAX:
 		break;
 	default:
 		break;
 	}
+}
+
+int Character::GetCharacterBit()
+{
+	return m_PlayerBit;
+}
+
+void Character::SetState(Character::STATE NextState)
+{
+	//========================================
+	//終了処理
+	//========================================
+	StateUninit(m_NowState);
+
+	//========================================
+	// 初期化
+	//========================================
+	StateInit(NextState);
+
+	m_NowState = NextState;
 }
 
 void Character::SetHitStop(int HitStopCount, Character::STATE NextState)
@@ -429,6 +344,18 @@ bool Character::GetShake()
 	return m_Shake;
 }
 
+void Character::SetLookRight()
+{
+	m_NowLookDir = Character::LOOKDIR::RIGHT;
+	m_rotate = CQuaternion::AngleAxis(CVector3::GetUp(),90.0f);
+}
+
+void Character::SetLookLeft()
+{
+	m_NowLookDir = Character::LOOKDIR::LEFT;
+	m_rotate = CQuaternion::AngleAxis(CVector3::GetUp(), -90.0f);
+}
+
 void Character::AddForce(const CVector3 & force)
 {
 	m_Velocity += force;
@@ -494,6 +421,7 @@ void Character::DrawCollider()
 	m_CharacterCollider.DrawCollider();
 }
 
+//=========<この下の関数はUpdateで呼ぶ関数です>=========
 void Character::ChangeAttack(Character::ATTACK attack)
 {
 	ChangeState(Character::STATE::ATTACK);

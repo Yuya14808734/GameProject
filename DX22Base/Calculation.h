@@ -146,6 +146,7 @@ public:
 	const CVector3& RotateVector(const CVector3& vec) const;
 	const DirectX::XMFLOAT4& GetValue() const;
 	const CQuaternion& normalize() const;
+	void SetQuaternion(float x, float y, float z, float w);
 
 public:
 	static CQuaternion& AngleAxis(const CVector3& Axis, float Angle);

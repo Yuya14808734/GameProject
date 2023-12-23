@@ -16,10 +16,11 @@ public:
 		WALK,		//歩く
 		DASH,		//走る
 		ATTACK,		//攻撃
-		BLOWAWAY,		//吹っ飛ばす
+		BLOWAWAY,	//吹っ飛ばす
 		JUMPIN,		//ジャンプの入り
 		JUMP,		//ジャンプ
-		AIRMOVE,	//落下
+		AIRMOVE,	//空中移動
+		FALLDOWN,	//落下(空中移動とは違いくるくる落ちる感じ)
 		DOWN,		//倒れる
 		HITSTOP,	//ヒットストップ
 		MAX,
@@ -106,6 +107,9 @@ public:
 	void Character_Update();							//キャラクターの更新
 	void Character_Draw();								//キャラクターの描画
 	void Character_UIDraw();
+	void StateInit(Character::STATE state);				//状態の初期化
+	void StateUninit(Character::STATE state);			//状態の終了処理
+	void StateUpdate(Character::STATE state);			//状態のアップデート
 	//==========================================================================
 	int GetCharacterBit();								//キャラクター番号の取得
 	void SetState(Character::STATE state);				//キャラクターの状態変更 外部が呼ぶ関数
@@ -113,6 +117,7 @@ public:
 	const Character::STATE& GetState() const;			//今の状態の取得
 	const Character::ATTACK& GetAttack() const;			//今している攻撃情報
 	ModelDrawer* GetModel() const;						//モデル情報の取得
+
 	//==========================================================================
 	const CVector3& GetPos() const;						//位置の取得
 	void SetPos(const CVector3& pos);					//位置の設定
@@ -124,7 +129,9 @@ public:
 	void SetRotate(const CQuaternion& rotate);			//回転量の設定(Quaternion)
 	void SetRotate(const CVector3& rotate);				//回転量の設定(度数法)
 	void SetShake(bool shake);							//キャラクターを揺らすか							
-	bool GetShake();									//キャラクターを揺らす							
+	bool GetShake();									//キャラクターを揺らす	
+	void SetLookRight();								//右を向かせる
+	void SetLookLeft();									//左を向かせる
 	//==========================================================================
 	void AddForce(const CVector3& force);				//力を足してやる
 	void SetForce(const CVector3& force);				//力を設定
@@ -187,6 +194,10 @@ protected:
 	virtual void AirMoveInit();		//空中にいるときの初期化
 	virtual void AirMoveUninit();	//空中にいるときの終了処理
 	virtual void AirMoveUpdate();	//落ちているときのアップデート
+	//==========================================================================
+	virtual void FallDownInit();
+	virtual void FallDownUninit();
+	virtual void FallDownUpdate();
 	//==========================================================================
 	virtual void DownInit();		//倒れた時の初期化
 	virtual void DownUninit();		//倒れた時の終了処理

@@ -11,28 +11,31 @@
 
 void Character::BlowAwayInit()
 {
+	//コントローラーの今入力されている左スティックのベクトルを取得する
 	CVector3 ChangeVector = m_Controller.GetLeftInputVector();
 
-	//正規化したベクトルの保存
+	//ベクトルを正規化して保存
 	CVector3 NormalChangeVector = ChangeVector.normalize();
 	NormalChangeVector.z = 0.0f;
 	CVector3 NormalVelocityVector = m_Velocity.normalize();
 	NormalVelocityVector.z = 0.0f;
 
-	//変えれるなら変えたい部分です
+	//今飛ばされているベクトルとコントローラーで入力されたベクトルへ
+	//数パーセント回す
 	//float RotateRadian = acosf(NormalVelocityVector.dot(NormalChangeVector));
 	//m_Velocity = CQuaternion::RadianAxis(
-	//	NormalVelocityVector.cross(NormalChangeVector),	//回す軸
-	//	RotateRadian * m_BlowAwayParameter.m_VectorChangePower				//回す弧度				
-	//).RotateVector(m_Velocity);							//回すベクトル
+	//	NormalVelocityVector.cross(NormalChangeVector),						//回す軸
+	//	RotateRadian * m_BlowAwayParameter.m_VectorChangePower				//回す弧度
+	//).RotateVector(m_Velocity);												//回すベクトル
 
 	m_MoveVector = CVector3::GetZero();
+
+
 }
 
 void Character::BlowAwayUninit()
 {
-	int i = 0;
-	i++;
+
 }
 
 void Character::BlowAwayUpdate()
@@ -61,7 +64,7 @@ void Character::BlowAwayUpdate()
 	//ある程度短くなったら
 	if (SmashNowLength < m_BlowAwayParameter.m_MinimumSmashLength)
 	{
-		ChangeState(Character::STATE::AIRMOVE);
+		ChangeState(Character::STATE::FALLDOWN);
 	}
 
 	m_pos += m_Velocity;

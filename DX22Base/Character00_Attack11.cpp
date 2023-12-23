@@ -29,6 +29,7 @@ void Character_00::Attack11_Init()
 	Attack.m_Use = false;
 	Attack.m_BoxCollider.CreateBox(BoxCollider::BOXTYPE::CENTER,
 		ColliderPos, CVector3(1.7f, 2.7f, 1.0f));
+	Attack.m_CanAttackCharacterBit = 0xffffffff;					//当たるキャラクターの設定
 
 	m_AttackCollider.push_back(Attack);
 
@@ -37,72 +38,57 @@ void Character_00::Attack11_Init()
 
 void Character_00::Attack11_Update()
 {
-	const int AnimeFrame = 16;
-	const int EndFrame = 30;
-	const float AnimeStartTime = 1.145f;
-	const float AnimeEndTime = 1.193f;
-	const float AnimeAllTime = AnimeEndTime - AnimeStartTime;
+	//============<攻撃を当てるかの設定>===================
+	//今まで当たったことのあるキャラクターには当てない
+	m_AttackCollider[0].m_CanAttackCharacterBit = ~m_AttackCollider[0].m_haveHitCharacterBit;
+	//=====================================================
+
+	const int AnimeAllFrame = 16;								//アニメーション全体のフレーム
+	const int EndFrame = 30;									//攻撃終了時間
+	const float AnimeStartTime = 1.145f;						//アニメーション開始時間
+	const float AnimeEndTime = 1.193f;							//アニメーション終了時間
+	const float AnimeAllTime = AnimeEndTime - AnimeStartTime;	//アニメーションの時間
 	
 	m_AttackTime++;
-	m_AnimeTime = static_cast<float>(m_AttackTime) / static_cast<float>(AnimeFrame) * AnimeAllTime + AnimeStartTime;
 
+	//アニメーションの再生時間の更新
+	m_AnimeTime = static_cast<float>(m_AttackTime) / static_cast<float>(AnimeAllFrame) * AnimeAllTime + AnimeStartTime;
+
+	//アニメーションが終了するべき時間を超えていた場合
 	if (m_AnimeTime > AnimeEndTime)
 	{
 		m_AnimeTime = AnimeEndTime;
 	}
 
-	if (m_AttackTime == 6)
+	//当たり判定開始
+	if (m_AttackTime == 6)					
 	{
 		m_AttackCollider[0].m_Use = true;
 	}
 
-	if (m_AttackTime == 20)
+	//当たり判定終了
+	if (m_AttackTime == 20)					
 	{
 		m_AttackCollider[0].m_Use = false;
 	}
 
 	//このフレームの間であれば弱2へ行くことが出来る
-	if (m_AttackTime > 15 && m_AttackTime < EndFrame)
+	if (m_AttackTime > 10 && m_AttackTime < EndFrame)	
 	{
 		//攻撃
-		if (m_Controller.GetAttack())
+		if (m_Controller.GetAttack())	
 		{
 			ChangeAttack(Character::ATTACK::ATTACK_12);	//弱の設定
 		}
 	}
 
-	//if (m_AttackTime > 24 || m_AttackTime < EndFrame)
-	//{
-	//	//移動
-	//	CVector2 LeftStick = GetPressLeftStick();
-
-	//	//デットゾーンの設定
-	//	if (LeftStick.x * LeftStick.x + LeftStick.y * LeftStick.y < 0.15f * 0.15f)
-	//	{
-	//		LeftStick.x = LeftStick.y = 0.0f;
-	//	}
-
-
-	//	//移動開始
-	//	if (LeftStick.x != 0.0f || IsKeyPress(VK_RIGHT) || IsKeyPress(VK_LEFT))
-	//	{
-	//		if (GetLeftSmash(0.35f) || IsKeyPress('L'))
-	//		{
-	//			ChangeState(Character::STATE::DASH);
-	//		}
-	//		else
-	//		{
-	//			ChangeState(Character::STATE::WALK);
-	//		}
-	//	}
-	//}
-
 	//フレームごとにイベントを設定する
-	if (m_AttackTime >= EndFrame)
+	if (m_AttackTime >= EndFrame)		
 	{
 		ChangeState(Character::STATE::IDLE);
 	}
 
+	//アニメーションの再生時間の設定
 	m_CharacterModel.SetAnimeTime(m_AnimeTime);
 }
 
@@ -113,10 +99,7 @@ void Character_00::Attack11_Uninit()
 
 void Character_00::Attack11_Hit(Character* HitCharacter)
 {
-	HitCharacter->AddDamage(5.0f);								//ダメージの加算
-
-	CVector3 AddVec = CVector2::GetAngleVector(
-		m_NowLookDir == Character::LOOKDIR::RIGHT ? 90.0f : -90.0f
-	) * 0.5f;
-	HitCharacter->AddForce(AddVec);
+	HitCharacter->AddDamage(2.0f);								//ダメージの加算
+	HitCharacter->SetHitStop(5, Character::STATE::BLOWAWAY);	//ヒットストップの
+	HitCharacter->SetShake(true);
 }

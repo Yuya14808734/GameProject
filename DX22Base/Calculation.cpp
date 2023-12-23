@@ -517,6 +517,12 @@ const CQuaternion& CQuaternion::normalize() const
 	return normalq;
 }
 
+void CQuaternion::SetQuaternion(float x, float y, float z, float w)
+{
+	DirectX::XMFLOAT4 f = DirectX::XMFLOAT4(x, y, z, w);
+	v = DirectX::XMLoadFloat4(&f);
+}
+
 CQuaternion& CQuaternion::AngleAxis(const CVector3& Axis, float Angle)
 {
 	float radian = DirectX::XMConvertToRadians(Angle);

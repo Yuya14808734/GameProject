@@ -55,6 +55,8 @@ void Character_00::AttackS2_Uninit()
 
 void Character_00::AttackS2_Update()
 {
+	//============<攻撃を当てるかの設定>====================================
+	
 	//今まで当たったことのあるキャラクターには当てない
 	m_AttackCollider[0].m_CanAttackCharacterBit = ~m_AttackCollider[0].m_haveHitCharacterBit;
 
@@ -78,6 +80,8 @@ void Character_00::AttackS2_Update()
 
 		return;
 	}
+
+	//======================================================================
 
 	m_AttackTime++;
 	float AnimeAllTime = 0.938f - 0.332f;
@@ -118,4 +122,12 @@ void Character_00::AttackS2_Hit(Character* HitCharacter)
 	HitCharacter->AddForce(AddVec);
 	HitCharacter->SetHitStop(30,Character::STATE::BLOWAWAY);
 	HitCharacter->SetShake(true);
+	if (m_NowLookDir == Character::LOOKDIR::RIGHT)
+	{
+		HitCharacter->SetLookLeft();
+	}
+	else
+	{
+		HitCharacter->SetLookRight();
+	}
 }

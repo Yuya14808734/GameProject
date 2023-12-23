@@ -30,14 +30,12 @@ void Character::WalkUpdate()
 		if (m_MoveVector.x > 0.0f)
 		{
 			//âEÇ…çsÇ¡ÇƒÇ¢ÇÈ
-			m_rotate = CQuaternion::AngleAxis(CVector3::GetUp(), 90.0f);
-			m_NowLookDir = Character::LOOKDIR::RIGHT;
+			SetLookRight();
 		}
 		else
 		{
 			//ç∂Ç…çsÇ¡ÇƒÇ¢ÇÈ
-			m_rotate = CQuaternion::AngleAxis(CVector3::GetUp(), -90.0f);
-			m_NowLookDir = Character::LOOKDIR::LEFT;
+			SetLookLeft();
 		}
 
 	}

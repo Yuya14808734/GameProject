@@ -29,6 +29,8 @@ void Character_00::Attack12_Init()
 	Attack.m_Use = false;
 	Attack.m_BoxCollider.CreateBox(BoxCollider::BOXTYPE::CENTER,
 		ColliderPos, CVector3(1.7f, 2.7f, 1.0f));
+	Attack.m_CanAttackCharacterBit = 0xffffffff;					//当たるキャラクターの設定
+
 
 	m_AttackCollider.push_back(Attack);
 
@@ -37,6 +39,13 @@ void Character_00::Attack12_Init()
 
 void Character_00::Attack12_Update()
 {
+	//============<攻撃を当てるかの設定>===================
+	//今まで当たったことのあるキャラクターには当てない
+	m_AttackCollider[0].m_CanAttackCharacterBit = ~m_AttackCollider[0].m_haveHitCharacterBit;
+	//=====================================================
+
+
+
 	const int AnimeFrame = 15;
 	const int EndFrame = 30;
 	const float AnimeStartTime = 0.88f;
@@ -87,10 +96,7 @@ void Character_00::Attack12_Uninit()
 
 void Character_00::Attack12_Hit(Character* HitCharacter)
 {
-	HitCharacter->AddDamage(5.0f);								//ダメージの加算
-
-	CVector3 AddVec = CVector2::GetAngleVector(
-		m_NowLookDir == Character::LOOKDIR::RIGHT ? 90.0f : -90.0f
-	) * 0.5f;
-	HitCharacter->AddForce(AddVec);
+	HitCharacter->AddDamage(3.0f);								//ダメージの加算
+	HitCharacter->SetHitStop(5, Character::STATE::BLOWAWAY);
+	HitCharacter->SetShake(true);
 }

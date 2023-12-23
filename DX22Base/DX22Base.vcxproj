@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="00_CameraDebug.cpp" />
     <ClCompile Include="00_SceneGame.cpp" />
+    <ClCompile Include="Character00_AirMoveState.cpp" />
     <ClCompile Include="Character00_Attack11.cpp" />
     <ClCompile Include="Character00_Attack12.cpp" />
     <ClCompile Include="Character00_Attack13.cpp" />
@@ -165,11 +166,21 @@
     <ClCompile Include="Calculation.cpp" />
     <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="CameraManager.cpp" />
+    <ClCompile Include="Character00_BlowAwayState.cpp" />
+    <ClCompile Include="Character00_DashState.cpp" />
+    <ClCompile Include="Character00_DownState.cpp" />
+    <ClCompile Include="Character00_FallDownState.cpp" />
+    <ClCompile Include="Character00_HitStopState.cpp" />
+    <ClCompile Include="Character00_IdleState.cpp" />
+    <ClCompile Include="Character00_JumpInState.cpp" />
+    <ClCompile Include="Character00_JumpState.cpp" />
+    <ClCompile Include="Character00_WalkState.cpp" />
     <ClCompile Include="CharacterStateWindow.cpp" />
     <ClCompile Include="Character_00.cpp" />
     <ClCompile Include="Character_AirMoveState.cpp" />
     <ClCompile Include="Character_AttackState.cpp" />
     <ClCompile Include="Character_Base.cpp" />
+    <ClCompile Include="Character_FallDownState.cpp" />
     <ClCompile Include="Character_HitStopState.cpp" />
     <ClCompile Include="Player_Controller.cpp" />
     <ClCompile Include="Character_DamageUI.cpp" />

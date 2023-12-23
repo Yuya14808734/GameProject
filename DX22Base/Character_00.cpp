@@ -31,7 +31,7 @@ void Character_00::Init()
 	BLOWAWAYPARAMETER blowAwayParameter;
 	blowAwayParameter.m_SmashMitigation = 0.85f;
 	blowAwayParameter.m_VectorChangePower = 0.02f;
-	blowAwayParameter.m_MinimumSmashLength = 0.3f;
+	blowAwayParameter.m_MinimumSmashLength = 0.03f;
 	SetBlowAwayParameter(blowAwayParameter);
 
 	ModelDrawer::LoadModel("Assets/unitychan/unitychan.fbx", "UnityChan", 0.003f);
@@ -42,6 +42,8 @@ void Character_00::Init()
 	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_WALK00_F.fbx", "Walk", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_RUN00_F.fbx", "Dash", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_JUMP00B.fbx", "Jump", "UnityChan");
+	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_DAMAGED00.fbx", "Damage00", "UnityChan");
+	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_DAMAGED01.fbx", "Damage01", "UnityChan");
 	m_CharacterModel.SetModel("UnityChan");
 	m_CharacterModel.PlayAnime("Walk",true);
 	m_CharacterModel.SetPosition(CVector3(0.0f, 3.0f, 0.0f));
@@ -79,117 +81,6 @@ void Character_00::Draw()
 
 }
 
-void Character_00::IdleInit()
-{
-	Character::IdleInit();
-	m_CharacterModel.PlayAnime("Idle", true);
-	m_AnimeTime = 0.0f;
-}
-
-void Character_00::IdleUpdate()
-{
-	Character::IdleUpdate();
-
-	m_AnimeTime += 0.015f;
-	if (m_AnimeTime > 1.0f)
-	{
-		m_AnimeTime -= 1.0f;
-	}
-
-	m_CharacterModel.SetAnimeLerp(m_AnimeTime);
-}
-
-void Character_00::WalkInit()
-{
-	Character::WalkInit();
-	m_CharacterModel.PlayAnime("Walk",true);
-	m_AnimeTime = 0.0f;
-}
-
-void Character_00::WalkUpdate()
-{
-	Character::WalkUpdate();
-
-	m_AnimeTime += 0.015f;
-	if (m_AnimeTime > 1.0f)
-	{
-		m_AnimeTime -= 1.0f;
-	}
-
-	m_CharacterModel.SetAnimeLerp(m_AnimeTime);
-}
-
-void Character_00::DashInit()
-{
-	Character::DashInit();
-	m_CharacterModel.PlayAnime("Dash", true);
-	m_AnimeTime = 0.0f;
-}
-
-void Character_00::DashUpdate()
-{
-	Character::DashUpdate();
-
-	m_AnimeTime += 0.015f;
-	if (m_AnimeTime > 1.0f)
-	{
-		m_AnimeTime -= 1.0f;
-	}
-
-	m_CharacterModel.SetAnimeLerp(m_AnimeTime);
-}
-
-void Character_00::JumpInInit()
-{
-	Character::JumpInInit();
-	m_CharacterModel.PlayAnime("Jump", false);
-	m_AnimeTime = 0.0f;
-}
-
-void Character_00::JumpInUpdate()
-{
-	Character::JumpInUpdate();
-	m_AnimeTime = (static_cast<float>(m_JumpCharageCount) / 3.0f) * 0.05f + 0.1f;
-
-	m_CharacterModel.SetAnimeTime(m_AnimeTime);
-}
-
-void Character_00::JumpInit()
-{
-	Character::JumpInit();
-}
-
-void Character_00::JumpUpdate()
-{
-	Character::JumpUpdate();
-
-	m_AnimeTime = (1.0f - (m_Velocity.y / m_JumpParameter.m_FirstJumpPower)) * 0.93f + 0.15f;
-
-	m_CharacterModel.SetAnimeTime(m_AnimeTime);
-}
-
-void Character_00::AirMoveInit()
-{
-	Character::AirMoveInit();
-
-	if (m_NowState == Character::STATE::WALK ||
-		m_NowState == Character::STATE::DASH ||
-		m_NowState == Character::STATE::IDLE ||
-		m_NowAttack == Character::ATTACK::ATTACK_AIRN)
-	{
-		m_CharacterModel.PlayAnime("Jump", false);
-	}
-}
-
-void Character_00::AirMoveUpdate()
-{
-	Character::AirMoveUpdate();
-
-	m_AnimeTime = sinf(static_cast<float>(m_FrameCount) / 60.0f * 3.14f * 3.0f) * 0.03f + 1.08f;
-
-	m_CharacterModel.SetAnimeTime(m_AnimeTime);
-
-}
 
 void Character_00::HitGround()
 {

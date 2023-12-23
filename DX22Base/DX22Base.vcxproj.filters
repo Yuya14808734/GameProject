@@ -160,6 +160,9 @@
     <Filter Include="ソース ファイル\04_Game\03_Stage\StageBase">
       <UniqueIdentifier>{d5d82284-2b32-42fe-9fa8-746dceeac89c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\04_Game\02_Character\Character_00\State">
+      <UniqueIdentifier>{6570717d-ba69-4dc9-bf73-90987509783e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BlendState.cpp">
@@ -359,6 +362,39 @@
     </ClCompile>
     <ClCompile Include="Character_HitStopState.cpp">
       <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character00_AirMoveState.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character00_BlowAwayState.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character00_DashState.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character00_DownState.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character00_HitStopState.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character00_IdleState.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character00_JumpInState.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character00_JumpState.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character00_WalkState.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character_FallDownState.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character00_FallDownState.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
