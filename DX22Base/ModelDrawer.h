@@ -44,6 +44,10 @@ public:
 	float GetAnimeEndTime();
 	void SetPosition(const CVector3& pos);
 	const CVector3& GetPosition();
+	void SetRotatePosShiftVector(const CVector3& vector);
+	const CVector3& GetRotatePosShiftVector();
+	void SetRotatePosShift(bool shift);
+	bool IsRotatePosShift();
 	void SetScale(const CVector3& scale);
 	const CVector3& GetScale();
 	void SetRotate(const CQuaternion& rotate);
@@ -55,6 +59,8 @@ private:
 	CVector3 m_pos;
 	CVector3 m_scale;
 	CQuaternion m_rotate;
+	bool m_RotatePosShift = false;
+	CVector3 m_RotatePosShiftVector;
 	Model::AnimeNo m_NowPlayAnimeNo = 0;
 	float m_AnimTime = 0.0f;
 	bool m_AnimeNow = false;

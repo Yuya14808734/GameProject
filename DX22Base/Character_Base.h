@@ -344,6 +344,7 @@ protected:
 	CQuaternion m_rotate;					//回転量
 	CVector3 m_Velocity;					//重力など
 	CVector3 m_MoveVector;					//コントローラーの移動量
+	CVector3 m_ShiftCenterPos;				//回転や拡縮をする中心位置をずらす
 		
 	//-------------------------------------------------------------------------------
 	// 当たり判定に関する変数

@@ -220,6 +220,8 @@ ModelDrawer::ModelDrawer()
 	m_pos(CVector3(0.0f,0.0f,0.0f)),
 	m_scale(CVector3(1.0f,1.0f,1.0f)),
 	m_rotate(CVector3(0.0f,0.0f,0.0f)),
+	m_RotatePosShift(false),
+	m_RotatePosShiftVector(CVector3(0.0f, 0.0f, 0.0f)),
 	m_NowPlayAnimeNo(0),
 	m_AnimTime(0.0f),
 	m_AnimeNow(false),
@@ -252,9 +254,20 @@ void ModelDrawer::Draw()
 
 	DirectX::XMFLOAT4X4 mat[3];
 	DirectX::XMMATRIX worldmat;
-	worldmat  = DirectX::XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
+
+	worldmat = DirectX::XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
+	
+	if (m_RotatePosShift)
+	{
+		worldmat *= DirectX::XMMatrixTranslation(
+			m_RotatePosShiftVector.x,
+			m_RotatePosShiftVector.y,
+			m_RotatePosShiftVector.z);
+	}
+
 	worldmat *= DirectX::XMMatrixRotationQuaternion(m_rotate.v);
 	worldmat *= DirectX::XMMatrixTranslation(m_pos.x, m_pos.y, m_pos.z);
+
 	DirectX::XMStoreFloat4x4(&mat[0], DirectX::XMMatrixTranspose(worldmat));
 	mat[1] = pCamera->GetViewMatrix();		//ƒJƒƒ‰‚Ìî•ñ‚ª•ª‚©‚èŸ‘æÀ‘•
 	mat[2] = pCamera->GetProjectionMatrix();		//ƒJƒƒ‰‚Ìî•ñ‚ª•ª‚©‚èŸ‘æÀ‘•
@@ -362,6 +375,26 @@ void ModelDrawer::SetPosition(const CVector3& pos)
 const CVector3& ModelDrawer::GetPosition()
 {
 	return m_pos;
+}
+
+void ModelDrawer::SetRotatePosShiftVector(const CVector3& vector)
+{
+	m_RotatePosShiftVector = vector;
+}
+
+const CVector3& ModelDrawer::GetRotatePosShiftVector()
+{
+	return m_RotatePosShiftVector;
+}
+
+void ModelDrawer::SetRotatePosShift(bool shift)
+{
+	m_RotatePosShift = shift;
+}
+
+bool ModelDrawer::IsRotatePosShift()
+{
+	return m_RotatePosShift;
 }
 
 void ModelDrawer::SetScale(const CVector3& scale)

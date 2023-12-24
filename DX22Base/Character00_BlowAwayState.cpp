@@ -7,6 +7,8 @@ void Character_00::BlowAwayInit()
 	m_AttackTime = 0;
 	m_AnimeTime = 0.144f;
 	m_CharacterModel.SetAnimeTime(m_AnimeTime);
+	m_CharacterModel.SetRotatePosShift(true);
+	m_ShiftCenterPos = CVector3::GetZero();
 }
 
 void Character_00::BlowAwayUninit()
@@ -25,6 +27,10 @@ void Character_00::BlowAwayUpdate()
 
 	m_AttackTime++;
 	m_AnimeTime = static_cast<float>(m_AttackTime) / static_cast<float>(AnimeEndFrame) * AnimeAllTime + AnimeStartTime;
+	float percent = (m_AnimeTime - AnimeStartTime) / AnimeAllTime;
+	
+	m_ShiftCenterPos = CVector3::GetForward() * (percent * 0.5f) +
+		CVector3::GetUp() * (percent * -0.2f);
 
 	if (m_AnimeTime > AnimeEndTime)
 	{

@@ -7,11 +7,14 @@ void Character_00::FallDownInit()
 	m_AttackTime = 0;
 	m_AnimeTime = 0.387f;;
 	m_CharacterModel.SetAnimeTime(m_AnimeTime);
+	m_CharacterModel.SetRotatePosShift(true);
 }
 
 void Character_00::FallDownUninit()
 {
 	m_rotate.SetQuaternion(0.0f,0.0f,0.0f,1.0f);
+	m_ShiftCenterPos = CVector3::GetZero();
+	m_CharacterModel.SetRotatePosShift(false);
 	Character::FallDownUninit();
 }
 

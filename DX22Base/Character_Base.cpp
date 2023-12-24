@@ -94,9 +94,10 @@ void Character::Character_Draw()
 {
 	Draw();
 
-	m_CharacterModel.SetPosition(
-		m_Shake ? m_pos + m_AddDrawPos : m_pos);
+	m_CharacterModel.SetPosition(m_Shake ? m_pos + m_AddDrawPos : m_pos);
+	m_CharacterModel.SetRotatePosShiftVector(m_ShiftCenterPos);
 	m_CharacterModel.SetRotate(m_rotate);
+
 	m_CharacterModel.Draw();
 }
 
