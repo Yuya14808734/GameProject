@@ -43,6 +43,7 @@ public:
 	bool GetJumpPress();
 	bool GetAttack();
 	const CVector2& GetLeftInputVector();
+	bool GetUp();
 
 private:
 	PLAYCONTROLLERTYPE m_ControllerType = PLAYCONTROLLERTYPE::MAX;	//コントローラーの種類

@@ -4,7 +4,7 @@
 
 void Character_00::AttackAirN_Init()
 {
-	m_AttackTime = 0;
+	m_FrameCount = 0;
 	m_AnimeTime = 0.935f;
 
 	//当たり判定の作成
@@ -39,26 +39,26 @@ void Character_00::AttackAirN_Update()
 	const float AnimeEndTime = 1.164f;
 	const float AnimeAllTime = AnimeEndTime - AnimeStartTime;
 
-	m_AttackTime++;
-	m_AnimeTime = static_cast<float>(m_AttackTime) / static_cast<float>(AnimeFrame) * AnimeAllTime + AnimeStartTime;
+	m_FrameCount++;
+	m_AnimeTime = static_cast<float>(m_FrameCount) / static_cast<float>(AnimeFrame) * AnimeAllTime + AnimeStartTime;
 
 	if (m_AnimeTime > AnimeEndTime)
 	{
 		m_AnimeTime = AnimeEndTime;
 	}
 
-	if (m_AttackTime == 8)
+	if (m_FrameCount == 8)
 	{
 		m_AttackCollider[0].m_Use = true;
 	}
 
-	if (m_AttackTime == 12)
+	if (m_FrameCount == 12)
 	{
 		m_AttackCollider[0].m_Use = false;
 	}
 
 	//フレームごとにイベントを設定する
-	if (m_AttackTime >= EndFrame)
+	if (m_FrameCount >= EndFrame)
 	{
 		ChangeState(Character::STATE::AIRMOVE);
 	}

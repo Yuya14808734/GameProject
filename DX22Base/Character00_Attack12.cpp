@@ -4,7 +4,7 @@
 
 void Character_00::Attack12_Init()
 {
-	m_AttackTime = 0;
+	m_FrameCount = 0;
 	m_AnimeTime = 0.88f;
 
 	//当たり判定の作成
@@ -35,6 +35,8 @@ void Character_00::Attack12_Init()
 	m_AttackCollider.push_back(Attack);
 
 	m_CharacterModel.PlayAnime("Pose2", true);
+
+	m_PushButton = false;
 }
 
 void Character_00::Attack12_Update()
@@ -52,36 +54,45 @@ void Character_00::Attack12_Update()
 	const float AnimeEndTime = 0.932f;
 	const float AnimeAllTime = AnimeEndTime - AnimeStartTime;
 
-	m_AttackTime++;
-	m_AnimeTime = static_cast<float>(m_AttackTime) / static_cast<float>(AnimeFrame) * AnimeAllTime + AnimeStartTime;
+	m_FrameCount++;
+	m_AnimeTime = static_cast<float>(m_FrameCount) / static_cast<float>(AnimeFrame) * AnimeAllTime + AnimeStartTime;
 
 	if (m_AnimeTime > AnimeEndTime)
 	{
 		m_AnimeTime = AnimeEndTime;
 	}
 
-	if (m_AttackTime == 6)
+	if (m_FrameCount == 6)
 	{
 		m_AttackCollider[0].m_Use = true;
 	}
 
-	if (m_AttackTime == 18)
+	if (m_FrameCount == 18)
 	{
 		m_AttackCollider[0].m_Use = false;
 	}
 
-	//このフレームの間であれば弱2へ行くことが出来る
-	if (m_AttackTime > 12 && m_AttackTime < EndFrame)
+	//ボタンをこのフレームの間に押していると次の攻撃に向かう
+	if (m_FrameCount > 5 && m_FrameCount < EndFrame)
+	{
+		if (m_Controller.GetAttack())
+		{
+			m_PushButton = true;
+		}
+	}
+
+	//このフレームの間で移動するなら移動する
+	if (m_FrameCount > 12 && m_FrameCount < EndFrame)
 	{
 		//攻撃
-		if (m_Controller.GetAttack())
+		if (m_PushButton)
 		{
 			ChangeAttack(Character::ATTACK::ATTACK_13);	//弱の設定
 		}
 	}
 
 	//フレームごとにイベントを設定する
-	if (m_AttackTime >= EndFrame)
+	if (m_FrameCount >= EndFrame)
 	{
 		ChangeState(Character::STATE::IDLE);
 	}
@@ -97,6 +108,6 @@ void Character_00::Attack12_Uninit()
 void Character_00::Attack12_Hit(Character* HitCharacter)
 {
 	HitCharacter->AddDamage(3.0f);								//ダメージの加算
-	HitCharacter->SetHitStop(5, Character::STATE::BLOWAWAY);
+	HitCharacter->SetHitStop(5, Character::STATE::LEANBACK);
 	HitCharacter->SetShake(true);
 }

@@ -4,12 +4,9 @@
 #include "XboxKeyboard.h"
 
 
-//後回しにします！
-//アニメーションないし
-
 void Character::DownInit()
 {
-
+	
 }
 
 void Character::DownUninit()
@@ -19,5 +16,6 @@ void Character::DownUninit()
 
 void Character::DownUpdate()
 {
-
+	//アニメーションが終了したら起き上がれるようにしたいので
+	//継承先で実装してください
 }

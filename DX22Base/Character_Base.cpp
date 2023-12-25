@@ -140,8 +140,17 @@ void Character::StateInit(Character::STATE state)
 	case Character::STATE::FALLDOWN:
 		FallDownInit();
 		break;
+	case Character::STATE::LEANBACK:
+		LeanBackInit();
+		break;
 	case Character::STATE::DOWN:
 		DownInit();
+		break;
+	case Character::STATE::WAKEUP:
+		WakeUpInit();
+		break;
+	case Character::STATE::HITSTOP:
+		HitStopInit();
 		break;
 	case Character::STATE::MAX:
 		break;
@@ -184,8 +193,14 @@ void Character::StateUninit(Character::STATE state)
 	case Character::STATE::FALLDOWN:
 		FallDownUninit();
 		break;
+	case Character::STATE::LEANBACK:
+		LeanBackUninit();
+		break;
 	case Character::STATE::DOWN:
 		DownUninit();
+		break;
+	case Character::STATE::WAKEUP:
+		WakeUpUninit();
 		break;
 	case Character::STATE::HITSTOP:
 		HitStopUninit();
@@ -231,8 +246,14 @@ void Character::StateUpdate(Character::STATE state)
 	case Character::STATE::FALLDOWN:
 		FallDownUpdate();
 		break;
+	case Character::STATE::LEANBACK:
+		LeanBackUpdate();
+		break;
 	case Character::STATE::DOWN:
 		DownUpdate();
+		break;
+	case Character::STATE::WAKEUP:
+		WakeUpUpdate();
 		break;
 	case Character::STATE::HITSTOP:
 		HitStopUpdate();

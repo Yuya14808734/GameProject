@@ -2,7 +2,7 @@
 
 void Character_00::AttackS2_Init()
 {
-	m_AttackTime = 0;
+	m_FrameCount = 0;
 	m_AnimeTime = 0.332f;
 
 	//当たり判定の作成
@@ -83,22 +83,22 @@ void Character_00::AttackS2_Update()
 
 	//======================================================================
 
-	m_AttackTime++;
+	m_FrameCount++;
 	float AnimeAllTime = 0.938f - 0.332f;
-	m_AnimeTime = static_cast<float>(m_AttackTime) / 24.0f  * AnimeAllTime + 0.332f;
+	m_AnimeTime = static_cast<float>(m_FrameCount) / 24.0f  * AnimeAllTime + 0.332f;
 
-	if (m_AttackTime == 6)
+	if (m_FrameCount == 6)
 	{
 		m_AttackCollider[0].m_Use = true;
 	}
 
-	if (m_AttackTime == 16)
+	if (m_FrameCount == 16)
 	{
 		m_AttackCollider[0].m_Use = false;
 	}
 
 	//フレームごとにイベントを設定する
-	if(m_AttackTime >= 24)
+	if(m_FrameCount >= 24)
 	{
 		ChangeState(Character::STATE::IDLE);
 	}

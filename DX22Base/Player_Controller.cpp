@@ -124,19 +124,38 @@ const CVector2& PlayerController::GetLeftInputVector()
 
 		if (IsKeyPress('A'))
 		{
-			returnVec.x += -1.0f;
+			returnVec.x -= -1.0f;
 		}
 
 		if (IsKeyPress('S'))
 		{
-			returnVec.x += -1.0f;
+			returnVec.y -= -1.0f;
 		}
 
 		if (IsKeyPress('W'))
 		{
-			returnVec.x += 1.0f;
+			returnVec.y += 1.0f;
 		}
 		break;
 	}
 	return returnVec;
+}
+
+bool PlayerController::GetUp()
+{
+	bool Check = false;
+	switch (m_ControllerType)
+	{
+	case PlayerController::PLAYCONTROLLERTYPE::GAMEPAD:
+		Check = 0.0f < m_pXPad->GetPressLeftStick().y;
+		break;
+	case PlayerController::PLAYCONTROLLERTYPE::KEYBOARD:
+
+		if (IsKeyPress('W'))
+		{
+			Check = true;
+		}
+		break;
+	}
+	return Check;
 }

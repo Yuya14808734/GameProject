@@ -21,7 +21,9 @@ public:
 		JUMP,		//ジャンプ
 		AIRMOVE,	//空中移動
 		FALLDOWN,	//落下(空中移動とは違いくるくる落ちる感じ)
+		LEANBACK,	//殴られてのけぞっている状態
 		DOWN,		//倒れる
+		WAKEUP,		//起き上がる
 		HITSTOP,	//ヒットストップ
 		MAX,
 	};
@@ -202,6 +204,14 @@ protected:
 	virtual void DownInit();		//倒れた時の初期化
 	virtual void DownUninit();		//倒れた時の終了処理
 	virtual void DownUpdate();		//倒れている状態のアップデート
+	//==========================================================================
+	virtual void WakeUpInit();
+	virtual void WakeUpUninit();
+	virtual void WakeUpUpdate();
+	//==========================================================================
+	virtual void LeanBackInit();
+	virtual void LeanBackUninit();
+	virtual void LeanBackUpdate();
 	//==========================================================================
 	virtual void HitStopInit();		//ヒットストップの初期化
 	virtual void HitStopUninit();	//ヒットストップの終了処理

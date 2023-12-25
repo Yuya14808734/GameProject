@@ -49,10 +49,18 @@ private:
 	void FallDownUninit() override;
 	void FallDownUpdate() override;
 	//==========================================================================
-	//void DownInit() override;		//倒れた時の初期化
-	//void DownUninit() override;		//倒れた時の終了処理
-	//void DownUpdate() override;		//倒れている状態のアップデート
+	void DownInit() override;		//倒れた時の初期化
+	void DownUninit() override;		//倒れた時の終了処理
+	void DownUpdate() override;		//倒れている状態のアップデート
 	//==========================================================================
+	void WakeUpInit() override;
+	void WakeUpUninit() override;
+	void WakeUpUpdate() override;
+	//==========================================================================
+	void LeanBackInit() override;
+	void LeanBackUninit() override;
+	void LeanBackUpdate() override;
+	//==========================================================================	
 	//void HitStopInit() override;	//ヒットストップの初期化
 	//void HitStopUninit() override;	//ヒットストップの終了処理
 	//void HitStopUpdate() override;	//ヒットストップ状態のアップデート
@@ -104,11 +112,12 @@ private:
 	void HitGround() override;
 private:
 
-	int m_AttackTime = 0;
-	float m_AnimeTime = 0.0f;
-	CharacterStateWindow m_stateWindow;
-	unsigned int m_FrameCount = 0;
-	int m_HitAttackStopCount = 0;
+	int m_FrameCount = 0;					//アタックをしているときに使うカウント
+	float m_AnimeTime = 0.0f;				//アニメーションのタイム
+	CharacterStateWindow m_stateWindow;		//キャラクターのデバッグウィンドウ
+	//unsigned int m_FrameCount = 0;
+	int m_HitAttackStopCount = 0;			//ヒットストップのカウント
+	bool m_PushButton = false;
 
 	//エフェクトの変数
 	Effekseer::Handle m_SwordHandle;

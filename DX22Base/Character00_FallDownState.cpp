@@ -4,7 +4,7 @@ void Character_00::FallDownInit()
 {
 	Character::FallDownInit();
 	m_CharacterModel.PlayAnime("Damage01", true);
-	m_AttackTime = 0;
+	m_FrameCount = 0;
 	m_AnimeTime = 0.387f;;
 	m_CharacterModel.SetAnimeTime(m_AnimeTime);
 	m_CharacterModel.SetRotatePosShift(true);
