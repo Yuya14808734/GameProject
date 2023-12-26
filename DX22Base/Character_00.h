@@ -61,9 +61,9 @@ private:
 	void LeanBackUninit() override;
 	void LeanBackUpdate() override;
 	//==========================================================================	
-	//void HitStopInit() override;	//ヒットストップの初期化
-	//void HitStopUninit() override;	//ヒットストップの終了処理
-	//void HitStopUpdate() override;	//ヒットストップ状態のアップデート
+	void HitStopInit() override;	//ヒットストップの初期化
+	void HitStopUninit() override;	//ヒットストップの終了処理
+	void HitStopUpdate() override;	//ヒットストップ状態のアップデート
 
 	//==========================================================================
 	//攻撃のアップデート

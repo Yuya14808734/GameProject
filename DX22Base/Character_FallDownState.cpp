@@ -14,7 +14,8 @@ void Character::FallDownUpdate()
 {
 	if (m_HitGround)
 	{
-		ChangeState(Character::STATE::IDLE);
+		ChangeState(Character::STATE::DOWN);
+		return;
 	}
 
 	bool OnButton = false;

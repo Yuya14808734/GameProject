@@ -29,7 +29,7 @@ void Character_00::Init()
 	SetjumpParameter(jumpParameter);
 
 	BLOWAWAYPARAMETER blowAwayParameter;
-	blowAwayParameter.m_SmashMitigation = 0.85f;
+	blowAwayParameter.m_SmashMitigation = 0.9f;
 	blowAwayParameter.m_VectorChangePower = 0.02f;
 	blowAwayParameter.m_MinimumSmashLength = 0.03f;
 	SetBlowAwayParameter(blowAwayParameter);

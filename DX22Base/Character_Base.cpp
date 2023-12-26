@@ -403,6 +403,16 @@ void Character::SetDamage(float damage)
 	m_DamagePercentage = damage;
 }
 
+void Character::SetInvincible(bool invincible)
+{
+	m_Invincible = invincible;
+}
+
+bool Character::IsInvincible()
+{
+	return m_Invincible;
+}
+
 BoxCollider* Character::GetCharacterCollider() const
 {
 	return const_cast<BoxCollider*>(&m_CharacterCollider);

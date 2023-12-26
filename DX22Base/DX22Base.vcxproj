@@ -175,6 +175,7 @@
     <ClCompile Include="Character00_JumpInState.cpp" />
     <ClCompile Include="Character00_JumpState.cpp" />
     <ClCompile Include="Character00_LeanBackState.cpp" />
+    <ClCompile Include="Character00_WakeUpState.cpp" />
     <ClCompile Include="Character00_WalkState.cpp" />
     <ClCompile Include="CharacterStateWindow.cpp" />
     <ClCompile Include="Character_00.cpp" />
@@ -184,6 +185,7 @@
     <ClCompile Include="Character_FallDownState.cpp" />
     <ClCompile Include="Character_HitStopState.cpp" />
     <ClCompile Include="Character_LeanBackState.cpp" />
+    <ClCompile Include="Character_WakeUpState.cpp" />
     <ClCompile Include="Player_Controller.cpp" />
     <ClCompile Include="Character_DamageUI.cpp" />
     <ClCompile Include="Character_DashState.cpp" />

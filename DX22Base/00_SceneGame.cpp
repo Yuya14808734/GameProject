@@ -119,13 +119,14 @@ void SceneGame::Update()
 	//キャラクター同士の攻撃の当たり判定を行う
 	for (Character* AttackCharacter : m_Characters)
 	{
-		//攻撃しているキャラクターから攻撃の当たり判定を取ってくる
-		std::vector<Character::ATTACKPARAM>& attackParamVector = AttackCharacter->GetAttackCollider();
-
+		//キャラクターが攻撃していなければ次のキャラクターに
 		if (AttackCharacter->GetState() != Character::STATE::ATTACK)
 		{
 			continue;
 		}
+
+		//攻撃しているキャラクターから攻撃の当たり判定を取ってくる
+		std::vector<Character::ATTACKPARAM>& attackParamVector = AttackCharacter->GetAttackCollider();
 
 		//配列の頭から攻撃を見ていく
 		for (Character::ATTACKPARAM& Character_Attack : attackParamVector)
@@ -144,6 +145,12 @@ void SceneGame::Update()
 			{
 				//攻撃しているキャラクターと受けるキャラクターが同じ場合
 				if(AttackCharacter == HitCharacter)
+				{
+					continue;
+				}
+
+				//当てるキャラクターが無敵の場合当たり判定を行わない
+				if (HitCharacter->IsInvincible())
 				{
 					continue;
 				}

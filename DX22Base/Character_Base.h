@@ -141,6 +141,8 @@ public:
 	void AddDamage(float damage);						//ダメージの加算
 	void SetDamage(float damage);						//ダメージの設定
 	//==========================================================================
+	void SetInvincible(bool invincible);				//キャラクターを無敵にするか
+	bool IsInvincible();								//キャラクターが無敵か否か
 	BoxCollider* GetCharacterCollider() const;			//キャラクター、ステージ当たり判定の取得
 	std::vector<ATTACKPARAM>& GetAttackCollider();		//攻撃コライダーの取得
 	void Character_ColliderInit();
@@ -359,6 +361,7 @@ protected:
 	//-------------------------------------------------------------------------------
 	// 当たり判定に関する変数
 	//-------------------------------------------------------------------------------
+	bool m_Invincible = false;				//無敵か否か
 	BoxCollider m_CharacterCollider;		//プレイヤーの当たり判定
 	std::vector<ATTACKPARAM> m_AttackCollider;	//攻撃したときの当たり判定
 	float m_DamagePercentage = 0.0f;		//ダメージの量

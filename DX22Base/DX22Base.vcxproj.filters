@@ -402,6 +402,12 @@
     <ClCompile Include="Character00_LeanBackState.cpp">
       <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
     </ClCompile>
+    <ClCompile Include="Character_WakeUpState.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character00_WakeUpState.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
