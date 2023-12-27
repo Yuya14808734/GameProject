@@ -243,7 +243,7 @@
     <ClCompile Include="Scene.cpp">
       <Filter>ソース ファイル\02_System</Filter>
     </ClCompile>
-    <ClCompile Include="00_SceneGame.cpp">
+    <ClCompile Include="Scene00_Game.cpp">
       <Filter>ソース ファイル\04_Game\00_Scene</Filter>
     </ClCompile>
     <ClCompile Include="Collider.cpp">
@@ -252,7 +252,7 @@
     <ClCompile Include="Character_00.cpp">
       <Filter>ソース ファイル\04_Game\02_Character\Character_00</Filter>
     </ClCompile>
-    <ClCompile Include="00_CameraDebug.cpp">
+    <ClCompile Include="Camera00_Debug.cpp">
       <Filter>ソース ファイル\04_Game\01_Camera</Filter>
     </ClCompile>
     <ClCompile Include="Stage_00.cpp">
@@ -408,6 +408,9 @@
     <ClCompile Include="Character00_WakeUpState.cpp">
       <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
     </ClCompile>
+    <ClCompile Include="Camera01_Game.cpp">
+      <Filter>ソース ファイル\04_Game\01_Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -482,13 +485,13 @@
     <ClInclude Include="Scene.h">
       <Filter>ヘッダー ファイル\02_System</Filter>
     </ClInclude>
-    <ClInclude Include="00_SceneGame.h">
+    <ClInclude Include="Scene00_Game.h">
       <Filter>ヘッダー ファイル\04_Game\00__Scene</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>ヘッダー ファイル\02_System</Filter>
     </ClInclude>
-    <ClInclude Include="00_CameraDebug.h">
+    <ClInclude Include="Camera00_Debug.h">
       <Filter>ヘッダー ファイル\04_Game\01_Camera</Filter>
     </ClInclude>
     <ClInclude Include="Stage_00.h">
@@ -547,6 +550,9 @@
     </ClInclude>
     <ClInclude Include="Player_Controller.h">
       <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera01_Game.h">
+      <Filter>ヘッダー ファイル\04_Game\01_Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

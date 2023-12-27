@@ -1,6 +1,7 @@
-#include "00_SceneGame.h"
+#include "Scene00_Game.h"
 #include "CameraManager.h"
-#include "00_CameraDebug.h"
+#include "Camera00_Debug.h"
+#include "Camera01_Game.h"
 #include "ModelDrawer.h"
 #include "Geometory.h"
 #include "Input.h"
@@ -16,8 +17,9 @@ void SceneGame::Init()
 	PlayerController::InitXPadNum();
 
 	//=====<カメラの生成>=====
-	CameraManager::GetInstance().CreateCamera(new CameraDebug(), "DebugCamera");
-	CameraManager::GetInstance().SetSceneCamera("DebugCamera");
+	CameraManager::GetInstance().CreateCamera(new CameraGame(), "GameCamera");
+	CameraManager::GetInstance().SetSceneCamera("GameCamera");
+	static_cast<CameraGame*>(CameraManager::GetInstance().GetCamera("GameCamera"))->SetCharacter(&m_Characters);
 
 	//=====<ステージの作成>=====
 	m_pStage = new Stage00();

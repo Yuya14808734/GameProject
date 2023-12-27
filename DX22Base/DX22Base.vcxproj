@@ -151,8 +151,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="00_CameraDebug.cpp" />
-    <ClCompile Include="00_SceneGame.cpp" />
+    <ClCompile Include="Camera00_Debug.cpp" />
+    <ClCompile Include="Scene00_Game.cpp" />
+    <ClCompile Include="Camera01_Game.cpp" />
     <ClCompile Include="Character00_AirMoveState.cpp" />
     <ClCompile Include="Character00_Attack11.cpp" />
     <ClCompile Include="Character00_Attack12.cpp" />
@@ -234,8 +235,9 @@
     <ClCompile Include="XboxKeyboard.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="00_CameraDebug.h" />
-    <ClInclude Include="00_SceneGame.h" />
+    <ClInclude Include="Camera00_Debug.h" />
+    <ClInclude Include="Camera01_Game.h" />
+    <ClInclude Include="Scene00_Game.h" />
     <ClInclude Include="Attack_Base.h" />
     <ClInclude Include="BlendState.h" />
     <ClInclude Include="Calculation.h" />

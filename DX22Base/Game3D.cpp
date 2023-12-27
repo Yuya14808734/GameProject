@@ -6,7 +6,7 @@
 #include "CameraManager.h"
 #include "ModelDrawer.h"
 #include "Collider.h"
-#include "00_SceneGame.h"
+#include "Scene00_Game.h"
 
 Game3D::Game3D()
 {

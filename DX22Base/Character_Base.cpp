@@ -1,7 +1,7 @@
 #include "Character_Base.h"
 #include "Attack_Base.h"
 #include "Scene.h"
-#include "00_SceneGame.h"
+#include "Scene00_Game.h"
 
 int Character::m_NewPlayerBit = 0x01;
 

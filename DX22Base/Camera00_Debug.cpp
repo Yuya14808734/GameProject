@@ -1,7 +1,7 @@
-#include "00_CameraDebug.h"
+#include "Camera00_Debug.h"
 #include "Input.h"
 #include "Scene.h"
-#include "00_SceneGame.h"
+#include "Scene00_Game.h"
 
 CameraDebug::CameraDebug()
 {
