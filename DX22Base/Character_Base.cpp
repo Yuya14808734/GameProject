@@ -73,6 +73,28 @@ void Character::Character_Update()
 	//========================================
 	StateUpdate(m_NowState);
 
+	//キャラクターがステージ外に出ていたら
+	if (m_pStage != nullptr)
+	{
+		//=====<キャラクターが死んだか否か>=====
+		if (m_pStage->GetDeadLineBottomY() > m_pos.y)
+		{
+			ChangeState(Character::STATE::DEAD);
+		}
+		if (m_pStage->GetDeadLineTopY() < m_pos.y)
+		{
+			ChangeState(Character::STATE::DEAD);
+		}
+		if (m_pStage->GetDeadLineLeftX() > m_pos.x)
+		{
+			ChangeState(Character::STATE::DEAD);
+		}
+		if (m_pStage->GetDeadLineRightX() < m_pos.x)
+		{
+			ChangeState(Character::STATE::DEAD);
+		}
+	}
+
 	//========================================
 	// 各ステータスが切り替わっていたら
 	//========================================
@@ -81,11 +103,16 @@ void Character::Character_Update()
 		m_ChangeState = false;
 
 		SetState(m_NextState);
-
 	}
 
+	//========================================
+	// 位置の設定
+	//========================================
 	m_CharacterCollider.SetPos(m_pos);
 
+	//========================================
+	// UIの更新
+	//========================================
 	m_DamageUI.GetDamageUI()->SetNumber(static_cast<int>(m_DamagePercentage));
 	m_DamageUI.Update();
 }
@@ -94,15 +121,20 @@ void Character::Character_Draw()
 {
 	Draw();
 
+	//========================================
+	// キャラクターの描画
+	//========================================
 	m_CharacterModel.SetPosition(m_Shake ? m_pos + m_AddDrawPos : m_pos);
 	m_CharacterModel.SetRotatePosShiftVector(m_ShiftCenterPos);
 	m_CharacterModel.SetRotate(m_rotate);
-
 	m_CharacterModel.Draw();
 }
 
 void Character::Character_UIDraw()
 {
+	//========================================
+	// UIの描画
+	//========================================
 	m_DamageUI.Draw();
 }
 
@@ -151,6 +183,15 @@ void Character::StateInit(Character::STATE state)
 		break;
 	case Character::STATE::HITSTOP:
 		HitStopInit();
+		break;
+	case Character::STATE::RESPAWN:
+		RespawnInit();
+		break;
+	case Character::STATE::DEAD:
+		DeadInit();
+		break;
+	case Character::STATE::GAMEOVER:
+		GameOverInit();
 		break;
 	case Character::STATE::MAX:
 		break;
@@ -205,6 +246,15 @@ void Character::StateUninit(Character::STATE state)
 	case Character::STATE::HITSTOP:
 		HitStopUninit();
 		break;
+	case Character::STATE::RESPAWN:
+		RespawnUninit();
+		break;
+	case Character::STATE::DEAD:
+		DeadUninit();
+		break;
+	case Character::STATE::GAMEOVER:
+		GameOverUninit();
+		break;
 	case Character::STATE::MAX:
 		break;
 	default:
@@ -255,8 +305,17 @@ void Character::StateUpdate(Character::STATE state)
 	case Character::STATE::WAKEUP:
 		WakeUpUpdate();
 		break;
+	case Character::STATE::RESPAWN:
+		RespawnUpdate();
+		break;
+	case Character::STATE::DEAD:
+		DeadUpdate();
+		break;
 	case Character::STATE::HITSTOP:
 		HitStopUpdate();
+		break;
+	case Character::STATE::GAMEOVER:
+		GameOverUpdate();
 		break;
 	case Character::STATE::MAX:
 		break;
@@ -451,6 +510,11 @@ void Character::Character_HitWall()
 void Character::DrawCollider()
 {
 	m_CharacterCollider.DrawCollider();
+}
+
+void Character::SetStage(Stage* pStage)
+{
+	m_pStage = pStage;
 }
 
 //=========<この下の関数はUpdateで呼ぶ関数です>=========

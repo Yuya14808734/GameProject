@@ -152,6 +152,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera00_Debug.cpp" />
+    <ClCompile Include="Character_DeadState.cpp" />
+    <ClCompile Include="Character_GameOverState.cpp" />
+    <ClCompile Include="Character_RespawnState.cpp" />
     <ClCompile Include="Scene00_Game.cpp" />
     <ClCompile Include="Camera01_Game.cpp" />
     <ClCompile Include="Character00_AirMoveState.cpp" />

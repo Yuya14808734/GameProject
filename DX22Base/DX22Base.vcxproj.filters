@@ -411,6 +411,15 @@
     <ClCompile Include="Camera01_Game.cpp">
       <Filter>ソース ファイル\04_Game\01_Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Character_DeadState.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character_RespawnState.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character_GameOverState.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">

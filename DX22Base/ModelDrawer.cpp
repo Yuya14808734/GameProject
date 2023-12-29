@@ -164,13 +164,18 @@ void ModelDrawer::DrawModel(const std::string& ModelName, const CVector3& pos, c
 		return;
 	}
 
+	CVector3 RadianRotate;
+	RadianRotate.x = DirectX::XMConvertToRadians(rotate.x);
+	RadianRotate.y = DirectX::XMConvertToRadians(rotate.y);
+	RadianRotate.z = DirectX::XMConvertToRadians(rotate.z);
+
 	DirectX::XMFLOAT4X4 mat[3];
-	DirectX::XMMATRIX scalemat, rotmat, transmat;
-	scalemat = DirectX::XMMatrixScaling(scale.x, scale.y, scale.z);
-	rotmat = DirectX::XMMatrixRotationRollPitchYaw(rotate.x, rotate.y, rotate.z);
-	transmat = DirectX::XMMatrixTranslation(pos.x, pos.y, pos.z);
-	DirectX::XMStoreFloat4x4(&mat[0], scalemat * rotmat * transmat);
-	mat[1] = pCamera->GetViewMatrix();		//カメラの情報が分かり次第実装
+	DirectX::XMMATRIX worldMat;
+	worldMat = DirectX::XMMatrixScaling(scale.x, scale.y, scale.z);
+	worldMat *= DirectX::XMMatrixRotationRollPitchYaw(RadianRotate.x, RadianRotate.y, RadianRotate.z);
+	worldMat *= DirectX::XMMatrixTranslation(pos.x, pos.y, pos.z);
+	DirectX::XMStoreFloat4x4(&mat[0], DirectX::XMMatrixTranspose(worldMat));
+	mat[1] = pCamera->GetViewMatrix();				//カメラの情報が分かり次第実装
 	mat[2] = pCamera->GetProjectionMatrix();		//カメラの情報が分かり次第実装
 	
 	//定数バッファーで受け渡し
@@ -257,6 +262,7 @@ void ModelDrawer::Draw()
 
 	worldmat = DirectX::XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
 	
+	//回転の中心の位置を移動させたいときに使う
 	if (m_RotatePosShift)
 	{
 		worldmat *= DirectX::XMMatrixTranslation(

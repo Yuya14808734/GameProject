@@ -10,9 +10,10 @@
 // 2D Vector
 //--------------------------
 
-const CVector2 CVector2::m_Right = CVector2(1.0f,0.0f);
-const CVector2 CVector2::m_Up = CVector2(0.0f, 1.0f);
-const CVector2 CVector2::m_Zero = CVector2(0.0f, 0.0f);
+const CVector2 CVector2::m_Right	= CVector2(1.0f,0.0f);
+const CVector2 CVector2::m_Up		= CVector2(0.0f, 1.0f);
+const CVector2 CVector2::m_Zero		= CVector2(0.0f, 0.0f);
+const CVector2 CVector2::m_One		= CVector2(1.0f, 1.0f);
 
 CVector2::CVector2()
 {
@@ -194,6 +195,11 @@ const CVector2& CVector2::GetZero()
 	return m_Zero;
 }
 
+const CVector2& CVector2::GetOne()
+{
+	return m_One;
+}
+
 const CVector2& CVector2::GetRotateRadius(float Radius)
 {
 	return CVector2(0.0f, 1.0f).rotateRadius(Radius);
@@ -209,10 +215,11 @@ const CVector2& CVector2::GetAngleVector(float Angle)
 //--------------------------
 // constructors
 
-const CVector3 CVector3::m_Forward = CVector3(0.0f,0.0f,1.0f);
-const CVector3 CVector3::m_Right = CVector3(1.0f, 0.0f, 0.0f);
-const CVector3 CVector3::m_Up = CVector3(0.0f, 1.0f, 0.0f);
-const CVector3 CVector3::m_Zero = CVector3(0.0f, 0.0f, 0.0f);
+const CVector3 CVector3::m_Forward	= CVector3(0.0f,0.0f,1.0f);
+const CVector3 CVector3::m_Right	= CVector3(1.0f, 0.0f, 0.0f);
+const CVector3 CVector3::m_Up		= CVector3(0.0f, 1.0f, 0.0f);
+const CVector3 CVector3::m_Zero		= CVector3(0.0f, 0.0f, 0.0f);
+const CVector3 CVector3::m_One		= CVector3(1.0f, 1.0f, 1.0f);
 
 CVector3::CVector3()
 {
@@ -409,6 +416,11 @@ const CVector3& CVector3::GetRight()
 const CVector3& CVector3::GetZero()
 {
 	return m_Zero;
+}
+
+const CVector3& CVector3::GetOne()
+{
+	return m_One;
 }
 
 //--------------------------

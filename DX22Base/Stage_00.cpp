@@ -66,6 +66,7 @@ void Stage00::Init()
 				default:
 					break;
 				}
+
 				tempModelDrawer.SetPosition(BlockPos);
 				tempModelDrawer.SetScale(BlockSize);
 				m_ModelDrawer.push_back(tempModelDrawer);
@@ -92,6 +93,21 @@ void Stage00::Init()
 	m_CharacterStartPos.push_back(characterstartpos);
 	characterstartpos = CVector3(0.0f, 0.0f, 0.0f);
 	m_CharacterStartPos.push_back(characterstartpos);
+
+
+	m_CameraMaxRightX	= 3.0f;
+	m_CameraMaxLeftX	= -3.0f;
+	m_CameraMaxTopY		= 15.0f;
+	m_CameraMaxBottomY	= -15.0f;
+
+	m_DeadLineRightX	= 30.0f;
+	m_DeadLineLeftX		= -30.0f;
+	m_DeadLineTopY		= 20.0f;
+	m_DeadLineBottomY	= -20.0f;
+
+	//キャラクターがリスポーンする位置を設定
+	m_BaseRespawnPos = CVector3(0.0f, 3.0f, 0.0f);
+	m_RespawnDistance = 1.0f;
 
 }
 

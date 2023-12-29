@@ -19,7 +19,7 @@ void SceneGame::Init()
 	//=====<カメラの生成>=====
 	CameraManager::GetInstance().CreateCamera(new CameraGame(), "GameCamera");
 	CameraManager::GetInstance().SetSceneCamera("GameCamera");
-	static_cast<CameraGame*>(CameraManager::GetInstance().GetCamera("GameCamera"))->SetCharacter(&m_Characters);
+	m_pGameCamera = static_cast<CameraGame*>(CameraManager::GetInstance().GetCamera("GameCamera"));
 
 	//=====<ステージの作成>=====
 	m_pStage = new Stage00();
@@ -34,6 +34,16 @@ void SceneGame::Init()
 	{
 		pCharacter->Character_Init();
 	}
+
+	//=====<各オブジェクトに設定するオブジェクトがあるならここでする>=====
+	for (Character* pCharacter : m_Characters)
+	{
+		pCharacter->SetStage(m_pStage);
+	}
+
+	m_pGameCamera->SetCharacter(&m_Characters);
+	m_pGameCamera->SetStage(m_pStage);
+	
 }
 
 void SceneGame::Uninit()
@@ -72,10 +82,22 @@ void SceneGame::Update()
 	for (std::vector<Character*>::iterator it_first = m_Characters.begin();
 		it_first != m_Characters.end();it_first++)
 	{
+		//一人目のキャラクターがゲームオーバーの場合
+		if ((*it_first)->GetState() == Character::STATE::GAMEOVER)
+		{
+			continue;
+		}
+
 		//二人目のキャラクターを選択(一人目の次のキャラクター)
 		std::vector<Character*>::iterator it_second = it_first + 1;
 		for (; it_second != m_Characters.end(); it_second++)
 		{
+			//二人目のキャラクターがゲームオーバーの場合
+			if ((*it_second)->GetState() == Character::STATE::GAMEOVER)
+			{
+				continue;
+			}
+
 			//四角コライダーの取得
 			BoxCollider* pFirstCollider = (*it_first)->GetCharacterCollider();
 			BoxCollider* pSecondCollider = (*it_second)->GetCharacterCollider();
@@ -121,6 +143,12 @@ void SceneGame::Update()
 	//キャラクター同士の攻撃の当たり判定を行う
 	for (Character* AttackCharacter : m_Characters)
 	{
+		//キャラクターがゲームオーバーしていたら当たり判定を行わない
+		if (AttackCharacter->GetState() == Character::STATE::GAMEOVER)
+		{
+			continue;
+		}
+
 		//キャラクターが攻撃していなければ次のキャラクターに
 		if (AttackCharacter->GetState() != Character::STATE::ATTACK)
 		{
@@ -145,6 +173,12 @@ void SceneGame::Update()
 			//攻撃を受けるキャラクター
 			for (Character* HitCharacter : m_Characters)
 			{
+				//受けるキャラクターがゲームオーバーの場合
+				if (HitCharacter->GetState() == Character::STATE::GAMEOVER)
+				{
+					continue;
+				}
+
 				//攻撃しているキャラクターと受けるキャラクターが同じ場合
 				if(AttackCharacter == HitCharacter)
 				{
@@ -217,6 +251,12 @@ void SceneGame::Update()
 	for (std::vector<Character*>::iterator it_Character = m_Characters.begin();
 		it_Character != m_Characters.end(); it_Character++)
 	{
+		//キャラクターがゲームオーバーしていたら当たり判定を行わない
+		if ((*it_Character)->GetState() == Character::STATE::GAMEOVER)
+		{
+			continue;
+		}
+
 		BoxCollider* pCharacterCollider = (*it_Character)->GetCharacterCollider();
 
 		//Xの移動だけの当たり判定
@@ -352,6 +392,16 @@ void SceneGame::Draw()
 
 		}
 	}
+
+	//=====<UIの描画>=====
+	ModelDrawer::DrawModel("ConcreteBlock",
+		CVector3(m_pStage->GetDeadLineLeftX(), 0.0f, 0.0f), CVector3::GetOne() * 2.0f, CVector3::GetZero());
+	ModelDrawer::DrawModel("ConcreteBlock", 
+		CVector3(m_pStage->GetDeadLineRightX(), 0.0f, 0.0f), CVector3::GetOne(), CVector3::GetZero());
+	ModelDrawer::DrawModel("ConcreteBlock", 
+		CVector3(0.0f, m_pStage->GetDeadLineTopY(), 0.0f), CVector3::GetOne(), CVector3::GetZero());
+	ModelDrawer::DrawModel("ConcreteBlock", 
+		CVector3(0.0f, m_pStage->GetDeadLineBottomY(), 0.0f), CVector3::GetOne(), CVector3::GetZero());
 
 	//=====<UIの描画>=====
 	EnableDepth(false);

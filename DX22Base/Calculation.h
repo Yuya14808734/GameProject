@@ -60,6 +60,7 @@ public:
 	static const CVector2& GetUp();
 	static const CVector2& GetRight();
 	static const CVector2& GetZero();
+	static const CVector2& GetOne();
 	static const CVector2& GetRotateRadius(float Radius);
 	static const CVector2& GetAngleVector(float Angle);
 
@@ -67,6 +68,7 @@ private:
 	static const CVector2 m_Right;
 	static const CVector2 m_Up;
 	static const CVector2 m_Zero;
+	static const CVector2 m_One;
 };
 
 class CVector3
@@ -122,12 +124,14 @@ public:
 	static const CVector3& GetUp();
 	static const CVector3& GetRight();
 	static const CVector3& GetZero();
+	static const CVector3& GetOne();
 
 private:
 	static const CVector3 m_Forward;
 	static const CVector3 m_Right;
 	static const CVector3 m_Up;
 	static const CVector3 m_Zero;
+	static const CVector3 m_One;
 };
 
 class CQuaternion

@@ -14,6 +14,16 @@ public:
 	void StageColliderDraw();	//ステージのコライダーの描画
 	std::vector<BoxCollider>* GetStageCollider() const;
 	std::vector<CVector3>* GetCharacterStartPos() const;
+	float GetCameraMaxRightX();
+	float GetCameraMaxLeftX();
+	float GetCameraMaxTopY();
+	float GetCameraMaxBottomY();
+	float GetDeadLineRightX();
+	float GetDeadLineLeftX();
+	float GetDeadLineTopY();
+	float GetDeadLineBottomY();
+	CVector3 AddRespawn();
+	void MinaRespawn();
 
 protected:
 
@@ -30,5 +40,27 @@ protected:
 	std::vector<BoxCollider> m_StageCollider;
 	std::vector<CVector3> m_CharacterStartPos;
 	std::vector<ModelDrawer> m_ModelDrawer;
+	float m_CameraNearZ = 0.0f;
+	float m_CameraFarZ	= 0.0f;
+
+	//カメラが行っていい範囲
+	float m_CameraMaxRightX		= 0.0f;
+	float m_CameraMaxLeftX		= 0.0f;
+	float m_CameraMaxTopY		= 0.0f;
+	float m_CameraMaxBottomY	= 0.0f;
+
+	//プレイヤーがこの位置を超えると死ぬ
+	float m_DeadLineRightX	= 0.0f;
+	float m_DeadLineLeftX	= 0.0f;
+	float m_DeadLineTopY	= 0.0f;
+	float m_DeadLineBottomY = 0.0f;
+
+	//プレイヤーのリスポーン位置
+	CVector3 m_BaseRespawnPos;
+	float m_RespawnDistance;
+	int m_UseRespawnNum = 0;
+
+
+
 
 };

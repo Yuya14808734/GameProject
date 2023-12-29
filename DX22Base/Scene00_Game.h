@@ -3,6 +3,7 @@
 #include <vector>
 #include "Character_Base.h"
 #include "Stage_Base.h"
+#include "Camera01_Game.h"
 
 
 class SceneGame : public CScene
@@ -18,5 +19,6 @@ public:
 private:
 	std::vector<Character*> m_Characters;	//キャラクターの情報
 	Stage* m_pStage;						//ステージの情報
+	CameraGame* m_pGameCamera = nullptr;		//ゲームのカメラ
 
 };

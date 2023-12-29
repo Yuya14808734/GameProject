@@ -2,6 +2,8 @@
 #include "Input.h"
 
 CameraGame::CameraGame()
+	:m_pCharacterVector(nullptr),
+	m_pStage(nullptr)
 {
 	m_pos = m_look = CVector3::GetZero();
 
@@ -11,30 +13,39 @@ CameraGame::CameraGame()
 
 CameraGame::~CameraGame()
 {
+
 }
 
 void CameraGame::Update()
 {
-	if (m_CharacterVector == nullptr)
+	//=====<移動に関する情報を取得できるか確認>========================
+	if (m_pCharacterVector == nullptr)
 	{
 		return;
 	}
 
-	if ((*m_CharacterVector).size() == 0)
+	if (m_pStage == nullptr)
 	{
 		return;
 	}
 
+	if((*m_pCharacterVector).size() == 0)
+	{
+		return;
+	}
+	//=================================================================
 
+	//=====<移動に関する情報を取得できるか確認>========================
 	float MaxRightX, MaxLeftX, MaxTopY, MaxBottomY;
 
-	std::vector<Character*>::iterator Character_It = (*m_CharacterVector).begin();
+	std::vector<Character*>::iterator Character_It = (*m_pCharacterVector).begin();
 
 	MaxRightX = MaxLeftX = (*Character_It)->GetPos().x; 
 	MaxTopY	= MaxBottomY = (*Character_It)->GetPos().y;
 	Character_It++;
 
-	for (; Character_It != (*m_CharacterVector).end(); Character_It++)
+	//キャラクターがいる一番淵の位置を取得
+	for (; Character_It != (*m_pCharacterVector).end(); Character_It++)
 	{
 		CVector3 CharacterPos = (*Character_It)->GetPos();
 		if (MaxRightX < CharacterPos.x)
@@ -55,43 +66,116 @@ void CameraGame::Update()
 		}
 	}
 
-	//キャラクターとキャラクターの中間を取って移動する位置を設定
+	//デットラインより少しずらした位置を設定する
+	float StageCanSeeLineRightX = m_pStage->GetDeadLineRightX() - 3.0f;
+	float StageCanSeeLineLeftX = m_pStage->GetDeadLineLeftX() + 3.0f;
+	float StageCanSeeLineTopY = m_pStage->GetDeadLineTopY() - 3.0f;
+	float StageCanSeeLineBottomY = m_pStage->GetDeadLineBottomY() + 3.0f;
+	
+	//デットライン近くにいた場合、デットラインを映したくないので位置変更
+	if (StageCanSeeLineRightX < MaxRightX)
+	{
+		MaxRightX = StageCanSeeLineRightX;
+	}
+	if (StageCanSeeLineLeftX > MaxLeftX)
+	{
+		MaxLeftX = StageCanSeeLineLeftX;
+	}
+	if (StageCanSeeLineTopY < MaxTopY)
+	{
+		MaxTopY = StageCanSeeLineTopY;
+	}
+	if (StageCanSeeLineBottomY > MaxBottomY)
+	{
+		MaxBottomY = StageCanSeeLineBottomY;
+	}
+
+	//======================================================================
+
+	//=====<キャラクターとキャラクターの中間を取って移動する位置を設定>=====
 	const float NearZ = -7.0f;				//一番近くに置けるカメラ座標
-	const float FarZ = -25.0f;				//一番遠くに置けるカメラ座標
-	const float NearDistance = 3.0f;		//これ距離より短ければカメラが一番近くなる
+	const float FarZ = -20.0f;				//一番遠くに置けるカメラ座標
+	const float NearDistance = 4.0f;		//これ距離より短ければカメラが一番近くなる
 	const float FarDistance = 10.0f;		//この距離より遠ければカメラが一番遠い距離に行く
 	float NowDistance = sqrtf(powf(MaxRightX - MaxLeftX, 2.0f) + powf(MaxTopY - MaxBottomY, 2.0f));
 
+	//カメラが行くべき座標
 	CVector3 GotoPos;
+
+	//XとYを設定
 	GotoPos.x = (MaxRightX - MaxLeftX) / 2.0f + MaxLeftX;
 	GotoPos.y = (MaxTopY - MaxBottomY) / 2.0f + MaxBottomY + 2.0f;
 
+	//Zを設定
 	if (NowDistance < NearDistance)
 	{
+		//カメラが行ける距離より近ければ
 		GotoPos.z = NearZ;
 	}
 	else if (NowDistance > FarDistance)
 	{
+		//カメラが行ける距離より遠ければ
 		GotoPos.z = FarZ;
 	}
 	else
 	{
+		//上の二つで無ければ
 		float PerDistance = NowDistance - NearDistance;
 		float Percent = PerDistance / (FarDistance - NearDistance);
 		GotoPos.z = (FarZ - NearZ) * Percent + NearZ;
 	}
+	//======================================================================
 
-	//今いる座標から向かうべき座標を補完しながら移動する
+	//=====<Zが0でカメラが見ている4端の位置を特定する>=============================
+	float CameraVerticalRadian = DirectX::XMConvertToRadians(m_fovy / 2.0f);		//カメラのカメラ縦方向の画角をラジアンに
+	float SlantingLength = (1.0f / cosf(CameraVerticalRadian)) * GotoPos.z;			//上の変数を使って斜めの長さを出す
+	float CameraCanLookLengthY =													//三平方の定理を使って縦の長さを出す
+		sqrtf(std::powf(SlantingLength, 2.0f) - std::powf(GotoPos.z, 2.0f));
+	float CameraCanLookLengthX =													//比率を使って横の長さを出す
+		CameraCanLookLengthY * m_aspect;
+
+	//Zが0の位置の見えているライン
+	float NowSeeLineRightX	= GotoPos.x + CameraCanLookLengthX;
+	float NowSeeLineLeftX	= GotoPos.x - CameraCanLookLengthX;
+	float NowSeeLineTopY	= GotoPos.y + CameraCanLookLengthY;
+	float NowSeeLineBottomY = GotoPos.y - CameraCanLookLengthY;	
+	//======================================================================
+
+	//=====<デットラインをカメラが映していた場合戻してやる>=============
+	if(StageCanSeeLineRightX	< NowSeeLineRightX)
+	{
+		//差分を求めてその量を引く
+		float Difference = StageCanSeeLineRightX - NowSeeLineRightX;
+		GotoPos.x += Difference;
+	}
+	if (StageCanSeeLineLeftX > NowSeeLineLeftX)
+	{
+		//差分を求めてその量を引く
+		float Difference = StageCanSeeLineLeftX - NowSeeLineLeftX;
+		GotoPos.x += Difference;
+	}
+	if (StageCanSeeLineTopY < NowSeeLineTopY)
+	{
+		//差分を求めてその量を引く
+		float Difference = StageCanSeeLineTopY - NowSeeLineTopY;
+		GotoPos.y += Difference;
+	}
+	if (StageCanSeeLineBottomY > NowSeeLineBottomY)
+	{
+		//差分を求めてその量を引く
+		float Difference = StageCanSeeLineBottomY - NowSeeLineBottomY;
+		GotoPos.y += Difference;
+	}
+	//======================================================================
+
+	//=====<今いる座標から向かうべき座標を補完しながら移動する>=============
 	CVector3 GoVector = GotoPos - m_pos;
 	GoVector = GoVector * 0.03f;
 
 	m_pos = m_pos + GoVector;
 	m_look.x = m_pos.x;
 	m_look.y = m_pos.y;
-
-
-
-	//カメラが行ける最大の端以上だった場合戻してやる
+	//======================================================================
 }
 
 void CameraGame::ChangeInit()
@@ -104,5 +188,10 @@ void CameraGame::ChangeUninit()
 
 void CameraGame::SetCharacter(std::vector<Character*>* pCharacterVector)
 {
-	m_CharacterVector = pCharacterVector;
+	m_pCharacterVector = pCharacterVector;
+}
+
+void CameraGame::SetStage(Stage* pStage)
+{
+	m_pStage = pStage;
 }

@@ -6,6 +6,7 @@
 #include "Character_DamageUI.h"
 #include "XboxKeyboard.h"
 #include "Player_Controller.h"
+#include "Stage_Base.h"
 
 class Character
 {
@@ -25,6 +26,9 @@ public:
 		DOWN,		//倒れる
 		WAKEUP,		//起き上がる
 		HITSTOP,	//ヒットストップ
+		RESPAWN,	//リスポーン
+		DEAD,		//死んだとき
+		GAMEOVER,	//ゲームオーバー
 		MAX,
 	};
 	enum class ATTACK : int
@@ -152,6 +156,7 @@ public:
 	void DrawCollider();								//コライダーの描画
 	//==========================================================================
 	void SetCharacterController(PlayerController pController);
+	void SetStage(Stage* pStage);
 
 
 protected:
@@ -211,14 +216,28 @@ protected:
 	virtual void WakeUpUninit();
 	virtual void WakeUpUpdate();
 	//==========================================================================
-	virtual void LeanBackInit();
-	virtual void LeanBackUninit();
-	virtual void LeanBackUpdate();
+	virtual void LeanBackInit();	//のけぞった時の初期化
+	virtual void LeanBackUninit();	//のけぞった時の終了処理
+	virtual void LeanBackUpdate();	//のけぞった時の
 	//==========================================================================
 	virtual void HitStopInit();		//ヒットストップの初期化
 	virtual void HitStopUninit();	//ヒットストップの終了処理
 	virtual void HitStopUpdate();	//ヒットストップ状態のアップデート
-	
+	//==========================================================================
+	virtual void DeadInit();		//死んだときの初期化
+	virtual void DeadUninit();		//死んだときの終了処理
+	virtual void DeadUpdate();		//死んだときのアップデート
+	//==========================================================================
+	virtual void RespawnInit();		//リスポーンしたときの初期化
+	virtual void RespawnUninit();	//リスポーンしたときの終了処理
+	virtual void RespawnUpdate();	//リスポーンしたときのアップデート
+	//==========================================================================
+	virtual void GameOverInit();		//リスポーンしたときの初期化
+	virtual void GameOverUninit();	//リスポーンしたときの終了処理
+	virtual void GameOverUpdate();	//リスポーンしたときのアップデート
+	//==========================================================================
+
+
 	//==========================================================================
 	//スマブラと同じような名前にしています
 	//https://www.youtube.com/watch?v=V40sMUAE5ek
@@ -335,11 +354,12 @@ protected:
 	//-------------------------------------------------------------------------------
 	// プレイヤーステートに関する変数
 	//-------------------------------------------------------------------------------
-	Character::STATE m_NowState	 = STATE::MAX;	//キャラクターの状態
-	Character::STATE m_NextState = STATE::MAX;	//キャラクターの状態
-	Character::ATTACK m_NowAttack = ATTACK::MAX;	//プレイヤーがしている攻撃
-	Character::LOOKDIR m_NowLookDir = LOOKDIR::MAX;	//プレイヤーが見ている方向
-	bool	m_ChangeState		= false;
+	Character::STATE	m_NowState			= STATE::MAX;	//キャラクターの状態
+	Character::STATE	m_NextState			= STATE::MAX;	//キャラクターの状態
+	Character::ATTACK	m_NowAttack			= ATTACK::MAX;	//プレイヤーがしている攻撃
+	Character::LOOKDIR	m_NowLookDir		= LOOKDIR::MAX;	//プレイヤーが見ている方向
+	bool				m_ChangeState		= false;
+	int					m_ChangeStateCount	= 0;
 	
 	//-------------------------------------------------------------------------------
 	// モデル描画に関する変数
@@ -349,35 +369,43 @@ protected:
 	//-------------------------------------------------------------------------------
 	// 座標に関する変数
 	//-------------------------------------------------------------------------------
-	CVector3 m_pos;							//座標
-	CVector3 m_AddDrawPos;					//描画するときにずらす座標
-	CVector3 m_oldPos;						//前の座標
-	CVector3 m_scale;						//大きさ
-	CQuaternion m_rotate;					//回転量
-	CVector3 m_Velocity;					//重力など
-	CVector3 m_MoveVector;					//コントローラーの移動量
-	CVector3 m_ShiftCenterPos;				//回転や拡縮をする中心位置をずらす
-		
+	CVector3		m_pos;							//座標
+	CVector3		m_AddDrawPos;					//描画するときにずらす座標
+	CVector3		m_oldPos;						//前の座標
+	CVector3		m_scale;						//大きさ
+	CQuaternion		m_rotate;						//回転量
+	CVector3		m_Velocity;						//重力など
+	CVector3		m_MoveVector;					//コントローラーの移動量
+	CVector3		m_ShiftCenterPos;				//回転や拡縮をする中心位置をずらす
+	CVector3		m_RespawnStartPos;				//設定するリスポーン終了位置
+	CVector3		m_RespawnEndPos;				//設定するリスポーン開始位置
+	float			m_RespawnLerpPercent = 0.0f;	//リスポーンポスに向かうときに使う数値
+	
+	//-------------------------------------------------------------------------------
+	// キャラクターの状態に関する変数
+	//-------------------------------------------------------------------------------
+	int		m_CharacterStock		= 0;		//ストック
+	float	m_DamagePercentage		= 0.0f;		//ダメージの量
+
 	//-------------------------------------------------------------------------------
 	// 当たり判定に関する変数
 	//-------------------------------------------------------------------------------
-	bool m_Invincible = false;				//無敵か否か
-	BoxCollider m_CharacterCollider;		//プレイヤーの当たり判定
-	std::vector<ATTACKPARAM> m_AttackCollider;	//攻撃したときの当たり判定
-	float m_DamagePercentage = 0.0f;		//ダメージの量
+	bool						m_Invincible			= false;	//無敵か否か
+	BoxCollider					m_CharacterCollider;				//プレイヤーの当たり判定
+	std::vector<ATTACKPARAM>	m_AttackCollider;					//攻撃したときの当たり判定
 
 	//-------------------------------------------------------------------------------
 	// ジャンプに関する変数
 	//-------------------------------------------------------------------------------
-	int m_JumpCount = 0;					//今ジャンプした回数
-	int m_JumpCharageCount = 0;				//ジャンプをチャージする時のカウント
+	int				m_JumpCount			= 0;		//今ジャンプした回数
+	int				m_JumpCharageCount	= 0;		//ジャンプをチャージする時のカウント
 
 	//-------------------------------------------------------------------------------
 	//ステージに当たった判定に使う変数
 	//-------------------------------------------------------------------------------
-	bool m_HitGround = false;				//前のフレームで地面に当たったか
-	bool m_HitCeiling = false;				//前のフレームで天井に当たったか
-	bool m_HitWall = false;					//前のフレームで壁に当たったか
+	bool			m_HitGround		= false;		//前のフレームで地面に当たったか
+	bool			m_HitCeiling	= false;		//前のフレームで天井に当たったか
+	bool			m_HitWall		= false;		//前のフレームで壁に当たったか
 
 	//-------------------------------------------------------------------------------
 	//ステージに当たった判定に使う変数
@@ -387,8 +415,12 @@ protected:
 	//-------------------------------------------------------------------------------
 	// ヒットストップに関する変数
 	//-------------------------------------------------------------------------------
-	bool m_Shake = false;					//プレイヤーを揺らすか
-	unsigned int m_HitStopCount = 0;		//ヒットストップする時間
-	Character::STATE m_HitStopNextState;	//ヒットストップ後の状態
+	bool				m_Shake				= false;	//プレイヤーを揺らすか
+	unsigned int		m_HitStopCount		= 0;		//ヒットストップする時間
+	Character::STATE	m_HitStopNextState;				//ヒットストップ後の状態
 
+	//-------------------------------------------------------------------------------
+	// 外部のオブジェクトを保持する変数
+	//-------------------------------------------------------------------------------
+	Stage*			m_pStage = nullptr;				//ステージの情報が入る
 };
