@@ -1,5 +1,4 @@
 #include "Character_Base.h"
-#include "Attack_Base.h"
 
 void Character::DashInit()
 {

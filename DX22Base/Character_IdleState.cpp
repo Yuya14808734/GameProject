@@ -1,6 +1,5 @@
 #include "Character_Base.h"
 #include "Input.h"
-#include "Attack_Base.h"
 
 //===========================================================
 //キャラクターが止まっているときの処理

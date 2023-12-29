@@ -567,6 +567,28 @@ float InputXPad::GetTriggerTrigger()
 }
 
 //====================================================================
+//用途　：何かボタンを押したとき反応する(プレス)
+//戻り値：int型
+//使い方：if文で囲ってあげればよいかと
+//注意点：なし
+//=====================================================================
+int InputXPad::AllKeyPress()
+{
+	if (	InputPressKey(PadButton::A_BUTTON)		|| InputPressKey(PadButton::B_BUTTON)		|| InputPressKey(PadButton::X_BUTTON)		|| InputTriggerKey(PadButton::Y_BUTTON)
+		||	InputPressKey(PadButton::START_BUTTON)	|| InputPressKey(PadButton::BACK_BUTTON)	|| InputPressKey(PadButton::LEFT_SHOULDER)
+		||	InputPressKey(PadButton::RIGHT_SHOULDER)|| InputPressKey(PadButton::UP_BUTTON)		|| InputPressKey(PadButton::DOWN_BUTTON)
+		||	InputPressKey(PadButton::LEFT_BUTTON)	|| InputPressKey(PadButton::RIGHT_BUTTON)	|| InputPressKey(PadButton::LEFT_TRIGGER)
+		||	InputPressKey(PadButton::RIGHT_TRIGGER)	|| InputPressKey(PadButton::LEFT_STICK)		|| InputPressKey(PadButton::RIGHT_STICK))
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+//====================================================================
 //用途　：何かボタンを押したとき反応する(トリガー)
 //戻り値：int型
 //使い方：if文で囲ってあげればよいかと

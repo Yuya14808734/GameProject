@@ -1,0 +1,16 @@
+diff a/DX22Base/Character_Base.cpp b/DX22Base/Character_Base.cpp	(rejected hunks)
+@@ -25,8 +25,13 @@
+ 	std::vector<CVector3>* startPosV = static_cast<SceneGame*>(CScene::GetScene())->GetStage()->GetCharacterStartPos();
+ 	m_pos = (*startPosV)[PlayerNum - 1];
+ 	
++	m_Controller.SetController(
++		PlayerController::PLAYCONTROLLERTYPE::GAMEPAD,
++		PlayerNum - 1
++	);
++
+ 	//�R���g���[���[�̐ݒ�
+-	if (PlayerNum == 1)
++	/*if (PlayerNum == 1)
+ 	{
+ 		m_Controller.SetController(
+ 			PlayerController::PLAYCONTROLLERTYPE::KEYBOARD,

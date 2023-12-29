@@ -1,5 +1,4 @@
 #include "Character_Base.h"
-#include "Attack_Base.h"
 #include "Scene.h"
 #include "Scene00_Game.h"
 
@@ -25,7 +24,7 @@ void Character::Character_Init()
 	//キャラクターの番号によってステージの場所を変える
 	std::vector<CVector3>* startPosV = static_cast<SceneGame*>(CScene::GetScene())->GetStage()->GetCharacterStartPos();
 	m_pos = (*startPosV)[PlayerNum - 1];
-	
+
 	//コントローラーの設定
 	if (PlayerNum == 1)
 	{

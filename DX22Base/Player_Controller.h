@@ -2,10 +2,15 @@
 #include "Calculation.h"
 #include "XboxKeyboard.h"
 #include "Input.h"
+#include <array>
 
 //=========================================================
-// キャラクターを動かすコントローラーの情報を持たせる
+//コントローラーの情報を持たせる
 //=========================================================
+
+//目的：コントローラーが接続されたらキーボードだろうがパッドだろうが両方同じこのクラスで
+//		処理をする(決定ボタンを押す時にキーボードならEnter、パッドならBを押した時にTrueなど)
+//		これにより違うコントローラーでも外から見たら同じように見ることができる
 
 class PlayerController
 {
@@ -18,11 +23,21 @@ public:
 	};
 
 public:
+	static void PlayerController_Init();
+	static std::array<PlayerController, 5>& GetPlayerControllers();
 	static void InitXPadNum();
+
 private:
-	static int m_XPadNum;		//つないであるコントローラーを数えるための変数
+	static std::array<PlayerController,5> m_PlayerControllers;				//接続されたコントローラーたち
+	static int m_XPadNum;											//つないであるコントローラーを数えるための変数
 
 public:
+	//===============================================================
+	// コンストラクタ・デストラクタ
+	//===============================================================
+	PlayerController() {};
+	~PlayerController() {};
+
 	//===============================================================
 	// コントローラーの設定
 	//===============================================================
@@ -31,12 +46,15 @@ public:
 	//===============================================================
 	// コントローラーの取得
 	//===============================================================
-	InputXPad* GetController();	//コントローラーがつないでいない場合nullptrが帰ってきます。
+	bool IsConnect();
+	InputXPad* GetController();				//コントローラーがつないでいない場合nullptrが帰ってきます。
 	PLAYCONTROLLERTYPE GetControllerType();	//コントローラーのタイプを取得
 
 	//===============================================================
-	// キャラクターの入力に関する関数
+	//入力に関する関数
 	//===============================================================
+	bool IsPushAnyBotton();					//なんか作れない
+	bool IsReturn();
 	const CVector2& GetMoveInput();
 	bool GetLeftSmash();
 	bool GetJumpTrigger();
@@ -48,5 +66,5 @@ public:
 private:
 	PLAYCONTROLLERTYPE m_ControllerType = PLAYCONTROLLERTYPE::MAX;	//コントローラーの種類
 	InputXPad* m_pXPad = nullptr;									//ゲームパッドがある場合、パッドの情報が入ります。
-	int m_PlayerNum = 0;											//このコントローラーを使うキャラクター番号
+	int m_PlayerNum = 0;											//このコントローラーを使うキャラクター番号(0～)
 };

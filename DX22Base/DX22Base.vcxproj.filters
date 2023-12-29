@@ -100,9 +100,6 @@
     <Filter Include="ソース ファイル\04_Game\04_Effect">
       <UniqueIdentifier>{5c0d8d6b-c36f-4e29-9964-ade6148289e5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\04_Game\05_Base">
-      <UniqueIdentifier>{9100d977-a04e-46ff-b0cf-273cf067d7fb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\04_Game\03_Stage">
       <UniqueIdentifier>{0a11127a-f7bd-4096-a1fb-49a1a150a1c7}</UniqueIdentifier>
     </Filter>
@@ -112,17 +109,8 @@
     <Filter Include="ヘッダー ファイル\04_Game\04_Effect">
       <UniqueIdentifier>{f1eb7697-a67b-476c-bfbd-72af7b47bdc6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\05_Base">
-      <UniqueIdentifier>{83065f8b-6d0f-43b8-a1e3-479b3cccb0bf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\04_Game\02_Character\Character_00\Attack">
       <UniqueIdentifier>{1389c4e0-7b3c-4bfe-ad5e-f034843aa51d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\04_Game\05_Base\01_AttackBase">
-      <UniqueIdentifier>{3f17e47b-c812-47b7-827a-8e56be76482b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\05_Base\01_AttackBase">
-      <UniqueIdentifier>{893b0301-9a90-470f-9666-6b9f9f490e2a}</UniqueIdentifier>
     </Filter>
     <Filter Include="リソース ファイル\imgui">
       <UniqueIdentifier>{897bffab-2655-48cf-8c8f-35ca51306cc4}</UniqueIdentifier>
@@ -162,6 +150,12 @@
     </Filter>
     <Filter Include="ソース ファイル\04_Game\02_Character\Character_00\State">
       <UniqueIdentifier>{6570717d-ba69-4dc9-bf73-90987509783e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\05_Select">
+      <UniqueIdentifier>{5eac3aa8-3271-4896-b91a-87155361f684}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\05_Select">
+      <UniqueIdentifier>{6e1be2eb-84d5-4e68-babd-168570e08945}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -267,9 +261,6 @@
     <ClCompile Include="Stage_Base.cpp">
       <Filter>ソース ファイル\04_Game\03_Stage\StageBase</Filter>
     </ClCompile>
-    <ClCompile Include="Attack_Base.cpp">
-      <Filter>ソース ファイル\04_Game\05_Base\01_AttackBase</Filter>
-    </ClCompile>
     <ClCompile Include="Character_IdleState.cpp">
       <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
     </ClCompile>
@@ -357,9 +348,6 @@
     <ClCompile Include="Number2D.cpp">
       <Filter>ソース ファイル\03_Assets\2D</Filter>
     </ClCompile>
-    <ClCompile Include="Player_Controller.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase</Filter>
-    </ClCompile>
     <ClCompile Include="Character_HitStopState.cpp">
       <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
     </ClCompile>
@@ -419,6 +407,24 @@
     </ClCompile>
     <ClCompile Include="Character_GameOverState.cpp">
       <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene01_Select.cpp">
+      <Filter>ソース ファイル\04_Game\00_Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera02_Select.cpp">
+      <Filter>ソース ファイル\04_Game\01_Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Select00_Character.cpp">
+      <Filter>ソース ファイル\04_Game\05_Select</Filter>
+    </ClCompile>
+    <ClCompile Include="Select01_Controller.cpp">
+      <Filter>ソース ファイル\04_Game\05_Select</Filter>
+    </ClCompile>
+    <ClCompile Include="Select02_PlayerSelect.cpp">
+      <Filter>ソース ファイル\04_Game\05_Select</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_Controller.cpp">
+      <Filter>ソース ファイル\02_System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -512,9 +518,6 @@
     <ClInclude Include="Stage_Base.h">
       <Filter>ヘッダー ファイル\04_Game\03_Stage\StageBase</Filter>
     </ClInclude>
-    <ClInclude Include="Attack_Base.h">
-      <Filter>ヘッダー ファイル\04_Game\05_Base\01_AttackBase</Filter>
-    </ClInclude>
     <ClInclude Include="Character_00.h">
       <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00</Filter>
     </ClInclude>
@@ -557,11 +560,26 @@
     <ClInclude Include="Number2D.h">
       <Filter>ヘッダー ファイル\03_Assets\2D</Filter>
     </ClInclude>
-    <ClInclude Include="Player_Controller.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase</Filter>
-    </ClInclude>
     <ClInclude Include="Camera01_Game.h">
       <Filter>ヘッダー ファイル\04_Game\01_Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene01_Select.h">
+      <Filter>ヘッダー ファイル\04_Game\00__Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera02_Select.h">
+      <Filter>ヘッダー ファイル\04_Game\01_Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Select00_Character.h">
+      <Filter>ヘッダー ファイル\04_Game\05_Select</Filter>
+    </ClInclude>
+    <ClInclude Include="Select01_Controller.h">
+      <Filter>ヘッダー ファイル\04_Game\05_Select</Filter>
+    </ClInclude>
+    <ClInclude Include="Select02_PlayerSelect.h">
+      <Filter>ヘッダー ファイル\04_Game\05_Select</Filter>
+    </ClInclude>
+    <ClInclude Include="Player_Controller.h">
+      <Filter>ヘッダー ファイル\02_System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

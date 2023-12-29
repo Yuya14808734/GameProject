@@ -11,6 +11,7 @@
 #include "CameraManager.h"
 #include "XboxKeyboard.h"
 #include "MiniWindow.h"
+#include "Player_Controller.h"
 
 //--- ’è”’è‹`
 const unsigned int SCREEN_WIDTH = 1280;
@@ -52,6 +53,7 @@ void MainInit()
 		
 	}
 	InputXPad::XpadInit();
+	PlayerController::PlayerController_Init();
 	MiniWindow::WindowInit();
 	EffectManager::EffectInit();
 

@@ -16,6 +16,8 @@ void SceneGame::Init()
 	//=====<コントローラーの初期化>=====
 	PlayerController::InitXPadNum();
 
+
+
 	//=====<カメラの生成>=====
 	CameraManager::GetInstance().CreateCamera(new CameraGame(), "GameCamera");
 	CameraManager::GetInstance().SetSceneCamera("GameCamera");

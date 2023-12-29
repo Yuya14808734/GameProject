@@ -155,7 +155,7 @@ public:
 	void Character_HitWall();							//壁に当たった
 	void DrawCollider();								//コライダーの描画
 	//==========================================================================
-	void SetCharacterController(PlayerController pController);
+	void SetCharacterController(PlayerController* pController);
 	void SetStage(Stage* pStage);
 
 
