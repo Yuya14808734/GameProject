@@ -38,11 +38,12 @@ private:
 	ID3D11ShaderResourceView* m_pTexture = nullptr;
 	VertexShader* m_pVertexShader = nullptr;
 	PixelShader* m_pPixelShader = nullptr;
-protected:
-	CVector3 m_pos;
-	CVector2 m_size;
-	CVector2 m_UVpos;
-	CVector2 m_UVsize;
-	DirectX::XMFLOAT4 m_color;
+public:
+	CVector3 m_BasePos;				//位置の原点となる座標
+	CVector3 m_pos;					//位置
+	CVector2 m_size;				//サイズ
+	CVector2 m_UVpos;				//UV位置
+	CVector2 m_UVsize;				//UVサイズ
+	DirectX::XMFLOAT4 m_color;		//色
 };
 #endif

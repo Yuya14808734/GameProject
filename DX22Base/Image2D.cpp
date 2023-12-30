@@ -5,6 +5,7 @@ Image2D::Image2D()
 	:m_pTexture(nullptr)
 	, m_pVertexShader(nullptr)
 	, m_pPixelShader(nullptr)
+	, m_BasePos({0.0f,0.0f,0.0f})
 	, m_pos({ 0.0f,0.0f,0.0f })
 	, m_size({ 1.0f,1.0f })
 	, m_UVpos({ 0.0f,0.0f })
@@ -81,8 +82,9 @@ void Image2D::Draw()
 
 	//ワールド行列で画面の表示位置を計算
 	DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(
-		m_pos.x,
-		m_pos.y, m_pos.z);
+		m_pos.x + m_BasePos.x,
+		m_pos.y + m_BasePos.y,
+		m_pos.z + m_BasePos.z);
 	DirectX::XMFLOAT4X4 fWorld;
 	DirectX::XMStoreFloat4x4(&fWorld,
 		DirectX::XMMatrixTranspose(T));

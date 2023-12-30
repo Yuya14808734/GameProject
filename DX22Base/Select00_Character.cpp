@@ -3,10 +3,15 @@
 SelectCharacter::SelectCharacter()
 {
 	m_isDecided = false;
+
+	//フレームの読み込み
+	m_FrameImage.SetTexture("Assets/CharacterImage/SelectFrame.png");
+	m_FrameImage.m_size = CVector2(276.0f, 400.0f) * 0.8f;
 }
 
 SelectCharacter::~SelectCharacter()
 {
+
 }
 
 void SelectCharacter::Update()
@@ -33,7 +38,20 @@ void SelectCharacter::Update()
 
 void SelectCharacter::Draw()
 {
+	if (m_pCharacterImageList == nullptr)
+	{
+		return;
+	}
 
+	if (m_pSelectController == nullptr)
+	{
+		return;
+	}
+
+	//枠の表示
+	m_FrameImage.m_pos = (*m_pCharacterImageList)[m_NowSelectCharacter].GetPos();
+	m_FrameImage.m_size = (*m_pCharacterImageList)[m_NowSelectCharacter].GetSize();
+	m_FrameImage.Draw();
 }
 
 void SelectCharacter::SetController(PlayerController* Controller)
@@ -54,11 +72,11 @@ void SelectCharacter::ChangeNowController(PlayerController* Controller)
 	m_pSelectController = Controller;
 }
 
-void SelectCharacter::SetNowCharacter(CHARACTER NowCharacter)
+void SelectCharacter::SetNowCharacter(SelectCharacterList::CHARACTER NowCharacter)
 {
 	m_NowSelectCharacter = static_cast<int>(NowCharacter);
 	m_NowSelectCharacter =	//キャラクターが異常な数字の場合、正常な数字にする
-		m_NowSelectCharacter % static_cast<int>(SelectCharacter::CHARACTER::MAX);
+		m_NowSelectCharacter % static_cast<int>(SelectCharacterList::CHARACTER::MAX);
 }
 
 bool SelectCharacter::IsDecided()
@@ -71,6 +89,11 @@ SelectCharacter::SELECTSTATE SelectCharacter::GetState()
 	return m_SelectState;
 }
 
+void SelectCharacter::SetCharacterList(std::array<Image2D, static_cast<int>(SelectCharacterList::CHARACTER::MAX)>* pCharacterImageList)
+{
+	m_pCharacterImageList = pCharacterImageList;
+}
+
 void SelectCharacter::SelectUpdate()
 {
 	//右を押したら
@@ -78,7 +101,7 @@ void SelectCharacter::SelectUpdate()
 	{
 		m_NowSelectCharacter++;
 		m_NowSelectCharacter =
-			m_NowSelectCharacter % static_cast<int>(SelectCharacter::CHARACTER::MAX);
+			m_NowSelectCharacter % static_cast<int>(SelectCharacterList::CHARACTER::MAX);
 
 		m_SelectState = SelectCharacter::SELECTSTATE::ANIMATION;
 	}
@@ -89,8 +112,8 @@ void SelectCharacter::SelectUpdate()
 		m_NowSelectCharacter--;
 
 		m_NowSelectCharacter =
-			(m_NowSelectCharacter + static_cast<int>(SelectCharacter::CHARACTER::MAX))
-			% static_cast<int>(SelectCharacter::CHARACTER::MAX);
+			(m_NowSelectCharacter + static_cast<int>(SelectCharacterList::CHARACTER::MAX))
+			% static_cast<int>(SelectCharacterList::CHARACTER::MAX);
 
 		m_SelectState = SelectCharacter::SELECTSTATE::ANIMATION;
 	}
@@ -105,7 +128,7 @@ void SelectCharacter::SelectUpdate()
 
 void SelectCharacter::AnimationUpdate()
 {
-
+	m_SelectState = SelectCharacter::SELECTSTATE::SELECT;
 }
 
 void SelectCharacter::DecidedUpdate()

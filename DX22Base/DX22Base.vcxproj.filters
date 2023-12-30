@@ -420,6 +420,9 @@
     <ClCompile Include="Player_Controller.cpp">
       <Filter>ソース ファイル\02_System</Filter>
     </ClCompile>
+    <ClCompile Include="Select01_CharacterList.cpp">
+      <Filter>ソース ファイル\04_Game\05_Select</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -568,6 +571,9 @@
     </ClInclude>
     <ClInclude Include="Player_Controller.h">
       <Filter>ヘッダー ファイル\02_System</Filter>
+    </ClInclude>
+    <ClInclude Include="Select01_CharacterList.h">
+      <Filter>ヘッダー ファイル\04_Game\05_Select</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

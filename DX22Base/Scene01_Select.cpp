@@ -5,8 +5,8 @@
 PlayerController* SceneSelect::m_pFirstPlayerController = nullptr;
 PlayerController* SceneSelect::m_pSecondPlayerController = nullptr;
 
-SelectCharacter::CHARACTER SceneSelect::m_FirstPlayerCharacter = SelectCharacter::CHARACTER::MAX;
-SelectCharacter::CHARACTER SceneSelect::m_SecondPlayerCharacter = SelectCharacter::CHARACTER::MAX;
+SelectCharacterList::CHARACTER SceneSelect::m_FirstPlayerCharacter =		SelectCharacterList::CHARACTER::MAX;
+SelectCharacterList::CHARACTER SceneSelect::m_SecondPlayerCharacter =	SelectCharacterList::CHARACTER::MAX;
 
 PlayerController* SceneSelect::GetFirstPlayerController()
 {
@@ -18,22 +18,39 @@ PlayerController* SceneSelect::GetSecondPlayerController()
 	return m_pSecondPlayerController;
 }
 
-SelectCharacter::CHARACTER SceneSelect::GetFirstPlayerCharacter()
+SelectCharacterList::CHARACTER SceneSelect::GetFirstPlayerCharacter()
 {
 	return m_FirstPlayerCharacter;
 }
 
-SelectCharacter::CHARACTER SceneSelect::GetSecondPlayerCharacter()
+SelectCharacterList::CHARACTER SceneSelect::GetSecondPlayerCharacter()
 {
 	return m_SecondPlayerCharacter;
 }
 
 void SceneSelect::Init()
 {
+	//========<コントローラーが切れていたら情報を削除する>=================
+	ControllerDisconnect();
+
+	//=========<2P分のキャラクターの設定を行う>=============================
+
+	//一人目
+	//選んでいるキャラクターを設定(前のバトルをしていれば)
 	m_SelectFirstCharacter.SetNowCharacter(m_FirstPlayerCharacter);
+	//コントローラーの設定(前のバトルをしていれば)
 	m_SelectFirstCharacter.SetController(m_pFirstPlayerController);
+	//選べるキャラクターの画像位置などを渡す
+	m_SelectFirstCharacter.SetCharacterList(&m_CharacterList.GetCharacterImageList());
+	
+	//二人目
+	//選んでいるキャラクターを設定(前のバトルをしていれば)
 	m_SelectSecondCharacter.SetNowCharacter(m_SecondPlayerCharacter);
+	//コントローラーの設定(前のバトルをしていれば)
 	m_SelectSecondCharacter.SetController(m_pSecondPlayerController);
+	//選べるキャラクターの画像位置などを渡す
+	m_SelectSecondCharacter.SetCharacterList(&m_CharacterList.GetCharacterImageList());
+	
 }
 
 void SceneSelect::Uninit()
@@ -49,7 +66,7 @@ void SceneSelect::Update()
 	//コントローラーをつなげる
 	ControllerConnect();
 
-	//コントローラーを解除する
+	//Bボタンを押していたらコントローラーを解除する
 	ControllerRelease();
 
 	//キャラクターの設定
@@ -71,8 +88,17 @@ void SceneSelect::Update()
 
 void SceneSelect::Draw()
 {
+	//=====<UIの描画>=====
+	EnableDepth(false);
+
+	//キャラクター画像を描画
+	m_CharacterList.Draw();
+	//1Pが選んでいる枠を表示
 	m_SelectFirstCharacter.Draw();
+	//2Pが選んでいる枠を表示
 	m_SelectSecondCharacter.Draw();
+
+	EnableDepth(true);
 }
 
 void SceneSelect::ControllerConnect()

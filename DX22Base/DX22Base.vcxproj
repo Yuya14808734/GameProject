@@ -227,6 +227,7 @@
     <ClCompile Include="Scene01_Select.cpp" />
     <ClCompile Include="SE.cpp" />
     <ClCompile Include="Select00_Character.cpp" />
+    <ClCompile Include="Select01_CharacterList.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Character00_SpecialAirN.cpp" />
     <ClCompile Include="Character00_SpecialN.cpp" />
@@ -280,6 +281,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scene01_Select.h" />
     <ClInclude Include="Select00_Character.h" />
+    <ClInclude Include="Select01_CharacterList.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprite.h" />

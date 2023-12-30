@@ -2,20 +2,21 @@
 #include "Scene.h"
 #include "Player_Controller.h"
 #include "Select00_Character.h"
+#include "Select01_CharacterList.h"
 
 class SceneSelect : public CScene
 {
 public:
 	static PlayerController* GetFirstPlayerController();
 	static PlayerController* GetSecondPlayerController();
-	static SelectCharacter::CHARACTER GetFirstPlayerCharacter();
-	static SelectCharacter::CHARACTER GetSecondPlayerCharacter();
+	static SelectCharacterList::CHARACTER GetFirstPlayerCharacter();
+	static SelectCharacterList::CHARACTER GetSecondPlayerCharacter();
 
 private:
 	static PlayerController* m_pFirstPlayerController;
 	static PlayerController* m_pSecondPlayerController;
-	static SelectCharacter::CHARACTER m_FirstPlayerCharacter;
-	static SelectCharacter::CHARACTER m_SecondPlayerCharacter;
+	static SelectCharacterList::CHARACTER m_FirstPlayerCharacter;
+	static SelectCharacterList::CHARACTER m_SecondPlayerCharacter;
 
 public:
 	void Init() override;
@@ -27,6 +28,7 @@ public:
 	void ControllerRelease();
 
 private:
+	SelectCharacterList m_CharacterList;
 	SelectCharacter m_SelectFirstCharacter;
 	SelectCharacter m_SelectSecondCharacter;
 };
