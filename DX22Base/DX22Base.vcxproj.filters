@@ -417,12 +417,6 @@
     <ClCompile Include="Select00_Character.cpp">
       <Filter>ソース ファイル\04_Game\05_Select</Filter>
     </ClCompile>
-    <ClCompile Include="Select01_Controller.cpp">
-      <Filter>ソース ファイル\04_Game\05_Select</Filter>
-    </ClCompile>
-    <ClCompile Include="Select02_PlayerSelect.cpp">
-      <Filter>ソース ファイル\04_Game\05_Select</Filter>
-    </ClCompile>
     <ClCompile Include="Player_Controller.cpp">
       <Filter>ソース ファイル\02_System</Filter>
     </ClCompile>
@@ -570,12 +564,6 @@
       <Filter>ヘッダー ファイル\04_Game\01_Camera</Filter>
     </ClInclude>
     <ClInclude Include="Select00_Character.h">
-      <Filter>ヘッダー ファイル\04_Game\05_Select</Filter>
-    </ClInclude>
-    <ClInclude Include="Select01_Controller.h">
-      <Filter>ヘッダー ファイル\04_Game\05_Select</Filter>
-    </ClInclude>
-    <ClInclude Include="Select02_PlayerSelect.h">
       <Filter>ヘッダー ファイル\04_Game\05_Select</Filter>
     </ClInclude>
     <ClInclude Include="Player_Controller.h">

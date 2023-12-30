@@ -34,7 +34,7 @@ void Character_00::DownUpdate()
 		m_AnimeTime = AnimeEndTime;
 
 		//“]‚ñ‚Å‚¢‚é‚Æ‚«‚Éãƒ{ƒ^ƒ“‚ğ‰Ÿ‚·‚Æ‹N‚«ã‚ª‚é
-		if (m_Controller.GetUp())
+		if (m_Controller.GetWakeUp())
 		{
 			ChangeState(Character::STATE::WAKEUP);
 		}

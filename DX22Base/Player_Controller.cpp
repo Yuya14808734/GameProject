@@ -102,6 +102,105 @@ bool PlayerController::IsReturn()
 	return IsReturnButton;
 }
 
+bool PlayerController::IsBack()
+{
+	bool IsBackButton = false;
+	switch (m_ControllerType)
+	{
+	case PlayerController::PLAYCONTROLLERTYPE::GAMEPAD:
+		IsBackButton = m_pXPad->InputPressKey(PadButton::B_BUTTON);;
+		break;
+	case PlayerController::PLAYCONTROLLERTYPE::KEYBOARD:
+		IsBackButton = IsKeyPress(VK_ESCAPE);
+		break;
+	}
+	return IsBackButton;
+}
+
+bool PlayerController::GetRightArrow()
+{
+	bool Right = false;
+	switch (m_ControllerType)
+	{
+	case PlayerController::PLAYCONTROLLERTYPE::GAMEPAD:
+		if (m_pXPad->GetPressLeftStick().x > 0.5f || m_pXPad->InputPressKey(PadButton::RIGHT_BUTTON))
+		{
+			Right = true;
+		}
+		break;
+	case PlayerController::PLAYCONTROLLERTYPE::KEYBOARD:
+		if (IsKeyPress('D') || IsKeyPress(VK_RIGHT))
+		{
+			Right = true;
+		}
+		break;
+	}
+	return Right;
+}
+
+bool PlayerController::GetUpArrow()
+{
+	bool Up = false;
+	switch (m_ControllerType)
+	{
+	case PlayerController::PLAYCONTROLLERTYPE::GAMEPAD:
+		if (m_pXPad->GetPressLeftStick().y > 0.5f || m_pXPad->InputPressKey(PadButton::UP_BUTTON))
+		{
+			Up = true;
+		}
+		break;
+	case PlayerController::PLAYCONTROLLERTYPE::KEYBOARD:
+		if (IsKeyPress('W') || IsKeyPress(VK_UP))
+		{
+			Up = true;
+		}
+		break;
+	}
+	return Up;
+}
+
+bool PlayerController::GetDownArrow()
+{
+	bool Down = false;
+	switch (m_ControllerType)
+	{
+	case PlayerController::PLAYCONTROLLERTYPE::GAMEPAD:
+		if (m_pXPad->GetPressLeftStick().y < -0.5f || m_pXPad->InputPressKey(PadButton::DOWN_BUTTON))
+		{
+			Down = true;
+		}
+		break;
+	case PlayerController::PLAYCONTROLLERTYPE::KEYBOARD:
+		if (IsKeyPress('S') || IsKeyPress(VK_DOWN))
+		{
+			Down = true;
+		}
+		break;
+	}
+	return Down;
+}
+
+bool PlayerController::GetLeftArrow()
+{
+	bool Left = false;
+	switch (m_ControllerType)
+	{
+	case PlayerController::PLAYCONTROLLERTYPE::GAMEPAD:
+		if (m_pXPad->GetPressLeftStick().x < -0.5f || m_pXPad->InputPressKey(PadButton::LEFT_BUTTON))
+		{
+			Left = true;
+		}
+		break;
+	case PlayerController::PLAYCONTROLLERTYPE::KEYBOARD:
+		if (IsKeyPress('A') || IsKeyPress(VK_LEFT))
+		{
+			Left = true;
+		}
+		break;
+	}
+	return Left;
+}
+
 const CVector2& PlayerController::GetMoveInput()
 {
 	CVector2 returnVec;
@@ -211,7 +310,7 @@ const CVector2& PlayerController::GetLeftInputVector()
 	return returnVec;
 }
 
-bool PlayerController::GetUp()
+bool PlayerController::GetWakeUp()
 {
 	bool Check = false;
 	switch (m_ControllerType)

@@ -227,11 +227,9 @@
     <ClCompile Include="Scene01_Select.cpp" />
     <ClCompile Include="SE.cpp" />
     <ClCompile Include="Select00_Character.cpp" />
-    <ClCompile Include="Select02_PlayerSelect.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Character00_SpecialAirN.cpp" />
     <ClCompile Include="Character00_SpecialN.cpp" />
-    <ClCompile Include="Select01_Controller.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Stage_00.cpp" />
     <ClCompile Include="Stage_Base.cpp" />
@@ -282,8 +280,6 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scene01_Select.h" />
     <ClInclude Include="Select00_Character.h" />
-    <ClInclude Include="Select01_Controller.h" />
-    <ClInclude Include="Select02_PlayerSelect.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprite.h" />

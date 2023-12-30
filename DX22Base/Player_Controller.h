@@ -55,13 +55,18 @@ public:
 	//===============================================================
 	bool IsPushAnyBotton();					//なんか作れない
 	bool IsReturn();
+	bool IsBack();
+	bool GetRightArrow();
+	bool GetUpArrow();
+	bool GetDownArrow();
+	bool GetLeftArrow();
 	const CVector2& GetMoveInput();
 	bool GetLeftSmash();
 	bool GetJumpTrigger();
 	bool GetJumpPress();
 	bool GetAttack();
 	const CVector2& GetLeftInputVector();
-	bool GetUp();
+	bool GetWakeUp();
 
 private:
 	PLAYCONTROLLERTYPE m_ControllerType = PLAYCONTROLLERTYPE::MAX;	//コントローラーの種類
