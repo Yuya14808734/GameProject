@@ -78,6 +78,7 @@ void MainLoop()
 	//====================================================
 	UpdateInput();
 	InputXPad::XpadUpdate();
+	PlayerController::PlayerController_Update();
 
 	g_pGame->Update();
 

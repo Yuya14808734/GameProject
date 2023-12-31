@@ -24,6 +24,7 @@ public:
 
 public:
 	static void PlayerController_Init();
+	static void PlayerController_Update();
 	static std::array<PlayerController, 5>& GetPlayerControllers();
 	static void InitXPadNum();
 
@@ -37,6 +38,12 @@ public:
 	//===============================================================
 	PlayerController() {};
 	~PlayerController() {};
+
+	//===============================================================
+	// コントローラーの更新
+	//===============================================================
+	void Update();						//コントローラーの情報を更新(Trigger情報)
+	void UnTriggerNowFrame();			//このフレームでTrigger判定できないようにする
 
 	//===============================================================
 	// コントローラーの設定
@@ -54,12 +61,18 @@ public:
 	//入力に関する関数
 	//===============================================================
 	bool IsPushAnyBotton();					//なんか作れない
-	bool IsReturn();
-	bool IsBack();
-	bool GetRightArrow();
-	bool GetUpArrow();
-	bool GetDownArrow();
-	bool GetLeftArrow();
+	bool IsPressReturn();
+	bool IsTriggerReturn();
+	bool IsPressBack();
+	bool IsTriggerBack();
+	bool GetPressRightArrow();
+	bool GetTriggerRightArrow();
+	bool GetPressUpArrow();
+	bool GetTriggerUpArrow();
+	bool GetPressDownArrow();
+	bool GetTriggerDownArrow();
+	bool GetPressLeftArrow();
+	bool GetTriggerLeftArrow();
 	const CVector2& GetMoveInput();
 	bool GetLeftSmash();
 	bool GetJumpTrigger();
@@ -72,4 +85,24 @@ private:
 	PLAYCONTROLLERTYPE m_ControllerType = PLAYCONTROLLERTYPE::MAX;	//コントローラーの種類
 	InputXPad* m_pXPad = nullptr;									//ゲームパッドがある場合、パッドの情報が入ります。
 	int m_PlayerNum = 0;											//このコントローラーを使うキャラクター番号(0～)
+
+
+private:
+	enum class TRIGGERBIT : unsigned int
+	{
+		NONE		= 0x00000000,
+		ALL			= 0xffffffff,
+		RIGHTARROW	= 0x00000001,
+		LEFTARROW	= 0x00000002,
+		UPARROW		= 0x00000004,
+		DOWNARROW	= 0x00000008,
+		RETURN		= 0x00000010,
+		BACK		= 0x00000020,
+	};
+
+private:
+	bool GetBitTrigger(TRIGGERBIT Bit);
+
+	int m_NowTriggerBit = 0x00;
+	int m_OldTriggerBit = 0x00;
 };

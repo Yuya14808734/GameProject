@@ -52,6 +52,7 @@ private:
 	Image2D m_NoConnectText;										//何も繋がっていない場合の文字
 	Image2D m_FrameImage;											//キャラクターを囲うフレーム
 	Image2D m_ControllerImage;										//コントローラーの画像
+	Image2D m_SelectedImage;										//選ばれたときの画像
 	std::array<Image2D, static_cast<int>(SelectCharacterList::CHARACTER::MAX)>*
 		m_pCharacterIconImageList = nullptr;						//選べるキャラクターのアイコン
 	std::array<Image2D, static_cast<int>(SelectCharacterList::CHARACTER::MAX)>*

@@ -21,8 +21,9 @@ public:
 	void SetTexture(const char* FilePath);
 	void ReleaseTexture();
 	void SetPos(const DirectX::XMFLOAT3& pos);
+	void SetPos(const CVector3& pos);
 	void SetPos(const CVector2& pos);
-	const CVector2& GetPos();
+	const CVector3& GetPos();
 	void SetSize(const DirectX::XMFLOAT2& size);
 	void SetSize(const CVector2& size);
 	const CVector2& GetSize();

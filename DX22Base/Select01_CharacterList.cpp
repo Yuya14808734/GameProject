@@ -4,12 +4,12 @@ SelectCharacterList::SelectCharacterList()
 {
 	const char* CharacterImageFilePath[static_cast<int>(CHARACTER::MAX)] =
 	{
-		"Assets/CharacterImage/SelectCharacter_UnityChan.png"
+		"Assets/CharacterImage/SelectCharacter_UnityChan.png",
 	};
 
 	const char* CharacterIconImageFilePath[static_cast<int>(CHARACTER::MAX)] =
 	{
-		"Assets/CharacterImage/UnitychanIcon.png"
+		"Assets/CharacterImage/UnitychanIcon.png",
 	};
 
 	//描画するときの最初の位置
@@ -20,11 +20,13 @@ SelectCharacterList::SelectCharacterList()
 	//各画像の位置の設定
 	for (int i = 0;i < static_cast<int>(CHARACTER::MAX);i++)
 	{
+		//キャラクターの立ち絵画像
 		m_CharacterImages[i].SetTexture(CharacterImageFilePath[i]);
 		m_CharacterImages[i].m_pos =
 			BasePos + ((BaseDistance + ImageSize) * static_cast<float>(i));
 		m_CharacterImages[i].m_size = ImageSize;
 
+		//キャラクターのアイコンの画像
 		m_CharacterIconImages[i].SetTexture(CharacterIconImageFilePath[i]);
 		m_CharacterIconImages[i].m_size = CVector2(150.0f, 150.0f);
 

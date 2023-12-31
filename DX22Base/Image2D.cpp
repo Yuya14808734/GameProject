@@ -125,11 +125,15 @@ void Image2D::SetPos(const DirectX::XMFLOAT3& pos)
 {
 	m_pos.f = pos;
 }
+void Image2D::SetPos(const CVector3& pos)
+{
+	m_pos = pos;
+}
 void Image2D::SetPos(const CVector2& pos)
 {
 	m_pos = pos;
 }
-const CVector2& Image2D::GetPos()
+const CVector3& Image2D::GetPos()
 {
 	return m_pos;
 }

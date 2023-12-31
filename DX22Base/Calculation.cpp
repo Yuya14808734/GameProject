@@ -17,19 +17,19 @@ const CVector2 CVector2::m_One		= CVector2(1.0f, 1.0f);
 
 CVector2::CVector2()
 {
-	x = y = 0.0f;
+	this->x = this->y = 0.0f;
 }
 
 CVector2::CVector2(const CVector2& v)
 {
-	x = v.x;
-	y = v.y;
+	this->x = v.x;
+	this->y = v.y;
 }
 
 CVector2::CVector2(const CVector3& v)
 {
-	x = v.x;
-	y = v.y;
+	this->x = v.x;
+	this->y = v.y;
 }
 
 CVector2::CVector2(const DirectX::XMFLOAT2& v)
@@ -54,30 +54,30 @@ CVector2::CVector2(int x, int y)
 // assignment operators
 CVector2& CVector2::operator += (const CVector2& v)
 {
-	x += v.x;
-	y += v.y;
+	this->x += v.x;
+	this->y += v.y;
 	return *this;
 }
 
 CVector2& CVector2::operator -= (const CVector2& v)
 {
-	x -= v.x;
-	y -= v.y;
+	this->x -= v.x;
+	this->y -= v.y;
 	return *this;
 }
 
 CVector2& CVector2::operator *= (float r)
 {
-	x *= r;
-	y *= r;
+	this->x *= r;
+	this->y *= r;
 	return *this;
 }
 
 CVector2& CVector2::operator /= (float r)
 {
 	if (r != 0.0f) {
-		x /= r;
-		y /= r;
+		this->x /= r;
+		this->y /= r;
 	}
 	return *this;
 }
@@ -101,18 +101,18 @@ CVector2 CVector2::operator + (const CVector2& v) const
 
 CVector2 CVector2::operator - (const CVector2& v) const
 {
-	return CVector2(x - v.x, y - v.y);
+	return CVector2(this->x - v.x, this->y - v.y);
 }
 
 CVector2 CVector2::operator * (float r) const
 {
-	return CVector2(x * r, y * r);
+	return CVector2(this->x * r, this->y * r);
 }
 
 CVector2 CVector2::operator / (float r) const
 {
 	if (r != 0.0f)
-		return CVector2(x / r, y / r);
+		return CVector2(this->x / r, this->y / r);
 	return *this;
 }
 
@@ -223,32 +223,32 @@ const CVector3 CVector3::m_One		= CVector3(1.0f, 1.0f, 1.0f);
 
 CVector3::CVector3()
 {
-	x = y = z = 0.0f;
+	this->x = this->y = this->z = 0.0f;
 }
 
 CVector3::CVector3(const CVector3& v)
 {
-	x = v.x;
-	y = v.y;
-	z = v.z;
+	this->x = v.x;
+	this->y = v.y;
+	this->z = v.z;
 }
 
 CVector3::CVector3(const CVector2& v)
 {
-	x = v.x;
-	y = v.y;
-	z = 0.0f;
+	this->x = v.x;
+	this->y = v.y;
+	this->z = 0.0f;
 }
 
 CVector3::CVector3(const CVector3* p)
 {
 	if (p) {
-		x = p->x;
-		y = p->y;
-		z = p->z;
+		this->x = p->x;
+		this->y = p->y;
+		this->z = p->z;
 	}
 	else {
-		x = y = z = 0.0f;
+		this->x = this->y = this->z = 0.0f;
 	}
 }
 

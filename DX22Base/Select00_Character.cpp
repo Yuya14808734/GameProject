@@ -27,6 +27,14 @@ SelectCharacter::SelectCharacter()
 	//なにもつながっていない時の背景の読み込み
 	m_NoConnectBackGround.SetTexture("Assets/UI/NoConnectBackGround.png");
 	m_NoConnectBackGround.m_size = CVector2(400.0f, 261.0f) * 0.5f;
+
+	//繋がった時に何につながったかの画像
+	m_ControllerImage.m_pos = CVector2(-120.0f, -60.0f);
+	m_ControllerImage.m_size = CVector2(128.0f, 128.0f);
+
+	//選ばれたときに映す画像
+	m_SelectedImage.SetTexture("Assets/CharacterImage/SelectedImage.png");
+	m_SelectedImage.m_size = CVector2(150.0f, 150.0f);
 }
 
 SelectCharacter::~SelectCharacter()
@@ -89,6 +97,12 @@ void SelectCharacter::Draw()
 	//=========<キャラクターのアイコンを描画>===========
 	(*m_pCharacterIconImageList)[m_NowSelectCharacter].m_BasePos = m_BasePos;
 	(*m_pCharacterIconImageList)[m_NowSelectCharacter].Draw();
+
+	//=========<選んでいたらキャラクターのアイコンを隠す文字の描画>===========
+	if(m_isDecided)
+	{
+		m_SelectedImage.Draw();
+	}
 }
 
 void SelectCharacter::SetController(PlayerController* Controller)
@@ -153,6 +167,7 @@ void SelectCharacter::SetPos(const CVector3& pos)
 	m_NoConnectBackGround.m_BasePos =
 	m_NoConnectText.m_BasePos =
 	m_ControllerImage.m_BasePos =
+	m_SelectedImage.m_BasePos =
 	m_BasePos = pos;
 }
 
@@ -174,7 +189,7 @@ void SelectCharacter::SetCharacterIconList(std::array<Image2D, static_cast<int>(
 void SelectCharacter::SelectUpdate()
 {
 	//右を押したら
-	if (m_pSelectController->GetRightArrow())
+	if (m_pSelectController->GetTriggerRightArrow())
 	{
 		m_NowSelectCharacter++;
 		m_NowSelectCharacter =
@@ -184,7 +199,7 @@ void SelectCharacter::SelectUpdate()
 	}
 
 	//左を押したら
-	if (m_pSelectController->GetLeftArrow())
+	if (m_pSelectController->GetTriggerLeftArrow())
 	{
 		m_NowSelectCharacter--;
 
@@ -196,7 +211,7 @@ void SelectCharacter::SelectUpdate()
 	}
 
 	//決定ボタンを押したら
-	if (m_pSelectController->IsReturn())
+	if (m_pSelectController->IsTriggerReturn())
 	{
 		m_isDecided = true;
 		m_SelectState = SelectCharacter::SELECTSTATE::DECIDED;
@@ -211,7 +226,7 @@ void SelectCharacter::AnimationUpdate()
 void SelectCharacter::DecidedUpdate()
 {
 	//決定ボタンを押したら
-	if (m_pSelectController->IsBack())
+	if (m_pSelectController->IsPressBack())
 	{
 		m_isDecided = false;
 		m_SelectState = SelectCharacter::SELECTSTATE::SELECT;

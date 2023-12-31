@@ -23,6 +23,14 @@ void PlayerController::PlayerController_Init()
 	}
 }
 
+void PlayerController::PlayerController_Update()
+{
+	for (int i = 0; i < 5; i++)
+	{
+		m_PlayerControllers[i].Update();
+	}
+}
+
 std::array<PlayerController, 5>& PlayerController::GetPlayerControllers()
 {
 	return m_PlayerControllers;
@@ -31,6 +39,48 @@ std::array<PlayerController, 5>& PlayerController::GetPlayerControllers()
 void PlayerController::InitXPadNum()
 {
 	m_XPadNum = 0;
+}
+
+void PlayerController::Update()
+{
+	m_OldTriggerBit = m_NowTriggerBit;
+	m_NowTriggerBit = 0x00;
+
+	if (GetPressRightArrow())
+	{
+		m_NowTriggerBit |= static_cast<int>(PlayerController::TRIGGERBIT::RIGHTARROW);
+	}
+
+	if (GetPressLeftArrow())
+	{
+		m_NowTriggerBit |= static_cast<int>(PlayerController::TRIGGERBIT::LEFTARROW);
+	}
+
+	if (GetPressUpArrow())
+	{
+		m_NowTriggerBit |= static_cast<int>(PlayerController::TRIGGERBIT::UPARROW);
+	}
+
+	if (GetPressDownArrow())
+	{
+		m_NowTriggerBit |= static_cast<int>(PlayerController::TRIGGERBIT::DOWNARROW);
+	}
+
+	if (IsPressReturn())
+	{
+		m_NowTriggerBit |= static_cast<int>(PlayerController::TRIGGERBIT::RETURN);
+	}
+
+	if (IsPressBack())
+	{
+		m_NowTriggerBit |= static_cast<int>(PlayerController::TRIGGERBIT::BACK);
+	}
+}
+
+void PlayerController::UnTriggerNowFrame()
+{
+	m_NowTriggerBit = static_cast<int>(PlayerController::TRIGGERBIT::ALL);
+	m_OldTriggerBit = static_cast<int>(PlayerController::TRIGGERBIT::ALL);
 }
 
 void PlayerController::SetController(PLAYCONTROLLERTYPE type, int PlayerNum)
@@ -87,7 +137,7 @@ bool PlayerController::IsPushAnyBotton()
 	return IsAnyButton;
 }
 
-bool PlayerController::IsReturn()
+bool PlayerController::IsPressReturn()
 {
 	bool IsReturnButton = false;
 	switch (m_ControllerType)
@@ -102,7 +152,12 @@ bool PlayerController::IsReturn()
 	return IsReturnButton;
 }
 
-bool PlayerController::IsBack()
+bool PlayerController::IsTriggerReturn()
+{
+	return GetBitTrigger(TRIGGERBIT::RETURN);
+}
+
+bool PlayerController::IsPressBack()
 {
 	bool IsBackButton = false;
 	switch (m_ControllerType)
@@ -117,7 +172,12 @@ bool PlayerController::IsBack()
 	return IsBackButton;
 }
 
-bool PlayerController::GetRightArrow()
+bool PlayerController::IsTriggerBack()
+{
+	return GetBitTrigger(TRIGGERBIT::BACK);
+}
+
+bool PlayerController::GetPressRightArrow()
 {
 	bool Right = false;
 	switch (m_ControllerType)
@@ -138,7 +198,12 @@ bool PlayerController::GetRightArrow()
 	return Right;
 }
 
-bool PlayerController::GetUpArrow()
+bool PlayerController::GetTriggerRightArrow()
+{
+	return GetBitTrigger(TRIGGERBIT::RIGHTARROW);
+}
+
+bool PlayerController::GetPressUpArrow()
 {
 	bool Up = false;
 	switch (m_ControllerType)
@@ -159,7 +224,12 @@ bool PlayerController::GetUpArrow()
 	return Up;
 }
 
-bool PlayerController::GetDownArrow()
+bool PlayerController::GetTriggerUpArrow()
+{
+	return GetBitTrigger(TRIGGERBIT::UPARROW);
+}
+
+bool PlayerController::GetPressDownArrow()
 {
 	bool Down = false;
 	switch (m_ControllerType)
@@ -180,7 +250,12 @@ bool PlayerController::GetDownArrow()
 	return Down;
 }
 
-bool PlayerController::GetLeftArrow()
+bool PlayerController::GetTriggerDownArrow()
+{
+	return GetBitTrigger(TRIGGERBIT::DOWNARROW);
+}
+
+bool PlayerController::GetPressLeftArrow()
 {
 	bool Left = false;
 	switch (m_ControllerType)
@@ -199,6 +274,11 @@ bool PlayerController::GetLeftArrow()
 		break;
 	}
 	return Left;
+}
+
+bool PlayerController::GetTriggerLeftArrow()
+{
+	return GetBitTrigger(TRIGGERBIT::LEFTARROW);
 }
 
 const CVector2& PlayerController::GetMoveInput()
@@ -327,4 +407,9 @@ bool PlayerController::GetWakeUp()
 		break;
 	}
 	return Check;
+}
+
+bool PlayerController::GetBitTrigger(PlayerController::TRIGGERBIT Bit)
+{
+	return (m_NowTriggerBit & (~m_OldTriggerBit) & static_cast<int>(Bit)) != 0x00;
 }

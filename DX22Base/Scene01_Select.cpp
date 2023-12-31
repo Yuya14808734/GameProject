@@ -135,10 +135,11 @@ void SceneSelect::ControllerConnect()
 			}
 
 			//EnterかAボタンが押されていたら
-			if (Controller.IsReturn())
+			if (Controller.IsTriggerReturn())
 			{
 				//操作するコントローラーを設定
 				m_pFirstPlayerController = &Controller;
+				m_pFirstPlayerController->UnTriggerNowFrame();
 				break;
 			}
 		}
@@ -164,7 +165,7 @@ void SceneSelect::ControllerConnect()
 			}
 
 			//EnterかAボタンが押されていたら
-			if (Controller.IsReturn())
+			if (Controller.IsTriggerReturn())
 			{
 				//操作するコントローラーを設定
 				m_pSecondPlayerController = &Controller;
@@ -176,6 +177,8 @@ void SceneSelect::ControllerConnect()
 
 void SceneSelect::ControllerDisconnect()
 {
+	//コントローラーが繋がっていない場合、コントローラーの情報をnullptrにする
+
 	//コントローラーの情報が入っていたら
 	if (m_pFirstPlayerController != nullptr)
 	{
@@ -199,6 +202,8 @@ void SceneSelect::ControllerDisconnect()
 
 void SceneSelect::ControllerRelease()
 {
+	//Bボタンを押したらコントローラーの登録を外してやる
+
 	//コントローラーの情報が入っていたら
 	if (m_pFirstPlayerController != nullptr)
 	{
@@ -206,7 +211,7 @@ void SceneSelect::ControllerRelease()
 		if (m_SelectFirstCharacter.GetState() == SelectCharacter::SELECTSTATE::SELECT)
 		{
 			//Bを押すとコントローラーの登録を外す
-			if (!m_pFirstPlayerController->IsBack())
+			if (m_pFirstPlayerController->IsTriggerBack())
 			{
 				m_pFirstPlayerController = nullptr;
 			}
@@ -220,7 +225,7 @@ void SceneSelect::ControllerRelease()
 		if (m_SelectSecondCharacter.GetState() == SelectCharacter::SELECTSTATE::SELECT)
 		{
 			//Bを押すとコントローラーの登録を外す
-			if (!m_pSecondPlayerController->IsBack())
+			if (m_pSecondPlayerController->IsTriggerBack())
 			{
 				m_pSecondPlayerController = nullptr;
 			}
