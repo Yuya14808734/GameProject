@@ -1,5 +1,17 @@
 #include "Select00_Character.h"
 
+float SelectCharacter::m_AlphaCount = 0.0f;
+
+void SelectCharacter::AlphaUpdate()
+{
+	m_AlphaCount += 1.0f / 60.0f;
+
+	while(m_AlphaCount > 100.0f)
+	{
+		m_AlphaCount -= 100.0f;
+	}
+}
+
 SelectCharacter::SelectCharacter()
 {
 	m_isDecided = false;
@@ -7,6 +19,14 @@ SelectCharacter::SelectCharacter()
 	//フレームの読み込み
 	m_FrameImage.SetTexture("Assets/CharacterImage/SelectFrame.png");
 	m_FrameImage.m_size = CVector2(276.0f, 400.0f) * 0.8f;
+
+	//なにもつながっていない時のフォントの読み込み
+	m_NoConnectText.SetTexture("Assets/UI/NoConnectText.png");
+	m_NoConnectText.m_size = CVector2(400.0f, 221.0f) * 0.5f;
+
+	//なにもつながっていない時の背景の読み込み
+	m_NoConnectBackGround.SetTexture("Assets/UI/NoConnectBackGround.png");
+	m_NoConnectBackGround.m_size = CVector2(400.0f, 261.0f) * 0.5f;
 }
 
 SelectCharacter::~SelectCharacter()
@@ -38,20 +58,37 @@ void SelectCharacter::Update()
 
 void SelectCharacter::Draw()
 {
+	//=========<選べるキャラクターのリストが設定されていない場合(SceneのInitで設定して下さい)>===========
 	if (m_pCharacterImageList == nullptr)
 	{
 		return;
 	}
 
-	if (m_pSelectController == nullptr)
+	if (m_pCharacterIconImageList == nullptr)
 	{
 		return;
 	}
 
-	//枠の表示
+	//=========<コントローラーが接続されていない場合(コントローラーが接続されるまで待つ)>===========
+	if (m_pSelectController == nullptr)
+	{
+		m_NoConnectBackGround.Draw();	//背景の描画
+		m_NoConnectText.m_color.w = (sinf((m_AlphaCount / 2.0f) * 3.14f) + 1.0f) / 2.0f;
+		m_NoConnectText.Draw();			//テキストの描画
+		return;
+	}
+
+	//=========<枠の表示>===========
 	m_FrameImage.m_pos = (*m_pCharacterImageList)[m_NowSelectCharacter].GetPos();
 	m_FrameImage.m_size = (*m_pCharacterImageList)[m_NowSelectCharacter].GetSize();
 	m_FrameImage.Draw();
+
+	//=========<接続したコントローラーによって画像を変える>===========
+	m_ControllerImage.Draw();
+
+	//=========<キャラクターのアイコンを描画>===========
+	(*m_pCharacterIconImageList)[m_NowSelectCharacter].m_BasePos = m_BasePos;
+	(*m_pCharacterIconImageList)[m_NowSelectCharacter].Draw();
 }
 
 void SelectCharacter::SetController(PlayerController* Controller)
@@ -61,15 +98,36 @@ void SelectCharacter::SetController(PlayerController* Controller)
 
 void SelectCharacter::ChangeNowController(PlayerController* Controller)
 {
-	//前のフレームでコントローラーがなく、今のフレームでコントローラーが接続された場合
-	if (m_pSelectController == nullptr && Controller != nullptr)
+	//今のフレームでコントローラーが変更された場合
+	if (m_pSelectController != Controller)
 	{
+		//コントローラーの上書き
+		m_pSelectController = Controller;
+
+		//=========<コントローラーが接続されていなければ>===========
+		if (Controller == nullptr)
+		{
+			m_ControllerImage.ReleaseTexture();
+			return;
+		}
+
+		//=========<コントローラーが接続されている>===========
+		
 		//初期化をする
 		m_SelectState = SelectCharacter::SELECTSTATE::SELECT;
 		m_isDecided = false;
-	}
 
-	m_pSelectController = Controller;
+		//次のコントローラーのタイプ
+		switch (Controller->GetControllerType())
+		{
+		case PlayerController::PLAYCONTROLLERTYPE::GAMEPAD:
+			m_ControllerImage.SetTexture("Assets/UI/ControllerImage.png");
+			break;
+		case PlayerController::PLAYCONTROLLERTYPE::KEYBOARD:
+			m_ControllerImage.SetTexture("Assets/UI/KeyboardImage.png");
+			break;
+		}
+	}
 }
 
 void SelectCharacter::SetNowCharacter(SelectCharacterList::CHARACTER NowCharacter)
@@ -89,9 +147,28 @@ SelectCharacter::SELECTSTATE SelectCharacter::GetState()
 	return m_SelectState;
 }
 
+void SelectCharacter::SetPos(const CVector3& pos)
+{
+	//各イメージのベース位置を変更
+	m_NoConnectBackGround.m_BasePos =
+	m_NoConnectText.m_BasePos =
+	m_ControllerImage.m_BasePos =
+	m_BasePos = pos;
+}
+
+const CVector3& SelectCharacter::GetPos() const
+{
+	return m_BasePos;
+}
+
 void SelectCharacter::SetCharacterList(std::array<Image2D, static_cast<int>(SelectCharacterList::CHARACTER::MAX)>* pCharacterImageList)
 {
 	m_pCharacterImageList = pCharacterImageList;
+}
+
+void SelectCharacter::SetCharacterIconList(std::array<Image2D, static_cast<int>(SelectCharacterList::CHARACTER::MAX)>* pCharacterIconImageList)
+{
+	m_pCharacterIconImageList = pCharacterIconImageList;
 }
 
 void SelectCharacter::SelectUpdate()

@@ -32,24 +32,31 @@ void SceneSelect::Init()
 {
 	//========<コントローラーが切れていたら情報を削除する>=================
 	ControllerDisconnect();
+	//=====================================================================
 
 	//=========<2P分のキャラクターの設定を行う>=============================
-
 	//一人目
+	//1Pが選んでいるキャラクターなどを表示する位置
+	m_SelectFirstCharacter.SetPos(CVector3(100.0f, 400.0f, 0.0f));
 	//選んでいるキャラクターを設定(前のバトルをしていれば)
 	m_SelectFirstCharacter.SetNowCharacter(m_FirstPlayerCharacter);
 	//コントローラーの設定(前のバトルをしていれば)
 	m_SelectFirstCharacter.SetController(m_pFirstPlayerController);
 	//選べるキャラクターの画像位置などを渡す
 	m_SelectFirstCharacter.SetCharacterList(&m_CharacterList.GetCharacterImageList());
-	
+	m_SelectFirstCharacter.SetCharacterIconList(&m_CharacterList.GetCharacterIconImageList());
+
 	//二人目
+	//2Pが選んでいるキャラクターなどを表示する位置
+	m_SelectSecondCharacter.SetPos(CVector3(600.0f, 400.0f, 0.0f));
 	//選んでいるキャラクターを設定(前のバトルをしていれば)
 	m_SelectSecondCharacter.SetNowCharacter(m_SecondPlayerCharacter);
 	//コントローラーの設定(前のバトルをしていれば)
 	m_SelectSecondCharacter.SetController(m_pSecondPlayerController);
 	//選べるキャラクターの画像位置などを渡す
 	m_SelectSecondCharacter.SetCharacterList(&m_CharacterList.GetCharacterImageList());
+	m_SelectSecondCharacter.SetCharacterIconList(&m_CharacterList.GetCharacterIconImageList());
+	//=====================================================================
 	
 }
 
@@ -60,16 +67,17 @@ void SceneSelect::Uninit()
 
 void SceneSelect::Update()
 {
-	//コントローラーが切れていたら情報を削除する
+	//=========<コントローラーが切れていたら情報を削除する>=========
 	ControllerDisconnect();
 
-	//コントローラーをつなげる
+	//=========<コントローラーをつなげる>=========
 	ControllerConnect();
 
-	//Bボタンを押していたらコントローラーを解除する
+	//=========<Bボタンを押していたらコントローラーを解除する>=========
 	ControllerRelease();
 
-	//キャラクターの設定
+	//=========<キャラクターを選択する処理>=========
+	SelectCharacter::AlphaUpdate();
 
 	//コントローラーが変更されているか確認
 	m_SelectFirstCharacter.ChangeNowController(m_pFirstPlayerController);
@@ -79,7 +87,7 @@ void SceneSelect::Update()
 	m_SelectFirstCharacter.Update();
 	m_SelectSecondCharacter.Update();
 
-	//二人がキャラクターを選んでいたら
+	//=========<二人がキャラクターを選んでいたら>=========
 	if (m_SelectFirstCharacter.IsDecided() && m_SelectSecondCharacter.IsDecided())
 	{
 		//決定ボタンを押せるようになる
@@ -105,37 +113,60 @@ void SceneSelect::ControllerConnect()
 {
 	//1Pと2Pの振り分け
 	//ボタンが何か押された順に1P,2Pとしていく
+
+	//1Pが接続されていなければ
 	if (m_pFirstPlayerController == nullptr)
 	{
+		//すべてのコントローラーを取得
 		std::array<PlayerController, 5>& ControllerArray = PlayerController::GetPlayerControllers();
 
 		for (PlayerController& Controller : ControllerArray)
 		{
+			//2Pと同じコントローラーではないか
+			if (&Controller == m_pSecondPlayerController)
+			{
+				continue;
+			}
+
+			//コントローラーが繋がっているか
 			if (!Controller.IsConnect())
 			{
 				continue;
 			}
 
+			//EnterかAボタンが押されていたら
 			if (Controller.IsReturn())
 			{
+				//操作するコントローラーを設定
 				m_pFirstPlayerController = &Controller;
 				break;
 			}
 		}
 	}
+	//2Pが接続されていなければ
 	else if (m_pSecondPlayerController == nullptr)
 	{
+		//すべてのコントローラーを取得
 		std::array<PlayerController, 5>& ControllerArray = PlayerController::GetPlayerControllers();
 
 		for (PlayerController& Controller : ControllerArray)
 		{
+			//1Pと同じコントローラーではないか
+			if (&Controller == m_pFirstPlayerController)
+			{
+				continue;
+			}
+
+			//コントローラーが繋がっているか
 			if (!Controller.IsConnect())
 			{
 				continue;
 			}
 
+			//EnterかAボタンが押されていたら
 			if (Controller.IsReturn())
 			{
+				//操作するコントローラーを設定
 				m_pSecondPlayerController = &Controller;
 				break;
 			}

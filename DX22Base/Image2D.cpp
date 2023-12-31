@@ -112,6 +112,15 @@ void Image2D::SetTexture(const char* FilePath)
 	LoadTextureFromFile(FilePath, &m_pTexture);
 }
 
+void Image2D::ReleaseTexture()
+{
+	if (m_pTexture != nullptr)
+	{
+		m_pTexture->Release();
+		m_pTexture = nullptr;
+	}
+}
+
 void Image2D::SetPos(const DirectX::XMFLOAT3& pos)
 {
 	m_pos.f = pos;

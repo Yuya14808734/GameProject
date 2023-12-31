@@ -19,6 +19,7 @@ public:
 	virtual void PrevDraw();
 	void Draw();
 	void SetTexture(const char* FilePath);
+	void ReleaseTexture();
 	void SetPos(const DirectX::XMFLOAT3& pos);
 	void SetPos(const CVector2& pos);
 	const CVector2& GetPos();

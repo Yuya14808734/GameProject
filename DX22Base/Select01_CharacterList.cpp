@@ -7,6 +7,11 @@ SelectCharacterList::SelectCharacterList()
 		"Assets/CharacterImage/SelectCharacter_UnityChan.png"
 	};
 
+	const char* CharacterIconImageFilePath[static_cast<int>(CHARACTER::MAX)] =
+	{
+		"Assets/CharacterImage/UnitychanIcon.png"
+	};
+
 	//ï`âÊÇ∑ÇÈÇ∆Ç´ÇÃç≈èâÇÃà íu
 	CVector3 BasePos = CVector3(640.0f,300.0f,0.0f);
 	CVector2 ImageSize = CVector2(273.0f, 400.0f) * 0.8f;
@@ -19,6 +24,10 @@ SelectCharacterList::SelectCharacterList()
 		m_CharacterImages[i].m_pos =
 			BasePos + ((BaseDistance + ImageSize) * static_cast<float>(i));
 		m_CharacterImages[i].m_size = ImageSize;
+
+		m_CharacterIconImages[i].SetTexture(CharacterIconImageFilePath[i]);
+		m_CharacterIconImages[i].m_size = CVector2(150.0f, 150.0f);
+
 	}
 }
 
@@ -39,4 +48,9 @@ void SelectCharacterList::Draw()
 std::array<Image2D, static_cast<int>(SelectCharacterList::CHARACTER::MAX)>& SelectCharacterList::GetCharacterImageList()
 {
 	return m_CharacterImages;
+}
+
+std::array<Image2D, static_cast<int>(SelectCharacterList::CHARACTER::MAX)>& SelectCharacterList::GetCharacterIconImageList()
+{
+	return m_CharacterIconImages;
 }
