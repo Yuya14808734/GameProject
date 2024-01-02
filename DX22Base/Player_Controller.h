@@ -53,6 +53,7 @@ public:
 	//===============================================================
 	// コントローラーの取得
 	//===============================================================
+	int GetPlayerNum();
 	bool IsConnect();
 	InputXPad* GetController();				//コントローラーがつないでいない場合nullptrが帰ってきます。
 	PLAYCONTROLLERTYPE GetControllerType();	//コントローラーのタイプを取得

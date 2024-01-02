@@ -14,7 +14,15 @@ void SelectCharacter::AlphaUpdate()
 
 SelectCharacter::SelectCharacter()
 {
-	m_isDecided = false;
+	m_isDecided				= false;
+	m_NowSelectCharacter	= static_cast<int>(SelectCharacterList::CHARACTER::MAX);
+	m_VisibleConnectTextCount		= m_VisibleConnectTextTime;
+	m_VisibleDisconnectTextCount	= m_VisibleDisConnectTextTime;
+
+	//キャラクターを出すボードのUI
+	//ボードの色を変更
+	SetBoardColor(SelectCharacter::BOARDCOLOR::BLACK);
+	m_CharacterBoardImage.m_size = CVector2(640.0f, 451.0f) * 0.45f;
 
 	//フレームの読み込み
 	m_FrameImage.SetTexture("Assets/CharacterImage/SelectFrame.png");
@@ -24,17 +32,30 @@ SelectCharacter::SelectCharacter()
 	m_NoConnectText.SetTexture("Assets/UI/NoConnectText.png");
 	m_NoConnectText.m_size = CVector2(400.0f, 221.0f) * 0.5f;
 
+	//繋がった時に表示する画像
+	m_ConnectedText.SetTexture("Assets/UI/ConnectedText.png");
+	m_ConnectedText.m_size = CVector2(400.0f, 261.0f) * 0.5f;
+
+	//接続解除した時の画像
+	m_DisConnectedText.SetTexture("Assets/UI/DisConnectText.png");
+	m_DisConnectedText.m_size = CVector2(400.0f, 261.0f) * 0.5f;
+
 	//なにもつながっていない時の背景の読み込み
-	m_NoConnectBackGround.SetTexture("Assets/UI/NoConnectBackGround.png");
-	m_NoConnectBackGround.m_size = CVector2(400.0f, 261.0f) * 0.5f;
+	m_ConnectBackGround_Image.SetTexture("Assets/UI/BackGround_Image.png");
+	m_ConnectBackGround_Image.m_size = CVector2(400.0f, 261.0f) * 0.45f;
+	
+	//繋がった時の背景の読み込み
+	m_ConnectBackGround_Frame.SetTexture("Assets/UI/BackGround_Frame.png");
+	m_ConnectBackGround_Frame.m_size = CVector2(400.0f, 261.0f) * 0.5f;
 
-	//繋がった時に何につながったかの画像
-	m_ControllerImage.m_pos = CVector2(-120.0f, -60.0f);
-	m_ControllerImage.m_size = CVector2(128.0f, 128.0f);
+	//コントローラーの画像
+	m_ControllerImage.m_pos = CVector2(-70.0f, -50.0f);
+	m_ControllerImage.m_size = CVector2(128.0f, 128.0f) * 0.5f;
 
-	//選ばれたときに映す画像
+	//Selectedと選んだ時に映す画像
 	m_SelectedImage.SetTexture("Assets/CharacterImage/SelectedImage.png");
-	m_SelectedImage.m_size = CVector2(150.0f, 150.0f);
+	m_SelectedImage.m_pos = CVector2(59.0f, 20.0f);
+	m_SelectedImage.m_size = CVector2(131.0f, 131.0f);
 }
 
 SelectCharacter::~SelectCharacter()
@@ -55,53 +76,136 @@ void SelectCharacter::Update()
 	case SelectCharacter::SELECTSTATE::SELECT:
 		SelectUpdate();
 		break;
-	case SelectCharacter::SELECTSTATE::ANIMATION:
-		AnimationUpdate();
-		break;
 	case SelectCharacter::SELECTSTATE::DECIDED:
 		DecidedUpdate();
 		break;
 	}
+
+	StandCharacterChangeUpdate();
 }
 
-void SelectCharacter::Draw()
+void SelectCharacter::BoardDraw()
 {
-	//=========<選べるキャラクターのリストが設定されていない場合(SceneのInitで設定して下さい)>===========
-	if (m_pCharacterImageList == nullptr)
-	{
-		return;
-	}
-
-	if (m_pCharacterIconImageList == nullptr)
-	{
-		return;
-	}
+	//=========<後ろの背景にあるボードの描画>========================================================
+	m_CharacterBoardImage.Draw();
+	//===============================================================================================
 
 	//=========<コントローラーが接続されていない場合(コントローラーが接続されるまで待つ)>===========
 	if (m_pSelectController == nullptr)
 	{
-		m_NoConnectBackGround.Draw();	//背景の描画
-		m_NoConnectText.m_color.w = (sinf((m_AlphaCount / 2.0f) * 3.14f) + 1.0f) / 2.0f;
-		m_NoConnectText.Draw();			//テキストの描画
+		//接続が解除された時に表示する
+		if (m_VisibleDisconnectTextCount < m_VisibleDisConnectTextTime)
+		{
+			m_VisibleDisconnectTextCount += 1.0f / 60.0f;
+			m_ConnectBackGround_Frame.m_color = DirectX::XMFLOAT4(1.0f, 127.0f / 255.0f, 80.0f / 255.0f, 1.0f);
+			m_ConnectBackGround_Frame.Draw();	//背景のフレーム描画
+			m_ConnectBackGround_Image.Draw();	//背景の本体描画
+			m_DisConnectedText.Draw();			//テキストの描画
+		}
+		else//接続されていない時に描画
+		{
+			m_ConnectBackGround_Frame.m_color = DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
+			m_ConnectBackGround_Frame.Draw();	//背景のフレーム描画
+			m_ConnectBackGround_Image.Draw();	//背景の本体描画
+			m_NoConnectText.m_color.w = (sinf((m_AlphaCount / 1.0f) * 3.14f) + 1.0f) / 2.0f;
+			m_NoConnectText.Draw();			//テキストの描画
+		}
 		return;
 	}
+	//================================================================================================
 
-	//=========<枠の表示>===========
-	m_FrameImage.m_pos = (*m_pCharacterImageList)[m_NowSelectCharacter].GetPos();
-	m_FrameImage.m_size = (*m_pCharacterImageList)[m_NowSelectCharacter].GetSize();
-	m_FrameImage.Draw();
+	//=========<キャラクターのアイコンを描画>=========================================================
+	Image2D* pIconImage = &m_pCharacterList->GetCharacterIconImageList()[m_NowSelectCharacter];
+	pIconImage->m_BasePos = m_BasePos;
+	pIconImage->m_pos = CVector2(59.0f, 20.0f);
+	pIconImage->m_size = CVector2(131.0f, 131.0f);
+	pIconImage->Draw();
+	//===============================================================================================
 
-	//=========<接続したコントローラーによって画像を変える>===========
-	m_ControllerImage.Draw();
-
-	//=========<キャラクターのアイコンを描画>===========
-	(*m_pCharacterIconImageList)[m_NowSelectCharacter].m_BasePos = m_BasePos;
-	(*m_pCharacterIconImageList)[m_NowSelectCharacter].Draw();
-
-	//=========<選んでいたらキャラクターのアイコンを隠す文字の描画>===========
+	//=========<選んでいたらキャラクターのアイコンを隠す文字の描画>==================================
 	if(m_isDecided)
 	{
 		m_SelectedImage.Draw();
+	}
+	//===============================================================================================
+
+	//=========<接続したコントローラーによって画像を変える>==========================================
+	m_ControllerImage.Draw();
+	//===============================================================================================
+
+	//=========<繋がった時に文字を描画>==============================================================
+	if (m_VisibleConnectTextCount < m_VisibleConnectTextTime)
+	{
+		m_VisibleConnectTextCount += 1.0f / 60.0f;
+		m_ConnectBackGround_Frame.m_color = DirectX::XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f);
+		m_ConnectBackGround_Frame.Draw();	//背景のフレーム描画
+		m_ConnectBackGround_Image.Draw();	//背景の本体描画
+		m_ConnectedText.Draw();
+	}
+	//===============================================================================================
+}
+
+void SelectCharacter::StandCharacterDraw()
+{
+	//=========<選べるキャラクターのリストが設定されていない場合(SceneのInitで設定して下さい)>===========
+	if (m_pCharacterList == nullptr)
+	{
+		return;
+	}
+	//===============================================================================================
+
+	//=========<コントローラーが接続されていない場合(コントローラーが接続されるまで待つ)>===========
+	if (m_pSelectController == nullptr)
+	{
+		return;
+	}
+	//================================================================================================
+
+	//=========<コントローラーが接続されていない場合(コントローラーが接続されるまで待つ)>===========
+	Image2D* StandCharacterImage = &m_pCharacterList->GetCharacterStandImageList()[m_NowSelectCharacter];
+	StandCharacterImage->m_pos = m_StandCharacterImageDrawPos_LerpNow;
+	StandCharacterImage->m_size = CVector2(474.0f, 697.0f);
+	StandCharacterImage->m_color.w = m_StandCharacterDrawAlpha;
+	StandCharacterImage->Draw();
+	//================================================================================================
+}
+
+void SelectCharacter::SelectFrameDraw()
+{
+	//=========<選べるキャラクターのリストが設定されていない場合(SceneのInitで設定して下さい)>===========
+	if (m_pCharacterList == nullptr)
+	{
+		return;
+	}
+	//===============================================================================================
+
+	//=========<コントローラーが接続されていない場合(コントローラーが接続されるまで待つ)>===========
+	if (m_pSelectController == nullptr)
+	{
+		return;
+	}
+	//================================================================================================
+
+	//=========<枠の表示>=============================================================================
+	m_FrameImage.m_pos = m_pCharacterList->GetIconPos()[m_NowSelectCharacter];
+	m_FrameImage.m_size = m_pCharacterList->GetIconSize();
+	m_FrameImage.Draw();
+	//===============================================================================================
+}
+
+void SelectCharacter::SetBoardColor(BOARDCOLOR color)
+{
+	switch (color)
+	{
+	case SelectCharacter::BOARDCOLOR::BLACK:
+		m_CharacterBoardImage.SetTexture("Assets/UI/SelectBoard_Black.png");
+		break;
+	case SelectCharacter::BOARDCOLOR::RED:
+		m_CharacterBoardImage.SetTexture("Assets/UI/SelectBoard_Red.png");
+		break;
+	case SelectCharacter::BOARDCOLOR::BLUE:
+		m_CharacterBoardImage.SetTexture("Assets/UI/SelectBoard_Blue.png");
+		break;
 	}
 }
 
@@ -118,10 +222,13 @@ void SelectCharacter::ChangeNowController(PlayerController* Controller)
 		//コントローラーの上書き
 		m_pSelectController = Controller;
 
-		//=========<コントローラーが接続されていなければ>===========
+		//=========<コントローラーが接続解除の場合>===========
 		if (Controller == nullptr)
 		{
+			SetBoardColor(SelectCharacter::BOARDCOLOR::BLACK);
 			m_ControllerImage.ReleaseTexture();
+			m_VisibleDisconnectTextCount = 0.0f;
+			m_VisibleConnectTextCount = m_VisibleConnectTextTime;
 			return;
 		}
 
@@ -130,15 +237,21 @@ void SelectCharacter::ChangeNowController(PlayerController* Controller)
 		//初期化をする
 		m_SelectState = SelectCharacter::SELECTSTATE::SELECT;
 		m_isDecided = false;
+		m_VisibleDisconnectTextCount = m_VisibleDisConnectTextTime;
+		m_VisibleConnectTextCount = 0.0f;
 
 		//次のコントローラーのタイプ
 		switch (Controller->GetControllerType())
 		{
 		case PlayerController::PLAYCONTROLLERTYPE::GAMEPAD:
-			m_ControllerImage.SetTexture("Assets/UI/ControllerImage.png");
+			m_ControllerImage.SetTexture("Assets/UI/PadImage.png");
+			m_ControllerImage.m_pos = CVector3(-73.0f, -42.0f, 0.0f);
+			m_ControllerImage.m_size = CVector2(81.0f, 81.0f);
 			break;
 		case PlayerController::PLAYCONTROLLERTYPE::KEYBOARD:
 			m_ControllerImage.SetTexture("Assets/UI/KeyboardImage.png");
+			m_ControllerImage.m_pos = CVector3(-73.0f, -40.0f, 0.0f);
+			m_ControllerImage.m_size = CVector2(80.0f, 80.0f);
 			break;
 		}
 	}
@@ -161,29 +274,34 @@ SelectCharacter::SELECTSTATE SelectCharacter::GetState()
 	return m_SelectState;
 }
 
-void SelectCharacter::SetPos(const CVector3& pos)
+void SelectCharacter::SetBoardPos(const CVector3& pos)
 {
 	//各イメージのベース位置を変更
-	m_NoConnectBackGround.m_BasePos =
+	m_CharacterBoardImage.m_BasePos =
+	m_ConnectBackGround_Image.m_BasePos =
+	m_ConnectBackGround_Frame.m_BasePos =
 	m_NoConnectText.m_BasePos =
+	m_ConnectedText.m_BasePos =
+	m_DisConnectedText.m_BasePos =
 	m_ControllerImage.m_BasePos =
 	m_SelectedImage.m_BasePos =
 	m_BasePos = pos;
 }
 
-const CVector3& SelectCharacter::GetPos() const
+const CVector3& SelectCharacter::GetBoardPos() const
 {
 	return m_BasePos;
 }
 
-void SelectCharacter::SetCharacterList(std::array<Image2D, static_cast<int>(SelectCharacterList::CHARACTER::MAX)>* pCharacterImageList)
+void SelectCharacter::SetCharacterList(SelectCharacterList* pCharacterList)
 {
-	m_pCharacterImageList = pCharacterImageList;
+	m_pCharacterList = pCharacterList;
 }
 
-void SelectCharacter::SetCharacterIconList(std::array<Image2D, static_cast<int>(SelectCharacterList::CHARACTER::MAX)>* pCharacterIconImageList)
+void SelectCharacter::SetLerpStandCharacterDrawPos(const CVector3& StartPos, const CVector3& EndPos)
 {
-	m_pCharacterIconImageList = pCharacterIconImageList;
+	m_StandCharacterImageDrawPos_LerpStart = StartPos;
+	m_StandCharacterImageDrawPos_LerpEnd = EndPos;
 }
 
 void SelectCharacter::SelectUpdate()
@@ -195,7 +313,7 @@ void SelectCharacter::SelectUpdate()
 		m_NowSelectCharacter =
 			m_NowSelectCharacter % static_cast<int>(SelectCharacterList::CHARACTER::MAX);
 
-		m_SelectState = SelectCharacter::SELECTSTATE::ANIMATION;
+		StandCharacterChangeInit();
 	}
 
 	//左を押したら
@@ -207,7 +325,7 @@ void SelectCharacter::SelectUpdate()
 			(m_NowSelectCharacter + static_cast<int>(SelectCharacterList::CHARACTER::MAX))
 			% static_cast<int>(SelectCharacterList::CHARACTER::MAX);
 
-		m_SelectState = SelectCharacter::SELECTSTATE::ANIMATION;
+		StandCharacterChangeInit();
 	}
 
 	//決定ボタンを押したら
@@ -218,9 +336,30 @@ void SelectCharacter::SelectUpdate()
 	}
 }
 
-void SelectCharacter::AnimationUpdate()
+void SelectCharacter::StandCharacterChangeInit()
 {
-	m_SelectState = SelectCharacter::SELECTSTATE::SELECT;
+	m_StandCharacterImageDrawPos_LerpCount = 0.0f;
+}
+
+void SelectCharacter::StandCharacterChangeUpdate()
+{
+	//補間が終わっていたら
+	if (m_StandCharacterImageDrawPos_LerpCount > m_StandCharacterLerpTime)
+	{
+		m_StandCharacterImageDrawPos_LerpNow = m_StandCharacterImageDrawPos_LerpEnd;
+		m_StandCharacterDrawAlpha = 1.0f;
+		return;
+	}
+
+	//補間時間を更新
+	m_StandCharacterImageDrawPos_LerpCount = m_StandCharacterImageDrawPos_LerpCount + (1.0f / 60.0f);
+
+	m_StandCharacterImageDrawPos_LerpNow =
+		(m_StandCharacterImageDrawPos_LerpEnd - m_StandCharacterImageDrawPos_LerpStart) *	//最初の位置から最後の位置へのベクトルを求める
+		(m_StandCharacterImageDrawPos_LerpCount / m_StandCharacterLerpTime) + m_StandCharacterImageDrawPos_LerpStart;		//上で求めたベクトルを過ぎた時間分、掛ける
+																		//それに最初の位置を足す
+
+	m_StandCharacterDrawAlpha = m_StandCharacterImageDrawPos_LerpCount / m_StandCharacterLerpTime;
 }
 
 void SelectCharacter::DecidedUpdate()

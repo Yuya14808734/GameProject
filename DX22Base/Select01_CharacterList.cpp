@@ -1,34 +1,35 @@
 #include "Select01_CharacterList.h"
+#include "Input.h"
 
 SelectCharacterList::SelectCharacterList()
 {
 	const char* CharacterImageFilePath[static_cast<int>(CHARACTER::MAX)] =
 	{
-		"Assets/CharacterImage/SelectCharacter_UnityChan.png",
+		"Assets/CharacterImage/StandImage_UnityChan.png",
 	};
 
 	const char* CharacterIconImageFilePath[static_cast<int>(CHARACTER::MAX)] =
 	{
-		"Assets/CharacterImage/UnitychanIcon.png",
+		"Assets/CharacterImage/IconImage_UnityChan.png",
 	};
 
-	//描画するときの最初の位置
-	CVector3 BasePos = CVector3(640.0f,300.0f,0.0f);
-	CVector2 ImageSize = CVector2(273.0f, 400.0f) * 0.8f;
-	CVector3 BaseDistance = CVector3(10.0f,0.0f,0.0f);
+	const CVector3 IconPos[static_cast<int>(CHARACTER::MAX)] =
+	{
+		CVector3(640.0f, 280.0f, 0.0f),
+	};
+
+	m_CharacterIconSize = CVector2(200.0f, 200.0f) * 0.8f;
 
 	//各画像の位置の設定
 	for (int i = 0;i < static_cast<int>(CHARACTER::MAX);i++)
 	{
-		//キャラクターの立ち絵画像
-		m_CharacterImages[i].SetTexture(CharacterImageFilePath[i]);
-		m_CharacterImages[i].m_pos =
-			BasePos + ((BaseDistance + ImageSize) * static_cast<float>(i));
-		m_CharacterImages[i].m_size = ImageSize;
+		//キャラクターの立ち絵画像の読み込み
+		m_CharacterStandImages[i].SetTexture(CharacterImageFilePath[i]);
 
-		//キャラクターのアイコンの画像
+		//キャラクターのアイコンの画像の読み込み
 		m_CharacterIconImages[i].SetTexture(CharacterIconImageFilePath[i]);
-		m_CharacterIconImages[i].m_size = CVector2(150.0f, 150.0f);
+
+		m_CharacterIconPos[i] = IconPos[i];
 
 	}
 }
@@ -43,16 +44,30 @@ void SelectCharacterList::Draw()
 	//各画像の位置の設定
 	for (int i = 0; i < static_cast<int>(CHARACTER::MAX); i++)
 	{
-		m_CharacterImages[i].Draw();
+		m_CharacterIconImages[i].m_BasePos = CVector3::GetZero();
+		m_CharacterIconImages[i].m_pos = m_CharacterIconPos[i];
+		m_CharacterIconImages[i].m_size = m_CharacterIconSize;
+
+		m_CharacterIconImages[i].Draw();
 	}
 }
 
-std::array<Image2D, static_cast<int>(SelectCharacterList::CHARACTER::MAX)>& SelectCharacterList::GetCharacterImageList()
+std::array<Image2D, static_cast<int>(SelectCharacterList::CHARACTER::MAX)>& SelectCharacterList::GetCharacterStandImageList()
 {
-	return m_CharacterImages;
+	return m_CharacterStandImages;
 }
 
 std::array<Image2D, static_cast<int>(SelectCharacterList::CHARACTER::MAX)>& SelectCharacterList::GetCharacterIconImageList()
 {
 	return m_CharacterIconImages;
+}
+
+std::array<CVector3, static_cast<int>(SelectCharacterList::CHARACTER::MAX)>& SelectCharacterList::GetIconPos()
+{
+	return m_CharacterIconPos;
+}
+
+CVector2& SelectCharacterList::GetIconSize()
+{
+	return m_CharacterIconSize;
 }

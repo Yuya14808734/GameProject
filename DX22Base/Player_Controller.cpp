@@ -98,6 +98,11 @@ void PlayerController::SetController(PLAYCONTROLLERTYPE type, int PlayerNum)
 	m_PlayerNum = PlayerNum;
 }
 
+int PlayerController::GetPlayerNum()
+{
+	return m_PlayerNum;
+}
+
 bool PlayerController::IsConnect()
 {
 	bool Connect = false;
@@ -143,7 +148,7 @@ bool PlayerController::IsPressReturn()
 	switch (m_ControllerType)
 	{
 	case PlayerController::PLAYCONTROLLERTYPE::GAMEPAD:
-		IsReturnButton = m_pXPad->InputPressKey(PadButton::A_BUTTON);;
+		IsReturnButton = m_pXPad->InputPressKey(PadButton::A_BUTTON);
 		break;
 	case PlayerController::PLAYCONTROLLERTYPE::KEYBOARD:
 		IsReturnButton = IsKeyPress(VK_RETURN);
@@ -163,7 +168,7 @@ bool PlayerController::IsPressBack()
 	switch (m_ControllerType)
 	{
 	case PlayerController::PLAYCONTROLLERTYPE::GAMEPAD:
-		IsBackButton = m_pXPad->InputPressKey(PadButton::B_BUTTON);;
+		IsBackButton = m_pXPad->InputPressKey(PadButton::B_BUTTON);
 		break;
 	case PlayerController::PLAYCONTROLLERTYPE::KEYBOARD:
 		IsBackButton = IsKeyPress(VK_ESCAPE);

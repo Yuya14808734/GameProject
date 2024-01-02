@@ -1,6 +1,7 @@
 #include "Scene01_Select.h"
 #include "CameraManager.h"
 #include <array>
+#include "Main.h"
 
 PlayerController* SceneSelect::m_pFirstPlayerController = nullptr;
 PlayerController* SceneSelect::m_pSecondPlayerController = nullptr;
@@ -30,6 +31,9 @@ SelectCharacterList::CHARACTER SceneSelect::GetSecondPlayerCharacter()
 
 void SceneSelect::Init()
 {
+	const CVector2 WindowSize(static_cast<float>(GetAppWidth()), static_cast<float>(GetAppHeight()));
+	const CVector2 WindowCenterPos = WindowSize * 0.5f;
+
 	//========<コントローラーが切れていたら情報を削除する>=================
 	ControllerDisconnect();
 	//=====================================================================
@@ -37,25 +41,27 @@ void SceneSelect::Init()
 	//=========<2P分のキャラクターの設定を行う>=============================
 	//一人目
 	//1Pが選んでいるキャラクターなどを表示する位置
-	m_SelectFirstCharacter.SetPos(CVector3(100.0f, 400.0f, 0.0f));
+	m_SelectFirstCharacter.SetBoardPos(CVector3(WindowCenterPos.x - 200.0f, WindowCenterPos.y + 200.0f, 0.0f));
 	//選んでいるキャラクターを設定(前のバトルをしていれば)
 	m_SelectFirstCharacter.SetNowCharacter(m_FirstPlayerCharacter);
 	//コントローラーの設定(前のバトルをしていれば)
 	m_SelectFirstCharacter.SetController(m_pFirstPlayerController);
 	//選べるキャラクターの画像位置などを渡す
-	m_SelectFirstCharacter.SetCharacterList(&m_CharacterList.GetCharacterImageList());
-	m_SelectFirstCharacter.SetCharacterIconList(&m_CharacterList.GetCharacterIconImageList());
+	m_SelectFirstCharacter.SetCharacterList(&m_CharacterList);
+	//立ち絵の位置の設定
+	m_SelectFirstCharacter.SetLerpStandCharacterDrawPos(CVector3(0.0f, 400.0f, 0.0f), CVector3(200.0f,400.0f,0.0f));
 
 	//二人目
 	//2Pが選んでいるキャラクターなどを表示する位置
-	m_SelectSecondCharacter.SetPos(CVector3(600.0f, 400.0f, 0.0f));
+	m_SelectSecondCharacter.SetBoardPos(CVector3(WindowCenterPos.x + 200.0f, WindowCenterPos.y + 200.0f, 0.0f));
 	//選んでいるキャラクターを設定(前のバトルをしていれば)
 	m_SelectSecondCharacter.SetNowCharacter(m_SecondPlayerCharacter);
 	//コントローラーの設定(前のバトルをしていれば)
 	m_SelectSecondCharacter.SetController(m_pSecondPlayerController);
 	//選べるキャラクターの画像位置などを渡す
-	m_SelectSecondCharacter.SetCharacterList(&m_CharacterList.GetCharacterImageList());
-	m_SelectSecondCharacter.SetCharacterIconList(&m_CharacterList.GetCharacterIconImageList());
+	m_SelectSecondCharacter.SetCharacterList(&m_CharacterList);
+	//立ち絵の位置の設定
+	m_SelectSecondCharacter.SetLerpStandCharacterDrawPos(CVector3(WindowSize.x, 400.0f, 0.0f), CVector3(WindowSize.x - 200.0f, 400.0f, 0.0f));
 	//=====================================================================
 	
 }
@@ -96,17 +102,34 @@ void SceneSelect::Update()
 
 void SceneSelect::Draw()
 {
-	//=====<UIの描画>=====
+	//=====<UIの描画>=======================================================
 	EnableDepth(false);
 
-	//キャラクター画像を描画
+	//=====<キャラクター画像を描画>=========================================
+	//1Pが選んでいるキャラクターの立ち絵の描画
+	m_SelectFirstCharacter.StandCharacterDraw();
+	//2Pが選んでいるキャラクターの立ち絵の描画
+	m_SelectSecondCharacter.StandCharacterDraw();
+	//キャラクターを選ぶときに使うアイコンの描画
 	m_CharacterList.Draw();
-	//1Pが選んでいる枠を表示
-	m_SelectFirstCharacter.Draw();
-	//2Pが選んでいる枠を表示
-	m_SelectSecondCharacter.Draw();
+	//======================================================================
+	
+	//=====<1Pの描画>=======================================================
+	//キャラクターとコントローラーを表示するボードを描画
+	m_SelectFirstCharacter.BoardDraw();
+	//キャラクターを選ぶフレームの描画
+	m_SelectFirstCharacter.SelectFrameDraw();
+	//======================================================================
+
+	//=====<2Pの描画>=======================================================
+	//キャラクターとコントローラーを表示するボードを描画
+	m_SelectSecondCharacter.BoardDraw();
+	//キャラクターを選ぶフレームの描画
+	m_SelectSecondCharacter.SelectFrameDraw();
+	//======================================================================
 
 	EnableDepth(true);
+	//======================================================================
 }
 
 void SceneSelect::ControllerConnect()
@@ -140,6 +163,8 @@ void SceneSelect::ControllerConnect()
 				//操作するコントローラーを設定
 				m_pFirstPlayerController = &Controller;
 				m_pFirstPlayerController->UnTriggerNowFrame();
+				//ボードの色を変更
+				m_SelectFirstCharacter.SetBoardColor(SelectCharacter::BOARDCOLOR::RED);
 				break;
 			}
 		}
@@ -169,6 +194,9 @@ void SceneSelect::ControllerConnect()
 			{
 				//操作するコントローラーを設定
 				m_pSecondPlayerController = &Controller;
+				m_pSecondPlayerController->UnTriggerNowFrame();
+				//ボードの色を変更
+				m_SelectSecondCharacter.SetBoardColor(SelectCharacter::BOARDCOLOR::BLUE);
 				break;
 			}
 		}
