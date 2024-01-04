@@ -7,6 +7,15 @@
 #include "Calculation.h"
 #include "Shader.h"
 
+//==========================================================
+//画像に関しては上から右にかけて数字が並んでいるような
+//テクスチャではないとおかしくなります。
+//また0は一番左上に置いてください。
+//例)
+//0 1 2 3
+//4 5 6 7
+//8 9
+//==========================================================
 
 class Number2D
 {
@@ -31,13 +40,15 @@ private:
 	ID3D11ShaderResourceView* m_pTexture = nullptr;
 	VertexShader* m_pVertexShader = nullptr;
 	PixelShader* m_pPixelShader = nullptr;
-protected:
+public:
 	CVector3 m_pos;
 	CVector2 m_size;
 	CVector2 m_UVpos;
 	CVector2 m_UVsize;
 	DirectX::XMFLOAT4 m_color;
+protected:
 	int m_Number = 0;
+private:
 	int m_SplitX = 0;
 	int m_SplitY = 0;
 };

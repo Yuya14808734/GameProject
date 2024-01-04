@@ -21,7 +21,7 @@ void Character::WalkUpdate()
 
 	bool NoButton = true;
 
-	m_MoveVector.x = m_Controller.GetMoveInput().x * m_MoveParameter.m_WalkSpeed;
+	m_MoveVector.x = m_Controller->GetMoveInput().x * m_MoveParameter.m_WalkSpeed;
 
 	if (m_MoveVector.x != 0.0f)
 	{
@@ -47,13 +47,13 @@ void Character::WalkUpdate()
 	}
 
 	//UŒ‚
-	if (m_Controller.GetAttack())
+	if (m_Controller->GetAttack())
 	{
 		ChangeAttack(Character::ATTACK::ATTACK_S2);	//‰¡‹­‚ÌÝ’è
 	}
 
 	//ƒWƒƒƒ“ƒv
-	if (m_Controller.GetJumpTrigger())
+	if (m_Controller->GetJumpTrigger())
 	{
 		ChangeState(Character::STATE::JUMPIN);
 	}

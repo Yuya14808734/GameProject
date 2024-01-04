@@ -25,7 +25,7 @@ SelectCharacter::SelectCharacter()
 	m_CharacterBoardImage.m_size = CVector2(640.0f, 451.0f) * 0.45f;
 
 	//フレームの読み込み
-	m_FrameImage.SetTexture("Assets/CharacterImage/SelectFrame.png");
+	m_FrameImage.SetTexture("Assets/UI/SelectFrame.png");
 	m_FrameImage.m_size = CVector2(276.0f, 400.0f) * 0.8f;
 
 	//なにもつながっていない時のフォントの読み込み
@@ -53,7 +53,7 @@ SelectCharacter::SelectCharacter()
 	m_ControllerImage.m_size = CVector2(128.0f, 128.0f) * 0.5f;
 
 	//Selectedと選んだ時に映す画像
-	m_SelectedImage.SetTexture("Assets/CharacterImage/SelectedImage.png");
+	m_SelectedImage.SetTexture("Assets/UI/SelectedImage.png");
 	m_SelectedImage.m_pos = CVector2(59.0f, 20.0f);
 	m_SelectedImage.m_size = CVector2(131.0f, 131.0f);
 }
@@ -115,7 +115,7 @@ void SelectCharacter::BoardDraw()
 	//================================================================================================
 
 	//=========<キャラクターのアイコンを描画>=========================================================
-	Image2D* pIconImage = &m_pCharacterList->GetCharacterIconImageList()[m_NowSelectCharacter];
+	Image2D* pIconImage = &SelectCharacterList::GetCharacterIconImageList()[m_NowSelectCharacter];
 	pIconImage->m_BasePos = m_BasePos;
 	pIconImage->m_pos = CVector2(59.0f, 20.0f);
 	pIconImage->m_size = CVector2(131.0f, 131.0f);
@@ -239,6 +239,7 @@ void SelectCharacter::ChangeNowController(PlayerController* Controller)
 		m_isDecided = false;
 		m_VisibleDisconnectTextCount = m_VisibleDisConnectTextTime;
 		m_VisibleConnectTextCount = 0.0f;
+		StandCharacterChangeInit();
 
 		//次のコントローラーのタイプ
 		switch (Controller->GetControllerType())
@@ -272,6 +273,11 @@ bool SelectCharacter::IsDecided()
 SelectCharacter::SELECTSTATE SelectCharacter::GetState()
 {
 	return m_SelectState;
+}
+
+SelectCharacterList::CHARACTER SelectCharacter::GetSelectCharacter()
+{
+	return static_cast<SelectCharacterList::CHARACTER>(m_NowSelectCharacter);
 }
 
 void SelectCharacter::SetBoardPos(const CVector3& pos)
@@ -331,6 +337,7 @@ void SelectCharacter::SelectUpdate()
 	//決定ボタンを押したら
 	if (m_pSelectController->IsTriggerReturn())
 	{
+		m_pSelectController->UnTriggerNowFrame();
 		m_isDecided = true;
 		m_SelectState = SelectCharacter::SELECTSTATE::DECIDED;
 	}

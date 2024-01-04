@@ -29,7 +29,7 @@ public:
 	static void InitXPadNum();
 
 private:
-	static std::array<PlayerController,5> m_PlayerControllers;				//接続されたコントローラーたち
+	static std::array<PlayerController,5> m_PlayerControllers;		//接続されたコントローラーたち
 	static int m_XPadNum;											//つないであるコントローラーを数えるための変数
 
 public:
@@ -55,7 +55,7 @@ public:
 	//===============================================================
 	int GetPlayerNum();
 	bool IsConnect();
-	InputXPad* GetController();				//コントローラーがつないでいない場合nullptrが帰ってきます。
+	InputXPad* GetPad();					//パッドがつないでいない場合nullptrが帰ってきます。
 	PLAYCONTROLLERTYPE GetControllerType();	//コントローラーのタイプを取得
 
 	//===============================================================

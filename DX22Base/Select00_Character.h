@@ -2,6 +2,7 @@
 #include "Player_Controller.h"
 #include "Image2D.h"
 #include "Select01_CharacterList.h"
+#include <array>
 
 class SelectCharacter
 {
@@ -21,7 +22,6 @@ public:
 		MAX
 	};
 
-
 private:
 	static constexpr float m_StandCharacterLerpTime = 0.5f;
 	static constexpr float m_VisibleConnectTextTime = 0.5f;
@@ -32,8 +32,6 @@ public:
 
 private:
 	static float m_AlphaCount;
-
-
 
 public:
 	SelectCharacter();												//コンストラクタ
@@ -48,6 +46,7 @@ public:
 	void SetNowCharacter(SelectCharacterList::CHARACTER NowCharacter);	//キャラクターを設定
 	bool IsDecided();												//キャラクターを決定したか
 	SelectCharacter::SELECTSTATE GetState();
+	SelectCharacterList::CHARACTER GetSelectCharacter();
 	void SetBoardPos(const CVector3& pos);
 	const CVector3& GetBoardPos() const;
 	void SetCharacterList(SelectCharacterList* pCharacterList);
@@ -62,7 +61,7 @@ private:
 private:
 
 	//=======<キャラクターセレクトの状態変数>==============================================================
-	int						m_MySelectNumber = 0;					//自分が何番目に選んでいるか
+	int						m_SelectPlayerNumber = 0;					//自分が何番目に選んでいるか
 	SELECTSTATE				m_SelectState = SELECTSTATE::MAX;		//選んでいる今の状態
 	int						m_NowSelectCharacter = 0;				//選んでいるキャラクターの番号
 	bool					m_isDecided = false;					//キャラクターを選択したか

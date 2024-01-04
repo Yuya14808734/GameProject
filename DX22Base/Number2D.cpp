@@ -72,12 +72,12 @@ void Number2D::Draw()
 	DirectX::XMStoreFloat4x4(&fProj,
 		DirectX::XMMatrixTranspose(
 			DirectX::XMMatrixOrthographicOffCenterLH(
-				0.0f,//画面左端の座標
-				GetAppWidth(),//画面右端の座標
+				0.0f,			//画面左端の座標
+				GetAppWidth(),	//画面右端の座標
 				GetAppHeight(),	//画面下端の座標
-				0.0f,	//画面上端の座標
-				-1.0f,	//2方向で写せる最小値
-				1.0f	//2方向で写せる最大値
+				0.0f,			//画面上端の座標
+				-1.0f,			//2方向で写せる最小値
+				1.0f			//2方向で写せる最大値
 			)
 		));
 

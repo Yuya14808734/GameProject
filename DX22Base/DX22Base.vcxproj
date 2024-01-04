@@ -153,9 +153,11 @@
   <ItemGroup>
     <ClCompile Include="Camera00_Debug.cpp" />
     <ClCompile Include="Camera02_Select.cpp" />
+    <ClCompile Include="Camera03_GameStart.cpp" />
     <ClCompile Include="Character_DeadState.cpp" />
     <ClCompile Include="Character_GameOverState.cpp" />
     <ClCompile Include="Character_RespawnState.cpp" />
+    <ClCompile Include="GameUI00_StartCount.cpp" />
     <ClCompile Include="Scene00_Game.cpp" />
     <ClCompile Include="Camera01_Game.cpp" />
     <ClCompile Include="Character00_AirMoveState.cpp" />
@@ -228,6 +230,7 @@
     <ClCompile Include="SE.cpp" />
     <ClCompile Include="Select00_Character.cpp" />
     <ClCompile Include="Select01_CharacterList.cpp" />
+    <ClCompile Include="Select02_SlideReadyToFightText.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Character00_SpecialAirN.cpp" />
     <ClCompile Include="Character00_SpecialN.cpp" />
@@ -244,6 +247,8 @@
     <ClInclude Include="Camera00_Debug.h" />
     <ClInclude Include="Camera01_Game.h" />
     <ClInclude Include="Camera02_Select.h" />
+    <ClInclude Include="Camera03_GameStart.h" />
+    <ClInclude Include="GameUI00_StartCount.h" />
     <ClInclude Include="Scene00_Game.h" />
     <ClInclude Include="BlendState.h" />
     <ClInclude Include="Calculation.h" />
@@ -282,6 +287,7 @@
     <ClInclude Include="Scene01_Select.h" />
     <ClInclude Include="Select00_Character.h" />
     <ClInclude Include="Select01_CharacterList.h" />
+    <ClInclude Include="Select02_SlideReadyToFightText.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprite.h" />
@@ -298,6 +304,13 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="MultiplyTexturePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
     </FxCompile>
   </ItemGroup>

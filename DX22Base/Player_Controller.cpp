@@ -118,7 +118,7 @@ bool PlayerController::IsConnect()
 	return Connect;
 }
 
-InputXPad* PlayerController::GetController()
+InputXPad* PlayerController::GetPad()
 {
 	return m_pXPad;
 }

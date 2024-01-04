@@ -28,12 +28,12 @@ void Character::IdleUpdate()
 		ChangeState(Character::STATE::AIRMOVE);
 	}
 
-	CVector2 LeftStick = m_Controller.GetMoveInput();
+	CVector2 LeftStick = m_Controller->GetMoveInput();
 
 	//移動開始
 	if (LeftStick.x != 0.0f)
 	{
-		if (m_Controller.GetLeftSmash())
+		if (m_Controller->GetLeftSmash())
 		{
 			ChangeState(Character::STATE::DASH);
 		}
@@ -44,13 +44,13 @@ void Character::IdleUpdate()
 	}
 
 	//ジャンプ
-	if (m_Controller.GetJumpTrigger())
+	if (m_Controller->GetJumpTrigger())
 	{
 		ChangeState(Character::STATE::JUMPIN);
 	}
 
 	//攻撃
-	if (m_Controller.GetAttack())
+	if (m_Controller->GetAttack())
 	{
 		ChangeAttack(Character::ATTACK::ATTACK_11);	//弱の設定
 	}

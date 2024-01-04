@@ -32,21 +32,21 @@ void Character::JumpUpdate()
 
 	bool OnButton = false;
 
-	m_MoveVector.x =  m_Controller.GetMoveInput().x * m_MoveParameter.m_AirSideMoveSpeed;
+	m_MoveVector.x =  m_Controller->GetMoveInput().x * m_MoveParameter.m_AirSideMoveSpeed;
 
 	m_Velocity.x *= m_MoveParameter.m_AirDrag;	//空気抵抗を掛ける
 
 	//もう一度ジャンプができる
 	if (m_JumpCount < m_JumpParameter.m_MaxJumpCount)
 	{
-		if (m_Controller.GetJumpTrigger())
+		if (m_Controller->GetJumpTrigger())
 		{
 			ChangeState(Character::STATE::JUMP);
 		}
 	}
 
 	//攻撃
-	if (m_Controller.GetAttack())
+	if (m_Controller->GetAttack())
 	{
 		ChangeAttack(Character::ATTACK::ATTACK_AIRN);	//弱の設定
 	}

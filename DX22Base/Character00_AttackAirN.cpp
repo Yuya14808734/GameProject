@@ -67,7 +67,7 @@ void Character_00::AttackAirN_Update()
 
 	bool OnButton = false;
 
-	float LeftStickX = m_Controller.GetMoveInput().x * m_MoveParameter.m_WalkSpeed;
+	float LeftStickX = m_Controller->GetMoveInput().x * m_MoveParameter.m_WalkSpeed;
 	m_Velocity.x = fabsf(LeftStickX) > fabsf(m_Velocity.x) ? LeftStickX : m_Velocity.x;
 
 	if (IsKeyPress(VK_RIGHT))

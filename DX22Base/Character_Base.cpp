@@ -25,27 +25,10 @@ void Character::Character_Init()
 	std::vector<CVector3>* startPosV = static_cast<SceneGame*>(CScene::GetScene())->GetStage()->GetCharacterStartPos();
 	m_pos = (*startPosV)[PlayerNum - 1];
 
-	//コントローラーの設定
-	if (PlayerNum == 1)
-	{
-		m_Controller.SetController(
-			PlayerController::PLAYCONTROLLERTYPE::KEYBOARD,
-			PlayerNum - 1
-		);
-	}
-	else
-	{
-		m_Controller.SetController(
-			PlayerController::PLAYCONTROLLERTYPE::GAMEPAD,
-			PlayerNum - 1
-		);
-	}
-
 	CVector2 BasePos(450.0f, 650.0f);
 	CVector2 PosDistance(400.0f, 0.0f);
 
 	m_DamageUI.SetPos(BasePos + (PosDistance * static_cast<float>(PlayerNum - 1)));
-
 
 	Init();
 
@@ -509,6 +492,11 @@ void Character::Character_HitWall()
 void Character::DrawCollider()
 {
 	m_CharacterCollider.DrawCollider();
+}
+
+void Character::SetCharacterController(PlayerController* pController)
+{
+	m_Controller = pController;
 }
 
 void Character::SetStage(Stage* pStage)

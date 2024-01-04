@@ -77,7 +77,7 @@ void Character_00::Attack11_Update()
 	//ボタンをこのフレームの間に押していると次の攻撃に向かう
 	if (m_FrameCount > 5 && m_FrameCount < EndFrame)
 	{
-		if (m_Controller.GetAttack())
+		if (m_Controller->GetAttack())
 		{
 			m_PushButton = true;
 		}

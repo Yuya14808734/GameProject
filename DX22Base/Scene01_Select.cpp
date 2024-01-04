@@ -2,12 +2,14 @@
 #include "CameraManager.h"
 #include <array>
 #include "Main.h"
+#include "Scene.h"
+#include "Scene00_Game.h"
 
 PlayerController* SceneSelect::m_pFirstPlayerController = nullptr;
 PlayerController* SceneSelect::m_pSecondPlayerController = nullptr;
 
-SelectCharacterList::CHARACTER SceneSelect::m_FirstPlayerCharacter =		SelectCharacterList::CHARACTER::MAX;
-SelectCharacterList::CHARACTER SceneSelect::m_SecondPlayerCharacter =	SelectCharacterList::CHARACTER::MAX;
+SelectCharacterList::CHARACTER SceneSelect::m_FirstPlayerCharacter =	SelectCharacterList::CHARACTER::UNITYCHAN;
+SelectCharacterList::CHARACTER SceneSelect::m_SecondPlayerCharacter =	SelectCharacterList::CHARACTER::UNITYCHAN;
 
 PlayerController* SceneSelect::GetFirstPlayerController()
 {
@@ -64,6 +66,15 @@ void SceneSelect::Init()
 	m_SelectSecondCharacter.SetLerpStandCharacterDrawPos(CVector3(WindowSize.x, 400.0f, 0.0f), CVector3(WindowSize.x - 200.0f, 400.0f, 0.0f));
 	//=====================================================================
 	
+	m_CharactersText.SetTexture("Assets/UI/CharactersText.png");
+	m_CharactersText.m_pos = CVector3(WindowCenterPos.x, 100.0f, 0.0f);
+	m_CharactersText.m_size = CVector2(400.0f, 194.0f);
+
+	m_BackGroundImage.SetTexture("Assets/UI/SelectBackGround.png");
+	m_BackGroundImage.m_pos = WindowCenterPos;
+	m_BackGroundImage.m_size = WindowSize;
+
+	m_ReadyToFightTextImage.StartSlide();
 }
 
 void SceneSelect::Uninit()
@@ -96,7 +107,18 @@ void SceneSelect::Update()
 	//=========<二人がキャラクターを選んでいたら>=========
 	if (m_SelectFirstCharacter.IsDecided() && m_SelectSecondCharacter.IsDecided())
 	{
+		m_ReadyToFightTextImage.Update();
+
 		//決定ボタンを押せるようになる
+		if (m_pFirstPlayerController->IsTriggerReturn() || m_pSecondPlayerController->IsTriggerReturn())
+		{
+			//キャラクターの設定
+			m_FirstPlayerCharacter = m_SelectFirstCharacter.GetSelectCharacter();
+			m_SecondPlayerCharacter = m_SelectSecondCharacter.GetSelectCharacter();
+
+			//シーンの切り替え
+			CScene::SetScene<SceneGame>();
+		}
 	}
 }
 
@@ -105,6 +127,8 @@ void SceneSelect::Draw()
 	//=====<UIの描画>=======================================================
 	EnableDepth(false);
 
+	m_BackGroundImage.Draw();
+
 	//=====<キャラクター画像を描画>=========================================
 	//1Pが選んでいるキャラクターの立ち絵の描画
 	m_SelectFirstCharacter.StandCharacterDraw();
@@ -112,6 +136,8 @@ void SceneSelect::Draw()
 	m_SelectSecondCharacter.StandCharacterDraw();
 	//キャラクターを選ぶときに使うアイコンの描画
 	m_CharacterList.Draw();
+
+	m_CharactersText.Draw();
 	//======================================================================
 	
 	//=====<1Pの描画>=======================================================
@@ -127,6 +153,12 @@ void SceneSelect::Draw()
 	//キャラクターを選ぶフレームの描画
 	m_SelectSecondCharacter.SelectFrameDraw();
 	//======================================================================
+
+	//=========<二人がキャラクターを選んでいたら>=========
+	if (m_SelectFirstCharacter.IsDecided() && m_SelectSecondCharacter.IsDecided())
+	{
+		m_ReadyToFightTextImage.Draw();
+	}
 
 	EnableDepth(true);
 	//======================================================================

@@ -11,7 +11,7 @@
 void Character::BlowAwayInit()
 {
 	//コントローラーの今入力されている左スティックのベクトルを取得する
-	CVector3 ChangeVector = m_Controller.GetLeftInputVector();
+	CVector3 ChangeVector = m_Controller->GetLeftInputVector();
 
 	//ベクトルを正規化して保存
 	CVector3 NormalChangeVector = ChangeVector.normalize();

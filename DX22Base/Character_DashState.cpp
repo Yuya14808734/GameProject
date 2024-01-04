@@ -19,7 +19,7 @@ void Character::DashUpdate()
 	}
 
 	bool NoButton = true;
-	float NowX = m_Controller.GetMoveInput().x * m_MoveParameter.m_WalkSpeed;
+	float NowX = m_Controller->GetMoveInput().x * m_MoveParameter.m_WalkSpeed;
 
 	if(NowX > 0.0f)
 	{
@@ -72,7 +72,7 @@ void Character::DashUpdate()
 	}
 
 	//ƒWƒƒƒ“ƒv
-	if (m_Controller.GetJumpTrigger())
+	if (m_Controller->GetJumpTrigger())
 	{
 		m_Velocity.x = m_MoveVector.x;
 		ChangeState(Character::STATE::JUMPIN);

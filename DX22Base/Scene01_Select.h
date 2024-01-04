@@ -3,6 +3,8 @@
 #include "Player_Controller.h"
 #include "Select00_Character.h"
 #include "Select01_CharacterList.h"
+#include "Select02_SlideReadyToFightText.h"
+#include "Image2D.h"
 
 class SceneSelect : public CScene
 {
@@ -31,4 +33,7 @@ private:
 	SelectCharacterList m_CharacterList;
 	SelectCharacter m_SelectFirstCharacter;
 	SelectCharacter m_SelectSecondCharacter;
+	Image2D m_CharactersText;
+	Image2D m_BackGroundImage;
+	SlidReadyToFightText m_ReadyToFightTextImage;
 };

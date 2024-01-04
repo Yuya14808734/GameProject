@@ -157,6 +157,12 @@
     <Filter Include="ソース ファイル\04_Game\05_Select">
       <UniqueIdentifier>{6e1be2eb-84d5-4e68-babd-168570e08945}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\04_Game\07_GameUI">
+      <UniqueIdentifier>{9ff81621-1482-4d14-b73d-e9f9e00149fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\07_GameUI">
+      <UniqueIdentifier>{b58f3543-94aa-4aea-8f52-eaa86b0ec290}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BlendState.cpp">
@@ -423,6 +429,15 @@
     <ClCompile Include="Select01_CharacterList.cpp">
       <Filter>ソース ファイル\04_Game\05_Select</Filter>
     </ClCompile>
+    <ClCompile Include="Select02_SlideReadyToFightText.cpp">
+      <Filter>ソース ファイル\04_Game\05_Select</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera03_GameStart.cpp">
+      <Filter>ソース ファイル\04_Game\01_Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI00_StartCount.cpp">
+      <Filter>ソース ファイル\04_Game\07_GameUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -575,6 +590,15 @@
     <ClInclude Include="Select01_CharacterList.h">
       <Filter>ヘッダー ファイル\04_Game\05_Select</Filter>
     </ClInclude>
+    <ClInclude Include="Select02_SlideReadyToFightText.h">
+      <Filter>ヘッダー ファイル\04_Game\05_Select</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera03_GameStart.h">
+      <Filter>ヘッダー ファイル\04_Game\01_Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI00_StartCount.h">
+      <Filter>ヘッダー ファイル\04_Game\07_GameUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui\imgui.natstepfilter">
@@ -589,6 +613,9 @@
   <ItemGroup>
     <FxCompile Include="ModelVS.hlsl">
       <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="MultiplyTexturePS.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

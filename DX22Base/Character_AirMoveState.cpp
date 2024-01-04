@@ -21,13 +21,13 @@ void Character::AirMoveUpdate()
 
 	bool OnButton = false;
 
-	float LeftStickX = m_Controller.GetMoveInput().x * m_MoveParameter.m_AirSideMoveSpeed;
+	float LeftStickX = m_Controller->GetMoveInput().x * m_MoveParameter.m_AirSideMoveSpeed;
 	m_Velocity.x = fabsf(LeftStickX) > fabsf(m_Velocity.x) ? LeftStickX : m_Velocity.x;
 
 	//‚à‚¤ˆê“xƒWƒƒƒ“ƒv‚ª‚Å‚«‚é
 	if (m_JumpCount < m_JumpParameter.m_MaxJumpCount)
 	{
-		if (m_Controller.GetJumpTrigger())
+		if (m_Controller->GetJumpTrigger())
 		{
 			m_JumpCount++;
 			m_Velocity.y = m_JumpParameter.m_FirstJumpPower;
@@ -36,7 +36,7 @@ void Character::AirMoveUpdate()
 	}
 
 	//UŒ‚
-	if (m_Controller.GetAttack())
+	if (m_Controller->GetAttack())
 	{
 		ChangeAttack(Character::ATTACK::ATTACK_AIRN);	//ã‚Ìİ’è
 	}
