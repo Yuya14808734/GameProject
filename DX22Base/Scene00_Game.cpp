@@ -57,6 +57,8 @@ void SceneGame::Init()
 	m_pGameCamera->SetCharacter(&m_Characters);
 	m_pGameCamera->SetStage(m_pStage);
 	pCameraGameStart->SetCharacter(m_Characters);
+
+	m_GameStartCountUI.SetNumDraw(3);
 }
 
 void SceneGame::Uninit()
@@ -144,6 +146,8 @@ Character* SceneGame::CreateCharacter(SelectCharacterList::CHARACTER CharacterNu
 
 void SceneGame::UpdateGameStart()
 {
+	m_GameStartCountUI.Update();
+
 	m_GameStartFrameCount++;
 
 	if (m_GameStartFrameCount == 1 * 60)
@@ -156,19 +160,21 @@ void SceneGame::UpdateGameStart()
 		m_GameStartCountUI.SetNumDraw(1);
 	}
 
-	if (m_GameStartFrameCount == 2 * 60)
-	{
-		m_GameStartCountUI.SetNumDraw(1);
-	}
-
 	if (m_GameStartFrameCount == 3 * 60)
 	{
 		m_GameStartCountUI.SetGoDraw(true);
+		m_GameState = GAMESTATE::GAMEPLAY;
 	}
 }
 
 void SceneGame::UpdateGamePlay()
 {
+	if (m_GameStartFrameCount < static_cast<int>(4.0f * 60.0f))
+	{
+		m_GameStartFrameCount++;
+		m_GameStartCountUI.Update();
+	}
+
 	//=====<キャラクターのアップデート>=====
 	//ここで攻撃や移動などのアップデートを行う
 	for (std::vector<Character*>::iterator it = m_Characters.begin();
@@ -334,6 +340,11 @@ void SceneGame::DrawGamePlay()
 	for (Character* copy : m_Characters)
 	{
 		copy->Character_UIDraw();
+	}
+
+	if (m_GameStartFrameCount < static_cast<int>(4.0f * 60.0f))
+	{
+		m_GameStartCountUI.Draw();
 	}
 
 	EnableDepth(true);
