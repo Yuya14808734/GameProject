@@ -188,4 +188,21 @@ void Character_DamageUI::SetScale(float scale)
 	m_PercentUI.SetSize(m_PercentUI.GetSize() * m_scale);
 }
 
+void Character_DamageUI::SetColorBoard(BOARDCOLOR color)
+{
+	switch (color)
+	{
+	case Character_DamageUI::BOARDCOLOR::RED:
+	{
+		
+	}
+		break;
+	case Character_DamageUI::BOARDCOLOR::BLUE:
+	{
+
+	}
+		break;
+	}
+}
+
 

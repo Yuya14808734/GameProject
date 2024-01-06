@@ -31,7 +31,6 @@ Game3D::Game3D()
 	ModelDrawer::InitModels();	//ƒ‚ƒfƒ‹‚Ì‰Šú‰»	
 	CScene::SetScene<SceneGame>();	//ƒV[ƒ“‚Ì‰Šú‰»
 
-
 	SelectCharacterList::LoadTexture();
 
 }

@@ -38,6 +38,14 @@ public:
 
 class Character_DamageUI
 {
+private:
+	enum class BOARDCOLOR
+	{
+		RED = 0,
+		BLUE,
+		MAX,
+	};
+
 public:
 	Character_DamageUI();
 	~Character_DamageUI();
@@ -48,6 +56,7 @@ public:
 	PercentUI* GetPercentUI();
 	void SetPos(const CVector2& pos);
 	void SetScale(float scale);
+	void SetColorBoard(BOARDCOLOR color);
 
 private:
 	CVector2 m_pos;
