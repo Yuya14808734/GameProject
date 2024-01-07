@@ -100,7 +100,7 @@ void Character::Character_Update()
 	//========================================
 	// à íuÇÃê›íË
 	//========================================
-	m_CharacterCollider.SetPos(m_pos);
+	m_CharacterCollider.SetBasePos(m_pos);
 
 	//========================================
 	// UIÇÃçXêV
@@ -366,7 +366,7 @@ const CVector3& Character::GetPos() const
 void Character::SetPos(const CVector3 & pos)
 {
 	m_pos = pos;
-	m_CharacterCollider.SetPos(pos);
+	m_CharacterCollider.SetBasePos(pos);
 }
 
 const CVector3& Character::GetOldPos() const

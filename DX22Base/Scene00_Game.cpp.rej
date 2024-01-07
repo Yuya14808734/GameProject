@@ -1,0 +1,30 @@
+diff a/DX22Base/Scene00_Game.cpp b/DX22Base/Scene00_Game.cpp	(rejected hunks)
+@@ -326,19 +326,22 @@
+ 				continue;
+ 			}
+ 
++			//�ϐ��ɒu��������
++			
+ 			//�߂荞�񂾔����̈ʒu�ňړ����Ă��(X�̂�)
+-			float NowHarfDistanceX = (pFirstCollider->GetPos().x - pSecondCollider->GetPos().x) * 0.5f;
+-			float CenterPosX = pSecondCollider->GetPos().x + NowHarfDistanceX;
+-			float FirstDirect = NowHarfDistanceX < 0.0f ? -1.0f : 1.0f;	//pFirstCollider�Ɍ���������
++			float NowHarfDistanceX = (pFirstCollider->GetColliderPos().x - pSecondCollider->GetColliderPos().x) * 0.5f;
++			float CenterPosX = pSecondCollider->GetColliderPos().x + NowHarfDistanceX;
++			float FirstDirect = NowHarfDistanceX < 0.0f ? -1.0f : 1.0f;	
++			//pFirstCollider�Ɍ���������
+ 			//��̒l���}�C�i�X�Ȃ�ʒu�֌W��
+-			//pFirstCollider �E pSecondCollider�ƂȂ�
++			//pFirstCollider �� pSecondCollider�ƂȂ�
+ 			//��̒l���v���X�Ȃ�ʒu�֌W��
+-			//pSecondCollider �E pFirstCollider�ƂȂ�
++			//pSecondCollider �� pFirstCollider�ƂȂ�
+ 
+ 			//��l�ڂ̃L�����N�^�[�̈ʒu�ݒ�
+ 			(*it_first)->SetPos(
+ 				CVector3(
+-					CenterPosX + ((pFirstCollider->GetSize().x * 0.5f) * FirstDirect),
++					CenterPosX + ((pFirstCollider->GetSize().x * 0.5f) * FirstDirect),// -pFirstCollider->GetShiftVec().x,
+ 					(*it_first)->GetPos().y,
+ 					(*it_first)->GetPos().z
+ 				)

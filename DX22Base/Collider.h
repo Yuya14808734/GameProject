@@ -18,7 +18,8 @@ class BoxCollider
 {
 public:
 	//タイプがあるにはあるけど
-	//中身は全部真ん中で処理をする
+	//当たり判定の処理をするときは
+	//中身は全部真ん中に変換をする
 	enum class BOXTYPE
 	{
 		CENTER = 0,
@@ -27,7 +28,8 @@ public:
 	};
 
 private:
-	CVector3 m_pos;
+	CVector3 m_BasePos;
+	CVector3 m_ShiftPosVector;
 	CVector3 m_size;
 	BOXTYPE m_type = BOXTYPE::CENTER;
 
@@ -35,10 +37,15 @@ private:
 public:
 	BoxCollider();
 	BoxCollider(const CVector3& p, const CVector3& s);
+	BoxCollider(const CVector3& p, const CVector3& s,const CVector3& shiftP);
 	~BoxCollider();
-	void CreateBox(BoxCollider::BOXTYPE type, const CVector3& pos, const CVector3& size);
-	void SetPos(const CVector3& pos);
-	const CVector3& GetPos() const;
+	void CreateBox(BoxCollider::BOXTYPE type, const CVector3& pos, const CVector3& size,const CVector3& shiftPos = CVector3::GetZero());
+	void SetBasePos(const CVector3& pos);
+	const CVector3& GetBasePos() const;
+	void SetShiftVec(const CVector3& shiftVec);
+	const CVector3& GetShiftVec() const;
+	void SetColliderPos(const CVector3& pos);
+	const CVector3& GetColliderPos() const;
 	void SetSize(const CVector3& size);
 	const CVector3& GetSize() const;
 	void SetType(BoxCollider::BOXTYPE type);

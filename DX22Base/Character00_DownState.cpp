@@ -8,6 +8,21 @@ void Character_00::DownInit()
 	m_AnimeTime = 0.394f;
 	m_FrameCount = 0;
 	m_Invincible = true;
+
+	//=====<キャラクターの当たり判定の調整>============
+	CVector3 copysize = m_CharacterCollider.GetSize();
+
+	m_CharacterCollider.SetSize(CVector3(
+		copysize.y,
+		copysize.x,
+		copysize.z
+	));
+
+	m_CharacterCollider.SetShiftVec(CVector3::GetRight() * 
+		(copysize.y * (m_NowLookDir == Character::LOOKDIR::RIGHT ? -0.5f : 0.5f)
+		));
+	//=================================================
+
 }
 
 void Character_00::DownUninit()

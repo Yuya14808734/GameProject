@@ -72,7 +72,7 @@ void Stage00::Init()
 				m_ModelDrawer.push_back(tempModelDrawer);
 
 				BoxCollider tempBoxCollider;
-				tempBoxCollider.SetPos(BlockPos);
+				tempBoxCollider.SetBasePos(BlockPos);
 				tempBoxCollider.SetSize(BlockSize);				
 				m_StageCollider.push_back(tempBoxCollider);
 				

@@ -102,10 +102,9 @@ protected:
 private:
 	static int m_NewPlayerBit;		//新しいプレイヤーのビット番号
 
-
 public:
 	Character() {};
-	~Character() {};
+	virtual ~Character() {};
 
 	//==========================================================================
 	void Character_Init();								//キャラクターの初期化

@@ -97,7 +97,7 @@ void Character_00::AttackAirN_Update()
 	m_pos += m_Velocity;
 
 	EffectManager::GetManager()->SetLocation(m_AirNEffect, { m_pos.x,m_pos.y + 1.0f,m_pos.z + 1.0f });
-	m_AttackCollider[0].m_BoxCollider.SetPos(m_pos);
+	m_AttackCollider[0].m_BoxCollider.SetBasePos(m_pos);
 }
 
 void Character_00::AttackAirN_Uninit()

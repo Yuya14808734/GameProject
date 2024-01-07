@@ -10,10 +10,9 @@ void Character_00::FallDownInit()
 	m_CharacterModel.SetRotatePosShift(true);
 
 	//=====<キャラクターの当たり判定の調整>============
-	float CharacterHeightHarfSize = m_CharacterCollider.GetSize().y * 0.5f;
-	m_CharacterCollider.SetPos(m_pos + CVector3::GetRight() * (CharacterHeightHarfSize
-		* (m_NowLookDir == Character::LOOKDIR::RIGHT ? 1.0f : -1.0f)));
-	m_CharacterCollider.SetSize(CVector3::GetOne() * CharacterHeightHarfSize);
+	float ColliderSize = m_CharacterCollider.GetSize().y * 0.75f;
+	m_CharacterCollider.SetSize(CVector3::GetOne() * ColliderSize);
+	m_CharacterCollider.SetShiftVec(CVector3(0.0f, -0.5f, 0.0f));
 	//=================================================
 }
 

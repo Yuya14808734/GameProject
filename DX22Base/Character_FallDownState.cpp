@@ -15,6 +15,8 @@ void Character::FallDownUpdate()
 	if (m_HitGround)
 	{
 		ChangeState(Character::STATE::DOWN);
+		m_Velocity.y += m_JumpParameter.m_FallDownGravity;			//èdóÕÇä|ÇØÇÈ
+		m_pos += m_Velocity;
 		return;
 	}
 

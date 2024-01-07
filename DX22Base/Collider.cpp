@@ -11,11 +11,17 @@ BoxCollider::BoxCollider()
 }
 
 BoxCollider::BoxCollider(const CVector3& p, const CVector3& s)
-	:m_pos(p),
+	:BoxCollider(p,s,CVector3(0.0f,0.0f,0.0f))
+{
+
+}
+
+BoxCollider::BoxCollider(const CVector3& p, const CVector3& s, const CVector3& shiftP)
+	:m_BasePos(p),
+	m_ShiftPosVector(shiftP),
 	m_size(s),
 	m_type(BoxCollider::BOXTYPE::CENTER)
 {
-
 }
 
 BoxCollider::~BoxCollider()
@@ -23,23 +29,24 @@ BoxCollider::~BoxCollider()
 
 }
 
-void BoxCollider::CreateBox(BoxCollider::BOXTYPE type, const CVector3 & pos, const CVector3 & size)
+void BoxCollider::CreateBox(BoxCollider::BOXTYPE type, const CVector3 & pos, const CVector3 & size, const CVector3& shiftVec)
 {
 	SetType(type);
-	SetPos(pos);
+	SetBasePos(pos);
+	SetShiftVec(shiftVec);
 	SetSize(size);
 }
 
-void BoxCollider::SetPos(const CVector3& pos)
+void BoxCollider::SetBasePos(const CVector3& pos)
 {
 	switch (m_type)
 	{
 	case BoxCollider::BOXTYPE::CENTER:
-		m_pos = pos;
+		m_BasePos = pos;
 		break;
 	case BoxCollider::BOXTYPE::FOOT:
-		m_pos = pos;
-		m_pos.y += m_size.y * 0.5f;
+		m_BasePos = pos;
+		m_BasePos.y += m_size.y * 0.5f;
 		break;
 	case BoxCollider::BOXTYPE::MAX:
 		break;
@@ -48,9 +55,29 @@ void BoxCollider::SetPos(const CVector3& pos)
 	}
 }
 
-const CVector3& BoxCollider::GetPos() const
+const CVector3& BoxCollider::GetBasePos() const
 {
-	return m_pos;
+	return m_BasePos;
+}
+
+void BoxCollider::SetShiftVec(const CVector3& shiftVec)
+{
+	m_ShiftPosVector = shiftVec;
+}
+
+const CVector3& BoxCollider::GetShiftVec() const
+{
+	return m_ShiftPosVector;
+}
+
+void BoxCollider::SetColliderPos(const CVector3& pos)
+{
+	m_BasePos = pos - m_ShiftPosVector;
+}
+
+const CVector3& BoxCollider::GetColliderPos() const
+{
+	return (m_BasePos + m_ShiftPosVector);
 }
 
 void BoxCollider::SetSize(const CVector3& size)
@@ -61,9 +88,9 @@ void BoxCollider::SetSize(const CVector3& size)
 		m_size = size;
 		break;
 	case BoxCollider::BOXTYPE::FOOT:
-		m_pos.y -= m_size.y * 0.5f;	//一度足元に位置を戻す
-		m_size = size;				//サイズを設定
-		m_pos.y += m_size.y * 0.5f;	//真ん中にする
+		m_BasePos.y -= m_size.y * 0.5f;	//前のサイズ分、一度足元に位置を戻す
+		m_size = size;				//サイズを変更
+		m_BasePos.y += m_size.y * 0.5f;	//今のサイズ分、真ん中にする
 		break;
 	case BoxCollider::BOXTYPE::MAX:
 		break;
@@ -95,7 +122,7 @@ bool BoxCollider::CollisionBox(const BoxCollider& Box)
 	CVector3 NowDistance;
 	CVector3 ColliderHarfSize;
 
-	NowDistance = Box.GetPos() - this->GetPos();
+	NowDistance = (Box.GetBasePos() + Box.GetShiftVec()) - (this->GetBasePos() + this->GetShiftVec());
 	NowDistance = NowDistance.Abs();
 	ColliderHarfSize = (this->GetSize() + Box.GetSize()) * 0.5f;
 
@@ -111,7 +138,8 @@ bool BoxCollider::CollisionBox(const BoxCollider& Box)
 
 void BoxCollider::DrawCollider()
 {
-	SetGeometoryTranslate(m_pos.x, m_pos.y, m_pos.z);
+	CVector3 DrawPos = m_BasePos + m_ShiftPosVector;
+	SetGeometoryTranslate(DrawPos.x, DrawPos.y, DrawPos.z);
 	SetGeometoryRotation(0.0f, 0.0f, 0.0f);
 	SetGeometoryScaling(m_size.x, m_size.y, m_size.z);
 	DrawBox();

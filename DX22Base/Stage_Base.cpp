@@ -33,7 +33,7 @@ void Stage::StageColliderDraw()
 
 	for (BoxCollider& copy : m_StageCollider)
 	{
-		SetGeometoryTranslate(copy.GetPos());
+		SetGeometoryTranslate(copy.GetBasePos());
 		SetGeometoryScaling(copy.GetSize());
 		DrawBox();
 	}

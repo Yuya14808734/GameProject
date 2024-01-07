@@ -73,7 +73,8 @@ void Character_00::Init()
 void Character_00::SetDefaultCollider()
 {
 	m_CharacterCollider.SetType(BoxCollider::BOXTYPE::FOOT);
-	m_CharacterCollider.SetPos(m_pos);
+	m_CharacterCollider.SetBasePos(m_pos);
+	m_CharacterCollider.SetShiftVec(CVector3::GetZero());
 	m_CharacterCollider.SetSize(CVector3(1.0f, 2.0f, 1.0f));
 }
 

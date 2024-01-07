@@ -326,19 +326,22 @@ void SceneGame::Collision_Player_Player()
 				continue;
 			}
 
+			//変数に置き換える
+			
 			//めり込んだ半分の位置で移動してやる(Xのみ)
-			float NowHarfDistanceX = (pFirstCollider->GetPos().x - pSecondCollider->GetPos().x) * 0.5f;
-			float CenterPosX = pSecondCollider->GetPos().x + NowHarfDistanceX;
-			float FirstDirect = NowHarfDistanceX < 0.0f ? -1.0f : 1.0f;	//pFirstColliderに向かう向き
+			float NowHarfDistanceX = (pFirstCollider->GetBasePos().x - pSecondCollider->GetBasePos().x) * 0.5f;
+			float CenterPosX = pSecondCollider->GetBasePos().x + NowHarfDistanceX;
+			float FirstDirect = NowHarfDistanceX < 0.0f ? -1.0f : 1.0f;	
+			//pFirstColliderに向かう向き
 			//上の値がマイナスなら位置関係は
-			//pFirstCollider ・ pSecondColliderとなる
+			//pFirstCollider ← pSecondColliderとなる
 			//上の値がプラスなら位置関係は
-			//pSecondCollider ・ pFirstColliderとなる
+			//pSecondCollider ← pFirstColliderとなる
 
 			//一人目のキャラクターの位置設定
 			(*it_first)->SetPos(
 				CVector3(
-					CenterPosX + ((pFirstCollider->GetSize().x * 0.5f) * FirstDirect),
+					CenterPosX + ((pFirstCollider->GetSize().x * 0.5f) * FirstDirect),// -pFirstCollider->GetShiftVec().x,
 					(*it_first)->GetPos().y,
 					(*it_first)->GetPos().z
 				)
@@ -347,7 +350,7 @@ void SceneGame::Collision_Player_Player()
 			//二人目のキャラクターの位置設定
 			(*it_second)->SetPos(
 				CVector3(
-					CenterPosX + ((pSecondCollider->GetSize().x * 0.5f) * -FirstDirect),
+					CenterPosX + ((pSecondCollider->GetSize().x * 0.5f) * -FirstDirect),// - pSecondCollider->GetShiftVec().x,
 					(*it_second)->GetPos().y,
 					(*it_second)->GetPos().z
 				)
@@ -378,11 +381,11 @@ void SceneGame::Collision_Player_Stage()
 		{
 			CVector3 DiffPos = (*it_Character)->GetPos() - (*it_Character)->GetOldPos();		//前の位置から今の位置まで移動したベクトル
 			CVector3 HitSize = (pCharacterCollider->GetSize() + (*it_StageCollider).GetSize()) * 0.5f;
-			float NowDistanceX = pCharacterCollider->GetPos().x - (*it_StageCollider).GetPos().x;
+			float NowDistanceX = pCharacterCollider->GetBasePos().x - (*it_StageCollider).GetBasePos().x;
 			float AbsNowDistanceX = fabsf(NowDistanceX);
-			float OldDistanceY = (pCharacterCollider->GetPos().y - DiffPos.y) - (*it_StageCollider).GetPos().y;
+			float OldDistanceY = (pCharacterCollider->GetBasePos().y - DiffPos.y) - (*it_StageCollider).GetBasePos().y;
 			float AbsOldDistanceY = fabsf(OldDistanceY);
-			float OldDistanceZ = (pCharacterCollider->GetPos().z - DiffPos.z) - (*it_StageCollider).GetPos().z;
+			float OldDistanceZ = (pCharacterCollider->GetBasePos().z - DiffPos.z) - (*it_StageCollider).GetBasePos().z;
 			float AbsOldDistanceZ = fabsf(OldDistanceZ);
 
 			//Xの移動だけして当たっていたら
@@ -392,7 +395,7 @@ void SceneGame::Collision_Player_Stage()
 			{
 				CVector3 newPos = (*it_Character)->GetPos();
 				float MoveDist = DiffPos.x < 0.0f ? HitSize.x : -HitSize.x;
-				newPos.x = (*it_StageCollider).GetPos().x + MoveDist;
+				newPos.x = (*it_StageCollider).GetBasePos().x + MoveDist;
 				(*it_Character)->SetPos(newPos);
 
 				(*it_Character)->Character_HitWall();
@@ -405,11 +408,11 @@ void SceneGame::Collision_Player_Stage()
 		{
 			CVector3 DiffPos = (*it_Character)->GetPos() - (*it_Character)->GetOldPos();		//前の位置から今の位置まで移動したベクトル
 			CVector3 HitSize = (pCharacterCollider->GetSize() + (*it_Stage).GetSize()) * 0.5f;
-			float NowDistanceX = pCharacterCollider->GetPos().x - (*it_Stage).GetPos().x;
+			float NowDistanceX = pCharacterCollider->GetBasePos().x - (*it_Stage).GetBasePos().x;
 			float AbsNowDistanceX = fabsf(NowDistanceX);
-			float NowDistanceY = pCharacterCollider->GetPos().y - (*it_Stage).GetPos().y;
+			float NowDistanceY = pCharacterCollider->GetBasePos().y - (*it_Stage).GetBasePos().y;
 			float AbsNowDistanceY = fabsf(NowDistanceY);
-			float OldDistanceZ = (pCharacterCollider->GetPos().z - DiffPos.z) - (*it_Stage).GetPos().z;
+			float OldDistanceZ = (pCharacterCollider->GetBasePos().z - DiffPos.z) - (*it_Stage).GetBasePos().z;
 			float AbsOldDistanceZ = fabsf(OldDistanceZ);
 
 			//Yの移動だけして当たっていたら
@@ -421,7 +424,7 @@ void SceneGame::Collision_Player_Stage()
 				float MoveDist = DiffPos.y < 0.0f ?
 					HitSize.y - (pCharacterCollider->GetType() == BoxCollider::BOXTYPE::FOOT ? (pCharacterCollider->GetSize().y * 0.5f) : 0.0f) :	//上からあたった
 					-HitSize.y;	//下からあたった
-				newPos.y = (*it_Stage).GetPos().y + MoveDist;
+				newPos.y = (*it_Stage).GetBasePos().y + MoveDist;
 				(*it_Character)->SetPos(newPos);
 
 				//上から移動したか下から移動したかで判定
@@ -443,11 +446,11 @@ void SceneGame::Collision_Player_Stage()
 
 			CVector3 DiffPos = (*it_Character)->GetPos() - (*it_Character)->GetOldPos();		//前の位置から今の位置まで移動したベクトル
 			CVector3 HitSize = (pCharacterCollider->GetSize() + (*it_Stage).GetSize()) * 0.5f;
-			float NowDistanceX = pCharacterCollider->GetPos().x - (*it_Stage).GetPos().x;
+			float NowDistanceX = pCharacterCollider->GetBasePos().x - (*it_Stage).GetBasePos().x;
 			float AbsNowDistanceX = fabsf(NowDistanceX);
-			float NowDistanceY = pCharacterCollider->GetPos().y - (*it_Stage).GetPos().y;
+			float NowDistanceY = pCharacterCollider->GetBasePos().y - (*it_Stage).GetBasePos().y;
 			float AbsNowDistanceY = fabsf(NowDistanceY);
-			float NowDistanceZ = pCharacterCollider->GetPos().z - DiffPos.z - (*it_Stage).GetPos().z;
+			float NowDistanceZ = pCharacterCollider->GetBasePos().z - DiffPos.z - (*it_Stage).GetBasePos().z;
 			float AbsNowDistanceZ = fabsf(NowDistanceZ);
 
 			//Zの移動だけして当たっていたら
@@ -457,7 +460,7 @@ void SceneGame::Collision_Player_Stage()
 			{
 				CVector3 newPos = (*it_Character)->GetPos();
 				float MoveDist = DiffPos.z < 0.0f ? HitSize.z : -HitSize.z;
-				newPos.z = (*it_Stage).GetPos().z + MoveDist;
+				newPos.z = (*it_Stage).GetBasePos().z + MoveDist;
 				(*it_Character)->SetPos(newPos);
 			}
 		}
