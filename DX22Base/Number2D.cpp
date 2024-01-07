@@ -5,14 +5,18 @@ Number2D::Number2D()
 	:m_pTexture(nullptr)
 	, m_pVertexShader(nullptr)
 	, m_pPixelShader(nullptr)
+	, m_BasePos({ 0.0f,0.0f,0.0f })
 	, m_pos({ 0.0f,0.0f,0.0f })
 	, m_size({ 1.0f,1.0f })
 	, m_UVpos({ 0.0f,0.0f })
 	, m_UVsize({ 1.0f,1.0f })
 	, m_color({ 1.0f,1.0f,1.0f,1.0f })
+	, m_UseDistance(false)
+	, m_NumDistance(1.0f)
 	, m_Number(0)
 	, m_SplitX(1)
 	, m_SplitY(1)
+
 {
 }
 
@@ -81,7 +85,7 @@ void Number2D::Draw()
 			)
 		));
 
-	CVector3 DrawPos = m_pos;	//ˆê”ÔÅ‰‚Ì”š‚ª•`‰æ‚³‚ê‚éêŠ
+	CVector3 DrawPos = m_pos + m_BasePos;	//ˆê”ÔÅ‰‚Ì”š‚ª•`‰æ‚³‚ê‚éêŠ
 								//¶‚É”š‚Í•`‰æ‚³‚ê‚é
 
 	int DrawNums = m_Number;
@@ -113,7 +117,7 @@ void Number2D::Draw()
 		Sprite::Draw();
 
 		//Ÿ‚Ì”š‚ğ•`‰æ‚·‚é‚Æ‚«‚É‚¸‚ç‚µ‚Ä‚â‚é
-		DrawPos.x -= m_size.x;
+		DrawPos.x -= m_UseDistance ? m_NumDistance : m_size.x;
 
 		DrawNums /= 10;
 
@@ -179,6 +183,16 @@ void Number2D::SetNumberTexture(const char* FilePath, int SplitX, int SplitY)
 void Number2D::SetNumber(int Num)
 {
 	m_Number = Num;
+}
+
+void Number2D::SetUseDistance(bool useDistance)
+{
+	m_UseDistance = useDistance;
+}
+
+void Number2D::SetDistance(float distance)
+{
+	m_NumDistance = distance;
 }
 
 void Number2D::SetVertexShader(VertexShader* pVS)

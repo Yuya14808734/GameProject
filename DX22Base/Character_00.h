@@ -12,6 +12,8 @@ private:
 	void Update() override;
 	void Draw() override;
 
+	void SetDefaultCollider() override;
+
 	//==========================================================================
 	void IdleInit() override;		//~‚Ü‚Á‚Ä‚¢‚é‚Æ‚«‚Ì‰Šú‰»
 	void IdleUninit() override;		//~‚Ü‚Á‚Ä‚¢‚é‚Æ‚«‚ÌI—¹ˆ—

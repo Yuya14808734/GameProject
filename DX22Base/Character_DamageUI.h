@@ -15,31 +15,10 @@ private:
 
 };
 
-class Character_CharacterIconUI : public Image2D
-{
-public:
-	Character_CharacterIconUI();
-	~Character_CharacterIconUI();
-	void Update() override;
-	void PrevDraw() override;
-	void SetIconTexture(const char* filePath);	//ÉAÉCÉRÉìÇÃê›íË
-
-private:
-};
-
-class PercentUI : public Image2D
-{
-public:
-	PercentUI();
-	~PercentUI() override;
-	void Update() override;
-	void PrevDraw() override;
-};
-
 class Character_DamageUI
 {
-private:
-	enum class BOARDCOLOR
+public:
+	enum class BOARDCOLOR : int
 	{
 		RED = 0,
 		BLUE,
@@ -52,17 +31,16 @@ public:
 	void Update();
 	void Draw();
 	Character_DamageNumUI* GetDamageUI();
-	Character_CharacterIconUI* GetCharacterIconUI();
-	PercentUI* GetPercentUI();
 	void SetPos(const CVector2& pos);
-	void SetScale(float scale);
-	void SetColorBoard(BOARDCOLOR color);
+	void SetBoardColor(BOARDCOLOR color);
+	void SetCharacterIconImage(const char* pFilePath);
 
 private:
-	CVector2 m_pos;
-	float m_scale = 1.0f;
-
-	Character_DamageNumUI m_DamageUI;
-	Character_CharacterIconUI m_IconUI;
-	PercentUI m_PercentUI;
+	CVector3 m_StockIconBasePos;
+	float m_StockIconDistance = 0.0f;
+	int m_StockIconDrawNum = 0;
+	Character_DamageNumUI m_DamageNum;
+	Image2D m_BackBoard;
+	Image2D m_CharacterIconImage;
+	Image2D m_StockIconImage;
 };

@@ -33,6 +33,8 @@ public:
 	const CVector2& GetSize();
 	void SetNumberTexture(const char* FilePath, int SplitX, int SplitY);
 	void SetNumber(int Num);
+	void SetUseDistance(bool useDistance);
+	void SetDistance(float distance);
 	void SetVertexShader(VertexShader* pVS);
 	void SetPixelShader(PixelShader* pPS);
 
@@ -41,11 +43,14 @@ private:
 	VertexShader* m_pVertexShader = nullptr;
 	PixelShader* m_pPixelShader = nullptr;
 public:
+	CVector3 m_BasePos;
 	CVector3 m_pos;
 	CVector2 m_size;
 	CVector2 m_UVpos;
 	CVector2 m_UVsize;
 	DirectX::XMFLOAT4 m_color;
+	bool m_UseDistance = false;
+	float m_NumDistance = 0.0f;
 protected:
 	int m_Number = 0;
 private:

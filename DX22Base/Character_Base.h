@@ -138,6 +138,7 @@ public:
 	bool GetShake();									//キャラクターを揺らす	
 	void SetLookRight();								//右を向かせる
 	void SetLookLeft();									//左を向かせる
+	void SetNowLook();									//m_NowLookで見ている方向を見る
 	//==========================================================================
 	void AddForce(const CVector3& force);				//力を足してやる
 	void SetForce(const CVector3& force);				//力を設定
@@ -149,7 +150,7 @@ public:
 	bool IsInvincible();								//キャラクターが無敵か否か
 	BoxCollider* GetCharacterCollider() const;			//キャラクター、ステージ当たり判定の取得
 	std::vector<ATTACKPARAM>& GetAttackCollider();		//攻撃コライダーの取得
-	void Character_ColliderInit();
+	void Character_ColliderInit();						//地面などに当たっていないことにする
 	void Character_HitCeiling();						//天井に当たった	
 	void Character_HitGround();							//地面に当たった
 	void Character_HitWall();							//壁に当たった
@@ -287,9 +288,11 @@ public:
 
 protected:
 
-	virtual void HitCeiling() {};		//天井に当たった時に呼ぶ
-	virtual void HitGround() {};	//地面に当たった時に呼ばれる
-	virtual void HitWall() {};		//壁に当たった時に呼ぶ
+	virtual void SetDefaultCollider() = 0;	//最初の当たり判定に戻す(キャラクターの当たり判定をいじった場合
+	
+	virtual void HitCeiling()	{};	//天井に当たった時に呼ぶ
+	virtual void HitGround()	{};	//地面に当たった時に呼ばれる
+	virtual void HitWall()		{};	//壁に当たった時に呼ぶ
 
 public:
 	//===============================================================================

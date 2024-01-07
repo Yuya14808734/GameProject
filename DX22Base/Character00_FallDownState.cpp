@@ -8,14 +8,25 @@ void Character_00::FallDownInit()
 	m_AnimeTime = 0.387f;;
 	m_CharacterModel.SetAnimeTime(m_AnimeTime);
 	m_CharacterModel.SetRotatePosShift(true);
+
+	//=====<キャラクターの当たり判定の調整>============
+	float CharacterHeightHarfSize = m_CharacterCollider.GetSize().y * 0.5f;
+	m_CharacterCollider.SetPos(m_pos + CVector3::GetRight() * (CharacterHeightHarfSize
+		* (m_NowLookDir == Character::LOOKDIR::RIGHT ? 1.0f : -1.0f)));
+	m_CharacterCollider.SetSize(CVector3::GetOne() * CharacterHeightHarfSize);
+	//=================================================
 }
 
 void Character_00::FallDownUninit()
 {
-	m_rotate.SetQuaternion(0.0f,0.0f,0.0f,1.0f);
+	SetNowLook();
 	m_ShiftCenterPos = CVector3::GetZero();
 	m_CharacterModel.SetRotatePosShift(false);
 	Character::FallDownUninit();
+
+	//=====<キャラクターの当たり判定の初期化>============
+	SetDefaultCollider();
+	//=================================================
 }
 
 void Character_00::FallDownUpdate()

@@ -6,6 +6,7 @@ void Character_00::Init()
 {
 	m_stateWindow.Init_MiniWindow();
 
+	//=====<動きのパラメータの設定>======================================
 	MOVEPARAMETER moveParameter;
 	moveParameter.m_WalkSpeed = 4.0f / 60.0f;
 	moveParameter.m_DashSpeed = 8.0f / 60.0f;
@@ -33,7 +34,9 @@ void Character_00::Init()
 	blowAwayParameter.m_VectorChangePower = 0.02f;
 	blowAwayParameter.m_MinimumSmashLength = 0.03f;
 	SetBlowAwayParameter(blowAwayParameter);
+	//============================================================================
 
+	//=====<モデル・アニメーションの読み込み>======================================
 	ModelDrawer::LoadModel("Assets/unitychan/unitychan.fbx", "UnityChan", 0.003f);
 	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_ARpose2.fbx", "Pose2", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_WAIT00.fbx", "Idle", "UnityChan");
@@ -44,23 +47,34 @@ void Character_00::Init()
 	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_JUMP00B.fbx", "Jump", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_DAMAGED00.fbx", "Damage00", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_DAMAGED01.fbx", "Damage01", "UnityChan");
+	//============================================================================
+	
+	//=====<モデル・アニメーションの設定>=========================================
 	m_CharacterModel.SetModel("UnityChan");
 	m_CharacterModel.PlayAnime("Walk",true);
+	//============================================================================
+
+	//=====<位置の設定>===========================================================
 	m_CharacterModel.SetPosition(CVector3(0.0f, 3.0f, 0.0f));
 	m_CharacterModel.SetRotate(CVector3::GetZero());
 	m_CharacterModel.SetScale(CVector3(5.0f, 5.0f, 5.0f));
+	//============================================================================
 
 	m_NowState = Character::STATE::IDLE;
-
-	m_CharacterCollider.SetType(BoxCollider::BOXTYPE::FOOT);
-	m_CharacterCollider.SetPos(m_pos);
-	m_CharacterCollider.SetSize(CVector3(1.0f,2.0f,1.0f));
 
 	m_stateWindow.SetCharacter(this);
 
 	m_FrameCount = 0;
 
-	m_DamageUI.GetCharacterIconUI()->SetIconTexture("Assets/CharacterImage/UnitychanIcon.png");
+	m_DamageUI.SetCharacterIconImage("Assets/CharacterImage/IconImage_UnityChan.png");
+}
+
+
+void Character_00::SetDefaultCollider()
+{
+	m_CharacterCollider.SetType(BoxCollider::BOXTYPE::FOOT);
+	m_CharacterCollider.SetPos(m_pos);
+	m_CharacterCollider.SetSize(CVector3(1.0f, 2.0f, 1.0f));
 }
 
 void Character_00::Uninit()

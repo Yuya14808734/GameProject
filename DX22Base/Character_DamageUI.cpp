@@ -1,17 +1,24 @@
 #include "Character_DamageUI.h"
+#include "Input.h"
 
 //============================================================
 //概要
-//キャラクターのダメージを表示するUI
+//キャラクターのダメージを表示する数字UI
 //============================================================
 
 Character_DamageNumUI::Character_DamageNumUI()
 {
 	//テクスチャのロード
-	SetNumberTexture("Assets/NumberImage/WhiteNumber.png", 13, 1);
+	SetNumberTexture("Assets/NumberImage/NumberImage02.png", 4, 3);
 
-	m_size.x = 16.0f * 1.5f;
-	m_size.y = 32.0f * 1.5f;
+	m_Number = 0;
+	m_pos.x = 64.0f;
+	m_pos.y = -5.0f;
+	m_size.x = (640.0f / 4.0f) * 0.35f;
+	m_size.y = (480.0f / 3.0f) * 0.35f;
+
+	m_UseDistance = true;
+	m_NumDistance = m_size.x * 0.55f;
 }
 
 Character_DamageNumUI::~Character_DamageNumUI()
@@ -75,69 +82,25 @@ void Character_DamageNumUI::PrevDraw()
 
 //============================================================
 //概要
-//キャラクターのアイコン
-//============================================================
-
-Character_CharacterIconUI::Character_CharacterIconUI()
-{
-	m_size.x = m_size.y = 100.0f;
-}
-
-Character_CharacterIconUI::~Character_CharacterIconUI()
-{
-
-}
-
-void Character_CharacterIconUI::Update()
-{
-
-}
-
-void Character_CharacterIconUI::PrevDraw()
-{
-
-}
-
-void Character_CharacterIconUI::SetIconTexture(const char* filePath)
-{
-	SetTexture(filePath);
-}
-
-//============================================================
-//概要
-//%を描画するクラス
-//============================================================
-
-PercentUI::PercentUI()
-{
-	//テクスチャのロード
-	SetTexture("Assets/NumberImage/PercentImage.png");
-
-	m_size.x = 147.0f * 0.5f;
-	m_size.y = 150.0f * 0.5f;
-}
-
-PercentUI::~PercentUI()
-{
-}
-
-void PercentUI::Update()
-{
-}
-
-void PercentUI::PrevDraw()
-{
-}
-
-//============================================================
-//概要
 //上の3つをまとめるクラス
 //============================================================
 
 Character_DamageUI::Character_DamageUI()
 {
-	SetScale(1.0f);
+	//===<テクスチャの読み込み>====================================
+	m_StockIconImage.SetTexture("Assets/UI/StockIconImage.png");
+	SetBoardColor(Character_DamageUI::BOARDCOLOR::RED);
+	m_StockIconImage.SetTexture("Assets/UI/StockIconImage.png");
+
+	m_BackBoard.m_size = CVector2(288.0f,123.3f);
+	m_CharacterIconImage.m_pos = CVector2(-87.0f,5.0f);
+	m_CharacterIconImage.m_size = CVector2(106.0f, 106.0f);
+	m_StockIconImage.m_size = CVector2(22.4f, 22.4f);
 	SetPos(CVector2(100.0f, 100.0f));
+
+	m_StockIconDrawNum = 3;
+	m_StockIconBasePos = CVector3(-127.0f, 74.0f, 0.0f);
+	m_StockIconDistance = 27.0f;
 }
 
 Character_DamageUI::~Character_DamageUI()
@@ -146,63 +109,92 @@ Character_DamageUI::~Character_DamageUI()
 
 void Character_DamageUI::Update()
 {
-	m_IconUI.Update();
-	m_DamageUI.Update();
+	m_DamageNum.Update();
+
+	////Image2D*
+	//Number2D* 
+	//	pChangeImage = &m_DamageNum;
+	//CVector2 Size = CVector2(320.0f, 320.0f);
+
+	//if (IsKeyPress(VK_RIGHT))
+	//{
+	//	m_StockIconBasePos.x += 1.0f;
+	//}
+
+	//if (IsKeyPress(VK_LEFT))
+	//{
+	//	m_StockIconBasePos.x -= 1.0f;
+	//}
+
+	//if (IsKeyPress(VK_UP))
+	//{
+	//	m_StockIconBasePos.y -= 1.0f;
+	//}
+
+	//if (IsKeyPress(VK_DOWN))
+	//{
+	//	m_StockIconBasePos.y += 1.0f;
+	//}
+
+	//if (IsKeyPress('I'))
+	//{
+	//	m_StockIconDistance += 0.1f;
+	//}
+
+	//if (IsKeyPress('O'))
+	//{
+	//	m_StockIconDistance -= 0.1f;
+	//}
 }
 
 void Character_DamageUI::Draw()
 {
-	m_IconUI.Draw();
-	m_DamageUI.Draw();
-	m_PercentUI.Draw();
+	m_BackBoard.Draw();
+	m_CharacterIconImage.Draw();
+	m_DamageNum.Draw();
+	m_StockIconImage.m_pos = m_StockIconBasePos;
+
+	for (int i = 0; i < m_StockIconDrawNum; i++)
+	{
+		m_StockIconImage.Draw();
+		m_StockIconImage.m_pos.x += m_StockIconDistance;
+	}
 }
 
 Character_DamageNumUI* Character_DamageUI::GetDamageUI()
 {
-	return &m_DamageUI;
-}
-
-Character_CharacterIconUI* Character_DamageUI::GetCharacterIconUI()
-{
-	return &m_IconUI;
-}
-
-PercentUI* Character_DamageUI::GetPercentUI()
-{
-	return &m_PercentUI;
+	return &m_DamageNum;
 }
 
 void Character_DamageUI::SetPos(const CVector2& pos)
 {
-	m_pos = pos;
-	m_IconUI.SetPos(m_pos - CVector2(50.0f, 25.0f) * m_scale);
-	m_DamageUI.SetPos(m_pos + CVector2(m_DamageUI.GetSize().x * 2.5f, 0.0f) * m_scale);
-	m_PercentUI.SetPos(m_pos + CVector2(m_DamageUI.GetSize().x * 3.7f, m_DamageUI.GetSize().y * 0.3f) * m_scale);
+	m_DamageNum.m_BasePos =
+	m_BackBoard.m_BasePos =
+	m_CharacterIconImage.m_BasePos =
+	m_StockIconImage.m_BasePos =
+	pos;	
 }
 
-void Character_DamageUI::SetScale(float scale)
-{
-	m_scale = scale;
-	m_IconUI.SetSize(m_IconUI.GetSize() * m_scale);
-	m_DamageUI.SetSize(m_DamageUI.GetSize() * m_scale);
-	m_PercentUI.SetSize(m_PercentUI.GetSize() * m_scale);
-}
-
-void Character_DamageUI::SetColorBoard(BOARDCOLOR color)
+void Character_DamageUI::SetBoardColor(BOARDCOLOR color)
 {
 	switch (color)
 	{
 	case Character_DamageUI::BOARDCOLOR::RED:
 	{
-		
+		m_BackBoard.SetTexture("Assets/UI/DamageBoard_Red.png");
 	}
 		break;
 	case Character_DamageUI::BOARDCOLOR::BLUE:
 	{
-
+		m_BackBoard.SetTexture("Assets/UI/DamageBoard_Blue.png");
 	}
 		break;
 	}
+}
+
+void Character_DamageUI::SetCharacterIconImage(const char* pFilePath)
+{
+	m_CharacterIconImage.SetTexture(pFilePath);
 }
 
 

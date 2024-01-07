@@ -19,16 +19,26 @@ int Character::GetNewPlayerBit()
 void Character::Character_Init()
 {
 	m_PlayerBit = GetNewPlayerBit();
-	int PlayerNum = static_cast<int>(log2f(static_cast<float>(m_PlayerBit))) + 1;
+	//0:プレイヤー1,1:プレイヤー2
+	int PlayerNum = static_cast<int>(log2f(static_cast<float>(m_PlayerBit)));
 
-	//キャラクターの番号によってステージの場所を変える
+	//=====<キャラクターの位置の設定>=============================================
+	//キャラクターの番号によってステージの配置場所を変える
 	std::vector<CVector3>* startPosV = static_cast<SceneGame*>(CScene::GetScene())->GetStage()->GetCharacterStartPos();
-	m_pos = (*startPosV)[PlayerNum - 1];
-
-	CVector2 BasePos(450.0f, 650.0f);
+	m_pos = (*startPosV)[PlayerNum];
+	//============================================================================
+	 
+	//=====<キャラクターのUIの位置の設定>=============================================
+	CVector2 BasePos(450.0f, 620.0f);
 	CVector2 PosDistance(400.0f, 0.0f);
 
-	m_DamageUI.SetPos(BasePos + (PosDistance * static_cast<float>(PlayerNum - 1)));
+	m_DamageUI.SetBoardColor(static_cast<Character_DamageUI::BOARDCOLOR>(PlayerNum));
+	m_DamageUI.SetPos(BasePos + (PosDistance * static_cast<float>(PlayerNum)));
+	//============================================================================
+
+	//=====<当たり判定の設定>=============================================
+	SetDefaultCollider();
+	//============================================================================
 
 	Init();
 
@@ -417,6 +427,19 @@ void Character::SetLookLeft()
 {
 	m_NowLookDir = Character::LOOKDIR::LEFT;
 	m_rotate = CQuaternion::AngleAxis(CVector3::GetUp(), -90.0f);
+}
+
+void Character::SetNowLook()
+{
+	switch (m_NowLookDir)
+	{
+	case Character::LOOKDIR::LEFT:
+		SetLookLeft();
+		break;
+	case Character::LOOKDIR::RIGHT:
+		SetLookRight();
+		break;
+	}
 }
 
 void Character::AddForce(const CVector3 & force)

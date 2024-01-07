@@ -45,7 +45,7 @@ void SceneGame::Init()
 	SecondCharacter->Character_Init();
 	pController = SceneSelect::GetSecondPlayerController();
 	pController = pController == nullptr ? 
-		&PlayerController::GetPlayerControllers()[0] : pController;
+		&PlayerController::GetPlayerControllers()[1] : pController;
 	SecondCharacter->SetCharacterController(pController);
 	
 	//=====<各オブジェクトに設定するオブジェクトがあるならここでする>=====
@@ -201,70 +201,6 @@ void SceneGame::UpdateGameEnd()
 
 }
 
-void SceneGame::Collision_Player_Player()
-{
-	//=====<キャラクター同士の当たり判定>=====
-
-	//一人目のキャラクターを選択
-	for (std::vector<Character*>::iterator it_first = m_Characters.begin();
-		it_first != m_Characters.end(); it_first++)
-	{
-		//一人目のキャラクターがゲームオーバーの場合
-		if ((*it_first)->GetState() == Character::STATE::GAMEOVER)
-		{
-			continue;
-		}
-
-		//二人目のキャラクターを選択(一人目の次のキャラクター)
-		std::vector<Character*>::iterator it_second = it_first + 1;
-		for (; it_second != m_Characters.end(); it_second++)
-		{
-			//二人目のキャラクターがゲームオーバーの場合
-			if ((*it_second)->GetState() == Character::STATE::GAMEOVER)
-			{
-				continue;
-			}
-
-			//四角コライダーの取得
-			BoxCollider* pFirstCollider = (*it_first)->GetCharacterCollider();
-			BoxCollider* pSecondCollider = (*it_second)->GetCharacterCollider();
-
-			//四角同士の当たり判定を行う
-			if (!pFirstCollider->CollisionBox(*pSecondCollider))
-			{
-				//当たっていない場合
-				continue;
-			}
-
-			//めり込んだ半分の位置で移動してやる(Xのみ)
-			float NowHarfDistanceX = (pFirstCollider->GetPos().x - pSecondCollider->GetPos().x) * 0.5f;
-			float CenterPosX = pSecondCollider->GetPos().x + NowHarfDistanceX;
-			float FirstDirect = NowHarfDistanceX < 0.0f ? -1.0f : 1.0f;	//pFirstColliderに向かう向き
-			//上の値がマイナスなら位置関係は
-			//pFirstCollider ・ pSecondColliderとなる
-			//上の値がプラスなら位置関係は
-			//pSecondCollider ・ pFirstColliderとなる
-
-			//一人目のキャラクターの位置設定
-			(*it_first)->SetPos(
-				CVector3(
-					CenterPosX + ((pFirstCollider->GetSize().x * 0.5f) * FirstDirect),
-					(*it_first)->GetPos().y,
-					(*it_first)->GetPos().z
-				)
-			);
-
-			//二人目のキャラクターの位置設定
-			(*it_second)->SetPos(
-				CVector3(
-					CenterPosX + ((pSecondCollider->GetSize().x * 0.5f) * -FirstDirect),
-					(*it_second)->GetPos().y,
-					(*it_second)->GetPos().z
-				)
-			);
-		}
-	}
-}
 
 void SceneGame::DrawGameStart()
 {
@@ -353,6 +289,71 @@ void SceneGame::DrawGamePlay()
 void SceneGame::DrawGameEnd()
 {
 	
+}
+
+void SceneGame::Collision_Player_Player()
+{
+	//=====<キャラクター同士の当たり判定>=====
+
+	//一人目のキャラクターを選択
+	for (std::vector<Character*>::iterator it_first = m_Characters.begin();
+		it_first != m_Characters.end(); it_first++)
+	{
+		//一人目のキャラクターがゲームオーバーの場合
+		if ((*it_first)->GetState() == Character::STATE::GAMEOVER)
+		{
+			continue;
+		}
+
+		//二人目のキャラクターを選択(一人目の次のキャラクター)
+		std::vector<Character*>::iterator it_second = it_first + 1;
+		for (; it_second != m_Characters.end(); it_second++)
+		{
+			//二人目のキャラクターがゲームオーバーの場合
+			if ((*it_second)->GetState() == Character::STATE::GAMEOVER)
+			{
+				continue;
+			}
+
+			//四角コライダーの取得
+			BoxCollider* pFirstCollider = (*it_first)->GetCharacterCollider();
+			BoxCollider* pSecondCollider = (*it_second)->GetCharacterCollider();
+
+			//四角同士の当たり判定を行う
+			if (!pFirstCollider->CollisionBox(*pSecondCollider))
+			{
+				//当たっていない場合
+				continue;
+			}
+
+			//めり込んだ半分の位置で移動してやる(Xのみ)
+			float NowHarfDistanceX = (pFirstCollider->GetPos().x - pSecondCollider->GetPos().x) * 0.5f;
+			float CenterPosX = pSecondCollider->GetPos().x + NowHarfDistanceX;
+			float FirstDirect = NowHarfDistanceX < 0.0f ? -1.0f : 1.0f;	//pFirstColliderに向かう向き
+			//上の値がマイナスなら位置関係は
+			//pFirstCollider ・ pSecondColliderとなる
+			//上の値がプラスなら位置関係は
+			//pSecondCollider ・ pFirstColliderとなる
+
+			//一人目のキャラクターの位置設定
+			(*it_first)->SetPos(
+				CVector3(
+					CenterPosX + ((pFirstCollider->GetSize().x * 0.5f) * FirstDirect),
+					(*it_first)->GetPos().y,
+					(*it_first)->GetPos().z
+				)
+			);
+
+			//二人目のキャラクターの位置設定
+			(*it_second)->SetPos(
+				CVector3(
+					CenterPosX + ((pSecondCollider->GetSize().x * 0.5f) * -FirstDirect),
+					(*it_second)->GetPos().y,
+					(*it_second)->GetPos().z
+				)
+			);
+		}
+	}
 }
 
 void SceneGame::Collision_Player_Stage()
@@ -572,4 +573,3 @@ void SceneGame::Collision_Attack_Player()
 		}
 	}
 }
-
