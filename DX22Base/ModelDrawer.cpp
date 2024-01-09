@@ -4,13 +4,13 @@
 
 std::map<std::string, ModelDrawer::ModelInformation*> ModelDrawer::m_Models;
 ConstantBuffer* ModelDrawer::m_pConstantBuffer = nullptr;
-VertexShader* ModelDrawer::m_pVertexShader = nullptr;
+VertexShader* ModelDrawer::m_pDefaultVertexShader = nullptr;
 
 void ModelDrawer::InitModels()
 {
 	//シェーダー読み込み処理(前回作成したModelVS.csoを読み込む)
-	m_pVertexShader = new VertexShader;
-	if (FAILED(m_pVertexShader->Load("Assets/Shader/ModelVS.cso")))
+	m_pDefaultVertexShader = new VertexShader;
+	if (FAILED(m_pDefaultVertexShader->Load("Assets/Shader/ModelVS.cso")))
 	{
 		MessageBox(nullptr, "ModelVS.cso", "Error", MB_OK);
 	}
@@ -25,8 +25,8 @@ void ModelDrawer::UninitModels()
 	DestroyAllModel(true);
 	delete m_pConstantBuffer;
 	m_pConstantBuffer = nullptr;
-	delete m_pVertexShader;
-	m_pVertexShader = nullptr;
+	delete m_pDefaultVertexShader;
+	m_pDefaultVertexShader = nullptr;
 }
 
 bool ModelDrawer::LoadModel(const char* FilePath, const std::string& ModelName, float Scale)
@@ -49,7 +49,7 @@ bool ModelDrawer::LoadModel(const char* FilePath, const std::string& ModelName, 
 		//return false;
 	}
 
-	ModelInfo->model->SetVertexShader(m_pVertexShader);
+	ModelInfo->model->SetVertexShader(m_pDefaultVertexShader);
 	
 	//モデル情報の設定
 	m_Models.insert(std::make_pair(ModelName, ModelInfo));
@@ -77,7 +77,7 @@ bool ModelDrawer::LoadModelAndTexture(const char * ModelFilePath, const char * T
 		//return false;
 	}
 
-	ModelInfo->model->SetVertexShader(m_pVertexShader);
+	ModelInfo->model->SetVertexShader(m_pDefaultVertexShader);
 
 	//モデル情報の設定
 	m_Models.insert(std::make_pair(ModelName, ModelInfo));
@@ -230,7 +230,9 @@ ModelDrawer::ModelDrawer()
 	m_NowPlayAnimeNo(0),
 	m_AnimTime(0.0f),
 	m_AnimeNow(false),
-	m_AnimeLoop(false)
+	m_AnimeLoop(false),
+	m_pVertexShader(m_pDefaultVertexShader),
+	m_pPixelShader(nullptr)
 {
 }
 
@@ -289,6 +291,8 @@ void ModelDrawer::Draw()
 		m_pModelInfo->model->SetAnimeTime(m_NowPlayAnimeNo, m_AnimTime);
 	}
 
+	m_pModelInfo->model->SetVertexShader(m_pVertexShader);
+	m_pModelInfo->model->SetPixelShader(m_pPixelShader);
 	m_pModelInfo->model->Draw();
 }
 

@@ -154,9 +154,14 @@
     <ClCompile Include="Camera00_Debug.cpp" />
     <ClCompile Include="Camera02_Select.cpp" />
     <ClCompile Include="Camera03_GameStart.cpp" />
+    <ClCompile Include="Character00_DeadState.cpp" />
+    <ClCompile Include="Character00_GameOverState.cpp" />
+    <ClCompile Include="Character00_RespawnState.cpp" />
     <ClCompile Include="Character_DeadState.cpp" />
     <ClCompile Include="Character_GameOverState.cpp" />
     <ClCompile Include="Character_RespawnState.cpp" />
+    <ClCompile Include="OffScreenRenderingClass.cpp" />
+    <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="GameUI00_StartCount.cpp" />
     <ClCompile Include="Scene00_Game.cpp" />
     <ClCompile Include="Camera01_Game.cpp" />
@@ -249,6 +254,7 @@
     <ClInclude Include="Camera02_Select.h" />
     <ClInclude Include="Camera03_GameStart.h" />
     <ClInclude Include="GameUI00_StartCount.h" />
+    <ClInclude Include="OffScreenRenderingClass.h" />
     <ClInclude Include="Scene00_Game.h" />
     <ClInclude Include="BlendState.h" />
     <ClInclude Include="Calculation.h" />
@@ -289,6 +295,7 @@
     <ClInclude Include="Select01_CharacterList.h" />
     <ClInclude Include="Select02_SlideReadyToFightText.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Stage_00.h" />

@@ -75,7 +75,7 @@ void BoxCollider::SetColliderPos(const CVector3& pos)
 	m_BasePos = pos - m_ShiftPosVector;
 }
 
-const CVector3& BoxCollider::GetColliderPos() const
+CVector3 BoxCollider::GetColliderPos() const
 {
 	return (m_BasePos + m_ShiftPosVector);
 }
@@ -122,7 +122,7 @@ bool BoxCollider::CollisionBox(const BoxCollider& Box)
 	CVector3 NowDistance;
 	CVector3 ColliderHarfSize;
 
-	NowDistance = (Box.GetBasePos() + Box.GetShiftVec()) - (this->GetBasePos() + this->GetShiftVec());
+	NowDistance = Box.GetColliderPos() - this->GetColliderPos();
 	NowDistance = NowDistance.Abs();
 	ColliderHarfSize = (this->GetSize() + Box.GetSize()) * 0.5f;
 

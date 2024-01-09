@@ -16,7 +16,6 @@ public:
 	Image2D();
 	virtual ~Image2D();
 	virtual void Update();
-	virtual void PrevDraw();
 	void Draw();
 	void SetTexture(const char* FilePath);
 	void ReleaseTexture();
@@ -35,6 +34,9 @@ public:
 	const CVector2& GetUVSize();
 	void SetVertexShader(VertexShader* pVS);
 	void SetPixelShader(PixelShader* pPS);
+
+protected:
+	virtual void PrevDraw();
 
 private:
 	ID3D11ShaderResourceView* m_pTexture = nullptr;

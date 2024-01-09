@@ -16,8 +16,8 @@ Effekseer::Handle g_efkHandle;
 ID3D11Device* g_pDevice;
 ID3D11DeviceContext* g_pContext;
 IDXGISwapChain* g_pSwapChain;
-ID3D11RenderTargetView* g_pRTV;
-ID3D11DepthStencilView* g_pDSV;
+ID3D11RenderTargetView* g_pRTV;		//レンダーターゲット
+ID3D11DepthStencilView* g_pDSV;		//深度バッファ情報
 
 ID3D11Device* GetDevice()
 {

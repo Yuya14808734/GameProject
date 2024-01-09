@@ -197,4 +197,9 @@ void Character_DamageUI::SetCharacterIconImage(const char* pFilePath)
 	m_CharacterIconImage.SetTexture(pFilePath);
 }
 
+void Character_DamageUI::SetStockNum(int num)
+{
+	m_StockIconDrawNum = num;
+}
+
 

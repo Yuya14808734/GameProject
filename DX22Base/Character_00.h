@@ -27,11 +27,7 @@ private:
 	void DashUninit() override;		//走るときの終了処理
 	void DashUpdate() override;		//走るときのアップデート
 	//==========================================================================
-	//void AttackInit() override;		//攻撃するときの初期化
-	//void AttackUninit() override;	//攻撃するときの終了処理
-	//void AttackUpdate() override;	//攻撃するときのアップデート
-	//==========================================================================
-	void BlowAwayInit() override;		//吹っ飛ばされる時の初期化
+	void BlowAwayInit() override;	//吹っ飛ばされる時の初期化
 	void BlowAwayUninit() override;	//吹っ飛ばしの終了処理
 	void BlowAwayUpdate() override;	//吹っ飛ばしのアップデート
 	//==========================================================================
@@ -66,6 +62,19 @@ private:
 	void HitStopInit() override;	//ヒットストップの初期化
 	void HitStopUninit() override;	//ヒットストップの終了処理
 	void HitStopUpdate() override;	//ヒットストップ状態のアップデート
+	//==========================================================================	
+	void DeadInit() override;		//死んだときの初期化
+	void DeadUninit() override;		//死んだときの終了処理
+	void DeadUpdate() override;		//死んだときのアップデート
+	//====================================================================
+	void RespawnInit() override;	//リスポーンしたときの初期化
+	void RespawnUninit() override;	//リスポーンしたときの終了処理
+	void RespawnUpdate() override;	//リスポーンしたときのアップデート
+	//====================================================================
+	void GameOverInit() override;	//リスポーンしたときの初期化
+	void GameOverUninit() override;	//リスポーンしたときの終了処理
+	void GameOverUpdate() override;	//リスポーンしたときのアップデート
+	//====================================================================
 
 	//==========================================================================
 	//攻撃のアップデート

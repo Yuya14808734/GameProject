@@ -22,7 +22,7 @@ public:
 	float GetDeadLineLeftX();
 	float GetDeadLineTopY();
 	float GetDeadLineBottomY();
-	CVector3 AddRespawn();
+	CVector3 AddRespawn();			//リスポーンしている数を増やす。戻り値は新しいリスポーン位置
 	void MinaRespawn();
 
 protected:

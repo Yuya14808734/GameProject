@@ -66,12 +66,38 @@ Model::~Model()
 
 void Model::SetVertexShader(VertexShader* vs)
 {
-	m_pVS = vs;
+	if (vs == nullptr)
+	{
+		SetDefaultVertexShader();
+	}
+	else
+	{
+		m_pVS = vs;
+	}
 }
+
+void Model::SetDefaultVertexShader()
+{
+	m_pVS = m_pDefVS;
+}
+
 void Model::SetPixelShader(PixelShader* ps)
 {
-	m_pPS = ps;
+	if (ps == nullptr)
+	{
+		SetDefaultPixelShader();
+	}
+	else
+	{
+		m_pPS = ps;
+	}
 }
+
+void Model::SetDefaultPixelShader()
+{
+	m_pPS = m_pDefPS;
+}
+
 const Model::Mesh* Model::GetMesh(unsigned int index)
 {
 	if (index >= GetMeshNum())

@@ -4,6 +4,7 @@ void Character::DeadInit()
 {
 	m_ChangeStateCount = 0;	//ステータスを変えるまでの時間をカウントする
 	m_CharacterStock--;		//ストックを減らす
+	m_DamageUI.SetStockNum(m_CharacterStock);
 }
 
 void Character::DeadUninit()

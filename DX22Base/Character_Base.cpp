@@ -34,6 +34,8 @@ void Character::Character_Init()
 
 	m_DamageUI.SetBoardColor(static_cast<Character_DamageUI::BOARDCOLOR>(PlayerNum));
 	m_DamageUI.SetPos(BasePos + (PosDistance * static_cast<float>(PlayerNum)));
+	m_CharacterStock = 3;
+	m_DamageUI.SetStockNum(m_CharacterStock);
 	//============================================================================
 
 	//=====<当たり判定の設定>=============================================
@@ -65,25 +67,28 @@ void Character::Character_Update()
 	//========================================
 	StateUpdate(m_NowState);
 
-	//キャラクターがステージ外に出ていたら
-	if (m_pStage != nullptr)
+	//死ぬ判定をしなくてよいか
+	if ((m_NowState != Character::STATE::GAMEOVER) && (m_NowState != Character::STATE::DEAD))
 	{
-		//=====<キャラクターが死んだか否か>=====
-		if (m_pStage->GetDeadLineBottomY() > m_pos.y)
+		if (m_pStage != nullptr)
 		{
-			ChangeState(Character::STATE::DEAD);
-		}
-		if (m_pStage->GetDeadLineTopY() < m_pos.y)
-		{
-			ChangeState(Character::STATE::DEAD);
-		}
-		if (m_pStage->GetDeadLineLeftX() > m_pos.x)
-		{
-			ChangeState(Character::STATE::DEAD);
-		}
-		if (m_pStage->GetDeadLineRightX() < m_pos.x)
-		{
-			ChangeState(Character::STATE::DEAD);
+			//=====<キャラクターが死んだか否か>=====
+			if (m_pStage->GetDeadLineBottomY() > m_pos.y)
+			{
+				ChangeState(Character::STATE::DEAD);
+			}
+			if (m_pStage->GetDeadLineTopY() < m_pos.y)
+			{
+				ChangeState(Character::STATE::DEAD);
+			}
+			if (m_pStage->GetDeadLineLeftX() > m_pos.x)
+			{
+				ChangeState(Character::STATE::DEAD);
+			}
+			if (m_pStage->GetDeadLineRightX() < m_pos.x)
+			{
+				ChangeState(Character::STATE::DEAD);
+			}
 		}
 	}
 

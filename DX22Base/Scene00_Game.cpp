@@ -326,35 +326,14 @@ void SceneGame::Collision_Player_Player()
 				continue;
 			}
 
-			//変数に置き換える
-			
-			//めり込んだ半分の位置で移動してやる(Xのみ)
-			float NowHarfDistanceX = (pFirstCollider->GetBasePos().x - pSecondCollider->GetBasePos().x) * 0.5f;
-			float CenterPosX = pSecondCollider->GetBasePos().x + NowHarfDistanceX;
-			float FirstDirect = NowHarfDistanceX < 0.0f ? -1.0f : 1.0f;	
-			//pFirstColliderに向かう向き
-			//上の値がマイナスなら位置関係は
-			//pFirstCollider ← pSecondColliderとなる
-			//上の値がプラスなら位置関係は
-			//pSecondCollider ← pFirstColliderとなる
-
-			//一人目のキャラクターの位置設定
-			(*it_first)->SetPos(
-				CVector3(
-					CenterPosX + ((pFirstCollider->GetSize().x * 0.5f) * FirstDirect),// -pFirstCollider->GetShiftVec().x,
-					(*it_first)->GetPos().y,
-					(*it_first)->GetPos().z
-				)
-			);
-
-			//二人目のキャラクターの位置設定
-			(*it_second)->SetPos(
-				CVector3(
-					CenterPosX + ((pSecondCollider->GetSize().x * 0.5f) * -FirstDirect),// - pSecondCollider->GetShiftVec().x,
-					(*it_second)->GetPos().y,
-					(*it_second)->GetPos().z
-				)
-			);
+			//めり込んだ分を跳ね返してやる
+			float MaxDistanceX = (pFirstCollider->GetSize().x + pSecondCollider->GetSize().x) * 0.5f;
+			float NowDistanceX = (pFirstCollider->GetColliderPos().x - pSecondCollider->GetColliderPos().x);
+			float MinDistanceX = MaxDistanceX * 0.5f * 0.1f;
+			float MoveX = (MaxDistanceX - fabsf(NowDistanceX)) * 0.02f + MinDistanceX;
+			float FirstDirect = NowDistanceX < 0.0f ? -1.0f : 1.0f;
+			(*it_first)->SetPos((*it_first)->GetPos() + CVector3::GetRight() * MoveX * FirstDirect);
+			(*it_second)->SetPos((*it_second)->GetPos() + CVector3::GetRight() * MoveX * -FirstDirect);
 		}
 	}
 }

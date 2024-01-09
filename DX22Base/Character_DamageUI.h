@@ -34,6 +34,7 @@ public:
 	void SetPos(const CVector2& pos);
 	void SetBoardColor(BOARDCOLOR color);
 	void SetCharacterIconImage(const char* pFilePath);
+	void SetStockNum(int num);
 
 private:
 	CVector3 m_StockIconBasePos;

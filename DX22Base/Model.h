@@ -126,7 +126,9 @@ public:
 	Model();
 	~Model();
 	void SetVertexShader(VertexShader* vs);
+	void SetDefaultVertexShader();
 	void SetPixelShader(PixelShader* ps);
+	void SetDefaultPixelShader();
 	const Mesh* GetMesh(unsigned int index);
 	unsigned int GetMeshNum();
 

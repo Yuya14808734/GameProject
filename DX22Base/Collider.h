@@ -45,7 +45,7 @@ public:
 	void SetShiftVec(const CVector3& shiftVec);
 	const CVector3& GetShiftVec() const;
 	void SetColliderPos(const CVector3& pos);
-	const CVector3& GetColliderPos() const;
+	CVector3 GetColliderPos() const;
 	void SetSize(const CVector3& size);
 	const CVector3& GetSize() const;
 	void SetType(BoxCollider::BOXTYPE type);

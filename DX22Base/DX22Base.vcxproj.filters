@@ -163,6 +163,18 @@
     <Filter Include="ヘッダー ファイル\04_Game\07_GameUI">
       <UniqueIdentifier>{b58f3543-94aa-4aea-8f52-eaa86b0ec290}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\03_Assets\Shader">
+      <UniqueIdentifier>{8b3d02c0-64e3-4e10-8568-4cf52f6e8a24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\03_Assets\Shader">
+      <UniqueIdentifier>{52a7b50a-cfe1-4b0b-a3b8-c5ea2f767b3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\03_Assets\Rendering">
+      <UniqueIdentifier>{f9afa053-6e22-48fb-8338-80091531bb21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\03_Assets\Rendering">
+      <UniqueIdentifier>{aa286861-1335-49de-a49d-364ecc166095}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BlendState.cpp">
@@ -438,6 +450,21 @@
     <ClCompile Include="GameUI00_StartCount.cpp">
       <Filter>ソース ファイル\04_Game\07_GameUI</Filter>
     </ClCompile>
+    <ClCompile Include="Character00_DeadState.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character00_GameOverState.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character00_RespawnState.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderManager.cpp">
+      <Filter>ソース ファイル\03_Assets\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="OffScreenRenderingClass.cpp">
+      <Filter>ソース ファイル\03_Assets\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -598,6 +625,12 @@
     </ClInclude>
     <ClInclude Include="GameUI00_StartCount.h">
       <Filter>ヘッダー ファイル\04_Game\07_GameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderManager.h">
+      <Filter>ヘッダー ファイル\03_Assets\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="OffScreenRenderingClass.h">
+      <Filter>ヘッダー ファイル\03_Assets\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
