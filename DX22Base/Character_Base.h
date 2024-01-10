@@ -37,10 +37,8 @@ public:
 		ATTACK_12,		//弱2
 		ATTACK_13,		//弱3
 		ATTACK_S2,		//横強
-		ATTACK_S4,		//横スマッシュ
+		ATTACK_SD,		//ダッシュ攻撃
 		ATTACK_AIRN,	//空N
-		SPECIAL_N,		//必殺技普通
-		SPECIAL_AIRN,	//空中必殺技
 		MAX,
 	};
 
@@ -258,31 +256,22 @@ protected:
 	virtual void AttackS2_Update() {};		//横強
 	virtual void AttackS2_Uninit() {};		//横強
 	//==========================================================================
-	virtual void AttackS4_Init() {};		//横スマッシュ
-	virtual void AttackS4_Update() {};		//横スマッシュ
-	virtual void AttackS4_Uninit() {};		//横スマッシュ
+	virtual void AttackSD_Init() {};		//ダッシュ攻撃
+	virtual void AttackSD_Update() {};		//ダッシュ攻撃
+	virtual void AttackSD_Uninit() {};		//ダッシュ攻撃
 	//==========================================================================
 	virtual void AttackAirN_Init() {};		//空N
 	virtual void AttackAirN_Update() {};	//空N
 	virtual void AttackAirN_Uninit() {};	//空N
 	//==========================================================================
-	virtual void SpecialN_Init() {};		//通常必殺技
-	virtual void SpecialN_Update() {};		//通常必殺技
-	virtual void SpecialN_Uninit() {};		//通常必殺技
-	//==========================================================================
-	virtual void SpecialAirN_Init() {};		//通常必殺技(空中)
-	virtual void SpecialAirN_Update() {};	//通常必殺技(空中)
-	virtual void SpecialAirN_Uninit() {};	//通常必殺技(空中)
 
 public:
 	virtual void Attack11_Hit(Character* HitCharacter) {};			//弱1
 	virtual void Attack12_Hit(Character* HitCharacter) {};			//弱2
 	virtual void Attack13_Hit(Character* HitCharacter) {};			//弱3
 	virtual void AttackS2_Hit(Character* HitCharacter) {};			//横強
-	virtual void AttackS4_Hit(Character* HitCharacter) {};			//横スマッシュ
+	virtual void AttackSD_Hit(Character* HitCharacter) {};			//ダッシュ攻撃
 	virtual void AttackAirN_Hit(Character* HitCharacter) {};		//空N
-	virtual void SpecialN_Hit(Character* HitCharacter) {};			//通常必殺技
-	virtual void SpecialAirN_Hit(Character* HitCharacter) {};		//通常必殺技(空中)
 
 
 protected:

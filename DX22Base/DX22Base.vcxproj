@@ -154,12 +154,14 @@
     <ClCompile Include="Camera00_Debug.cpp" />
     <ClCompile Include="Camera02_Select.cpp" />
     <ClCompile Include="Camera03_GameStart.cpp" />
+    <ClCompile Include="Character00_AttackDS.cpp" />
     <ClCompile Include="Character00_DeadState.cpp" />
     <ClCompile Include="Character00_GameOverState.cpp" />
     <ClCompile Include="Character00_RespawnState.cpp" />
     <ClCompile Include="Character_DeadState.cpp" />
     <ClCompile Include="Character_GameOverState.cpp" />
     <ClCompile Include="Character_RespawnState.cpp" />
+    <ClCompile Include="Image3D.cpp" />
     <ClCompile Include="OffScreenRenderingClass.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="GameUI00_StartCount.cpp" />
@@ -237,8 +239,6 @@
     <ClCompile Include="Select01_CharacterList.cpp" />
     <ClCompile Include="Select02_SlideReadyToFightText.cpp" />
     <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="Character00_SpecialAirN.cpp" />
-    <ClCompile Include="Character00_SpecialN.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Stage_00.cpp" />
     <ClCompile Include="Stage_Base.cpp" />
@@ -254,6 +254,7 @@
     <ClInclude Include="Camera02_Select.h" />
     <ClInclude Include="Camera03_GameStart.h" />
     <ClInclude Include="GameUI00_StartCount.h" />
+    <ClInclude Include="Image3D.h" />
     <ClInclude Include="OffScreenRenderingClass.h" />
     <ClInclude Include="Scene00_Game.h" />
     <ClInclude Include="BlendState.h" />

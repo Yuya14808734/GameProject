@@ -444,8 +444,6 @@ CQuaternion::CQuaternion(float AngleX, float AngleY, float AngleZ)
 		DirectX::XMConvertToRadians(AngleX),
 		DirectX::XMConvertToRadians(AngleY),
 		DirectX::XMConvertToRadians(AngleZ));
-
-	//inv_v =
 }
 
 CQuaternion::CQuaternion(CVector3 Angle)
@@ -465,27 +463,6 @@ CQuaternion CQuaternion::operator*(const CQuaternion& q)
 	CQuaternion r_q;
 	r_q.v = DirectX::XMQuaternionMultiply(this->v, q.v);
 	return r_q;
-
-	/*DirectX::XMFLOAT4 q1, q2;
-	q1 = this->GetValue();
-	q2 = q.GetValue();*/
-
-	/*return CQuaternion(
-		(q2.w * q1.x) - (q2.z * q1.y) + (q2.y * q1.z) + (q2.x * q1.w),
-		(q2.z * q1.x) + (q2.w * q1.y) - (q2.x * q1.z) + (q2.y * q1.w),
-		(-q2.y * q1.x) + (q2.x * q1.y) + (q2.w * q1.z) + (q2.z * q1.w),
-		(-q2.x * q1.x) - (q2.y * q1.y) - (q2.z * q1.z) + (q2.w * q1.w)
-	);*/
-
-	/*DirectX::XMFLOAT4 return_q(
-		(q2.w * q1.x) - (q2.z * q1.y) + (q2.y * q1.z) + (q2.x * q1.w),
-		(q2.z * q1.x) + (q2.w * q1.y) - (q2.x * q1.z) + (q2.y * q1.w),
-		(-q2.y * q1.x) + (q2.x * q1.y) + (q2.w * q1.z) + (q2.z * q1.w),
-		(-q2.x * q1.x) - (q2.y * q1.y) - (q2.z * q1.z) + (q2.w * q1.w)
-			);*/
-
-	//return rq;
-	//return CQuaternion(return_q);
 }
 
 CQuaternion CQuaternion::operator*=(const CQuaternion& q)
@@ -533,6 +510,14 @@ void CQuaternion::SetQuaternion(float x, float y, float z, float w)
 {
 	DirectX::XMFLOAT4 f = DirectX::XMFLOAT4(x, y, z, w);
 	v = DirectX::XMLoadFloat4(&f);
+}
+
+void CQuaternion::SetQuaternion(float AngleX, float AngleY, float AngleZ)
+{
+	v = DirectX::XMQuaternionRotationRollPitchYaw(
+		DirectX::XMConvertToRadians(AngleX),
+		DirectX::XMConvertToRadians(AngleY),
+		DirectX::XMConvertToRadians(AngleZ));
 }
 
 CQuaternion& CQuaternion::AngleAxis(const CVector3& Axis, float Angle)

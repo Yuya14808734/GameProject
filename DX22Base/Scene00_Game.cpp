@@ -33,7 +33,7 @@ void SceneGame::Init()
 	//=====<キャラクターの生成>=====
 	Character::InitPlayerBit();
 	
-	//=====<選んだキャラクターの生成>=====
+	//=====<セレクトシーンで選んだキャラクターの生成>=====
 	Character* FirstCharacter = CreateCharacter(SceneSelect::GetFirstPlayerCharacter());
 	PlayerController* pController = SceneSelect::GetFirstPlayerController();
 	pController = pController == nullptr ? 
@@ -48,7 +48,16 @@ void SceneGame::Init()
 		&PlayerController::GetPlayerControllers()[1] : pController;
 	SecondCharacter->SetCharacterController(pController);
 	
-	//=====<各オブジェクトに設定するオブジェクトがあるならここでする>=====
+	//=====<UIのパラメータの設定>=====
+	m_GameStartCountUI.SetNumDraw(3);
+
+	//=====<背景画像の設定>=====
+	m_BackGround.SetTexture("Assets/BackGroundImage/BackGround00.png");
+	m_BackGround.SetPos(CVector3(0.0f, 0.0f, 50.0f));
+	m_BackGround.SetSize(CVector2(1200.0f,800.0f));
+	m_BackGround.SetScale(CVector3::GetOne() * 0.2f);
+
+	//=====<各オブジェクトに渡したいオブジェクトポインタがあるならここでする>=====
 	for (Character* pCharacter : m_Characters)
 	{
 		pCharacter->SetStage(m_pStage);
@@ -58,7 +67,6 @@ void SceneGame::Init()
 	m_pGameCamera->SetStage(m_pStage);
 	pCameraGameStart->SetCharacter(m_Characters);
 
-	m_GameStartCountUI.SetNumDraw(3);
 }
 
 void SceneGame::Uninit()
@@ -81,6 +89,8 @@ void SceneGame::Uninit()
 
 void SceneGame::Update()
 {
+	m_BackGround.Update();
+
 	switch (m_GameState)
 	{
 	case SceneGame::GAMESTATE::GAMESTART:
@@ -97,6 +107,8 @@ void SceneGame::Update()
 
 void SceneGame::Draw()
 {
+	m_BackGround.Draw();
+
 	switch (m_GameState)
 	{
 	case SceneGame::GAMESTATE::GAMESTART:
@@ -164,6 +176,8 @@ void SceneGame::UpdateGameStart()
 	{
 		m_GameStartCountUI.SetGoDraw(true);
 		m_GameState = GAMESTATE::GAMEPLAY;
+		CameraManager::GetInstance().SetSceneCamera("GameCamera");
+		
 	}
 }
 
@@ -532,21 +546,11 @@ void SceneGame::Collision_Attack_Player()
 						case Character::ATTACK::ATTACK_S2:
 							AttackCharacter->AttackS2_Hit(HitCharacter);
 							break;
-						case Character::ATTACK::ATTACK_S4:
-							AttackCharacter->AttackS4_Hit(HitCharacter);
+						case Character::ATTACK::ATTACK_SD:
+							AttackCharacter->AttackSD_Hit(HitCharacter);
 							break;
 						case Character::ATTACK::ATTACK_AIRN:
 							AttackCharacter->AttackAirN_Hit(HitCharacter);
-							break;
-						case Character::ATTACK::SPECIAL_N:
-							AttackCharacter->SpecialN_Hit(HitCharacter);
-							break;
-						case Character::ATTACK::SPECIAL_AIRN:
-							AttackCharacter->SpecialAirN_Hit(HitCharacter);
-							break;
-						case Character::ATTACK::MAX:
-							break;
-						default:
 							break;
 						}
 					}

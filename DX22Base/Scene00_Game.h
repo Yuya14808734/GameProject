@@ -6,6 +6,7 @@
 #include "Camera01_Game.h"
 #include "Select01_CharacterList.h"
 #include "GameUI00_StartCount.h"
+#include "Image3D.h"
 
 
 class SceneGame : public CScene
@@ -48,6 +49,7 @@ private:
 	std::vector<Character*> m_Characters;	//キャラクターの情報
 	Stage* m_pStage;						//ステージの情報
 	CameraGame* m_pGameCamera = nullptr;		//ゲームのカメラ
+	Image3D m_BackGround;
 
 	GameStartCountUI m_GameStartCountUI;
 	int m_GameStartFrameCount = 0;

@@ -47,6 +47,7 @@ void Character_00::Init()
 	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_JUMP00B.fbx", "Jump", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_DAMAGED00.fbx", "Damage00", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_DAMAGED01.fbx", "Damage01", "UnityChan");
+	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_SLIDE00.fbx", "Slide00", "UnityChan");
 	//============================================================================
 	
 	//=====<モデル・アニメーションの設定>=========================================

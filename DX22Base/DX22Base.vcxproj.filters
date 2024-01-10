@@ -175,6 +175,12 @@
     <Filter Include="ソース ファイル\03_Assets\Rendering">
       <UniqueIdentifier>{aa286861-1335-49de-a49d-364ecc166095}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\03_Assets\3D">
+      <UniqueIdentifier>{36ae5bb8-e505-40d4-8d26-596aa05de703}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\03_Assets\3D">
+      <UniqueIdentifier>{bb962117-6c4c-4f40-8a50-203817d9c918}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BlendState.cpp">
@@ -321,12 +327,6 @@
     <ClCompile Include="Character00_AttackAirN.cpp">
       <Filter>ソース ファイル\04_Game\02_Character\Character_00\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="Character00_SpecialN.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00\Attack</Filter>
-    </ClCompile>
-    <ClCompile Include="Character00_SpecialAirN.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00\Attack</Filter>
-    </ClCompile>
     <ClCompile Include="Character_JumpInState.cpp">
       <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
     </ClCompile>
@@ -464,6 +464,12 @@
     </ClCompile>
     <ClCompile Include="OffScreenRenderingClass.cpp">
       <Filter>ソース ファイル\03_Assets\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Image3D.cpp">
+      <Filter>ソース ファイル\03_Assets\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Character00_AttackDS.cpp">
+      <Filter>ソース ファイル\04_Game\02_Character\Character_00\Attack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -631,6 +637,9 @@
     </ClInclude>
     <ClInclude Include="OffScreenRenderingClass.h">
       <Filter>ヘッダー ファイル\03_Assets\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Image3D.h">
+      <Filter>ヘッダー ファイル\03_Assets\3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

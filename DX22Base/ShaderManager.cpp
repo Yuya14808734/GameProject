@@ -3,6 +3,15 @@
 std::map<std::string, VertexShader*> ShaderManager::m_pVertexShaders;
 std::map<std::string, PixelShader*> ShaderManager::m_pPixelShaders;
 
+void ShaderManager::InitShaders()
+{
+}
+
+void ShaderManager::UninitShaders()
+{
+	AllReleaseShader();
+}
+
 bool ShaderManager::SetVertexShader(const std::string& ShaderName, VertexShader* pVertexShader)
 {
 	if (pVertexShader == nullptr)

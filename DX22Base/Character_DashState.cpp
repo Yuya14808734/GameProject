@@ -71,6 +71,11 @@ void Character::DashUpdate()
 		}
 	}
 
+	if (m_Controller->GetAttack())
+	{
+		ChangeAttack(Character::ATTACK::ATTACK_SD);
+	}
+
 	//ƒWƒƒƒ“ƒv
 	if (m_Controller->GetJumpTrigger())
 	{

@@ -151,6 +151,7 @@ public:
 	const DirectX::XMFLOAT4& GetValue() const;
 	const CQuaternion& normalize() const;
 	void SetQuaternion(float x, float y, float z, float w);
+	void SetQuaternion(float AngleX, float AngleY, float AngleZ);
 
 public:
 	static CQuaternion& AngleAxis(const CVector3& Axis, float Angle);

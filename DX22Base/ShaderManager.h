@@ -7,6 +7,8 @@
 class ShaderManager
 {
 public:
+	static void InitShaders();
+	static void UninitShaders();
 	static bool SetVertexShader(const std::string& ShaderName,VertexShader* pVertexShader);
 	static bool SetPixelShader(const std::string& ShaderName, PixelShader* pPixelShader);
 	static VertexShader* GetVertexShader(const std::string& Name);

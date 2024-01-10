@@ -79,45 +79,36 @@ private:
 	//==========================================================================
 	//攻撃のアップデート
 	//=====================================================
-	void Attack11_Init();								//弱1
-	void Attack11_Update();
-	void Attack11_Uninit();
-	void Attack11_Hit(Character* HitCharacter);			
+	void Attack11_Init() override;									//弱1
+	void Attack11_Update() override;
+	void Attack11_Uninit() override;
+	void Attack11_Hit(Character* HitCharacter) override;			
 	//=====================================================
-	void Attack12_Init();								//弱2
-	void Attack12_Update();
-	void Attack12_Uninit();
-	void Attack12_Hit(Character* HitCharacter);			
+	void Attack12_Init() override;									//弱2
+	void Attack12_Update() override;
+	void Attack12_Uninit() override;
+	void Attack12_Hit(Character* HitCharacter) override;
 	//=====================================================
-	void Attack13_Init();								//弱3
-	void Attack13_Update();
-	void Attack13_Uninit();
-	void Attack13_Hit(Character* HitCharacter);			
+	void Attack13_Init() override;									//弱3
+	void Attack13_Update() override;
+	void Attack13_Uninit() override;
+	void Attack13_Hit(Character* HitCharacter) override;
 	//=====================================================
-	void AttackS2_Init();									//横強
-	void AttackS2_Update();
-	void AttackS2_Uninit();
-	void AttackS2_Hit(Character* HitCharacter);			
+	void AttackS2_Init() override;									//横強
+	void AttackS2_Update() override;
+	void AttackS2_Uninit() override;
+	void AttackS2_Hit(Character* HitCharacter) override;
 	//=====================================================
-	void AttackS4_Init() {};								//横スマッシュ
-	void AttackS4_Update() {};
-	void AttackS4_Uninit() {};
-	void AttackS4_Hit(Character* HitCharacter) {};
+	void AttackSD_Init() override;								//横スマッシュ
+	void AttackSD_Update() override;
+	void AttackSD_Uninit() override;
+	void AttackSD_Hit(Character* HitCharacter) override;
 	//=====================================================
-	void AttackAirN_Init();								//空N
-	void AttackAirN_Update();
-	void AttackAirN_Uninit();
-	void AttackAirN_Hit(Character* HitCharacter);		
+	void AttackAirN_Init() override;									//空N
+	void AttackAirN_Update() override;
+	void AttackAirN_Uninit() override;
+	void AttackAirN_Hit(Character* HitCharacter) override;		
 	//=====================================================
-	void SpecialN_Init() {};								//通常必殺技
-	void SpecialN_Update() {};
-	void SpecialN_Uninit() {};
-	void SpecialN_Hit(Character* HitCharacter) {};
-	//=====================================================
-	void SpecialAirN_Init() {};								//通常必殺技(空中)
-	void SpecialAirN_Update() {};
-	void SpecialAirN_Uninit() {};
-	void SpecialAirN_Hit(Character* HitCharacter) {};		
 
 
 	void HitGround() override;

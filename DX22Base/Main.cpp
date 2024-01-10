@@ -12,6 +12,7 @@
 #include "XboxKeyboard.h"
 #include "MiniWindow.h"
 #include "Player_Controller.h"
+#include "ShaderManager.h"
 
 //--- íËêîíËã`
 const unsigned int SCREEN_WIDTH = 1280;
@@ -52,6 +53,8 @@ void MainInit()
 	{
 		
 	}
+	
+	ShaderManager::InitShaders();
 	InputXPad::XpadInit();
 	PlayerController::PlayerController_Init();
 	MiniWindow::WindowInit();
@@ -64,6 +67,7 @@ void MainUninit()
 	delete g_pGame;
 	EffectManager::EffectUninit();
 	MiniWindow::WindowUninit();
+	ShaderManager::UninitShaders();
 	UninitXAudio2();
 	Sprite::Uninit();
 	UninitGeometory();

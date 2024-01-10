@@ -18,21 +18,11 @@ void Character::AttackInit()
 	case Character::ATTACK::ATTACK_S2:
 		AttackS2_Init();
 		break;
-	case Character::ATTACK::ATTACK_S4:
-		AttackS4_Init();
+	case Character::ATTACK::ATTACK_SD:
+		AttackSD_Init();
 		break;
 	case Character::ATTACK::ATTACK_AIRN:
 		AttackAirN_Init();
-		break;
-	case Character::ATTACK::SPECIAL_N:
-		SpecialN_Init();
-		break;
-	case Character::ATTACK::SPECIAL_AIRN:
-		SpecialAirN_Init();
-		break;
-	case Character::ATTACK::MAX:
-		break;
-	default:
 		break;
 	}
 }
@@ -53,21 +43,11 @@ void Character::AttackUninit()
 	case Character::ATTACK::ATTACK_S2:
 		AttackS2_Uninit();
 		break;
-	case Character::ATTACK::ATTACK_S4:
-		AttackS4_Uninit();
+	case Character::ATTACK::ATTACK_SD:
+		AttackSD_Uninit();
 		break;
 	case Character::ATTACK::ATTACK_AIRN:
 		AttackAirN_Uninit();
-		break;
-	case Character::ATTACK::SPECIAL_N:
-		SpecialN_Uninit();
-		break;
-	case Character::ATTACK::SPECIAL_AIRN:
-		SpecialAirN_Uninit();
-		break;
-	case Character::ATTACK::MAX:
-		break;
-	default:
 		break;
 	}
 }
@@ -88,21 +68,11 @@ void Character::AttackUpdate()
 	case Character::ATTACK::ATTACK_S2:
 		AttackS2_Update();
 		break;
-	case Character::ATTACK::ATTACK_S4:
-		AttackS4_Update();
+	case Character::ATTACK::ATTACK_SD:
+		AttackSD_Update();
 		break;
 	case Character::ATTACK::ATTACK_AIRN:
 		AttackAirN_Update();
-		break;
-	case Character::ATTACK::SPECIAL_N:
-		SpecialN_Update();
-		break;
-	case Character::ATTACK::SPECIAL_AIRN:
-		SpecialAirN_Update();
-		break;
-	case Character::ATTACK::MAX:
-		break;
-	default:
 		break;
 	}
 }
