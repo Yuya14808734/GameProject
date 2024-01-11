@@ -2,37 +2,63 @@
 #include "Input.h"
 #include "MiniWindow.h"
 
+//==============================================
+#include "Character00_AirMoveState.h"
+#include "Character00_BlowAwayState.h"
+#include "Character00_DashState.h"
+#include "Character00_DeadState.h"
+#include "Character00_DownState.h"
+#include "Character00_FallDownState.h"
+#include "Character00_GameOverState.h"
+#include "Character00_HitStopState.h"
+#include "Character00_IdleState.h"
+#include "Character00_JumpInState.h"
+#include "Character00_JumpState.h"
+#include "Character00_LeanBackState.h"
+#include "Character00_RespawnState.h"
+#include "Character00_WakeUpState.h"
+#include "Character00_WalkState.h"
+//==============================================
+#include "Character00_Attack11.h"
+#include "Character00_Attack12.h"
+#include "Character00_Attack13.h"
+#include "Character00_AttackAirN.h"
+#include "Character00_AttackDS.h"
+#include "Character00_AttackS2.h"
+//==============================================
+
+
 void Character_00::Init()
 {
 	m_stateWindow.Init_MiniWindow();
 
 	//=====<“®‚«‚Ìƒpƒ‰ƒ[ƒ^‚ÌÝ’è>======================================
 	MOVEPARAMETER moveParameter;
-	moveParameter.m_WalkSpeed = 4.0f / 60.0f;
-	moveParameter.m_DashSpeed = 8.0f / 60.0f;
-	moveParameter.m_AirSideMoveSpeed = 4.0f / 60.0f;
-	moveParameter.m_Friction = 0.65f;
-	moveParameter.m_AirDrag = 0.98f;
+	moveParameter.WalkSpeed = 4.0f / 60.0f;
+	moveParameter.DashSpeed = 8.0f / 60.0f;
+	moveParameter.AirSideMoveSpeed = 4.0f / 60.0f;
+	moveParameter.Friction = 0.65f;
+	moveParameter.AirDrag = 0.98f;
 	SetMoveParameter(moveParameter);
 
 	JUMPPARAMETER jumpParameter;
-	jumpParameter.m_MaxJumpCount = 2;
-	jumpParameter.m_MiniJumpPushButtonCount = 2;
-	jumpParameter.m_JumpChargeCount = 3;
-	jumpParameter.m_FirstMiniJumpPower = 0.15f;
-	jumpParameter.m_FirstJumpPower = 0.3f;
-	jumpParameter.m_SecondJumpPower = 0.7f;
-	jumpParameter.m_JumpUpReduction = 0.93f;
-	jumpParameter.m_FallDownGravity = -0.01f;
-	jumpParameter.m_DefaultFallSpeed = -0.15f;
-	jumpParameter.m_SpeedUpFallSpeed = -0.3f;
-	jumpParameter.m_ChangeFallSpeed = 0.05f;
+	jumpParameter.MaxJumpCount = 2;
+	jumpParameter.MiniJumpPushButtonCount = 2;
+	jumpParameter.JumpChargeCount = 3;
+	jumpParameter.FirstMiniJumpPower = 0.15f;
+	jumpParameter.FirstJumpPower = 0.3f;
+	jumpParameter.SecondJumpPower = 0.7f;
+	jumpParameter.JumpUpReduction = 0.93f;
+	jumpParameter.FallDownGravity = -0.01f;
+	jumpParameter.DefaultFallSpeed = -0.15f;
+	jumpParameter.SpeedUpFallSpeed = -0.3f;
+	jumpParameter.ChangeFallSpeed = 0.05f;
 	SetjumpParameter(jumpParameter);
 
 	BLOWAWAYPARAMETER blowAwayParameter;
-	blowAwayParameter.m_SmashMitigation = 0.9f;
-	blowAwayParameter.m_VectorChangePower = 0.02f;
-	blowAwayParameter.m_MinimumSmashLength = 0.03f;
+	blowAwayParameter.SmashMitigation = 0.9f;
+	blowAwayParameter.VectorChangePower = 0.02f;
+	blowAwayParameter.MinimumSmashLength = 0.03f;
 	SetBlowAwayParameter(blowAwayParameter);
 	//============================================================================
 
@@ -61,9 +87,9 @@ void Character_00::Init()
 	m_CharacterModel.SetScale(CVector3(5.0f, 5.0f, 5.0f));
 	//============================================================================
 
-	m_NowState = Character::STATE::IDLE;
-
 	m_stateWindow.SetCharacter(this);
+
+	SetNextState(Character::STATE::State_Idle);
 
 	m_FrameCount = 0;
 
@@ -74,9 +100,83 @@ void Character_00::Init()
 void Character_00::SetDefaultCollider()
 {
 	m_CharacterCollider.SetType(BoxCollider::BOXTYPE::FOOT);
-	m_CharacterCollider.SetBasePos(m_pos);
+	m_CharacterCollider.SetBasePos(m_Parameter.Pos);
 	m_CharacterCollider.SetShiftVec(CVector3::GetZero());
 	m_CharacterCollider.SetSize(CVector3(1.0f, 2.0f, 1.0f));
+}
+
+State* Character_00::SetNextState(STATE NextState)
+{
+	switch (NextState)
+	{
+	case Character::STATE::State_None:
+		break;
+	case Character::STATE::State_AirMove:
+		m_CharacterStateContext.SetNextState(new Character00_AirMoveState());
+		break;
+	case Character::STATE::State_BlowAway:
+		m_CharacterStateContext.SetNextState(new Character00_BlowAwayState());
+		break;
+	case Character::STATE::State_Dash:
+		m_CharacterStateContext.SetNextState(new Character00_DashState());
+		break;
+	case Character::STATE::State_Dead:
+		m_CharacterStateContext.SetNextState(new Character00_DeadState());
+		break;
+	case Character::STATE::State_Down:
+		m_CharacterStateContext.SetNextState(new Character00_DownState());
+		break;
+	case Character::STATE::State_FallDown:
+		m_CharacterStateContext.SetNextState(new Character00_FallDownState());
+		break;
+	case Character::STATE::State_GameOver:
+		m_CharacterStateContext.SetNextState(new Character00_GameOverState());
+		break;
+	case Character::STATE::State_HitStop:
+		m_CharacterStateContext.SetNextState(new Character00_HitStopState());
+		break;
+	case Character::STATE::State_Idle:
+		m_CharacterStateContext.SetNextState(new Character00_IdleState());
+		break;
+	case Character::STATE::State_JumpIn:
+		m_CharacterStateContext.SetNextState(new Character00_JumpInState());
+		break;
+	case Character::STATE::State_Jump:
+		m_CharacterStateContext.SetNextState(new Character00_JumpState());
+		break;
+	case Character::STATE::State_LeanBack:
+		m_CharacterStateContext.SetNextState(new Character00_LeanBackState());
+		break;
+	case Character::STATE::State_Respawn:
+		m_CharacterStateContext.SetNextState(new Character00_RespawnState());
+		break;
+	case Character::STATE::State_WakeUp:
+		m_CharacterStateContext.SetNextState(new Character00_WakeUpState());
+		break;
+	case Character::STATE::State_Walk:
+		m_CharacterStateContext.SetNextState(new Character00_WalkState());
+		break;
+	case Character::STATE::State_Attack11:
+		m_CharacterStateContext.SetNextState(new Character00_Attack11());
+		break;
+	case Character::STATE::State_Attack12:
+		m_CharacterStateContext.SetNextState(new Character00_Attack12());
+		break;
+	case Character::STATE::State_Attack13:
+		m_CharacterStateContext.SetNextState(new Character00_Attack13());
+		break;
+	case Character::STATE::State_AttackAirN:
+		m_CharacterStateContext.SetNextState(new Character00_AttackAirN);
+		break;
+	case Character::STATE::State_AttackDS:
+		m_CharacterStateContext.SetNextState(new Character00_AttackDS());
+		break;
+	case Character::STATE::State_AttackS2:
+		m_CharacterStateContext.SetNextState(new Character00_AttackS2());
+		break;
+	}
+
+	return m_CharacterStateContext.GetNextState();
 }
 
 void Character_00::Uninit()
@@ -92,10 +192,4 @@ void Character_00::Update()
 void Character_00::Draw()
 {
 
-}
-
-
-void Character_00::HitGround()
-{
-	m_Velocity.y = 0.0f;
 }

@@ -25,7 +25,7 @@ void Character::Character_Init()
 	//=====<キャラクターの位置の設定>=============================================
 	//キャラクターの番号によってステージの配置場所を変える
 	std::vector<CVector3>* startPosV = static_cast<SceneGame*>(CScene::GetScene())->GetStage()->GetCharacterStartPos();
-	m_pos = (*startPosV)[PlayerNum];
+	m_Parameter.Pos = (*startPosV)[PlayerNum];
 	//============================================================================
 	 
 	//=====<キャラクターのUIの位置の設定>=============================================
@@ -44,11 +44,8 @@ void Character::Character_Init()
 
 	Init();
 
-	m_ChangeState = false;
-	m_JumpCount = 0;
-	m_HitGround = m_HitCeiling = m_HitWall = false;
-
-	StateInit(m_NowState);
+	m_Parameter.JumpCount = 0;
+	m_Parameter.HitGround = m_Parameter.HitCeiling = m_Parameter.HitWall = false;
 }
 
 void Character::Character_Uninit()
@@ -58,54 +55,36 @@ void Character::Character_Uninit()
 
 void Character::Character_Update()
 {
-	m_oldPos = m_pos;
+	m_Parameter.OldPos = m_Parameter.Pos;
 
 	Update();
 
 	//========================================
 	// 各ステータスのアップデート
 	//========================================
-	StateUpdate(m_NowState);
-
-	//死ぬ判定をしなくてよいか
-	if ((m_NowState != Character::STATE::GAMEOVER) && (m_NowState != Character::STATE::DEAD))
-	{
-		if (m_pStage != nullptr)
-		{
-			//=====<キャラクターが死んだか否か>=====
-			if (m_pStage->GetDeadLineBottomY() > m_pos.y)
-			{
-				ChangeState(Character::STATE::DEAD);
-			}
-			if (m_pStage->GetDeadLineTopY() < m_pos.y)
-			{
-				ChangeState(Character::STATE::DEAD);
-			}
-			if (m_pStage->GetDeadLineLeftX() > m_pos.x)
-			{
-				ChangeState(Character::STATE::DEAD);
-			}
-			if (m_pStage->GetDeadLineRightX() < m_pos.x)
-			{
-				ChangeState(Character::STATE::DEAD);
-			}
-		}
-	}
+	m_CharacterStateContext.StateUpdate();
 
 	//========================================
 	// 各ステータスが切り替わっていたら
 	//========================================
-	if (m_ChangeState)
+	if (m_CharacterStateContext.GetNextState() != nullptr)
 	{
-		m_ChangeState = false;
-
-		SetState(m_NextState);
+		m_CharacterStateContext.StateUninit();
+		m_CharacterStateContext.ChangeNextState();
+		Character_State* pState = static_cast<Character_State*>(m_CharacterStateContext.GetNowState());
+		pState->SetCharacter(this);
+		pState->SetAttackCollider(&m_AttackCollider);
+		pState->SetCharacterCollider(&m_CharacterCollider);
+		pState->SetController(m_Controller);
+		pState->SetCharacterParameter(&m_Parameter);
+		pState->SetStage(m_pStage);
+		m_CharacterStateContext.StateInit();
 	}
 
 	//========================================
 	// 位置の設定
 	//========================================
-	m_CharacterCollider.SetBasePos(m_pos);
+	m_CharacterCollider.SetBasePos(m_Parameter.Pos);
 
 	//========================================
 	// UIの更新
@@ -121,9 +100,7 @@ void Character::Character_Draw()
 	//========================================
 	// キャラクターの描画
 	//========================================
-	m_CharacterModel.SetPosition(m_Shake ? m_pos + m_AddDrawPos : m_pos);
-	m_CharacterModel.SetRotatePosShiftVector(m_ShiftCenterPos);
-	m_CharacterModel.SetRotate(m_rotate);
+	m_CharacterModel.SetRotate(m_Parameter.Rotate);
 	m_CharacterModel.Draw();
 }
 
@@ -135,303 +112,75 @@ void Character::Character_UIDraw()
 	m_DamageUI.Draw();
 }
 
-void Character::StateInit(Character::STATE state)
-{
-	//========================================
-	// 初期化
-	//========================================
-	switch (state)
-	{
-	case Character::STATE::IDLE:
-		IdleInit();
-		break;
-	case Character::STATE::WALK:
-		WalkInit();
-		break;
-	case Character::STATE::DASH:
-		DashInit();
-		break;
-	case Character::STATE::ATTACK:
-		AttackInit();
-		break;
-	case Character::STATE::BLOWAWAY:
-		BlowAwayInit();
-		break;
-	case Character::STATE::JUMPIN:
-		JumpInInit();
-		break;
-	case Character::STATE::JUMP:
-		JumpInit();
-		break;
-	case Character::STATE::AIRMOVE:
-		AirMoveInit();
-		break;
-	case Character::STATE::FALLDOWN:
-		FallDownInit();
-		break;
-	case Character::STATE::LEANBACK:
-		LeanBackInit();
-		break;
-	case Character::STATE::DOWN:
-		DownInit();
-		break;
-	case Character::STATE::WAKEUP:
-		WakeUpInit();
-		break;
-	case Character::STATE::HITSTOP:
-		HitStopInit();
-		break;
-	case Character::STATE::RESPAWN:
-		RespawnInit();
-		break;
-	case Character::STATE::DEAD:
-		DeadInit();
-		break;
-	case Character::STATE::GAMEOVER:
-		GameOverInit();
-		break;
-	case Character::STATE::MAX:
-		break;
-	default:
-		break;
-	}
-}
-
-void Character::StateUninit(Character::STATE state)
-{
-	//========================================
-	//終了処理
-	//========================================
-	switch (state)
-	{
-	case Character::STATE::IDLE:
-		IdleUninit();
-		break;
-	case Character::STATE::WALK:
-		WalkUninit();
-		break;
-	case Character::STATE::DASH:
-		DashUninit();
-		break;
-	case Character::STATE::ATTACK:
-		AttackUninit();
-		break;
-	case Character::STATE::BLOWAWAY:
-		BlowAwayUninit();
-		break;
-	case Character::STATE::JUMPIN:
-		JumpInUninit();
-		break;
-	case Character::STATE::JUMP:
-		JumpUninit();
-		break;
-	case Character::STATE::AIRMOVE:
-		AirMoveUninit();
-		break;
-	case Character::STATE::FALLDOWN:
-		FallDownUninit();
-		break;
-	case Character::STATE::LEANBACK:
-		LeanBackUninit();
-		break;
-	case Character::STATE::DOWN:
-		DownUninit();
-		break;
-	case Character::STATE::WAKEUP:
-		WakeUpUninit();
-		break;
-	case Character::STATE::HITSTOP:
-		HitStopUninit();
-		break;
-	case Character::STATE::RESPAWN:
-		RespawnUninit();
-		break;
-	case Character::STATE::DEAD:
-		DeadUninit();
-		break;
-	case Character::STATE::GAMEOVER:
-		GameOverUninit();
-		break;
-	case Character::STATE::MAX:
-		break;
-	default:
-		break;
-	}
-}
-
-void Character::StateUpdate(Character::STATE state)
-{
-	//========================================
-	// 各ステータスのアップデート
-	//========================================
-	switch (state)
-	{
-	case Character::STATE::IDLE:
-		IdleUpdate();
-		break;
-	case Character::STATE::WALK:
-		WalkUpdate();
-		break;
-	case Character::STATE::DASH:
-		DashUpdate();
-		break;
-	case Character::STATE::ATTACK:
-		AttackUpdate();
-		break;
-	case Character::STATE::BLOWAWAY:
-		BlowAwayUpdate();
-		break;
-	case Character::STATE::JUMPIN:
-		JumpInUpdate();
-		break;
-	case Character::STATE::JUMP:
-		JumpUpdate();
-		break;
-	case Character::STATE::AIRMOVE:
-		AirMoveUpdate();
-		break;
-	case Character::STATE::FALLDOWN:
-		FallDownUpdate();
-		break;
-	case Character::STATE::LEANBACK:
-		LeanBackUpdate();
-		break;
-	case Character::STATE::DOWN:
-		DownUpdate();
-		break;
-	case Character::STATE::WAKEUP:
-		WakeUpUpdate();
-		break;
-	case Character::STATE::RESPAWN:
-		RespawnUpdate();
-		break;
-	case Character::STATE::DEAD:
-		DeadUpdate();
-		break;
-	case Character::STATE::HITSTOP:
-		HitStopUpdate();
-		break;
-	case Character::STATE::GAMEOVER:
-		GameOverUpdate();
-		break;
-	case Character::STATE::MAX:
-		break;
-	default:
-		break;
-	}
-}
-
 int Character::GetCharacterBit()
 {
 	return m_PlayerBit;
 }
 
-void Character::SetState(Character::STATE NextState)
+StateContext* Character::GetStateContext()
 {
-	//========================================
-	//終了処理
-	//========================================
-	StateUninit(m_NowState);
-
-	//========================================
-	// 初期化
-	//========================================
-	StateInit(NextState);
-
-	m_NowState = NextState;
-}
-
-void Character::SetHitStop(int HitStopCount, Character::STATE NextState)
-{
-	SetState(Character::STATE::HITSTOP);
-	m_HitStopCount = HitStopCount;
-	m_HitStopNextState = NextState;
-}
-
-const Character::STATE& Character::GetState() const
-{
-	return m_NowState;
-}
-
-const Character::ATTACK& Character::GetAttack() const
-{
-	return m_NowAttack;
-}
-
-ModelDrawer* Character::GetModel() const
-{
-	return const_cast<ModelDrawer*>(&m_CharacterModel);
+	return &m_CharacterStateContext;
 }
 
 const CVector3& Character::GetPos() const
 {
-	return m_pos;
+	return m_Parameter.Pos;
 }
 
 void Character::SetPos(const CVector3 & pos)
 {
-	m_pos = pos;
+	m_Parameter.Pos = pos;
 	m_CharacterCollider.SetBasePos(pos);
 }
 
 const CVector3& Character::GetOldPos() const
 {
-	return m_oldPos;
+	return m_Parameter.OldPos;
 }
 
 void Character::SetOldPos()
 {
-	m_oldPos = m_pos;
+	m_Parameter.OldPos = m_Parameter.Pos;
 }
 
 const CVector3 & Character::GetScale() const
 {
-	return m_scale;
+	return m_Parameter.Scale;
 }
 
 void Character::SetScale(const CVector3 & scale)
 {
-	m_scale = scale;
+	m_Parameter.Scale = scale;
 }
 
 const CQuaternion & Character::GetRotate() const
 {
-	return m_rotate;
+	return m_Parameter.Rotate;
 }
 
 void Character::SetRotate(const CQuaternion & rotate)
 {
-	m_rotate = rotate;
+	m_Parameter.Rotate = rotate;
 }
 
 void Character::SetRotate(const CVector3 & rotate)
 {
-	m_rotate.v = DirectX::XMQuaternionRotationRollPitchYaw(
+	m_Parameter.Rotate.v = DirectX::XMQuaternionRotationRollPitchYaw(
 		DirectX::XMConvertToRadians(rotate.x),
 		DirectX::XMConvertToRadians(rotate.y),
 		DirectX::XMConvertToRadians(rotate.z));
 }
 
-void Character::SetShake(bool shake)
-{
-	m_Shake = shake;
-}
-
-bool Character::GetShake()
-{
-	return m_Shake;
-}
-
 void Character::SetLookRight()
 {
 	m_NowLookDir = Character::LOOKDIR::RIGHT;
-	m_rotate = CQuaternion::AngleAxis(CVector3::GetUp(),90.0f);
+	m_Parameter.Rotate = CQuaternion::AngleAxis(CVector3::GetUp(),90.0f);
 }
 
 void Character::SetLookLeft()
 {
 	m_NowLookDir = Character::LOOKDIR::LEFT;
-	m_rotate = CQuaternion::AngleAxis(CVector3::GetUp(), -90.0f);
+	m_Parameter.Rotate = CQuaternion::AngleAxis(CVector3::GetUp(), -90.0f);
 }
 
 void Character::SetNowLook()
@@ -447,14 +196,19 @@ void Character::SetNowLook()
 	}
 }
 
+Character::LOOKDIR Character::GetLook()
+{
+	return m_NowLookDir;
+}
+
 void Character::AddForce(const CVector3 & force)
 {
-	m_Velocity += force;
+	m_Parameter.Velocity += force;
 }
 
 void Character::SetForce(const CVector3 & force)
 {
-	m_Velocity = force;
+	m_Parameter.Velocity = force;
 }
 
 float Character::GetDamage() const
@@ -470,6 +224,17 @@ void Character::AddDamage(float damage)
 void Character::SetDamage(float damage)
 {
 	m_DamagePercentage = damage;
+}
+
+void Character::SetStock(int stock)
+{
+	m_CharacterStock = stock;
+	m_DamageUI.SetStockNum(stock);
+}
+
+int Character::GetStock()
+{
+	return m_CharacterStock;
 }
 
 void Character::SetInvincible(bool invincible)
@@ -494,27 +259,24 @@ std::vector<Character::ATTACKPARAM>& Character::GetAttackCollider()
 
 void Character::Character_ColliderInit()
 {
-	m_HitCeiling = m_HitGround = m_HitWall = false;
+	m_Parameter.HitCeiling = m_Parameter.HitGround = m_Parameter.HitWall = false;
 }
 
 void Character::Character_HitCeiling()
 {
-	m_HitCeiling = true;
-	HitCeiling();
+	m_Parameter.HitCeiling = true;
 }
 
 void Character::Character_HitGround()
 {
-	m_Velocity.y = 0.0f;
-	m_JumpCount = 0;
-	m_HitGround = true;
-	HitGround();
+	m_Parameter.Velocity.y = 0.0f;
+	m_Parameter.JumpCount = 0;
+	m_Parameter.HitGround = true;
 }
 
 void Character::Character_HitWall()
 {
-	m_HitWall = true;
-	HitWall();
+	m_Parameter.HitWall = true;
 }
 
 void Character::DrawCollider()
@@ -531,24 +293,3 @@ void Character::SetStage(Stage* pStage)
 {
 	m_pStage = pStage;
 }
-
-//=========<この下の関数はUpdateで呼ぶ関数です>=========
-void Character::ChangeAttack(Character::ATTACK attack)
-{
-	ChangeState(Character::STATE::ATTACK);
-	m_NowAttack = attack;
-}
-
-void Character::ChangeState(Character::STATE state)
-{
-	m_NextState = state;
-	m_ChangeState = true;
-}
-
-void Character::ChangeHitStop(int HitStopCount, Character::STATE NextState)
-{
-	ChangeState(Character::STATE::HITSTOP);
-	m_HitStopCount = HitStopCount;
-	m_HitStopNextState = NextState;
-}
-

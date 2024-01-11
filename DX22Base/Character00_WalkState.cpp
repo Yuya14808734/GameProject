@@ -1,20 +1,20 @@
-#include "Character_00.h"
+#include "Character00_WalkState.h"
 
-void Character_00::WalkInit()
+void Character00_WalkState::Init()
 {
-	Character::WalkInit();
-	m_CharacterModel.PlayAnime("Walk", true);
+	CharacterBase_WalkState::Init();
+	m_pModelDrawer->PlayAnime("Walk", true);
 	m_AnimeTime = 0.0f;
 }
 
-void Character_00::WalkUninit()
+void Character00_WalkState::Uninit()
 {
-	Character::WalkUninit();
+	CharacterBase_WalkState::Uninit();
 }
 
-void Character_00::WalkUpdate()
+void Character00_WalkState::Update()
 {
-	Character::WalkUpdate();
+	CharacterBase_WalkState::Update();
 
 	m_AnimeTime += 0.015f;
 	if (m_AnimeTime > 1.0f)
@@ -22,5 +22,5 @@ void Character_00::WalkUpdate()
 		m_AnimeTime -= 1.0f;
 	}
 
-	m_CharacterModel.SetAnimeLerp(m_AnimeTime);
+	m_pModelDrawer->SetAnimeLerp(m_AnimeTime);
 }

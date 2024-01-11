@@ -1,21 +1,21 @@
-#include "Character_00.h"
+#include "Character00_LeanBackState.h"
 
-void Character_00::LeanBackInit()
+void Character00_LeanBackState::Init()
 {
-	Character::LeanBackInit();
+	CharacterBase_LeanBackState::Init();
 	m_FrameCount = 0;
 	m_AnimeTime = 0.0f;
-	m_CharacterModel.PlayAnime("Damage00", true);
+	m_pModelDrawer->PlayAnime("Damage00", true);
 }
 
-void Character_00::LeanBackUninit()
+void Character00_LeanBackState::Uninit()
 {
-	Character::LeanBackUninit();
+	CharacterBase_LeanBackState::Uninit();
 }
 
-void Character_00::LeanBackUpdate()
+void Character00_LeanBackState::Update()
 {
-	Character::LeanBackUpdate();
+	CharacterBase_LeanBackState::Update();
 
 	const int LeanBackEndFrame = 20;			//アニメーションを停止するフレーム
 	const float AnimeStartTime = 0.0f;		//アニメーションの始める時間
@@ -30,6 +30,6 @@ void Character_00::LeanBackUpdate()
 	if (m_AnimeTime > AnimeEndTime)
 	{
 		m_AnimeTime = AnimeEndTime;
-		ChangeState(Character::STATE::IDLE);
+		m_pCharacter->SetNextState(Character::STATE::State_Idle);
 	}
 }

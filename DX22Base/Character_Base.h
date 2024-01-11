@@ -7,41 +7,17 @@
 #include "XboxKeyboard.h"
 #include "Player_Controller.h"
 #include "Stage_Base.h"
+#include "StatePattern.h"
+
+class Character;
+class Character_State;
+class Character_AttackState;
+class StateContext;
+class State;
 
 class Character
 {
 public:
-	enum class STATE : int
-	{
-		IDLE = 0,	//待機
-		WALK,		//歩く
-		DASH,		//走る
-		ATTACK,		//攻撃
-		BLOWAWAY,	//吹っ飛ばす
-		JUMPIN,		//ジャンプの入り
-		JUMP,		//ジャンプ
-		AIRMOVE,	//空中移動
-		FALLDOWN,	//落下(空中移動とは違いくるくる落ちる感じ)
-		LEANBACK,	//殴られてのけぞっている状態
-		DOWN,		//倒れる
-		WAKEUP,		//起き上がる
-		HITSTOP,	//ヒットストップ
-		RESPAWN,	//リスポーン
-		DEAD,		//死んだとき
-		GAMEOVER,	//ゲームオーバー
-		MAX,
-	};
-	enum class ATTACK : int
-	{
-		ATTACK_11,		//弱1
-		ATTACK_12,		//弱2
-		ATTACK_13,		//弱3
-		ATTACK_S2,		//横強
-		ATTACK_SD,		//ダッシュ攻撃
-		ATTACK_AIRN,	//空N
-		MAX,
-	};
-
 	enum class LOOKDIR : int
 	{
 		RIGHT = 0,
@@ -49,6 +25,33 @@ public:
 		UP,
 		DOWN,
 		MAX
+	};
+
+	enum class STATE
+	{
+		State_None = 0,
+		State_AirMove,
+		State_BlowAway,
+		State_Dash,
+		State_Dead,
+		State_Down,
+		State_FallDown,
+		State_GameOver,
+		State_HitStop,
+		State_Idle,
+		State_JumpIn,
+		State_Jump,
+		State_LeanBack,
+		State_Respawn,
+		State_WakeUp,
+		State_Walk,
+		State_Attack11,
+		State_Attack12,
+		State_Attack13,
+		State_AttackAirN,
+		State_AttackDS,
+		State_AttackS2,
+		State_Max
 	};
 
 	struct ATTACKPARAM
@@ -61,35 +64,63 @@ public:
 		unsigned int m_HitTriggerCharacterBit = 0x00;		//前のフレームで初めて当たった事があるキャラクターのビット番号
 	};
 
+	struct CHARACTER_PARAMETER
+	{
+		//-------------------------------------------------------------------------------
+		// 座標に関する変数
+		//-------------------------------------------------------------------------------
+		CVector3		Pos;						//座標
+		CVector3		AddDrawPos;					//描画するときにずらす座標
+		CVector3		OldPos;						//前の座標
+		CVector3		Scale;						//大きさ
+		CQuaternion		Rotate;						//回転量
+		CVector3		Velocity;					//重力など
+		CVector3		MoveVector;					//コントローラーの移動量
+		CVector3		ShiftCenterPos;				//回転や拡縮をする中心位置をずらす
+
+		//-------------------------------------------------------------------------------
+		// ジャンプに関する変数
+		//-------------------------------------------------------------------------------
+		int				JumpCount = 0;			//今ジャンプした回数
+		int				JumpCharageCount = 0;		//ジャンプをチャージする時のカウント
+
+		//-------------------------------------------------------------------------------
+		//ステージに当たったか
+		//-------------------------------------------------------------------------------
+		bool			HitGround = false;			//前のフレームで地面に当たったか
+		bool			HitCeiling = false;			//前のフレームで天井に当たったか
+		bool			HitWall = false;				//前のフレームで壁に当たったか
+	};
+
 	struct MOVEPARAMETER
 	{
-		float	m_WalkSpeed = 0.0f;		//歩くスピード
-		float	m_DashSpeed = 0.0f;		//走るスピード
-		float	m_AirSideMoveSpeed = 0.0f;		//落ちているときの横移動のスピード
-		float	m_Friction = 0.0f;		//摩擦量
-		float	m_AirDrag = 0.0f;		//空気抵抗
+		float	WalkSpeed = 0.0f;		//歩くスピード
+		float	DashSpeed = 0.0f;		//走るスピード
+		float	AirSideMoveSpeed = 0.0f;		//落ちているときの横移動のスピード
+		float	Friction = 0.0f;		//摩擦量
+		float	AirDrag = 0.0f;		//空気抵抗
 	};
 
 	struct JUMPPARAMETER
 	{
-		int		m_MaxJumpCount = 0;				//ジャンプできる最大数
-		int		m_MiniJumpPushButtonCount = 0;	//小ジャンプするときのフレーム
-		int		m_JumpChargeCount = 0;			//ジャンプするまでのチャージ時間
-		float	m_FirstMiniJumpPower = 0.0f;	//小ジャンプをするときの力
-		float	m_FirstJumpPower = 0.0f;		//ジャンプするときの力
-		float	m_SecondJumpPower = 0.0f;		//二回目のジャンプの力
-		float	m_JumpUpReduction = 0.0f;		//ジャンプして上に上がるときの重力
-		float	m_FallDownGravity = 0.0f;		//ジャンプし終わって下に下がるときの重力
-		float	m_DefaultFallSpeed = 0.0f;		//最大落下速度
-		float	m_SpeedUpFallSpeed = 0.0f;		//落下中に下を押した場合の落下量
-		float	m_ChangeFallSpeed = 0.0f;		//落下に変わるときのスピード
+		int		MaxJumpCount = 0;				//ジャンプできる最大数
+		int		MiniJumpPushButtonCount = 0;	//小ジャンプするときのフレーム
+		int		JumpChargeCount = 0;			//ジャンプするまでのチャージ時間
+		float	FirstMiniJumpPower = 0.0f;	//小ジャンプをするときの力
+		float	FirstJumpPower = 0.0f;		//ジャンプするときの力
+		float	SecondJumpPower = 0.0f;		//二回目のジャンプの力
+		float	JumpUpReduction = 0.0f;		//ジャンプして上に上がるときの重力
+		float	FallDownGravity = 0.0f;		//ジャンプし終わって下に下がるときの重力
+		float	DefaultFallSpeed = 0.0f;		//最大落下速度
+		float	SpeedUpFallSpeed = 0.0f;		//落下中に下を押した場合の落下量
+		float	ChangeFallSpeed = 0.0f;		//落下に変わるときのスピード
 	};
 
 	struct BLOWAWAYPARAMETER
 	{
-		float m_SmashMitigation = 0.0f;			//吹っ飛ばされた時にどれくらい弱くしていくか
-		float m_VectorChangePower = 0.0f;		//吹っ飛ばされた時にベクトル変更する割合
-		float m_MinimumSmashLength = 0.0f;		//吹っ飛んでいると判定する最低距離速度
+		float SmashMitigation = 0.0f;			//吹っ飛ばされた時にどれくらい弱くしていくか
+		float VectorChangePower = 0.0f;		//吹っ飛ばされた時にベクトル変更する割合
+		float MinimumSmashLength = 0.0f;		//吹っ飛んでいると判定する最低距離速度
 	};
 
 public:
@@ -98,7 +129,7 @@ protected:
 	static int GetNewPlayerBit();	//新しいプレイヤーの番号(2進数)を受け取る
 									//変なところで呼ぶと番号がずれてしまうのでInit以外で呼ばないように
 private:
-	static int m_NewPlayerBit;		//新しいプレイヤーのビット番号
+	static int m_NewPlayerBit;		//新しいプレイヤーのビット番号(キャラクターを数えるために使う)
 
 public:
 	Character() {};
@@ -109,18 +140,11 @@ public:
 	void Character_Uninit();							//キャラクターの終了処理
 	void Character_Update();							//キャラクターの更新
 	void Character_Draw();								//キャラクターの描画
-	void Character_UIDraw();
-	void StateInit(Character::STATE state);				//状態の初期化
-	void StateUninit(Character::STATE state);			//状態の終了処理
-	void StateUpdate(Character::STATE state);			//状態のアップデート
+	void Character_UIDraw();							//UIの描画
 	//==========================================================================
-	int GetCharacterBit();								//キャラクター番号の取得
-	void SetState(Character::STATE state);				//キャラクターの状態変更 外部が呼ぶ関数
-	void SetHitStop(int HitStopCount,Character::STATE NextState);	//ヒットストップを設定	 外部が呼ぶ関数
-	const Character::STATE& GetState() const;			//今の状態の取得
-	const Character::ATTACK& GetAttack() const;			//今している攻撃情報
-	ModelDrawer* GetModel() const;						//モデル情報の取得
-
+	int GetCharacterBit();								//キャラクター番号を取得
+	virtual State* SetNextState(STATE NextState) = 0;
+	StateContext* GetStateContext();					//今の状態の取得
 	//==========================================================================
 	const CVector3& GetPos() const;						//位置の取得
 	void SetPos(const CVector3& pos);					//位置の設定
@@ -131,22 +155,23 @@ public:
 	const CQuaternion& GetRotate() const;				//回転量の取得
 	void SetRotate(const CQuaternion& rotate);			//回転量の設定(Quaternion)
 	void SetRotate(const CVector3& rotate);				//回転量の設定(度数法)
-	void SetShake(bool shake);							//キャラクターを揺らすか							
-	bool GetShake();									//キャラクターを揺らす	
 	void SetLookRight();								//右を向かせる
 	void SetLookLeft();									//左を向かせる
 	void SetNowLook();									//m_NowLookで見ている方向を見る
+	LOOKDIR GetLook();
 	//==========================================================================
 	void AddForce(const CVector3& force);				//力を足してやる
 	void SetForce(const CVector3& force);				//力を設定
 	float GetDamage() const;							//ダメージの取得
 	void AddDamage(float damage);						//ダメージの加算
 	void SetDamage(float damage);						//ダメージの設定
+	void SetStock(int stock);
+	int GetStock();
 	//==========================================================================
 	void SetInvincible(bool invincible);				//キャラクターを無敵にするか
 	bool IsInvincible();								//キャラクターが無敵か否か
 	BoxCollider* GetCharacterCollider() const;			//キャラクター、ステージ当たり判定の取得
-	std::vector<ATTACKPARAM>& GetAttackCollider();		//攻撃コライダーの取得
+	std::vector<Character::ATTACKPARAM>& GetAttackCollider();		//攻撃コライダーの取得
 	void Character_ColliderInit();						//地面などに当たっていないことにする
 	void Character_HitCeiling();						//天井に当たった	
 	void Character_HitGround();							//地面に当たった
@@ -156,12 +181,6 @@ public:
 	void SetCharacterController(PlayerController* pController);
 	void SetStage(Stage* pStage);
 
-
-protected:
-	void ChangeAttack(Character::ATTACK attack);		//攻撃を設定する関数 内部で呼ぶ関数
-	void ChangeState(Character::STATE state);			//状態を変更する関数 内部で呼ぶ関数
-	void ChangeHitStop(int HitStopCount, Character::STATE NextState);				//状態を変更する関数 内部で呼ぶ関数
-
 protected:
 
 	virtual void Init() {};			//継承先の初期化
@@ -169,124 +188,15 @@ protected:
 	virtual void Update() {};		//継承先の更新
 	virtual void Draw() {};			//継承先の描画
 
-	//==========================================================================
-	virtual void IdleInit();		//止まっているときの初期化
-	virtual void IdleUninit();		//止まっているときの終了処理
-	virtual void IdleUpdate();		//止まっているときのアップデート
-	//==========================================================================
-	virtual void WalkInit();		//歩く時の初期化
-	virtual void WalkUninit();		//歩く時の終了処理
-	virtual void WalkUpdate();		//歩く時のアップデート
-	//==========================================================================
-	virtual void DashInit();		//走るときの初期化
-	virtual void DashUninit();		//走るときの終了処理
-	virtual void DashUpdate();		//走るときのアップデート
-	//==========================================================================
-	virtual void AttackInit();		//攻撃するときの初期化
-	virtual void AttackUninit();	//攻撃するときの終了処理
-	virtual void AttackUpdate();	//攻撃するときのアップデート
-	//==========================================================================
-	virtual void BlowAwayInit();		//吹っ飛ばされる時の初期化
-	virtual void BlowAwayUninit();		//吹っ飛ばしの終了処理
-	virtual void BlowAwayUpdate();		//吹っ飛ばしのアップデート
-	//==========================================================================
-	virtual void JumpInInit();		//ジャンプ始めの初期化
-	virtual void JumpInUpdate();	//ジャンプ始めのアップデート
-	virtual void JumpInUninit();	//ジャンプ始めの終了処理
-	//==========================================================================
-	virtual void JumpInit();		//ジャンプしたときの初期化
-	virtual void JumpUninit();		//ジャンプしたときの終了処理
-	virtual void JumpUpdate();		//ジャンプしたときのアップデート
-	//==========================================================================
-	virtual void AirMoveInit();		//空中にいるときの初期化
-	virtual void AirMoveUninit();	//空中にいるときの終了処理
-	virtual void AirMoveUpdate();	//落ちているときのアップデート
-	//==========================================================================
-	virtual void FallDownInit();
-	virtual void FallDownUninit();
-	virtual void FallDownUpdate();
-	//==========================================================================
-	virtual void DownInit();		//倒れた時の初期化
-	virtual void DownUninit();		//倒れた時の終了処理
-	virtual void DownUpdate();		//倒れている状態のアップデート
-	//==========================================================================
-	virtual void WakeUpInit();
-	virtual void WakeUpUninit();
-	virtual void WakeUpUpdate();
-	//==========================================================================
-	virtual void LeanBackInit();	//のけぞった時の初期化
-	virtual void LeanBackUninit();	//のけぞった時の終了処理
-	virtual void LeanBackUpdate();	//のけぞった時の
-	//==========================================================================
-	virtual void HitStopInit();		//ヒットストップの初期化
-	virtual void HitStopUninit();	//ヒットストップの終了処理
-	virtual void HitStopUpdate();	//ヒットストップ状態のアップデート
-	//==========================================================================
-	virtual void DeadInit();		//死んだときの初期化
-	virtual void DeadUninit();		//死んだときの終了処理
-	virtual void DeadUpdate();		//死んだときのアップデート
-	//==========================================================================
-	virtual void RespawnInit();		//リスポーンしたときの初期化
-	virtual void RespawnUninit();	//リスポーンしたときの終了処理
-	virtual void RespawnUpdate();	//リスポーンしたときのアップデート
-	//==========================================================================
-	virtual void GameOverInit();		//リスポーンしたときの初期化
-	virtual void GameOverUninit();	//リスポーンしたときの終了処理
-	virtual void GameOverUpdate();	//リスポーンしたときのアップデート
-	//==========================================================================
-
-
-	//==========================================================================
-	//スマブラと同じような名前にしています
-	//https://www.youtube.com/watch?v=V40sMUAE5ek
-	//==========================================================================
-	virtual void Attack11_Init() {};		//弱1
-	virtual void Attack11_Update() {};		//弱1
-	virtual void Attack11_Uninit() {};		//弱1
-	//==========================================================================
-	virtual void Attack12_Init() {};		//弱2
-	virtual void Attack12_Update() {};		//弱2
-	virtual void Attack12_Uninit() {};		//弱2
-	//==========================================================================
-	virtual void Attack13_Init() {};		//弱3
-	virtual void Attack13_Update() {};		//弱3
-	virtual void Attack13_Uninit() {};		//弱3
-	//==========================================================================
-	virtual void AttackS2_Init() {};		//横強
-	virtual void AttackS2_Update() {};		//横強
-	virtual void AttackS2_Uninit() {};		//横強
-	//==========================================================================
-	virtual void AttackSD_Init() {};		//ダッシュ攻撃
-	virtual void AttackSD_Update() {};		//ダッシュ攻撃
-	virtual void AttackSD_Uninit() {};		//ダッシュ攻撃
-	//==========================================================================
-	virtual void AttackAirN_Init() {};		//空N
-	virtual void AttackAirN_Update() {};	//空N
-	virtual void AttackAirN_Uninit() {};	//空N
-	//==========================================================================
-
 public:
-	virtual void Attack11_Hit(Character* HitCharacter) {};			//弱1
-	virtual void Attack12_Hit(Character* HitCharacter) {};			//弱2
-	virtual void Attack13_Hit(Character* HitCharacter) {};			//弱3
-	virtual void AttackS2_Hit(Character* HitCharacter) {};			//横強
-	virtual void AttackSD_Hit(Character* HitCharacter) {};			//ダッシュ攻撃
-	virtual void AttackAirN_Hit(Character* HitCharacter) {};		//空N
-
-
-protected:
 
 	virtual void SetDefaultCollider() = 0;	//最初の当たり判定に戻す(キャラクターの当たり判定をいじった場合
-	
-	virtual void HitCeiling()	{};	//天井に当たった時に呼ぶ
-	virtual void HitGround()	{};	//地面に当たった時に呼ばれる
-	virtual void HitWall()		{};	//壁に当たった時に呼ぶ
 
 public:
 	//===============================================================================
 	// パラメータ一覧
 	//===============================================================================
-	
+
 	//-------------------------------------------------------------------------------
 	// 横移動に関するパラメータ
 	//-------------------------------------------------------------------------------
@@ -339,38 +249,25 @@ protected:
 	//===============================================================================
 	// 変数一覧
 	//===============================================================================
-	int		m_PlayerBit = 0x00;				//このキャラクターが何番なのかを入れる
+	int		m_PlayerBit = 0x00;						//このキャラクターが何番なのかを入れる
 	PlayerController* m_Controller = nullptr;		//キャラクターのコントローラー
+
+	//===============================================================================
+	// 位置などをまとめた変数
+	//===============================================================================
+	CHARACTER_PARAMETER m_Parameter;
 
 	//-------------------------------------------------------------------------------
 	// プレイヤーステートに関する変数
 	//-------------------------------------------------------------------------------
-	Character::STATE	m_NowState			= STATE::MAX;	//キャラクターの状態
-	Character::STATE	m_NextState			= STATE::MAX;	//キャラクターの状態
-	Character::ATTACK	m_NowAttack			= ATTACK::MAX;	//プレイヤーがしている攻撃
+	StateContext m_CharacterStateContext;
+
 	Character::LOOKDIR	m_NowLookDir		= LOOKDIR::MAX;	//プレイヤーが見ている方向
-	bool				m_ChangeState		= false;
-	int					m_ChangeStateCount	= 0;
 	
 	//-------------------------------------------------------------------------------
 	// モデル描画に関する変数
 	//-------------------------------------------------------------------------------
-	ModelDrawer m_CharacterModel;			//キャラクターのモデル
-	
-	//-------------------------------------------------------------------------------
-	// 座標に関する変数
-	//-------------------------------------------------------------------------------
-	CVector3		m_pos;							//座標
-	CVector3		m_AddDrawPos;					//描画するときにずらす座標
-	CVector3		m_oldPos;						//前の座標
-	CVector3		m_scale;						//大きさ
-	CQuaternion		m_rotate;						//回転量
-	CVector3		m_Velocity;						//重力など
-	CVector3		m_MoveVector;					//コントローラーの移動量
-	CVector3		m_ShiftCenterPos;				//回転や拡縮をする中心位置をずらす
-	CVector3		m_RespawnStartPos;				//設定するリスポーン終了位置
-	CVector3		m_RespawnEndPos;				//設定するリスポーン開始位置
-	float			m_RespawnLerpPercent = 0.0f;	//リスポーンポスに向かうときに使う数値
+	ModelDrawer		m_CharacterModel;				//キャラクターのモデル
 	
 	//-------------------------------------------------------------------------------
 	// キャラクターの状態に関する変数
@@ -386,32 +283,74 @@ protected:
 	std::vector<ATTACKPARAM>	m_AttackCollider;					//攻撃したときの当たり判定
 
 	//-------------------------------------------------------------------------------
-	// ジャンプに関する変数
-	//-------------------------------------------------------------------------------
-	int				m_JumpCount			= 0;		//今ジャンプした回数
-	int				m_JumpCharageCount	= 0;		//ジャンプをチャージする時のカウント
-
-	//-------------------------------------------------------------------------------
-	//ステージに当たった判定に使う変数
-	//-------------------------------------------------------------------------------
-	bool			m_HitGround		= false;		//前のフレームで地面に当たったか
-	bool			m_HitCeiling	= false;		//前のフレームで天井に当たったか
-	bool			m_HitWall		= false;		//前のフレームで壁に当たったか
-
-	//-------------------------------------------------------------------------------
 	//ステージに当たった判定に使う変数
 	//-------------------------------------------------------------------------------
 	Character_DamageUI m_DamageUI;
 
 	//-------------------------------------------------------------------------------
-	// ヒットストップに関する変数
-	//-------------------------------------------------------------------------------
-	bool				m_Shake				= false;	//プレイヤーを揺らすか
-	unsigned int		m_HitStopCount		= 0;		//ヒットストップする時間
-	Character::STATE	m_HitStopNextState;				//ヒットストップ後の状態
-
-	//-------------------------------------------------------------------------------
 	// 外部のオブジェクトを保持する変数
 	//-------------------------------------------------------------------------------
 	Stage*			m_pStage = nullptr;				//ステージの情報が入る
+};
+
+class Character_State : public State
+{
+public:
+	enum class TYPE
+	{
+		DEFAULT = 0,
+		ATTACK,
+		MAX
+	};
+
+public:
+	Character_State(TYPE type) : m_StateType(type) {};
+	Character_State() : Character_State(Character_State::TYPE::DEFAULT) {};
+	virtual ~Character_State() {};
+
+	Character_State::TYPE GetType();
+	void SetCharacter(Character* pCharacter);
+	void SetController(PlayerController* pController);
+	void SetCharacterParameter(Character::CHARACTER_PARAMETER* CharacterParameter);
+	void SetStage(Stage* pStage);
+	void SetCharacterCollider(BoxCollider* pCollider);
+	void SetAttackCollider(std::vector<Character::ATTACKPARAM>* pAttackCollider);
+
+public:
+	virtual void Init() {};
+	virtual void Uninit() {};
+	virtual void Update() {};
+
+private:
+	Character_State::TYPE m_StateType = Character_State::TYPE::MAX;
+
+protected:
+	Character* const m_pCharacter = nullptr;
+	PlayerController* const m_pController = nullptr;
+	Character::CHARACTER_PARAMETER* const m_pCharacterParameter = nullptr;
+	Stage* const m_pStage = nullptr;
+	ModelDrawer* const m_pModelDrawer = nullptr;
+	const Character::MOVEPARAMETER* const m_pMoveParameter = nullptr;
+	const Character::JUMPPARAMETER* const m_pJumpParameter = nullptr;
+	const Character::BLOWAWAYPARAMETER* const m_pBlowAwayParameter = nullptr;
+	BoxCollider* const m_pCharacterCollider = nullptr;
+	std::vector<Character::ATTACKPARAM>* const m_pAttackCollider = nullptr;
+};
+
+//==========================================================================
+//スマブラと同じような名前にしています
+//https://www.youtube.com/watch?v=V40sMUAE5ek
+//==========================================================================
+
+class Character_AttackState : public Character_State
+{
+public:
+	Character_AttackState() :Character_State(Character_State::TYPE::DEFAULT) {};
+	virtual ~Character_AttackState() {};
+	virtual void HitCharacter(Character* pHitCharacter) {};
+
+protected:
+	virtual void Init() override {};
+	virtual void Uninit() override {};
+	virtual void Update() override {};
 };

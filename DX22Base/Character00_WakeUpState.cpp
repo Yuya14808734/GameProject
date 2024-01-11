@@ -1,24 +1,24 @@
-#include "Character_00.h"
+#include "Character00_WakeUpState.h"
 
-void Character_00::WakeUpInit()
+void Character00_WakeUpState::Init()
 {
-	Character::WakeUpInit();
+	CharacterBase_WakeUpState::Init();
 
-	m_CharacterModel.PlayAnime("Damage01", true);
+	m_pModelDrawer->PlayAnime("Damage01", true);
 	m_AnimeTime = 2.082f;
 	m_FrameCount = 0;
-	m_Invincible = true;
+	m_pCharacter->SetInvincible(true);
 }
 
-void Character_00::WakeUpUninit()
+void Character00_WakeUpState::Uninit()
 {
-	Character::WakeUpUninit();
-	m_Invincible = false;
+	CharacterBase_WakeUpState::Uninit();
+	m_pCharacter->SetInvincible(false);
 }
 
-void Character_00::WakeUpUpdate()
+void Character00_WakeUpState::Update()
 {
-	Character::WakeUpUpdate();
+	CharacterBase_WakeUpState::Update();
 
 	const float AnimeEndFrame = 20.0f;			//アニメーションを停止するフレーム
 	const float AnimeStartTime = 2.082f;		//アニメーションの始める時間
@@ -34,8 +34,8 @@ void Character_00::WakeUpUpdate()
 	if (m_AnimeTime > AnimeEndTime)
 	{
 		m_AnimeTime = AnimeEndTime;
-		ChangeState(Character::STATE::IDLE);
+		m_pCharacter->SetNextState(Character::STATE::State_Idle);
 	}
 
-	m_CharacterModel.SetAnimeTime(m_AnimeTime);
+	m_pModelDrawer->SetAnimeTime(m_AnimeTime);
 }

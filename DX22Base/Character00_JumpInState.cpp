@@ -1,23 +1,23 @@
-#include "Character_00.h"
+#include "Character00_JumpInState.h"
 
-void Character_00::JumpInInit()
+void Character00_JumpInState::Init()
 {
-	Character::JumpInInit();
-	m_CharacterModel.PlayAnime("Jump", false);
+	CharacterBase_JumpInState::Init();
+	m_pModelDrawer->PlayAnime("Jump", false);
 	m_AnimeTime = 0.0f;
 }
 
-void Character_00::JumpInUninit()
+void Character00_JumpInState::Uninit()
 {
-	Character::JumpInUninit();
+	CharacterBase_JumpInState::Uninit();
 }
 
-void Character_00::JumpInUpdate()
+void Character00_JumpInState::Update()
 {
-	Character::JumpInUpdate();
-	m_AnimeTime = (static_cast<float>(m_JumpCharageCount) / 3.0f) * 0.05f + 0.1f;
+	CharacterBase_JumpInState::Update();
+	m_AnimeTime = (static_cast<float>(m_pCharacterParameter->JumpCharageCount) / 3.0f) * 0.05f + 0.1f;
 
-	m_CharacterModel.SetAnimeTime(m_AnimeTime);
+	m_pModelDrawer->SetAnimeTime(m_AnimeTime);
 }
 
 

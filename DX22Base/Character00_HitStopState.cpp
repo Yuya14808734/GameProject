@@ -1,16 +1,16 @@
-#include "Character_00.h"
+#include "Character00_HitStopState.h"
 
-void Character_00::HitStopInit()
+void Character00_HitStopState::Init()
 {
-	Character::HitStopInit();
+	CharacterBase_HitStopState::Init();
 }
 
-void Character_00::HitStopUninit()
+void Character00_HitStopState::Uninit()
 {
-	Character::HitStopUninit();
+	CharacterBase_HitStopState::Uninit();
 }
 
-void Character_00::HitStopUpdate()
+void Character00_HitStopState::Update()
 {
-	Character::HitStopUpdate();
+	CharacterBase_HitStopState::Update();
 }

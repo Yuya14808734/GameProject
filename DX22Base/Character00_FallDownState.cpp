@@ -1,41 +1,42 @@
-#include "Character_00.h"
+#include "Character00_FallDownState.h"
 
-void Character_00::FallDownInit()
+void Character00_FallDownState::Init()
 {
-	Character::FallDownInit();
-	m_CharacterModel.PlayAnime("Damage01", true);
+	CharacterBase_FallDownState::Init();
+	m_pModelDrawer->PlayAnime("Damage01", true);
 	m_FrameCount = 0;
 	m_AnimeTime = 0.387f;;
-	m_CharacterModel.SetAnimeTime(m_AnimeTime);
-	m_CharacterModel.SetRotatePosShift(true);
+	m_pModelDrawer->SetAnimeTime(m_AnimeTime);
+	m_pModelDrawer->SetRotatePosShift(true);
 
 	//=====<キャラクターの当たり判定の調整>============
-	float ColliderSize = m_CharacterCollider.GetSize().y * 0.75f;
-	m_CharacterCollider.SetSize(CVector3::GetOne() * ColliderSize);
-	m_CharacterCollider.SetShiftVec(CVector3(0.0f, -0.5f, 0.0f));
+	BoxCollider * pCollider = m_pCharacter->GetCharacterCollider();
+	float ColliderSize = pCollider->GetSize().y * 0.75f;
+	pCollider->SetSize(CVector3::GetOne() * ColliderSize);
+	pCollider->SetShiftVec(CVector3(0.0f, -0.5f, 0.0f));
 	//=================================================
 }
 
-void Character_00::FallDownUninit()
+void Character00_FallDownState::Uninit()
 {
-	SetNowLook();
-	m_ShiftCenterPos = CVector3::GetZero();
-	m_CharacterModel.SetRotatePosShift(false);
-	Character::FallDownUninit();
+	m_pCharacter->SetNowLook();
+	m_pModelDrawer->SetRotatePosShiftVector(CVector3::GetZero());
+	m_pModelDrawer->SetRotatePosShift(false);
+	CharacterBase_FallDownState::Uninit();
 
 	//=====<キャラクターの当たり判定の初期化>============
-	SetDefaultCollider();
+	m_pCharacter->SetDefaultCollider();
 	//=================================================
 }
 
-void Character_00::FallDownUpdate()
+void Character00_FallDownState::Update()
 {
-	Character::FallDownUpdate();
+	CharacterBase_FallDownState::Update();
 
 	const float AnimeEndTime = 0.387f;;		//アニメーションを終わる時間
 
-	m_CharacterModel.SetAnimeTime(AnimeEndTime);
+	m_pModelDrawer->SetAnimeTime(AnimeEndTime);
 
-	m_rotate *= CQuaternion::AngleAxis(CVector3::GetForward(),
-		m_NowLookDir == Character::LOOKDIR::RIGHT ? 5.0f : -5.0f);
+	m_pCharacterParameter->Rotate *= CQuaternion::AngleAxis(CVector3::GetForward(),
+		m_pCharacter->GetLook() == Character::LOOKDIR::RIGHT ? 5.0f : -5.0f);
 }

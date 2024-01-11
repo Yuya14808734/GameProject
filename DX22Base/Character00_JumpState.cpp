@@ -1,20 +1,20 @@
-#include "Character_00.h"
+#include "Character00_JumpState.h"
 
-void Character_00::JumpInit()
+void Character00_JumpState::Init()
 {
-	Character::JumpInit();
+	CharacterBase_JumpState::Init();
 }
 
-void Character_00::JumpUninit()
+void Character00_JumpState::Uninit()
 {
-	Character::JumpUninit();
+	CharacterBase_JumpState::Uninit();
 }
 
-void Character_00::JumpUpdate()
+void Character00_JumpState::Update()
 {
-	Character::JumpUpdate();
+	CharacterBase_JumpState::Update();
 
-	m_AnimeTime = (1.0f - (m_Velocity.y / m_JumpParameter.m_FirstJumpPower)) * 0.93f + 0.15f;
+	m_AnimeTime = (1.0f - (m_pCharacterParameter->Velocity.y / m_pJumpParameter->FirstJumpPower)) * 0.93f + 0.15f;
 
-	m_CharacterModel.SetAnimeTime(m_AnimeTime);
+	m_pModelDrawer->SetAnimeTime(m_AnimeTime);
 }

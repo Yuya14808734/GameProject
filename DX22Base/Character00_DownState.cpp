@@ -1,38 +1,40 @@
-#include "Character_00.h"
+#include "Character00_DownState.h"
 
-void Character_00::DownInit()
+void Character00_DownState::Init()
 {
-	Character::DownInit();
+	CharacterBase_DownState::Init();
 
-	m_CharacterModel.PlayAnime("Damage01", true);
+	m_pModelDrawer->PlayAnime("Damage01", true);
 	m_AnimeTime = 0.394f;
 	m_FrameCount = 0;
-	m_Invincible = true;
+	m_pCharacter->SetInvincible(true);
 
 	//=====<キャラクターの当たり判定の調整>============
-	CVector3 copysize = m_CharacterCollider.GetSize();
+	BoxCollider* pCollider = m_pCharacter->GetCharacterCollider();
 
-	m_CharacterCollider.SetSize(CVector3(
-		copysize.y,
-		copysize.x,
+	CVector3 copysize = pCollider->GetSize();
+
+	pCollider->SetSize(CVector3(
+		copysize.y,	//yと
+		copysize.x,	//xを入れ替えている
 		copysize.z
 	));
 
-	m_CharacterCollider.SetShiftVec(CVector3::GetRight() * 
-		(copysize.y * (m_NowLookDir == Character::LOOKDIR::RIGHT ? -0.5f : 0.5f)
+	pCollider->SetShiftVec(CVector3::GetRight() *
+		(copysize.y * (m_pCharacter->GetLook() == Character::LOOKDIR::RIGHT ? -0.5f : 0.5f)
 		));
 	//=================================================
 
 }
 
-void Character_00::DownUninit()
+void Character00_DownState::Uninit()
 {
-	Character::DownUninit();
+	CharacterBase_DownState::Uninit();
 }
 
-void Character_00::DownUpdate()
+void Character00_DownState::Update()
 {
-	Character::DownUpdate();
+	CharacterBase_DownState::Update();
 
 	const int AnimeEndFrame = 20;			//アニメーションを停止するフレーム
 	const float AnimeStartTime = 0.394f;		//アニメーションの始める時間
@@ -49,17 +51,17 @@ void Character_00::DownUpdate()
 		m_AnimeTime = AnimeEndTime;
 
 		//転んでいるときに上ボタンを押すと起き上がる
-		if (m_Controller->GetWakeUp())
+		if (m_pController->GetWakeUp())
 		{
-			ChangeState(Character::STATE::WAKEUP);
+			m_pCharacter->SetNextState(Character::STATE::State_WakeUp);
 		}
 	}
 
 	//アニメーションが終了してある程度時間がたったら無敵を外す
 	if (m_FrameCount > AnimeEndFrame + 30)
 	{
-		m_Invincible = false;
+		m_pCharacter->SetInvincible(false);
 	}
 
-	m_CharacterModel.SetAnimeTime(m_AnimeTime);
+	m_pModelDrawer->SetAnimeTime(m_AnimeTime);
 }

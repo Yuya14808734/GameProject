@@ -1,15 +1,15 @@
-#include "Character_00.h"
+#include "Character00_DeadState.h"
 
-void Character_00::DeadInit()
+void Character00_DeadState::Init()
 {
-	Character::DeadInit();
+	CharacterBase_DeadState::Init();
 }
-void Character_00::DeadUninit()
+void Character00_DeadState::Uninit()
 {
-	Character::DeadUninit();
+	CharacterBase_DeadState::Uninit();
 }
 
-void Character_00::DeadUpdate()
+void Character00_DeadState::Update()
 {
-	Character::DeadUpdate();
+	CharacterBase_DeadState::Update();
 }

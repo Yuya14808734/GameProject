@@ -264,7 +264,9 @@ void SceneGame::DrawGamePlay()
 		{
 			CharacterCopy->DrawCollider();
 
-			if (CharacterCopy->GetState() != Character::STATE::ATTACK)
+			//キャラクターが攻撃していなければ次のキャラクターに
+			if (static_cast<Character_State*>(CharacterCopy->GetStateContext()->GetNowState())
+				->GetType() != Character_State::TYPE::ATTACK)
 			{
 				continue;
 			}
@@ -313,22 +315,10 @@ void SceneGame::Collision_Player_Player()
 	for (std::vector<Character*>::iterator it_first = m_Characters.begin();
 		it_first != m_Characters.end(); it_first++)
 	{
-		//一人目のキャラクターがゲームオーバーの場合
-		if ((*it_first)->GetState() == Character::STATE::GAMEOVER)
-		{
-			continue;
-		}
-
 		//二人目のキャラクターを選択(一人目の次のキャラクター)
 		std::vector<Character*>::iterator it_second = it_first + 1;
 		for (; it_second != m_Characters.end(); it_second++)
 		{
-			//二人目のキャラクターがゲームオーバーの場合
-			if ((*it_second)->GetState() == Character::STATE::GAMEOVER)
-			{
-				continue;
-			}
-
 			//四角コライダーの取得
 			BoxCollider* pFirstCollider = (*it_first)->GetCharacterCollider();
 			BoxCollider* pSecondCollider = (*it_second)->GetCharacterCollider();
@@ -360,12 +350,6 @@ void SceneGame::Collision_Player_Stage()
 	for (std::vector<Character*>::iterator it_Character = m_Characters.begin();
 		it_Character != m_Characters.end(); it_Character++)
 	{
-		//キャラクターがゲームオーバーしていたら当たり判定を行わない
-		if ((*it_Character)->GetState() == Character::STATE::GAMEOVER)
-		{
-			continue;
-		}
-
 		BoxCollider* pCharacterCollider = (*it_Character)->GetCharacterCollider();
 
 		//Xの移動だけの当たり判定
@@ -467,14 +451,9 @@ void SceneGame::Collision_Attack_Player()
 	//キャラクター同士の攻撃の当たり判定を行う
 	for (Character* AttackCharacter : m_Characters)
 	{
-		//キャラクターがゲームオーバーしていたら当たり判定を行わない
-		if (AttackCharacter->GetState() == Character::STATE::GAMEOVER)
-		{
-			continue;
-		}
-
 		//キャラクターが攻撃していなければ次のキャラクターに
-		if (AttackCharacter->GetState() != Character::STATE::ATTACK)
+		if (static_cast<Character_State*>(AttackCharacter->GetStateContext()->GetNowState())
+			->GetType() != Character_State::TYPE::ATTACK)
 		{
 			continue;
 		}
@@ -497,12 +476,6 @@ void SceneGame::Collision_Attack_Player()
 			//攻撃を受けるキャラクター
 			for (Character* HitCharacter : m_Characters)
 			{
-				//受けるキャラクターがゲームオーバーの場合
-				if (HitCharacter->GetState() == Character::STATE::GAMEOVER)
-				{
-					continue;
-				}
-
 				//攻撃しているキャラクターと受けるキャラクターが同じ場合
 				if (AttackCharacter == HitCharacter)
 				{
@@ -532,27 +505,8 @@ void SceneGame::Collision_Attack_Player()
 						HitCharacter->SetPos(HitCharacterPos);
 
 						//当たった時の処理をする
-						switch (AttackCharacter->GetAttack())
-						{
-						case Character::ATTACK::ATTACK_11:
-							AttackCharacter->Attack11_Hit(HitCharacter);
-							break;
-						case Character::ATTACK::ATTACK_12:
-							AttackCharacter->Attack12_Hit(HitCharacter);
-							break;
-						case Character::ATTACK::ATTACK_13:
-							AttackCharacter->Attack13_Hit(HitCharacter);
-							break;
-						case Character::ATTACK::ATTACK_S2:
-							AttackCharacter->AttackS2_Hit(HitCharacter);
-							break;
-						case Character::ATTACK::ATTACK_SD:
-							AttackCharacter->AttackSD_Hit(HitCharacter);
-							break;
-						case Character::ATTACK::ATTACK_AIRN:
-							AttackCharacter->AttackAirN_Hit(HitCharacter);
-							break;
-						}
+						static_cast<Character_AttackState*>(AttackCharacter->GetStateContext()->GetNowState())
+							->HitCharacter(HitCharacter);
 					}
 				}
 			}

@@ -1,15 +1,16 @@
-#include "Character_00.h"
+#include "Character00_Attack13.h"
+#include "CharacterBase_HitStopState.h"
 
-void Character_00::Attack13_Init()
+void Character00_Attack13::Init()
 {
 	m_FrameCount = 0;
 	m_AnimeTime = 0.935f;
 
 	//当たり判定の作成
-	CVector3 ColliderPos = m_pos + CVector3::GetUp() * (m_CharacterCollider.GetSize().y * 0.5f);
+	CVector3 ColliderPos = m_pCharacterParameter->Pos + CVector3::GetUp() * (m_pCharacterCollider->GetSize().y * 0.5f);
 	float Rotate = 0.0f;
 
-	switch (m_NowLookDir)
+	switch (m_pCharacter->GetLook())
 	{
 	case Character::LOOKDIR::RIGHT:
 		ColliderPos = ColliderPos + CVector3::GetRight() * 1.5f;
@@ -23,23 +24,23 @@ void Character_00::Attack13_Init()
 		break;
 	}
 
-	ATTACKPARAM Attack;
+	Character::ATTACKPARAM Attack;
 	Attack.m_Use = false;
 	Attack.m_BoxCollider.CreateBox(BoxCollider::BOXTYPE::CENTER,
 		ColliderPos, CVector3(1.7f, 2.7f, 1.0f));
 	Attack.m_CanAttackCharacterBit = 0xffffffff;					//当たるキャラクターの設定
 
 
-	m_AttackCollider.push_back(Attack);
+	(*m_pAttackCollider).push_back(Attack);
 
-	m_CharacterModel.PlayAnime("WAIT04", true);
+	m_pModelDrawer->PlayAnime("WAIT04", true);
 }
 
-void Character_00::Attack13_Update()
+void Character00_Attack13::Update()
 {
 	//============<攻撃を当てるかの設定>===================
 	//今まで当たったことのあるキャラクターには当てない
-	m_AttackCollider[0].m_CanAttackCharacterBit = ~m_AttackCollider[0].m_haveHitCharacterBit;
+	(*m_pAttackCollider)[0].m_CanAttackCharacterBit = ~(*m_pAttackCollider)[0].m_haveHitCharacterBit;
 	//=====================================================
 
 	const int AnimeEndFrame = 30;			//アニメーションを停止するフレーム
@@ -58,45 +59,46 @@ void Character_00::Attack13_Update()
 
 	if (m_FrameCount == 8)
 	{
-		m_AttackCollider[0].m_Use = true;
+		(*m_pAttackCollider)[0].m_Use = true;
 	}
 
 	if (m_FrameCount == 12)
 	{
-		m_AttackCollider[0].m_Use = false;
+		(*m_pAttackCollider)[0].m_Use = false;
 	}
 
 	//フレームごとにイベントを設定する
 	if (m_FrameCount >= EndFrame)
 	{
-		ChangeState(Character::STATE::IDLE);
+		m_pCharacter->SetNextState(Character::STATE::State_Idle);
 	}
 
-	m_CharacterModel.SetAnimeTime(m_AnimeTime);
+	m_pModelDrawer->SetAnimeTime(m_AnimeTime);
 }
 
-void Character_00::Attack13_Uninit()
+void Character00_Attack13::Uninit()
 {
-	m_AttackCollider.clear();
+	m_pAttackCollider->clear();
 }
 
-void Character_00::Attack13_Hit(Character* HitCharacter)
+void Character00_Attack13::HitCharacter(Character* pHitCharacter)
 {
-	HitCharacter->AddDamage(5.0f);								//ダメージの加算
-	float ForcePower = (HitCharacter->GetDamage() / 100.0f) * 0.5f + 0.3f;			//ダメージから吹っ飛ばすベクトルの計算
+	pHitCharacter->AddDamage(5.0f);								//ダメージの加算
+	float ForcePower = (pHitCharacter->GetDamage() / 100.0f) * 0.5f + 0.3f;			//ダメージから吹っ飛ばすベクトルの計算
 
 	CVector3 AddVec = CVector2::GetAngleVector(
-		m_NowLookDir == Character::LOOKDIR::RIGHT ? -70.0f : 70.0f
+		m_pCharacter->GetLook() == Character::LOOKDIR::RIGHT ? -70.0f : 70.0f
 	) * ForcePower;
-	HitCharacter->AddForce(AddVec); 
-	HitCharacter->SetHitStop(5, Character::STATE::BLOWAWAY);
-	HitCharacter->SetShake(true);
-	if (m_NowLookDir == Character::LOOKDIR::RIGHT)
+	pHitCharacter->AddForce(AddVec);
+	CharacterBase_HitStopState* pHitStopState =
+		static_cast<CharacterBase_HitStopState*>(m_pCharacter->SetNextState(Character::STATE::State_HitStop));
+	pHitStopState->SetHitStop(5, Character::STATE::State_BlowAway, true);	//ヒットストップの設定
+	if (m_pCharacter->GetLook() == Character::LOOKDIR::RIGHT)
 	{
-		HitCharacter->SetLookLeft();
+		pHitCharacter->SetLookLeft();
 	}
 	else
 	{
-		HitCharacter->SetLookRight();
+		pHitCharacter->SetLookRight();
 	}
 }

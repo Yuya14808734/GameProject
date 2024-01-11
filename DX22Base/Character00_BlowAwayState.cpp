@@ -1,24 +1,24 @@
-#include "Character_00.h"
+#include "Character00_BlowAwayState.h"
 
-void Character_00::BlowAwayInit()
+void Character00_BlowAwayState::Init()
 {
-	Character::BlowAwayInit();
-	m_CharacterModel.PlayAnime("Damage01", true);
+	CharacterBase_BlowAwayState::Init();
+	m_pModelDrawer->PlayAnime("Damage01", true);
 	m_FrameCount = 0;
 	m_AnimeTime = 0.144f;
-	m_CharacterModel.SetAnimeTime(m_AnimeTime);
-	m_CharacterModel.SetRotatePosShift(true);
-	m_ShiftCenterPos = CVector3::GetZero();
+	m_pModelDrawer->SetAnimeTime(m_AnimeTime);
+	m_pModelDrawer->SetRotatePosShift(true);
+	m_ShiftCenterPosVector = CVector3::GetZero();
 }
 
-void Character_00::BlowAwayUninit()
+void Character00_BlowAwayState::Uninit()
 {
-	Character::BlowAwayUninit();
+	CharacterBase_BlowAwayState::Uninit();
 }
 
-void Character_00::BlowAwayUpdate()
+void Character00_BlowAwayState::Update()
 {
-	Character::BlowAwayUpdate();
+	CharacterBase_BlowAwayState::Update();
 
 	const int AnimeEndFrame = 20;			//アニメーションを停止するフレーム
 	const float AnimeStartTime = 0.144f;		//アニメーションの始める時間
@@ -29,7 +29,7 @@ void Character_00::BlowAwayUpdate()
 	m_AnimeTime = static_cast<float>(m_FrameCount) / static_cast<float>(AnimeEndFrame) * AnimeAllTime + AnimeStartTime;
 	float percent = (m_AnimeTime - AnimeStartTime) / AnimeAllTime;
 	
-	m_ShiftCenterPos = CVector3::GetForward() * (percent * 0.5f) +
+	m_ShiftCenterPosVector = CVector3::GetForward() * (percent * 0.5f) +
 		CVector3::GetUp() * (percent * -0.2f);
 
 	if (m_AnimeTime > AnimeEndTime)
@@ -37,6 +37,7 @@ void Character_00::BlowAwayUpdate()
 		m_AnimeTime = AnimeEndTime;
 	}
 
-	m_CharacterModel.SetAnimeTime(m_AnimeTime);
+	m_pModelDrawer->SetRotatePosShiftVector(m_ShiftCenterPosVector);
+	m_pModelDrawer->SetAnimeTime(m_AnimeTime);
 }
 

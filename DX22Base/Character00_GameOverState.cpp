@@ -1,16 +1,16 @@
-#include "Character_00.h"
+#include "Character00_GameOverState.h"
 
-void Character_00::GameOverInit()
+void Character00_GameOverState::Init()
 {
-	Character::GameOverInit();
+	CharacterBase_GameOverState::Init();
 }
 
-void Character_00::GameOverUninit()
+void Character00_GameOverState::Uninit()
 {
-	Character::GameOverUninit();
+	CharacterBase_GameOverState::Uninit();
 }
 
-void Character_00::GameOverUpdate()
+void Character00_GameOverState::Update()
 {
-	Character::GameOverUpdate();
+	CharacterBase_GameOverState::Update();
 }

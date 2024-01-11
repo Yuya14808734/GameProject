@@ -1,20 +1,20 @@
-#include "Character_00.h"
+#include "Character00_DashState.h"
 
-void Character_00::DashInit()
+void Character00_DashState::Init()
 {
-	Character::DashInit();
-	m_CharacterModel.PlayAnime("Dash", true);
+	CharacterBase_DashState::Init();
+	m_pModelDrawer->PlayAnime("Dash", true);
 	m_AnimeTime = 0.0f;
 }
 
-void Character_00::DashUninit()
+void Character00_DashState::Uninit()
 {
-	Character::DashUninit();
+	CharacterBase_DashState::Uninit();
 }
 
-void Character_00::DashUpdate()
+void Character00_DashState::Update()
 {
-	Character::DashUpdate();
+	CharacterBase_DashState::Update();
 
 	m_AnimeTime += 0.015f;
 	if (m_AnimeTime > 1.0f)
@@ -22,5 +22,5 @@ void Character_00::DashUpdate()
 		m_AnimeTime -= 1.0f;
 	}
 
-	m_CharacterModel.SetAnimeLerp(m_AnimeTime);
+	m_pModelDrawer->SetAnimeLerp(m_AnimeTime);
 }

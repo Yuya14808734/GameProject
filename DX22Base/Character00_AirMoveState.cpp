@@ -1,29 +1,30 @@
-#include "Character_00.h"
+#include "Character00_AirMoveState.h"
 
-void Character_00::AirMoveInit()
+void Character00_AirMoveState::Init()
 {
-	Character::AirMoveInit();
+	CharacterBase_AirMoveState::Init();
 
-	if (m_NowState == Character::STATE::WALK ||
+	//Ç‚ÇÈÇ»ÇÁTypeyeld
+	/*if (m_NowState == Character::STATE::WALK ||
 		m_NowState == Character::STATE::DASH ||
 		m_NowState == Character::STATE::IDLE ||
 		m_NowAttack == Character::ATTACK::ATTACK_AIRN)
 	{
 		m_CharacterModel.PlayAnime("Jump", false);
-	}
+	}*/
 }
 
-void Character_00::AirMoveUninit()
+void Character00_AirMoveState::Uninit()
 {
-	Character::AirMoveUninit();
+	CharacterBase_AirMoveState::Uninit();
 }
 
-void Character_00::AirMoveUpdate()
+void Character00_AirMoveState::Update()
 {
-	Character::AirMoveUpdate();
+	Character00_AirMoveState::Update();
 
 	m_AnimeTime = sinf(static_cast<float>(m_FrameCount) / 60.0f * 3.14f * 3.0f) * 0.03f + 1.08f;
 
-	m_CharacterModel.SetAnimeTime(m_AnimeTime);
+	m_pModelDrawer->SetAnimeTime(m_AnimeTime);
 
 }

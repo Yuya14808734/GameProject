@@ -1,15 +1,15 @@
-#include "Character_00.h"
+#include "Character00_AttackDS.h"
 
-void Character_00::AttackSD_Init()
+void Character00_AttackDS::Init()
 {
 	m_FrameCount = 0;
 	m_AnimeTime = 0.375f;
 
 	//当たり判定の作成
-	CVector3 ColliderPos = m_pos + CVector3::GetUp() * (m_CharacterCollider.GetSize().y * 0.5f);
+	CVector3 ColliderPos = m_pCharacterParameter->Pos + CVector3::GetUp() * (m_pCharacterCollider->GetSize().y * 0.5f);
 	float Rotate = 0.0f;
 
-	switch (m_NowLookDir)
+	switch (m_pCharacter->GetLook())
 	{
 	case Character::LOOKDIR::RIGHT:
 		ColliderPos = ColliderPos + CVector3::GetRight() * 1.5f;
@@ -23,24 +23,24 @@ void Character_00::AttackSD_Init()
 		break;
 	}
 
-	ATTACKPARAM Attack;
+	Character::ATTACKPARAM Attack;
 	Attack.m_Use = false;
 	Attack.m_BoxCollider.CreateBox(BoxCollider::BOXTYPE::CENTER,
-		ColliderPos, m_pos , CVector3(1.7f, 2.7f, 1.0f));
+		ColliderPos, m_pCharacterParameter->Pos, CVector3(1.7f, 2.7f, 1.0f));
 	Attack.m_CanAttackCharacterBit = 0xffffffff;					//当たるキャラクターの設定
 
-	m_AttackCollider.push_back(Attack);
+	(*m_pAttackCollider).push_back(Attack);
 
-	m_CharacterModel.PlayAnime("Slide00", true);
+	m_pModelDrawer->PlayAnime("Slide00", true);
 
 	m_PushButton = false;
 }
 
-void Character_00::AttackSD_Update()
+void Character00_AttackDS::Update()
 {
 	//============<攻撃を当てるかの設定>===================
 	//今まで当たったことのあるキャラクターには当てない
-	m_AttackCollider[0].m_CanAttackCharacterBit = ~m_AttackCollider[0].m_haveHitCharacterBit;
+	(*m_pAttackCollider)[0].m_CanAttackCharacterBit = ~(*m_pAttackCollider)[0].m_haveHitCharacterBit;
 	//=====================================================
 
 	const int AnimeAllFrame = 16;								//アニメーション全体のフレーム
@@ -51,41 +51,41 @@ void Character_00::AttackSD_Update()
 
 	m_FrameCount++;
 
-	m_AttackCollider[0].m_BoxCollider.SetBasePos(m_pos);
+	(*m_pAttackCollider)[0].m_BoxCollider.SetBasePos(m_pCharacterParameter->Pos);
 
 	//アニメーションの再生時間の更新
 	m_AnimeTime = static_cast<float>(m_FrameCount) / static_cast<float>(AnimeAllFrame) * AnimeAllTime + AnimeStartTime;
 
 	//アニメーションの再生時間の設定
-	m_CharacterModel.SetAnimeTime(m_AnimeTime);
+	m_pModelDrawer->SetAnimeTime(m_AnimeTime);
 
-	m_MoveVector.y = 0.0f;
+	m_pCharacterParameter->MoveVector.y = 0.0f;
 
-	switch (m_NowLookDir)
+	switch (m_pCharacter->GetLook())
 	{
 	case Character::LOOKDIR::RIGHT:
-		m_MoveVector.x = m_MoveParameter.m_DashSpeed * 0.8f;
+		m_pCharacterParameter->MoveVector.x = m_pMoveParameter->DashSpeed * 0.8f;
 		break;
 	case Character::LOOKDIR::LEFT:
-		m_MoveVector.x = m_MoveParameter.m_DashSpeed * -0.8f;
+		m_pCharacterParameter->MoveVector.x = m_pMoveParameter->DashSpeed * -0.8f;
 		break;
 	}
 
-	m_pos += m_MoveVector;
+	m_pCharacterParameter->Pos += m_pCharacterParameter->MoveVector;
 
 	//フレームごとにイベントを設定する
 	if (m_FrameCount >= EndFrame)
 	{
-		ChangeState(Character::STATE::IDLE);
+		m_pCharacter->SetNextState(Character::STATE::State_Idle);
 	}
 }
 
-void Character_00::AttackSD_Uninit()
+void Character00_AttackDS::Uninit()
 {
-	m_AttackCollider.clear();
+	(*m_pAttackCollider).clear();
 }
 
-void Character_00::AttackSD_Hit(Character* HitCharacter)
+void Character00_AttackDS::HitCharacter(Character* pHitCharacter)
 {
 
 }

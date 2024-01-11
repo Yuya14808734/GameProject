@@ -1,20 +1,20 @@
-#include "Character_00.h"
+#include "Character00_IdleState.h"
 
-void Character_00::IdleInit()
+void Character00_IdleState::Init()
 {
-	Character::IdleInit();
-	m_CharacterModel.PlayAnime("Idle", true);
+	CharacterBase_IdleState::Init();
+	m_pModelDrawer->PlayAnime("Idle", true);
 	m_AnimeTime = 0.0f;
 }
 
-void Character_00::IdleUninit()
+void Character00_IdleState::Uninit()
 {
-	Character::IdleUninit();
+	CharacterBase_IdleState::Uninit();
 }
 
-void Character_00::IdleUpdate()
+void Character00_IdleState::Update()
 {
-	Character::IdleUpdate();
+	CharacterBase_IdleState::Update();
 
 	m_AnimeTime += 0.015f;
 	if (m_AnimeTime > 1.0f)
@@ -22,5 +22,5 @@ void Character_00::IdleUpdate()
 		m_AnimeTime -= 1.0f;
 	}
 
-	m_CharacterModel.SetAnimeLerp(m_AnimeTime);
+	m_pModelDrawer->SetAnimeLerp(m_AnimeTime);
 }

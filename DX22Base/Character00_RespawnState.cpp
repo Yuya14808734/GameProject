@@ -1,16 +1,16 @@
-#include "Character_00.h"
+#include "Character00_RespawnState.h"
 
-void Character_00::RespawnInit()
+void Character00_RespawnState::Init()
 {
-	Character::RespawnInit();
+	CharacterBase_RespawnState::Init();
 }
 
-void Character_00::RespawnUninit()
+void Character00_RespawnState::Uninit()
 {
-	Character::RespawnUninit();
+	CharacterBase_RespawnState::Uninit();
 }
 
-void Character_00::RespawnUpdate()
+void Character00_RespawnState::Update()
 {
-	Character::RespawnUpdate();
+	CharacterBase_RespawnState::Update();
 }
