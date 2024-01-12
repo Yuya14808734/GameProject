@@ -21,7 +21,7 @@ void Character00_AirMoveState::Uninit()
 
 void Character00_AirMoveState::Update()
 {
-	Character00_AirMoveState::Update();
+	CharacterBase_AirMoveState::Update();
 
 	m_AnimeTime = sinf(static_cast<float>(m_FrameCount) / 60.0f * 3.14f * 3.0f) * 0.03f + 1.08f;
 

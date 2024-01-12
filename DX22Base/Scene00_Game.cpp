@@ -34,13 +34,15 @@ void SceneGame::Init()
 	Character::InitPlayerBit();
 	
 	//=====<セレクトシーンで選んだキャラクターの生成>=====
-	Character* FirstCharacter = CreateCharacter(SceneSelect::GetFirstPlayerCharacter());
+	//===<一人目>===
+	Character* FirstCharacter = CreateCharacter(SceneSelect::GetFirstPlayerCharacter());	
+	
 	PlayerController* pController = SceneSelect::GetFirstPlayerController();
 	pController = pController == nullptr ? 
 		&PlayerController::GetPlayerControllers()[0] : pController;
 	FirstCharacter->SetCharacterController(pController);
 	FirstCharacter->Character_Init();
-
+	//===<二人目>===
 	Character* SecondCharacter = CreateCharacter(SceneSelect::GetSecondPlayerCharacter());
 	SecondCharacter->Character_Init();
 	pController = SceneSelect::GetSecondPlayerController();
@@ -144,10 +146,6 @@ Character* SceneGame::CreateCharacter(SelectCharacterList::CHARACTER CharacterNu
 	{
 	case SelectCharacterList::CHARACTER::UNITYCHAN:
 		m_Characters.push_back(new Character_00());
-		break;
-	case SelectCharacterList::CHARACTER::MAX:
-		break;
-	default:
 		break;
 	}
 

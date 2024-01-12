@@ -122,8 +122,10 @@ void Character00_AttackS2::HitCharacter(Character* pHitCharacter)
 	) * ForcePower;
 	pHitCharacter->AddForce(AddVec);
 	CharacterBase_HitStopState* pHitStopState =
-		static_cast<CharacterBase_HitStopState*>(m_pCharacter->SetNextState(Character::STATE::State_HitStop));
+		static_cast<CharacterBase_HitStopState*>(pHitCharacter->SetNextState(Character::STATE::State_HitStop));
+	pHitCharacter->ChangeNextState();
 	pHitStopState->SetHitStop(5, Character::STATE::State_BlowAway, true);	//ヒットストップの設定
+
 	if(m_pCharacter->GetLook() == Character::LOOKDIR::RIGHT)
 	{
 		pHitCharacter->SetLookLeft();

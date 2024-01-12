@@ -81,7 +81,7 @@ public:
 		//-------------------------------------------------------------------------------
 		// ジャンプに関する変数
 		//-------------------------------------------------------------------------------
-		int				JumpCount = 0;			//今ジャンプした回数
+		int				JumpCount = 0;				//今ジャンプした回数
 		int				JumpCharageCount = 0;		//ジャンプをチャージする時のカウント
 
 		//-------------------------------------------------------------------------------
@@ -144,6 +144,7 @@ public:
 	//==========================================================================
 	int GetCharacterBit();								//キャラクター番号を取得
 	virtual State* SetNextState(STATE NextState) = 0;
+	void ChangeNextState();
 	StateContext* GetStateContext();					//今の状態の取得
 	//==========================================================================
 	const CVector3& GetPos() const;						//位置の取得
@@ -311,10 +312,14 @@ public:
 	Character_State::TYPE GetType();
 	void SetCharacter(Character* pCharacter);
 	void SetController(PlayerController* pController);
-	void SetCharacterParameter(Character::CHARACTER_PARAMETER* CharacterParameter);
+	void SetCharacterParameter(Character::CHARACTER_PARAMETER* pCharacterParameter);
 	void SetStage(Stage* pStage);
+	void SetModelDrawer(ModelDrawer* pModelDrawer);
 	void SetCharacterCollider(BoxCollider* pCollider);
 	void SetAttackCollider(std::vector<Character::ATTACKPARAM>* pAttackCollider);
+	void SetMoveParameter(Character::MOVEPARAMETER* pMoveParameter);
+	void SetJumpParameter(Character::JUMPPARAMETER* pJumpParameter);
+	void SetBlowAwayParameter(Character::BLOWAWAYPARAMETER* pBlowAwayParameter);
 
 public:
 	virtual void Init() {};
@@ -325,16 +330,16 @@ private:
 	Character_State::TYPE m_StateType = Character_State::TYPE::MAX;
 
 protected:
-	Character* const m_pCharacter = nullptr;
-	PlayerController* const m_pController = nullptr;
-	Character::CHARACTER_PARAMETER* const m_pCharacterParameter = nullptr;
-	Stage* const m_pStage = nullptr;
-	ModelDrawer* const m_pModelDrawer = nullptr;
-	const Character::MOVEPARAMETER* const m_pMoveParameter = nullptr;
-	const Character::JUMPPARAMETER* const m_pJumpParameter = nullptr;
-	const Character::BLOWAWAYPARAMETER* const m_pBlowAwayParameter = nullptr;
-	BoxCollider* const m_pCharacterCollider = nullptr;
-	std::vector<Character::ATTACKPARAM>* const m_pAttackCollider = nullptr;
+	Character* m_pCharacter = nullptr;
+	PlayerController* m_pController = nullptr;
+	Character::CHARACTER_PARAMETER* m_pCharacterParameter = nullptr;
+	Stage* m_pStage = nullptr;
+	ModelDrawer* m_pModelDrawer = nullptr;
+	BoxCollider* m_pCharacterCollider = nullptr;
+	std::vector<Character::ATTACKPARAM>* m_pAttackCollider = nullptr;
+	Character::MOVEPARAMETER* m_pMoveParameter = nullptr;
+	Character::JUMPPARAMETER* m_pJumpParameter = nullptr;
+	Character::BLOWAWAYPARAMETER* m_pBlowAwayParameter = nullptr;
 };
 
 //==========================================================================
@@ -345,7 +350,7 @@ protected:
 class Character_AttackState : public Character_State
 {
 public:
-	Character_AttackState() :Character_State(Character_State::TYPE::DEFAULT) {};
+	Character_AttackState() :Character_State(Character_State::TYPE::ATTACK) {};
 	virtual ~Character_AttackState() {};
 	virtual void HitCharacter(Character* pHitCharacter) {};
 

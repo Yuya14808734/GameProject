@@ -44,6 +44,8 @@ void Character::Character_Init()
 
 	Init();
 
+	ChangeNextState();
+
 	m_Parameter.JumpCount = 0;
 	m_Parameter.HitGround = m_Parameter.HitCeiling = m_Parameter.HitWall = false;
 }
@@ -67,19 +69,7 @@ void Character::Character_Update()
 	//========================================
 	// 各ステータスが切り替わっていたら
 	//========================================
-	if (m_CharacterStateContext.GetNextState() != nullptr)
-	{
-		m_CharacterStateContext.StateUninit();
-		m_CharacterStateContext.ChangeNextState();
-		Character_State* pState = static_cast<Character_State*>(m_CharacterStateContext.GetNowState());
-		pState->SetCharacter(this);
-		pState->SetAttackCollider(&m_AttackCollider);
-		pState->SetCharacterCollider(&m_CharacterCollider);
-		pState->SetController(m_Controller);
-		pState->SetCharacterParameter(&m_Parameter);
-		pState->SetStage(m_pStage);
-		m_CharacterStateContext.StateInit();
-	}
+	ChangeNextState();
 
 	//========================================
 	// 位置の設定
@@ -100,6 +90,7 @@ void Character::Character_Draw()
 	//========================================
 	// キャラクターの描画
 	//========================================
+	m_CharacterModel.SetPosition(m_Parameter.Pos);
 	m_CharacterModel.SetRotate(m_Parameter.Rotate);
 	m_CharacterModel.Draw();
 }
@@ -115,6 +106,30 @@ void Character::Character_UIDraw()
 int Character::GetCharacterBit()
 {
 	return m_PlayerBit;
+}
+
+void Character::ChangeNextState()
+{
+	if (m_CharacterStateContext.GetNextState() != nullptr)
+	{
+		m_CharacterStateContext.StateUninit();
+
+		m_CharacterStateContext.ChangeNextState();
+
+		Character_State* pState = static_cast<Character_State*>(m_CharacterStateContext.GetNowState());
+		pState->SetCharacter(this);
+		pState->SetController(m_Controller);
+		pState->SetCharacterParameter(&m_Parameter);
+		pState->SetStage(m_pStage);
+		pState->SetModelDrawer(&m_CharacterModel);
+		pState->SetCharacterCollider(&m_CharacterCollider);
+		pState->SetAttackCollider(&m_AttackCollider);
+		pState->SetMoveParameter(&m_MoveParameter);
+		pState->SetJumpParameter(&m_JumpParameter);
+		pState->SetBlowAwayParameter(&m_BlowAwayParameter);
+
+		m_CharacterStateContext.StateInit();
+	}
 }
 
 StateContext* Character::GetStateContext()
@@ -287,9 +302,20 @@ void Character::DrawCollider()
 void Character::SetCharacterController(PlayerController* pController)
 {
 	m_Controller = pController;
+	if (m_CharacterStateContext.GetNowState() != nullptr)
+	{
+		Character_State* pState = static_cast<Character_State*>(m_CharacterStateContext.GetNowState());
+		pState->SetController(pController);
+	}
 }
 
 void Character::SetStage(Stage* pStage)
 {
 	m_pStage = pStage;
+
+	if(m_CharacterStateContext.GetNowState() != nullptr)
+	{
+		Character_State* pState = static_cast<Character_State*>(m_CharacterStateContext.GetNowState());
+		pState->SetStage(pStage);
+	}
 }

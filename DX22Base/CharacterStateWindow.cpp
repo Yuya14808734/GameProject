@@ -19,11 +19,11 @@ void CharacterStateWindow::DrawUpdate()
 
 	Character::JUMPPARAMETER JumpParameter = m_pCharacter->GetJumpParameter();
 
-	ImGui::InputFloat(u8"ジャンプ力", &JumpParameter.m_FirstJumpPower);
-	ImGui::InputFloat(u8"ジャンプ重力", &JumpParameter.m_JumpUpReduction);
-	ImGui::InputFloat(u8"下に下がるときの重力", &JumpParameter.m_FallDownGravity);
-	ImGui::InputFloat(u8"最大落下速度", &JumpParameter.m_DefaultFallSpeed);
-	ImGui::InputFloat(u8"落下に変わるスピード", &JumpParameter.m_ChangeFallSpeed);
+	ImGui::InputFloat(u8"ジャンプ力", &JumpParameter.FirstJumpPower);
+	ImGui::InputFloat(u8"ジャンプ重力", &JumpParameter.JumpUpReduction);
+	ImGui::InputFloat(u8"下に下がるときの重力", &JumpParameter.FallDownGravity);
+	ImGui::InputFloat(u8"最大落下速度", &JumpParameter.DefaultFallSpeed);
+	ImGui::InputFloat(u8"落下に変わるスピード", &JumpParameter.ChangeFallSpeed);
 
 	m_pCharacter->SetjumpParameter(JumpParameter);
 }

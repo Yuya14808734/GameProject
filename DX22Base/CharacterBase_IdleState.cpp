@@ -25,7 +25,7 @@ void CharacterBase_IdleState::Update()
 	//’n–Ê‚É“–‚½‚Á‚Ä‚¢‚È‚¯‚ê‚Î
 	if (!m_pCharacterParameter->HitGround)
 	{
-		//ChangeState(Character::STATE::AIRMOVE);
+		m_pCharacter->SetNextState(Character::STATE::State_AirMove);
 	}
 
 	CVector2 LeftStick = m_pController->GetMoveInput();
@@ -35,24 +35,24 @@ void CharacterBase_IdleState::Update()
 	{
 		if (m_pController->GetLeftSmash())
 		{
-			//ChangeState(Character::STATE::DASH);
+			m_pCharacter->SetNextState(Character::STATE::State_Dash);
 		}
 		else
 		{
-			//ChangeState(Character::STATE::WALK);
+			m_pCharacter->SetNextState(Character::STATE::State_Walk);
 		}
 	}
 
 	//ƒWƒƒƒ“ƒv
 	if (m_pController->GetJumpTrigger())
 	{
-		//ChangeState(Character::STATE::JUMPIN);
+		m_pCharacter->SetNextState(Character::STATE::State_JumpIn);
 	}
 
 	//UŒ‚
 	if (m_pController->GetAttack())
 	{
-		//ChangeAttack(Character::ATTACK::ATTACK_11);	//Žã‚ÌÝ’è
+		m_pCharacter->SetNextState(Character::STATE::State_Attack11);	//Žã‚ÌÝ’è
 	}
 
 	m_pCharacterParameter->Velocity.y += m_pJumpParameter->FallDownGravity;

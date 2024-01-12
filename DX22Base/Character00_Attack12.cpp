@@ -110,6 +110,7 @@ void Character00_Attack12::HitCharacter(Character* pHitCharacter)
 {
 	pHitCharacter->AddDamage(3.0f);								//ダメージの加算
 	CharacterBase_HitStopState* pHitStopState =
-		static_cast<CharacterBase_HitStopState*>(m_pCharacter->SetNextState(Character::STATE::State_HitStop));
+		static_cast<CharacterBase_HitStopState*>(pHitCharacter->SetNextState(Character::STATE::State_HitStop));
+	pHitCharacter->ChangeNextState();
 	pHitStopState->SetHitStop(5, Character::STATE::State_LeanBack, true);	//ヒットストップの設定
 }

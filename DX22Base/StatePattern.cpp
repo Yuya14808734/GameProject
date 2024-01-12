@@ -28,8 +28,6 @@ State* StateContext::ChangeNextState()
 	m_pNowState = m_pNextState;
 	m_pNextState = nullptr;
 
-	m_pNowState->Init();
-
 	return m_pNowState;
 }
 
