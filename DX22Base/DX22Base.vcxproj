@@ -163,6 +163,7 @@
     <ClCompile Include="CharacterBase_RespawnState.cpp" />
     <ClCompile Include="Character_Attack.cpp" />
     <ClCompile Include="Character_State.cpp" />
+    <ClCompile Include="GameUI01_GameEndText.cpp" />
     <ClCompile Include="Image3D.cpp" />
     <ClCompile Include="OffScreenRenderingClass.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
@@ -293,6 +294,7 @@
     <ClInclude Include="Character_Attack.h" />
     <ClInclude Include="Character_State.h" />
     <ClInclude Include="GameUI00_StartCount.h" />
+    <ClInclude Include="GameUI01_GameEndText.h" />
     <ClInclude Include="Image3D.h" />
     <ClInclude Include="OffScreenRenderingClass.h" />
     <ClInclude Include="Scene00_Game.h" />
