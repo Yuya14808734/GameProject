@@ -47,7 +47,7 @@ void Character::Character_Init()
 	ChangeNextState();
 
 	m_Parameter.JumpCount = 0;
-	m_Parameter.HitGround = m_Parameter.HitCeiling = m_Parameter.HitWall = false;
+	Character_ColliderInit();
 }
 
 void Character::Character_Uninit()
@@ -282,6 +282,11 @@ void Character::Character_HitCeiling()
 	m_Parameter.HitCeiling = true;
 }
 
+bool Character::GetHitCeling()
+{
+	return m_Parameter.HitCeiling;
+}
+
 void Character::Character_HitGround()
 {
 	m_Parameter.Velocity.y = 0.0f;
@@ -289,9 +294,19 @@ void Character::Character_HitGround()
 	m_Parameter.HitGround = true;
 }
 
+bool Character::GetHitGround()
+{
+	return m_Parameter.HitGround;
+}
+
 void Character::Character_HitWall()
 {
 	m_Parameter.HitWall = true;
+}
+
+bool Character::GetHitWall()
+{
+	return m_Parameter.HitWall;
 }
 
 void Character::DrawCollider()

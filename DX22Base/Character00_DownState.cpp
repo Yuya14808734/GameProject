@@ -9,26 +9,42 @@ void Character00_DownState::Init()
 	m_FrameCount = 0;
 	m_pCharacter->SetInvincible(true);
 
+	//=====<倒れた時のアニメーションで見た目の位置がずれるので各パラメータの調節>============
 	//=====<キャラクターの当たり判定の調整>============
 	BoxCollider* pCollider = m_pCharacter->GetCharacterCollider();
 
 	CVector3 copysize = pCollider->GetSize();
 
+	//横に倒れるのでXとYのサイズを入れ替える
 	pCollider->SetSize(CVector3(
 		copysize.y,	//yと
 		copysize.x,	//xを入れ替えている
 		copysize.z
 	));
 
+	//キャラクターの当たり判定の位置を真ん中に移動する
 	pCollider->SetShiftVec(CVector3::GetRight() *
-		(copysize.y * (m_pCharacter->GetLook() == Character::LOOKDIR::RIGHT ? -0.5f : 0.5f)
-		));
+		(copysize.y * 
+			(m_pCharacter->GetLook() == Character::LOOKDIR::RIGHT ? -0.5f : 0.5f
+		)));
+	//=================================================
+
+	//=====<横の分を移動する>============
+	m_pCharacterParameter->Pos.x += (copysize.y * 
+		(m_pCharacter->GetLook() == Character::LOOKDIR::RIGHT ? 0.5f : -0.5f));
 	//=================================================
 
 }
 
 void Character00_DownState::Uninit()
 {
+	float ShiftX = m_pCharacterCollider->GetSize().x * 
+		(m_pCharacter->GetLook() == Character::LOOKDIR::RIGHT ?
+		-0.5f : 0.5f);
+
+	m_pCharacterParameter->Pos.x += ShiftX;
+
+	m_pCharacter->SetDefaultCollider();
 	CharacterBase_DownState::Uninit();
 }
 

@@ -10,26 +10,25 @@ void Character00_Attack12::Init()
 
 	//当たり判定の作成
 	CVector3 ColliderPos = m_pCharacterParameter->Pos + CVector3::GetUp() * (m_pCharacterCollider->GetSize().y * 0.5f);
-	float Rotate = 0.0f;
 
 	switch (m_pCharacter->GetLook())
 	{
 	case Character::LOOKDIR::RIGHT:
-		ColliderPos = ColliderPos + CVector3::GetRight() * 1.5f;
-		Rotate = 3.14f;
+		ColliderPos = ColliderPos +
+			CVector3(0.7f, 0.2f, 0.0f);
 		break;
 	case Character::LOOKDIR::LEFT:
-		ColliderPos = ColliderPos + CVector3::GetRight() * -1.5f;
-		Rotate = 0.0f;
+		ColliderPos = ColliderPos +
+			CVector3(-0.7f, 0.2f, 0.0f);
 		break;
-	default:
-		break;
-	}
+	};
+
+	CVector3 ColliderSize = CVector3(1.3f, 1.0f, 1.0f);
 
 	Character::ATTACKPARAM Attack;
 	Attack.m_Use = false;
 	Attack.m_BoxCollider.CreateBox(BoxCollider::BOXTYPE::CENTER,
-		ColliderPos, CVector3(1.7f, 2.7f, 1.0f));
+		ColliderPos, ColliderSize);
 	Attack.m_CanAttackCharacterBit = 0xffffffff;					//当たるキャラクターの設定
 
 

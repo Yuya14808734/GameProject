@@ -175,7 +175,6 @@ void SceneGame::UpdateGameStart()
 		m_GameStartCountUI.SetGoDraw(true);
 		m_GameState = GAMESTATE::GAMEPLAY;
 		CameraManager::GetInstance().SetSceneCamera("GameCamera");
-		
 	}
 }
 
@@ -440,6 +439,18 @@ void SceneGame::Collision_Player_Stage()
 			}
 		}
 	}
+
+	if (!(m_Characters[0])->GetHitGround())
+	{
+		int a = 0;
+		a++;
+	}
+
+	if (!(m_Characters[1])->GetHitGround())
+	{
+		int a = 0;
+		a++;
+	}
 }
 
 void SceneGame::Collision_Attack_Player()
@@ -463,9 +474,10 @@ void SceneGame::Collision_Attack_Player()
 		for (Character::ATTACKPARAM& Character_Attack : attackParamVector)
 		{
 			//前のフレームに依存しないビットはここで0にしておく
-			Character_Attack.m_HitCharacterBit = 0x00;
-			Character_Attack.m_HitTriggerCharacterBit = 0x00;
+			Character_Attack.m_HitCharacterBit = 0x00;			//このフレームで当たったキャラクター
+			Character_Attack.m_HitTriggerCharacterBit = 0x00;	//このフレームで初めて当たったキャラクター
 
+			//この攻撃の当たり判定は使わない
 			if (!Character_Attack.m_Use)
 			{
 				continue;
@@ -490,9 +502,10 @@ void SceneGame::Collision_Attack_Player()
 				if (Character_Attack.m_BoxCollider.CollisionBox(*HitCharacter->GetCharacterCollider()))
 				{
 					//当たったキャラクターの情報を入れる
-					Character_Attack.m_HitCharacterBit |= HitCharacter->GetCharacterBit();
-					Character_Attack.m_HitTriggerCharacterBit = ~Character_Attack.m_haveHitCharacterBit & HitCharacter->GetCharacterBit();
-					Character_Attack.m_haveHitCharacterBit |= HitCharacter->GetCharacterBit();
+					Character_Attack.m_HitCharacterBit |= HitCharacter->GetCharacterBit();				//今のフレームで当たったキャラクター
+					Character_Attack.m_HitTriggerCharacterBit 
+						= ~Character_Attack.m_haveHitCharacterBit & HitCharacter->GetCharacterBit();	//始めて当たったキャラクター
+					Character_Attack.m_haveHitCharacterBit |= HitCharacter->GetCharacterBit();			//今まで当たったことのあるキャラクター
 
 					//攻撃を当てるの判定
 					if ((HitCharacter->GetCharacterBit() & Character_Attack.m_CanAttackCharacterBit) != 0x00)

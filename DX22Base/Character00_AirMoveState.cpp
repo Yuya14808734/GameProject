@@ -8,10 +8,10 @@ void Character00_AirMoveState::Init()
 	/*if (m_NowState == Character::STATE::WALK ||
 		m_NowState == Character::STATE::DASH ||
 		m_NowState == Character::STATE::IDLE ||
-		m_NowAttack == Character::ATTACK::ATTACK_AIRN)
+		m_NowAttack == Character::ATTACK::ATTACK_AIRN)*/
 	{
-		m_CharacterModel.PlayAnime("Jump", false);
-	}*/
+		m_pModelDrawer->PlayAnime("Jump", false);
+	}
 }
 
 void Character00_AirMoveState::Uninit()

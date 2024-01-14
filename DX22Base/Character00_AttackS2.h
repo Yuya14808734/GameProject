@@ -4,6 +4,9 @@
 
 class Character00_AttackS2 : public Character_AttackState
 {
+private:
+	const int m_HitStopFrame = 30;
+
 public:
 	Character00_AttackS2() {};
 	~Character00_AttackS2() override {};

@@ -175,8 +175,11 @@ public:
 	std::vector<Character::ATTACKPARAM>& GetAttackCollider();		//攻撃コライダーの取得
 	void Character_ColliderInit();						//地面などに当たっていないことにする
 	void Character_HitCeiling();						//天井に当たった	
+	bool GetHitCeling();								//天井に当たったか取得
 	void Character_HitGround();							//地面に当たった
+	bool GetHitGround();								//地面に当たったか取得
 	void Character_HitWall();							//壁に当たった
+	bool GetHitWall();									//壁に当たったか取得
 	void DrawCollider();								//コライダーの描画
 	//==========================================================================
 	void SetCharacterController(PlayerController* pController);

@@ -102,7 +102,7 @@ void Character_00::SetDefaultCollider()
 	m_CharacterCollider.SetType(BoxCollider::BOXTYPE::FOOT);
 	m_CharacterCollider.SetBasePos(m_Parameter.Pos);
 	m_CharacterCollider.SetShiftVec(CVector3::GetZero());
-	m_CharacterCollider.SetSize(CVector3(1.0f, 2.0f, 1.0f));
+	m_CharacterCollider.SetSize(CVector3(0.7f, 2.0f, 1.0f));
 }
 
 State* Character_00::SetNextState(STATE NextState)
