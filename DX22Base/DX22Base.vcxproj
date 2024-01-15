@@ -163,6 +163,9 @@
     <ClCompile Include="CharacterBase_RespawnState.cpp" />
     <ClCompile Include="Character_Attack.cpp" />
     <ClCompile Include="Character_State.cpp" />
+    <ClCompile Include="SceneGame_StartState.cpp" />
+    <ClCompile Include="SceneGame_GamePlayState.cpp" />
+    <ClCompile Include="SceneGame_EndState.cpp" />
     <ClCompile Include="GameUI01_GameEndText.cpp" />
     <ClCompile Include="Image3D.cpp" />
     <ClCompile Include="OffScreenRenderingClass.cpp" />
@@ -294,6 +297,10 @@
     <ClInclude Include="CharacterBase_WalkState.h" />
     <ClInclude Include="Character_Attack.h" />
     <ClInclude Include="Character_State.h" />
+    <ClInclude Include="SceneBase_State.h" />
+    <ClInclude Include="SceneGame_StartState.h" />
+    <ClInclude Include="SceneGame_GamePlayState.h" />
+    <ClInclude Include="SceneGame_EndState.h" />
     <ClInclude Include="GameUI00_StartCount.h" />
     <ClInclude Include="GameUI01_GameEndText.h" />
     <ClInclude Include="Image3D.h" />
@@ -351,6 +358,12 @@
     <ClInclude Include="XboxKeyboard.h" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="ComparisonColorPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="ModelVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
@@ -364,6 +377,7 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="MultiplyTextureVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>

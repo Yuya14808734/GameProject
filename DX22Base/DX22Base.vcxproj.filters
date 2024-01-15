@@ -49,12 +49,6 @@
     <Filter Include="ヘッダー ファイル\04_Game">
       <UniqueIdentifier>{20531538-1a73-4c1c-b1dd-367567c9c0fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\01_Camera">
-      <UniqueIdentifier>{14df8b3b-0066-4d62-8d05-8661c1a0ce67}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\00__Scene">
-      <UniqueIdentifier>{d8ebe295-101d-4581-a794-852ce5b3c13a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\03_Assets">
       <UniqueIdentifier>{0e7cbd74-c152-4255-b373-6f36934aead5}</UniqueIdentifier>
     </Filter>
@@ -73,95 +67,17 @@
     <Filter Include="ソース ファイル\04_Game">
       <UniqueIdentifier>{01802416-f700-4808-89e1-0764a8308379}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\04_Game\01_Camera">
-      <UniqueIdentifier>{c0ae956a-945c-4627-a49c-31ab20eac8d0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\04_Game\00_Scene">
       <UniqueIdentifier>{72381214-ba18-42e2-bbb0-22ecfc257ab4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\04_Game\02_Character">
-      <UniqueIdentifier>{a02cd7d7-6396-4334-acdb-06f00dba8cd6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\02_Character">
-      <UniqueIdentifier>{067bdd2c-52c4-41f8-9c24-1d6542679dca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\04_Game\02_Character\Character_00">
-      <UniqueIdentifier>{efc5da23-9735-40db-8956-45e57cc47dd8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\02_Character\Character_00">
-      <UniqueIdentifier>{2bd36819-b618-46b2-a756-32f7465490a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\04_Game\03_Stage">
-      <UniqueIdentifier>{db577238-41ce-43ee-89d6-c4bbc6cd6831}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\04_Game\03_Stage\Stage_00">
-      <UniqueIdentifier>{833dbf51-51f5-438d-a951-dbada05c7668}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\04_Game\04_Effect">
-      <UniqueIdentifier>{5c0d8d6b-c36f-4e29-9964-ade6148289e5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\03_Stage">
-      <UniqueIdentifier>{0a11127a-f7bd-4096-a1fb-49a1a150a1c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\03_Stage\Stage_00">
-      <UniqueIdentifier>{100ce985-cf6f-4aa5-8e0e-f3b7c3ffd8c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\04_Effect">
-      <UniqueIdentifier>{f1eb7697-a67b-476c-bfbd-72af7b47bdc6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\04_Game\02_Character\Character_00\Attack">
-      <UniqueIdentifier>{1389c4e0-7b3c-4bfe-ad5e-f034843aa51d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="リソース ファイル\imgui">
       <UniqueIdentifier>{897bffab-2655-48cf-8c8f-35ca51306cc4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\04_Game\06_MiniWindow">
-      <UniqueIdentifier>{e5078f30-bcf9-4e5c-b58d-3d125f3ccac1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\06_MiniWindow">
-      <UniqueIdentifier>{4cfb9f31-4633-42e9-bc80-4905c869e09c}</UniqueIdentifier>
     </Filter>
     <Filter Include="リソース ファイル\VertexShader">
       <UniqueIdentifier>{5db16706-fd10-4598-8ef5-99f7d34e7e7d}</UniqueIdentifier>
     </Filter>
     <Filter Include="リソース ファイル\PixelShader">
       <UniqueIdentifier>{b3215dd2-0df8-4d44-b6cf-044763a2b681}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\04_Game\02_Character\CharacterBase">
-      <UniqueIdentifier>{c0782d59-a471-4294-91f5-eb647c37443e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\04_Game\02_Character\CharacterBase\00_State">
-      <UniqueIdentifier>{7c58496e-fcde-468b-a9ba-c2a5f19e4b63}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\04_Game\02_Character\CharacterBase\01_UI">
-      <UniqueIdentifier>{17e7d51e-7c35-478b-8878-1123591835b2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\02_Character\CharacterBase">
-      <UniqueIdentifier>{830d77a3-51fa-4890-b786-bfdf1462d361}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\02_Character\CharacterBase\01_UI">
-      <UniqueIdentifier>{f154daf0-9f8c-4eed-823e-956135b06a58}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\03_Stage\StageBase">
-      <UniqueIdentifier>{6cdf03b3-0004-46fc-9c5a-64d707114d04}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\04_Game\03_Stage\StageBase">
-      <UniqueIdentifier>{d5d82284-2b32-42fe-9fa8-746dceeac89c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\04_Game\02_Character\Character_00\State">
-      <UniqueIdentifier>{6570717d-ba69-4dc9-bf73-90987509783e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\05_Select">
-      <UniqueIdentifier>{5eac3aa8-3271-4896-b91a-87155361f684}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\04_Game\05_Select">
-      <UniqueIdentifier>{6e1be2eb-84d5-4e68-babd-168570e08945}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\04_Game\07_GameUI">
-      <UniqueIdentifier>{9ff81621-1482-4d14-b73d-e9f9e00149fe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\07_GameUI">
-      <UniqueIdentifier>{b58f3543-94aa-4aea-8f52-eaa86b0ec290}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\03_Assets\Shader">
       <UniqueIdentifier>{8b3d02c0-64e3-4e10-8568-4cf52f6e8a24}</UniqueIdentifier>
@@ -181,25 +97,133 @@
     <Filter Include="ヘッダー ファイル\03_Assets\3D">
       <UniqueIdentifier>{bb962117-6c4c-4f40-8a50-203817d9c918}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\02_Character\CharacterBase\00_State">
-      <UniqueIdentifier>{f9972334-697e-4669-921b-a47d174d37f8}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\04_Game\01_SceneState">
+      <UniqueIdentifier>{96a37e96-7a7e-4a1f-abeb-0a5b7d4ca977}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\02_Character\Character_00\00_State">
-      <UniqueIdentifier>{7c4bbb81-6b69-4d15-b4dc-d49bfdcf78a9}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\04_Game\02_Camera">
+      <UniqueIdentifier>{c0ae956a-945c-4627-a49c-31ab20eac8d0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\02_Character\Character_00\01_Attack">
-      <UniqueIdentifier>{8b707b9a-a0c0-4af3-8706-2eb35d0a1683}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\04_Game\03_Character">
+      <UniqueIdentifier>{a02cd7d7-6396-4334-acdb-06f00dba8cd6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\04_Game\08_Pattern">
+    <Filter Include="ソース ファイル\04_Game\03_Character\Character_00">
+      <UniqueIdentifier>{efc5da23-9735-40db-8956-45e57cc47dd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\03_Character\Character_00\Attack">
+      <UniqueIdentifier>{1389c4e0-7b3c-4bfe-ad5e-f034843aa51d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\03_Character\Character_00\State">
+      <UniqueIdentifier>{6570717d-ba69-4dc9-bf73-90987509783e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\03_Character\CharacterBase">
+      <UniqueIdentifier>{c0782d59-a471-4294-91f5-eb647c37443e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\03_Character\CharacterBase\00_State">
+      <UniqueIdentifier>{7c58496e-fcde-468b-a9ba-c2a5f19e4b63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\03_Character\CharacterBase\01_UI">
+      <UniqueIdentifier>{17e7d51e-7c35-478b-8878-1123591835b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\04_Stage">
+      <UniqueIdentifier>{db577238-41ce-43ee-89d6-c4bbc6cd6831}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\04_Stage\Stage_00">
+      <UniqueIdentifier>{833dbf51-51f5-438d-a951-dbada05c7668}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\04_Stage\StageBase">
+      <UniqueIdentifier>{d5d82284-2b32-42fe-9fa8-746dceeac89c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\05_Effect">
+      <UniqueIdentifier>{5c0d8d6b-c36f-4e29-9964-ade6148289e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\06_Select">
+      <UniqueIdentifier>{6e1be2eb-84d5-4e68-babd-168570e08945}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\07_MiniWindow">
+      <UniqueIdentifier>{e5078f30-bcf9-4e5c-b58d-3d125f3ccac1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\08_GameUI">
+      <UniqueIdentifier>{9ff81621-1482-4d14-b73d-e9f9e00149fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\09_Pattern">
       <UniqueIdentifier>{4c12526d-8324-48ca-a06b-ee19beee1f82}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\04_Game\08_Pattern\00_State">
+    <Filter Include="ソース ファイル\04_Game\09_Pattern\00_State">
       <UniqueIdentifier>{2fd5ebe2-ac7a-4988-9286-8c3d5fc46577}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\08_Pattern">
+    <Filter Include="ヘッダー ファイル\04_Game\01_SceneState">
+      <UniqueIdentifier>{bb808754-2fe4-48a7-ae82-5337405fbb63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\01_SceneState\01_Title">
+      <UniqueIdentifier>{4c7c8d09-6eb2-454b-9dc7-fd8002d163c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\01_SceneState\02_Game">
+      <UniqueIdentifier>{202eff30-1c2d-4817-aa06-fda0859f5a65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\01_SceneState\00_Base">
+      <UniqueIdentifier>{481d0f47-9937-4d5f-a446-f11d7188c9f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\01_SceneState\01_Title">
+      <UniqueIdentifier>{61b7914f-1d3e-42b9-85b0-cdc2a1f39e00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\01_SceneState\02_Game">
+      <UniqueIdentifier>{e8dec61f-384e-4400-826e-c5dfe06d0a78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\01_SceneState\00_Base">
+      <UniqueIdentifier>{19fd2bf8-42bc-443b-bb2e-cdfb310f1571}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\00_Scene">
+      <UniqueIdentifier>{d8ebe295-101d-4581-a794-852ce5b3c13a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\02_Camera">
+      <UniqueIdentifier>{14df8b3b-0066-4d62-8d05-8661c1a0ce67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\03_Character">
+      <UniqueIdentifier>{067bdd2c-52c4-41f8-9c24-1d6542679dca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\03_Character\Character_00">
+      <UniqueIdentifier>{2bd36819-b618-46b2-a756-32f7465490a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\03_Character\Character_00\00_State">
+      <UniqueIdentifier>{7c4bbb81-6b69-4d15-b4dc-d49bfdcf78a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\03_Character\Character_00\01_Attack">
+      <UniqueIdentifier>{8b707b9a-a0c0-4af3-8706-2eb35d0a1683}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\03_Character\CharacterBase">
+      <UniqueIdentifier>{830d77a3-51fa-4890-b786-bfdf1462d361}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\03_Character\CharacterBase\01_UI">
+      <UniqueIdentifier>{f154daf0-9f8c-4eed-823e-956135b06a58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\03_Character\CharacterBase\00_State">
+      <UniqueIdentifier>{f9972334-697e-4669-921b-a47d174d37f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\04_Stage">
+      <UniqueIdentifier>{0a11127a-f7bd-4096-a1fb-49a1a150a1c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\04_Stage\Stage_00">
+      <UniqueIdentifier>{100ce985-cf6f-4aa5-8e0e-f3b7c3ffd8c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\04_Stage\StageBase">
+      <UniqueIdentifier>{6cdf03b3-0004-46fc-9c5a-64d707114d04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\05_Effect">
+      <UniqueIdentifier>{f1eb7697-a67b-476c-bfbd-72af7b47bdc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\06_Select">
+      <UniqueIdentifier>{5eac3aa8-3271-4896-b91a-87155361f684}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\07_MiniWindow">
+      <UniqueIdentifier>{4cfb9f31-4633-42e9-bc80-4905c869e09c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\08_GameUI">
+      <UniqueIdentifier>{b58f3543-94aa-4aea-8f52-eaa86b0ec290}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\09_Pattern">
       <UniqueIdentifier>{8921fba4-c195-4e1f-9702-a3db7e48df14}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\08_Pattern\00_State">
+    <Filter Include="ヘッダー ファイル\04_Game\09_Pattern\00_State">
       <UniqueIdentifier>{0592f260-c867-4d83-8552-69f8351412f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -289,61 +313,61 @@
       <Filter>ソース ファイル\02_System</Filter>
     </ClCompile>
     <ClCompile Include="Character_00.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\Character_00</Filter>
     </ClCompile>
     <ClCompile Include="Camera00_Debug.cpp">
-      <Filter>ソース ファイル\04_Game\01_Camera</Filter>
+      <Filter>ソース ファイル\04_Game\02_Camera</Filter>
     </ClCompile>
     <ClCompile Include="Stage_00.cpp">
-      <Filter>ソース ファイル\04_Game\03_Stage\Stage_00</Filter>
+      <Filter>ソース ファイル\04_Game\04_Stage\Stage_00</Filter>
     </ClCompile>
     <ClCompile Include="XboxKeyboard.cpp">
       <Filter>ソース ファイル\02_System</Filter>
     </ClCompile>
     <ClCompile Include="Character_Base.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\CharacterBase</Filter>
     </ClCompile>
     <ClCompile Include="Stage_Base.cpp">
-      <Filter>ソース ファイル\04_Game\03_Stage\StageBase</Filter>
+      <Filter>ソース ファイル\04_Game\04_Stage\StageBase</Filter>
     </ClCompile>
     <ClCompile Include="CharacterBase_IdleState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="CharacterBase_WalkState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="CharacterBase_DashState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="CharacterBase_JumpState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="CharacterBase_AirMoveState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="CharacterBase_BlowAwayState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="CharacterBase_DownState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="Character00_Attack11.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00\Attack</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\Character_00\Attack</Filter>
     </ClCompile>
     <ClCompile Include="Character00_Attack12.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00\Attack</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\Character_00\Attack</Filter>
     </ClCompile>
     <ClCompile Include="Character00_Attack13.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00\Attack</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\Character_00\Attack</Filter>
     </ClCompile>
     <ClCompile Include="Character00_AttackS2.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00\Attack</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\Character_00\Attack</Filter>
     </ClCompile>
     <ClCompile Include="Character00_AttackAirN.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00\Attack</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\Character_00\Attack</Filter>
     </ClCompile>
     <ClCompile Include="CharacterBase_JumpInState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="imgui\imgui.cpp">
       <Filter>リソース ファイル\imgui</Filter>
@@ -370,109 +394,109 @@
       <Filter>ソース ファイル\02_System</Filter>
     </ClCompile>
     <ClCompile Include="CharacterStateWindow.cpp">
-      <Filter>ソース ファイル\04_Game\06_MiniWindow</Filter>
+      <Filter>ソース ファイル\04_Game\07_MiniWindow</Filter>
     </ClCompile>
     <ClCompile Include="WinUtil.cpp">
       <Filter>ソース ファイル\00_Main</Filter>
     </ClCompile>
     <ClCompile Include="Character_DamageUI.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\01_UI</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\CharacterBase\01_UI</Filter>
     </ClCompile>
     <ClCompile Include="Number2D.cpp">
       <Filter>ソース ファイル\03_Assets\2D</Filter>
     </ClCompile>
     <ClCompile Include="CharacterBase_HitStopState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="Character00_AirMoveState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\Character_00\State</Filter>
     </ClCompile>
     <ClCompile Include="Character00_BlowAwayState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\Character_00\State</Filter>
     </ClCompile>
     <ClCompile Include="Character00_DashState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\Character_00\State</Filter>
     </ClCompile>
     <ClCompile Include="Character00_DownState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\Character_00\State</Filter>
     </ClCompile>
     <ClCompile Include="Character00_HitStopState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\Character_00\State</Filter>
     </ClCompile>
     <ClCompile Include="Character00_IdleState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\Character_00\State</Filter>
     </ClCompile>
     <ClCompile Include="Character00_JumpInState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\Character_00\State</Filter>
     </ClCompile>
     <ClCompile Include="Character00_JumpState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\Character_00\State</Filter>
     </ClCompile>
     <ClCompile Include="Character00_WalkState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\Character_00\State</Filter>
     </ClCompile>
     <ClCompile Include="CharacterBase_FallDownState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="Character00_FallDownState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\Character_00\State</Filter>
     </ClCompile>
     <ClCompile Include="CharacterBase_LeanBackState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="Character00_LeanBackState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\Character_00\State</Filter>
     </ClCompile>
     <ClCompile Include="CharacterBase_WakeUpState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="Character00_WakeUpState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\Character_00\State</Filter>
     </ClCompile>
     <ClCompile Include="Camera01_Game.cpp">
-      <Filter>ソース ファイル\04_Game\01_Camera</Filter>
+      <Filter>ソース ファイル\04_Game\02_Camera</Filter>
     </ClCompile>
     <ClCompile Include="CharacterBase_DeadState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="CharacterBase_RespawnState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="CharacterBase_GameOverState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClCompile>
     <ClCompile Include="Scene01_Select.cpp">
       <Filter>ソース ファイル\04_Game\00_Scene</Filter>
     </ClCompile>
     <ClCompile Include="Camera02_Select.cpp">
-      <Filter>ソース ファイル\04_Game\01_Camera</Filter>
+      <Filter>ソース ファイル\04_Game\02_Camera</Filter>
     </ClCompile>
     <ClCompile Include="Select00_Character.cpp">
-      <Filter>ソース ファイル\04_Game\05_Select</Filter>
+      <Filter>ソース ファイル\04_Game\06_Select</Filter>
     </ClCompile>
     <ClCompile Include="Player_Controller.cpp">
       <Filter>ソース ファイル\02_System</Filter>
     </ClCompile>
     <ClCompile Include="Select01_CharacterList.cpp">
-      <Filter>ソース ファイル\04_Game\05_Select</Filter>
+      <Filter>ソース ファイル\04_Game\06_Select</Filter>
     </ClCompile>
     <ClCompile Include="Select02_SlideReadyToFightText.cpp">
-      <Filter>ソース ファイル\04_Game\05_Select</Filter>
+      <Filter>ソース ファイル\04_Game\06_Select</Filter>
     </ClCompile>
     <ClCompile Include="Camera03_GameStart.cpp">
-      <Filter>ソース ファイル\04_Game\01_Camera</Filter>
+      <Filter>ソース ファイル\04_Game\02_Camera</Filter>
     </ClCompile>
     <ClCompile Include="GameUI00_StartCount.cpp">
-      <Filter>ソース ファイル\04_Game\07_GameUI</Filter>
+      <Filter>ソース ファイル\04_Game\08_GameUI</Filter>
     </ClCompile>
     <ClCompile Include="Character00_DeadState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\Character_00\State</Filter>
     </ClCompile>
     <ClCompile Include="Character00_GameOverState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\Character_00\State</Filter>
     </ClCompile>
     <ClCompile Include="Character00_RespawnState.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00\State</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\Character_00\State</Filter>
     </ClCompile>
     <ClCompile Include="ShaderManager.cpp">
       <Filter>ソース ファイル\03_Assets\Shader</Filter>
@@ -484,22 +508,31 @@
       <Filter>ソース ファイル\03_Assets\3D</Filter>
     </ClCompile>
     <ClCompile Include="Character00_AttackDS.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\Character_00\Attack</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\Character_00\Attack</Filter>
     </ClCompile>
     <ClCompile Include="Character_State.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\CharacterBase</Filter>
     </ClCompile>
     <ClCompile Include="Character_Attack.cpp">
-      <Filter>ソース ファイル\04_Game\02_Character\CharacterBase</Filter>
+      <Filter>ソース ファイル\04_Game\03_Character\CharacterBase</Filter>
     </ClCompile>
     <ClCompile Include="StatePattern.cpp">
-      <Filter>ソース ファイル\04_Game\08_Pattern\00_State</Filter>
+      <Filter>ソース ファイル\04_Game\09_Pattern\00_State</Filter>
     </ClCompile>
     <ClCompile Include="GameUI01_GameEndText.cpp">
-      <Filter>ソース ファイル\04_Game\07_GameUI</Filter>
+      <Filter>ソース ファイル\04_Game\08_GameUI</Filter>
     </ClCompile>
     <ClCompile Include="TextureClass.cpp">
       <Filter>ソース ファイル\01_DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneGame_StartState.cpp">
+      <Filter>ソース ファイル\04_Game\01_SceneState\02_Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneGame_GamePlayState.cpp">
+      <Filter>ソース ファイル\04_Game\01_SceneState\02_Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneGame_EndState.cpp">
+      <Filter>ソース ファイル\04_Game\01_SceneState\02_Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -576,28 +609,28 @@
       <Filter>ヘッダー ファイル\02_System</Filter>
     </ClInclude>
     <ClInclude Include="Scene00_Game.h">
-      <Filter>ヘッダー ファイル\04_Game\00__Scene</Filter>
+      <Filter>ヘッダー ファイル\04_Game\00_Scene</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>ヘッダー ファイル\02_System</Filter>
     </ClInclude>
     <ClInclude Include="Camera00_Debug.h">
-      <Filter>ヘッダー ファイル\04_Game\01_Camera</Filter>
+      <Filter>ヘッダー ファイル\04_Game\02_Camera</Filter>
     </ClInclude>
     <ClInclude Include="Stage_00.h">
-      <Filter>ヘッダー ファイル\04_Game\03_Stage\Stage_00</Filter>
+      <Filter>ヘッダー ファイル\04_Game\04_Stage\Stage_00</Filter>
     </ClInclude>
     <ClInclude Include="XboxKeyboard.h">
       <Filter>ヘッダー ファイル\02_System</Filter>
     </ClInclude>
     <ClInclude Include="Stage_Base.h">
-      <Filter>ヘッダー ファイル\04_Game\03_Stage\StageBase</Filter>
+      <Filter>ヘッダー ファイル\04_Game\04_Stage\StageBase</Filter>
     </ClInclude>
     <ClInclude Include="Character_00.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\Character_00</Filter>
     </ClInclude>
     <ClInclude Include="Character_Base.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase</Filter>
     </ClInclude>
     <ClInclude Include="imgui\imconfig.h">
       <Filter>リソース ファイル\imgui</Filter>
@@ -627,40 +660,40 @@
       <Filter>ヘッダー ファイル\02_System</Filter>
     </ClInclude>
     <ClInclude Include="CharacterStateWindow.h">
-      <Filter>ヘッダー ファイル\04_Game\06_MiniWindow</Filter>
+      <Filter>ヘッダー ファイル\04_Game\07_MiniWindow</Filter>
     </ClInclude>
     <ClInclude Include="Character_DamageUI.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase\01_UI</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase\01_UI</Filter>
     </ClInclude>
     <ClInclude Include="Number2D.h">
       <Filter>ヘッダー ファイル\03_Assets\2D</Filter>
     </ClInclude>
     <ClInclude Include="Camera01_Game.h">
-      <Filter>ヘッダー ファイル\04_Game\01_Camera</Filter>
+      <Filter>ヘッダー ファイル\04_Game\02_Camera</Filter>
     </ClInclude>
     <ClInclude Include="Scene01_Select.h">
-      <Filter>ヘッダー ファイル\04_Game\00__Scene</Filter>
+      <Filter>ヘッダー ファイル\04_Game\00_Scene</Filter>
     </ClInclude>
     <ClInclude Include="Camera02_Select.h">
-      <Filter>ヘッダー ファイル\04_Game\01_Camera</Filter>
+      <Filter>ヘッダー ファイル\04_Game\02_Camera</Filter>
     </ClInclude>
     <ClInclude Include="Select00_Character.h">
-      <Filter>ヘッダー ファイル\04_Game\05_Select</Filter>
+      <Filter>ヘッダー ファイル\04_Game\06_Select</Filter>
     </ClInclude>
     <ClInclude Include="Player_Controller.h">
       <Filter>ヘッダー ファイル\02_System</Filter>
     </ClInclude>
     <ClInclude Include="Select01_CharacterList.h">
-      <Filter>ヘッダー ファイル\04_Game\05_Select</Filter>
+      <Filter>ヘッダー ファイル\04_Game\06_Select</Filter>
     </ClInclude>
     <ClInclude Include="Select02_SlideReadyToFightText.h">
-      <Filter>ヘッダー ファイル\04_Game\05_Select</Filter>
+      <Filter>ヘッダー ファイル\04_Game\06_Select</Filter>
     </ClInclude>
     <ClInclude Include="Camera03_GameStart.h">
-      <Filter>ヘッダー ファイル\04_Game\01_Camera</Filter>
+      <Filter>ヘッダー ファイル\04_Game\02_Camera</Filter>
     </ClInclude>
     <ClInclude Include="GameUI00_StartCount.h">
-      <Filter>ヘッダー ファイル\04_Game\07_GameUI</Filter>
+      <Filter>ヘッダー ファイル\04_Game\08_GameUI</Filter>
     </ClInclude>
     <ClInclude Include="ShaderManager.h">
       <Filter>ヘッダー ファイル\03_Assets\Shader</Filter>
@@ -672,127 +705,139 @@
       <Filter>ヘッダー ファイル\03_Assets\3D</Filter>
     </ClInclude>
     <ClInclude Include="CharacterBase_AirMoveState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClInclude>
     <ClInclude Include="CharacterBase_BlowAwayState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClInclude>
     <ClInclude Include="CharacterBase_DashState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClInclude>
     <ClInclude Include="CharacterBase_DeadState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClInclude>
     <ClInclude Include="CharacterBase_DownState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClInclude>
     <ClInclude Include="CharacterBase_FallDownState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClInclude>
     <ClInclude Include="CharacterBase_GameOverState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClInclude>
     <ClInclude Include="CharacterBase_HitStopState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClInclude>
     <ClInclude Include="CharacterBase_IdleState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClInclude>
     <ClInclude Include="CharacterBase_JumpInState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClInclude>
     <ClInclude Include="CharacterBase_JumpState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClInclude>
     <ClInclude Include="CharacterBase_LeanBackState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClInclude>
     <ClInclude Include="CharacterBase_RespawnState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClInclude>
     <ClInclude Include="CharacterBase_WakeUpState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClInclude>
     <ClInclude Include="CharacterBase_WalkState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase\00_State</Filter>
     </ClInclude>
     <ClInclude Include="Character00_AirMoveState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\Character_00\00_State</Filter>
     </ClInclude>
     <ClInclude Include="Character00_BlowAwayState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\Character_00\00_State</Filter>
     </ClInclude>
     <ClInclude Include="Character00_DashState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\Character_00\00_State</Filter>
     </ClInclude>
     <ClInclude Include="Character00_DeadState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\Character_00\00_State</Filter>
     </ClInclude>
     <ClInclude Include="Character00_DownState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\Character_00\00_State</Filter>
     </ClInclude>
     <ClInclude Include="Character00_FallDownState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\Character_00\00_State</Filter>
     </ClInclude>
     <ClInclude Include="Character00_GameOverState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\Character_00\00_State</Filter>
     </ClInclude>
     <ClInclude Include="Character00_HitStopState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\Character_00\00_State</Filter>
     </ClInclude>
     <ClInclude Include="Character00_IdleState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\Character_00\00_State</Filter>
     </ClInclude>
     <ClInclude Include="Character00_JumpInState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\Character_00\00_State</Filter>
     </ClInclude>
     <ClInclude Include="Character00_JumpState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\Character_00\00_State</Filter>
     </ClInclude>
     <ClInclude Include="Character00_LeanBackState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\Character_00\00_State</Filter>
     </ClInclude>
     <ClInclude Include="Character00_RespawnState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\Character_00\00_State</Filter>
     </ClInclude>
     <ClInclude Include="Character00_WakeUpState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\Character_00\00_State</Filter>
     </ClInclude>
     <ClInclude Include="Character00_WalkState.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\Character_00\00_State</Filter>
     </ClInclude>
     <ClInclude Include="Character00_Attack11.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00\01_Attack</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\Character_00\01_Attack</Filter>
     </ClInclude>
     <ClInclude Include="Character00_Attack12.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00\01_Attack</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\Character_00\01_Attack</Filter>
     </ClInclude>
     <ClInclude Include="Character00_Attack13.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00\01_Attack</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\Character_00\01_Attack</Filter>
     </ClInclude>
     <ClInclude Include="Character00_AttackAirN.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00\01_Attack</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\Character_00\01_Attack</Filter>
     </ClInclude>
     <ClInclude Include="Character00_AttackDS.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00\01_Attack</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\Character_00\01_Attack</Filter>
     </ClInclude>
     <ClInclude Include="Character00_AttackS2.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\Character_00\01_Attack</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\Character_00\01_Attack</Filter>
     </ClInclude>
     <ClInclude Include="StatePattern.h">
-      <Filter>ヘッダー ファイル\04_Game\08_Pattern\00_State</Filter>
+      <Filter>ヘッダー ファイル\04_Game\09_Pattern\00_State</Filter>
     </ClInclude>
     <ClInclude Include="Character_State.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase</Filter>
     </ClInclude>
     <ClInclude Include="Character_Attack.h">
-      <Filter>ヘッダー ファイル\04_Game\02_Character\CharacterBase</Filter>
+      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase</Filter>
     </ClInclude>
     <ClInclude Include="GameUI01_GameEndText.h">
-      <Filter>ヘッダー ファイル\04_Game\07_GameUI</Filter>
+      <Filter>ヘッダー ファイル\04_Game\08_GameUI</Filter>
     </ClInclude>
     <ClInclude Include="TextureClass.h">
       <Filter>ヘッダー ファイル\01_DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneGame_StartState.h">
+      <Filter>ヘッダー ファイル\04_Game\01_SceneState\02_Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneGame_GamePlayState.h">
+      <Filter>ヘッダー ファイル\04_Game\01_SceneState\02_Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneGame_EndState.h">
+      <Filter>ヘッダー ファイル\04_Game\01_SceneState\02_Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneBase_State.h">
+      <Filter>ヘッダー ファイル\04_Game\01_SceneState\00_Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -814,6 +859,9 @@
     </FxCompile>
     <FxCompile Include="MultiplyTextureVS.hlsl">
       <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="ComparisonColorPS.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

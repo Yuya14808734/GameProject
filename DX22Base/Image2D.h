@@ -32,8 +32,8 @@ public:
 	void SetUVSize(const DirectX::XMFLOAT2& uvsize);
 	void SetUVSize(const CVector2& uvsize);
 	const CVector2& GetUVSize();
-	void SetVertexShader(VertexShader* pVS);
-	void SetPixelShader(PixelShader* pPS);
+	void SetVertexShader(VertexShader* pVS,bool MemoryDelete = false);
+	void SetPixelShader(PixelShader* pPS, bool MemoryDelete = false);
 
 protected:
 	virtual void PrevDraw();
@@ -49,5 +49,6 @@ public:
 	CVector2 m_UVpos;				//UV位置
 	CVector2 m_UVsize;				//UVサイズ
 	DirectX::XMFLOAT4 m_color;		//色
+	bool m_IsVisible = true;
 };
 #endif

@@ -1,5 +1,6 @@
 #include "GameUI00_StartCount.h"
 #include "Main.h"
+#include "ShaderManager.h"
 
 const CVector2 GameStartCountUI::m_CountTextStartSize = CVector2(100.0f, 100.0f);
 const CVector2 GameStartCountUI::m_GoTextStartSize = CVector2(640.0f, 246.0f);
@@ -7,52 +8,56 @@ const CVector2 GameStartCountUI::m_GoTextStartSize = CVector2(640.0f, 246.0f);
 
 GameStartCountUI::GameStartCountUI()
 {
-	m_pVS_MultiTexture = new VertexShader();
-	m_pVS_MultiTexture->Load("Assets/Shader/MultiplyTextureVS.cso");
+	//定数バッファーの作成
+	m_ConstantBuffer_SecondTextureUV = new ConstantBuffer();
+	m_ConstantBuffer_SecondTextureUV->Create(sizeof(m_UVParam));
 
-	m_pPS_MultiTexture = new PixelShader();
-	m_pPS_MultiTexture->Load("Assets/Shader/MultiplyTexturePS.cso");
+	//シェーダーの作成
+	m_pVS_MultiTexture =
+	ShaderManager::CreateVertexShader("MultiplyTextureVS", CreateShaderPath("MultiplyTextureVS"));
+	m_pPS_MultiTexture =
+	ShaderManager::CreatePixelShader("MultiplyTexturePS", CreateShaderPath("MultiplyTexturePS"));
 
+	//頂点シェーダーの設定
 	m_CountImage.SetVertexShader(m_pVS_MultiTexture);
 	m_GoTextImage.SetVertexShader(m_pVS_MultiTexture);
+	//ピクセルシェーダーの設定
 	m_CountImage.SetPixelShader(m_pPS_MultiTexture);
 	m_GoTextImage.SetPixelShader(m_pPS_MultiTexture);
 
+	//各画像のテクスチャーの設定
 	m_CountImage.SetNumberTexture("Assets/NumberImage/NumberImage02.png",4,3);
 	m_CountImage.m_size = m_CountTextStartSize;
 	m_GoTextImage.SetTexture("Assets/NumberImage/GoTextImage02.png");
 	m_GoTextImage.m_size = m_GoTextStartSize;
 	
+	//各画像の位置を設定
 	m_GoTextImage.m_pos = m_CountImage.m_pos = CVector3(
 		static_cast<float>(GetAppWidth()) * 0.5f
 		, static_cast<float>(GetAppHeight()) * 0.4f
 		, 0.0f);
 	m_AddSize = CVector2(1.0f, 1.0f);
 
-	LoadTextureFromFile("Assets/Texture/Fire.png", &m_pPattern);	//模様をロード
+	//上の文字に映す模様をロード
+	LoadTextureFromFile("Assets/Texture/Fire.png", &m_pPattern);
 
-	m_ConstantBuffer_SecondTextureUV = new ConstantBuffer();
-	m_ConstantBuffer_SecondTextureUV->Create(sizeof(m_UVParam));
-
-	m_Count = 0.0f;
-	m_ChangeTime = static_cast<float>((rand() % 10) + 1) / 100.0f;
+	m_PatternChangeCount = 0.0f;													//時間を数える
+	m_PatternChangeTime = static_cast<float>((rand() % 10) + 1) / 100.0f;	//模様を切り替える秒数
 }
 
 GameStartCountUI::~GameStartCountUI()
 {
 	delete m_ConstantBuffer_SecondTextureUV;
-	delete m_pPS_MultiTexture;
-	delete m_pVS_MultiTexture;
 }
 
 void GameStartCountUI::Update()
 {
-	m_Count += 1.0f / 60.0f;
+	m_PatternChangeCount += 1.0f / 60.0f;
 
-	if (m_ChangeTime < m_Count)
+	if (m_PatternChangeTime < m_PatternChangeCount)
 	{
-		m_ChangeTime = static_cast<float>((rand() % 10) + 1) / 100.0f;
-		m_Count = 0.0f;
+		m_PatternChangeTime = static_cast<float>((rand() % 10) + 1) / 100.0f;
+		m_PatternChangeCount = 0.0f;
 
 		//サイズを設定
 		//				(0～100) - (最低UVサイズ)

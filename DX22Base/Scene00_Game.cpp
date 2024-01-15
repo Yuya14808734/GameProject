@@ -91,6 +91,10 @@ void SceneGame::Uninit()
 
 void SceneGame::Update()
 {
+	//=====<コントローラーが抜かれたらゲームを終了する>=====
+
+
+
 	m_BackGround.Update();
 
 	switch (m_GameState)

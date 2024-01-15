@@ -11,6 +11,7 @@ Image2D::Image2D()
 	, m_UVpos({ 0.0f,0.0f })
 	, m_UVsize({ 1.0f,1.0f })
 	, m_color({ 1.0f,1.0f,1.0f,1.0f })
+	, m_IsVisible(true)
 {
 
 }
@@ -41,6 +42,11 @@ void Image2D::Draw()
 	}
 
 	PrevDraw();
+
+	if(!m_IsVisible)
+	{
+		return;
+	}
 
 	//シェーダーの変更
 	if (m_pVertexShader != nullptr)
@@ -182,23 +188,29 @@ const CVector2& Image2D::GetUVSize()
 	return m_UVsize;
 }
 
-void Image2D::SetVertexShader(VertexShader* pVS)
+void Image2D::SetVertexShader(VertexShader* pVS, bool MemoryDelete)
 {
-	if (m_pVertexShader != nullptr)
+	if (MemoryDelete)
 	{
-		delete m_pVertexShader;
-		m_pVertexShader = nullptr;
+		if (m_pVertexShader != nullptr)
+		{
+			delete m_pVertexShader;
+			m_pVertexShader = nullptr;
+		}
 	}
 
 	m_pVertexShader = pVS;
 }
 
-void Image2D::SetPixelShader(PixelShader* pPS)
+void Image2D::SetPixelShader(PixelShader* pPS, bool MemoryDelete)
 {
-	if (m_pPixelShader != nullptr)
+	if (MemoryDelete)
 	{
-		delete m_pPixelShader;
-		m_pPixelShader = nullptr;
+		if (m_pPixelShader != nullptr)
+		{
+			delete m_pPixelShader;
+			m_pPixelShader = nullptr;
+		}
 	}
 
 	m_pPixelShader = pPS;
