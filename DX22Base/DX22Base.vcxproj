@@ -23,7 +23,7 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{fac33454-6bfc-4c9c-9a76-69d40070ed6a}</ProjectGuid>
     <RootNamespace>DX22Base</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -245,6 +245,7 @@
     <ClCompile Include="Stage_Base.cpp" />
     <ClCompile Include="Startup.cpp" />
     <ClCompile Include="StatePattern.cpp" />
+    <ClCompile Include="TextureClass.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Image2D.cpp" />
     <ClCompile Include="WinUtil.cpp" />
@@ -343,6 +344,7 @@
     <ClInclude Include="Stage_00.h" />
     <ClInclude Include="Stage_Base.h" />
     <ClInclude Include="StatePattern.h" />
+    <ClInclude Include="TextureClass.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Image2D.h" />
     <ClInclude Include="WinUtil.h" />

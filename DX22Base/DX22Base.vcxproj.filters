@@ -498,6 +498,9 @@
     <ClCompile Include="GameUI01_GameEndText.cpp">
       <Filter>ソース ファイル\04_Game\07_GameUI</Filter>
     </ClCompile>
+    <ClCompile Include="TextureClass.cpp">
+      <Filter>ソース ファイル\01_DirectX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -787,6 +790,9 @@
     </ClInclude>
     <ClInclude Include="GameUI01_GameEndText.h">
       <Filter>ヘッダー ファイル\04_Game\07_GameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureClass.h">
+      <Filter>ヘッダー ファイル\01_DirectX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

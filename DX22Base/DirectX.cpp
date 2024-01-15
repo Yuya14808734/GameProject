@@ -3,6 +3,7 @@
 #include <Effekseer.h>//インクルードディレクトリを変更した後これを書く
 #include <EffekseerRendererDX11.h>
 #include "Input.h"
+#include "Main.h"
 
 //Effekseer--------------------------
 Effekseer::ManagerRef g_effekseerMng;
@@ -10,7 +11,6 @@ EffekseerRendererDX11::RendererRef g_efkRenderer;
 Effekseer::EffectRef g_effect;
 Effekseer::Handle g_efkHandle;
 //-----------------------------------
-
 
 //--- グローバル変数
 ID3D11Device* g_pDevice;
@@ -178,6 +178,43 @@ void BeginDrawDX()
 void EndDrawDX()
 {
 	g_pSwapChain->Present(0, 0);
+}
+
+void SetRenderTargets(UINT num, RenderTarget ** ppViews, DepthStencil * pView)
+{
+	static ID3D11RenderTargetView* rtvs[4];
+
+	if (num > 4) num = 4;
+	for (UINT i = 0; i < num; ++i)
+		rtvs[i] = ppViews[i]->GetView();
+	g_pContext->OMSetRenderTargets(num, rtvs, pView ? pView->GetView() : nullptr);
+
+	// ビューポートの設定
+	D3D11_VIEWPORT vp;
+	vp.TopLeftX = 0.0f;
+	vp.TopLeftY = 0.0f;
+	vp.Width = (float)ppViews[0]->GetWidth();
+	vp.Height = (float)ppViews[0]->GetHeight();
+	vp.MinDepth = 0.0f;
+	vp.MaxDepth = 1.0f;
+	g_pContext->RSSetViewports(1, &vp);
+}
+
+void SetDefaultRenderTargets()
+{
+	g_pContext->OMSetRenderTargets(1, &g_pRTV, g_pDSV);
+
+	g_pContext->OMSetRenderTargets(1, &g_pRTV, g_pDSV);
+
+	// ビューポート設定
+	D3D11_VIEWPORT viewport;
+	viewport.Width = (FLOAT)GetAppWidth();
+	viewport.Height = (FLOAT)GetAppHeight();
+	viewport.MinDepth = 0.0f;
+	viewport.MaxDepth = 1.0f;
+	viewport.TopLeftX = 0;
+	viewport.TopLeftY = 0;
+	g_pContext->RSSetViewports(1, &viewport);
 }
 
 void EnableDepth(bool enable)
