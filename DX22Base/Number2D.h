@@ -35,8 +35,8 @@ public:
 	void SetNumber(int Num);
 	void SetUseDistance(bool useDistance);
 	void SetDistance(float distance);
-	void SetVertexShader(VertexShader* pVS);
-	void SetPixelShader(PixelShader* pPS);
+	void SetVertexShader(VertexShader* pVS, bool MemoryDelete = false);
+	void SetPixelShader(PixelShader* pPS, bool MemoryDelete = false);
 
 private:
 	ID3D11ShaderResourceView* m_pTexture = nullptr;

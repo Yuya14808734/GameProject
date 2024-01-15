@@ -815,12 +815,6 @@
     <ClInclude Include="StatePattern.h">
       <Filter>ヘッダー ファイル\04_Game\09_Pattern\00_State</Filter>
     </ClInclude>
-    <ClInclude Include="Character_State.h">
-      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase</Filter>
-    </ClInclude>
-    <ClInclude Include="Character_Attack.h">
-      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase</Filter>
-    </ClInclude>
     <ClInclude Include="GameUI01_GameEndText.h">
       <Filter>ヘッダー ファイル\04_Game\08_GameUI</Filter>
     </ClInclude>
@@ -838,6 +832,12 @@
     </ClInclude>
     <ClInclude Include="SceneBase_State.h">
       <Filter>ヘッダー ファイル\04_Game\01_SceneState\00_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Character_State.h">
+      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Character_Attack.h">
+      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

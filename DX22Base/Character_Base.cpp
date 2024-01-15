@@ -1,4 +1,6 @@
 #include "Character_Base.h"
+#include "Character_State.h"
+#include "Character_Attack.h"
 #include "Scene.h"
 #include "Scene00_Game.h"
 
@@ -52,6 +54,10 @@ void Character::Character_Init()
 
 void Character::Character_Uninit()
 {
+	//========================================
+	// 終了処理
+	//========================================
+	m_CharacterStateContext.ReleaseAllState();
 	Uninit();
 }
 
@@ -103,13 +109,21 @@ void Character::Character_UIDraw()
 	m_DamageUI.Draw();
 }
 
-int Character::GetCharacterBit()
+void Character::DrawCollider()
 {
-	return m_PlayerBit;
+	//========================================
+	// 当たり判定の描画
+	//========================================
+	m_CharacterCollider.DrawCollider();
 }
+
 
 void Character::ChangeNextState()
 {
+	//========================================
+	// 次のステートを設定していたら変更する
+	//========================================
+
 	if (m_CharacterStateContext.GetNextState() != nullptr)
 	{
 		m_CharacterStateContext.StateUninit();
@@ -132,189 +146,7 @@ void Character::ChangeNextState()
 	}
 }
 
-StateContext* Character::GetStateContext()
-{
-	return &m_CharacterStateContext;
-}
-
-const CVector3& Character::GetPos() const
-{
-	return m_Parameter.Pos;
-}
-
-void Character::SetPos(const CVector3 & pos)
-{
-	m_Parameter.Pos = pos;
-	m_CharacterCollider.SetBasePos(pos);
-}
-
-const CVector3& Character::GetOldPos() const
-{
-	return m_Parameter.OldPos;
-}
-
-void Character::SetOldPos()
-{
-	m_Parameter.OldPos = m_Parameter.Pos;
-}
-
-const CVector3 & Character::GetScale() const
-{
-	return m_Parameter.Scale;
-}
-
-void Character::SetScale(const CVector3 & scale)
-{
-	m_Parameter.Scale = scale;
-}
-
-const CQuaternion & Character::GetRotate() const
-{
-	return m_Parameter.Rotate;
-}
-
-void Character::SetRotate(const CQuaternion & rotate)
-{
-	m_Parameter.Rotate = rotate;
-}
-
-void Character::SetRotate(const CVector3 & rotate)
-{
-	m_Parameter.Rotate.v = DirectX::XMQuaternionRotationRollPitchYaw(
-		DirectX::XMConvertToRadians(rotate.x),
-		DirectX::XMConvertToRadians(rotate.y),
-		DirectX::XMConvertToRadians(rotate.z));
-}
-
-void Character::SetLookRight()
-{
-	m_NowLookDir = Character::LOOKDIR::RIGHT;
-	m_Parameter.Rotate = CQuaternion::AngleAxis(CVector3::GetUp(),90.0f);
-}
-
-void Character::SetLookLeft()
-{
-	m_NowLookDir = Character::LOOKDIR::LEFT;
-	m_Parameter.Rotate = CQuaternion::AngleAxis(CVector3::GetUp(), -90.0f);
-}
-
-void Character::SetNowLook()
-{
-	switch (m_NowLookDir)
-	{
-	case Character::LOOKDIR::LEFT:
-		SetLookLeft();
-		break;
-	case Character::LOOKDIR::RIGHT:
-		SetLookRight();
-		break;
-	}
-}
-
-Character::LOOKDIR Character::GetLook()
-{
-	return m_NowLookDir;
-}
-
-void Character::AddForce(const CVector3 & force)
-{
-	m_Parameter.Velocity += force;
-}
-
-void Character::SetForce(const CVector3 & force)
-{
-	m_Parameter.Velocity = force;
-}
-
-float Character::GetDamage() const
-{
-	return m_DamagePercentage;
-}
-
-void Character::AddDamage(float damage)
-{
-	m_DamagePercentage += damage;
-}
-
-void Character::SetDamage(float damage)
-{
-	m_DamagePercentage = damage;
-}
-
-void Character::SetStock(int stock)
-{
-	m_CharacterStock = stock;
-	m_DamageUI.SetStockNum(stock);
-}
-
-int Character::GetStock()
-{
-	return m_CharacterStock;
-}
-
-void Character::SetInvincible(bool invincible)
-{
-	m_Invincible = invincible;
-}
-
-bool Character::IsInvincible()
-{
-	return m_Invincible;
-}
-
-BoxCollider* Character::GetCharacterCollider() const
-{
-	return const_cast<BoxCollider*>(&m_CharacterCollider);
-}
-
-std::vector<Character::ATTACKPARAM>& Character::GetAttackCollider()
-{
-	return m_AttackCollider;
-}
-
-void Character::Character_ColliderInit()
-{
-	m_Parameter.HitCeiling = m_Parameter.HitGround = m_Parameter.HitWall = false;
-}
-
-void Character::Character_HitCeiling()
-{
-	m_Parameter.HitCeiling = true;
-}
-
-bool Character::GetHitCeling()
-{
-	return m_Parameter.HitCeiling;
-}
-
-void Character::Character_HitGround()
-{
-	m_Parameter.Velocity.y = 0.0f;
-	m_Parameter.JumpCount = 0;
-	m_Parameter.HitGround = true;
-}
-
-bool Character::GetHitGround()
-{
-	return m_Parameter.HitGround;
-}
-
-void Character::Character_HitWall()
-{
-	m_Parameter.HitWall = true;
-}
-
-bool Character::GetHitWall()
-{
-	return m_Parameter.HitWall;
-}
-
-void Character::DrawCollider()
-{
-	m_CharacterCollider.DrawCollider();
-}
-
-void Character::SetCharacterController(PlayerController* pController)
+void Character::SetCharacterController(PlayerController* pController) 	//コントローラーを設定
 {
 	m_Controller = pController;
 	if (m_CharacterStateContext.GetNowState() != nullptr)
@@ -324,11 +156,10 @@ void Character::SetCharacterController(PlayerController* pController)
 	}
 }
 
-void Character::SetStage(Stage* pStage)
+void Character::SetStage(Stage* pStage)								//ステージを設定
 {
 	m_pStage = pStage;
-
-	if(m_CharacterStateContext.GetNowState() != nullptr)
+	if (m_CharacterStateContext.GetNowState() != nullptr)
 	{
 		Character_State* pState = static_cast<Character_State*>(m_CharacterStateContext.GetNowState());
 		pState->SetStage(pStage);

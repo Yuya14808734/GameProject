@@ -1,5 +1,5 @@
 #pragma once
-#include "Character_Base.h"
+#include "Character_State.h"
 
 class CharacterBase_HitStopState : public Character_State
 {

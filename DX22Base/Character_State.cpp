@@ -1,4 +1,4 @@
-#include "Character_Base.h"
+#include "Character_State.h"
 
 Character_State::TYPE Character_State::GetType()
 {

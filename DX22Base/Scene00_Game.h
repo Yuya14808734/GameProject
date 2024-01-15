@@ -7,11 +7,13 @@
 #include "Select01_CharacterList.h"
 #include "GameUI00_StartCount.h"
 #include "Image3D.h"
+#include "StatePattern.h"
+#include "Player_Controller.h"
 
 
 class SceneGame : public CScene
 {
-private:
+public:
 	enum class GAMESTATE : int
 	{
 		GAMESTART = 0,
@@ -25,27 +27,16 @@ public:
 	void Uninit() override;
 	void Update() override;
 	void Draw() override;
-	std::vector<Character*>& GetCharacter();
-	Stage* GetStage();
 
+	State* SetNextState(GAMESTATE State);		//ステートの設定
+	void ChangeNextState();						//ステートの取得
 private:
 	Character* CreateCharacter(int Num);										//キャラクターの作成(番号で)	
 	Character* CreateCharacter(SelectCharacterList::CHARACTER CharacterNum);	//キャラクターの作成(ENUMで)
 
-	void UpdateGameStart();														//ゲーム開始時のアップデート
-	void UpdateGamePlay();														//ゲーム中のアップデート
-	void UpdateGameEnd();														//ゲーム終了時のアップデート
-	void DrawGameStart();														//ゲーム開始時のアップデート
-	void DrawGamePlay();														//ゲーム中のアップデート
-	void DrawGameEnd();															//ゲーム終了時のアップデート
-
-	void Collision_Player_Player();												//当たり判定(プレイヤーとプレイヤー)
-	void Collision_Player_Stage();												//当たり判定(プレイヤーとステージ)
-	void Collision_Attack_Player();												//当たり判定(プレイヤー攻撃)
-	
-
 private:
 	GAMESTATE m_GameState = GAMESTATE::MAX;
+	StateContext m_GameSceneStateContext;
 	std::vector<Character*> m_Characters;	//キャラクターの情報
 	Stage* m_pStage;						//ステージの情報
 	CameraGame* m_pGameCamera = nullptr;		//ゲームのカメラ
@@ -53,5 +44,16 @@ private:
 
 	GameStartCountUI m_GameStartCountUI;
 	int m_GameStartFrameCount = 0;
+
+	PlayerController* m_pFirstController = nullptr;
+	PlayerController* m_pSecondController = nullptr;
+
+
+public:
+	std::vector<Character*>& GetCharacter()
+	{ return m_Characters;}
+
+	Stage* GetStage()
+	{ return m_pStage;}
 
 };

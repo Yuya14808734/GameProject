@@ -41,6 +41,30 @@ State* StateContext::GetNextState()
 	return m_pNextState;
 }
 
+void StateContext::ReleaseNowState()
+{
+	if (m_pNowState != nullptr)
+	{
+		delete m_pNowState;
+		m_pNowState = nullptr;
+	}
+}
+
+void StateContext::ReleaseNextState()
+{
+	if (m_pNextState != nullptr)
+	{
+		delete m_pNextState;
+		m_pNextState = nullptr;
+	}
+}
+
+void StateContext::ReleaseAllState()
+{
+	ReleaseNowState();
+	ReleaseNextState();
+}
+
 void StateContext::StateInit()
 {
 	if (m_pNowState == nullptr)
@@ -69,4 +93,14 @@ void StateContext::StateUpdate()
 	}
 
 	m_pNowState->Update();
+}
+
+void StateContext::StateDraw()
+{
+	if (m_pNowState == nullptr)
+	{
+		return;
+	}
+
+	m_pNowState->Draw();
 }

@@ -195,23 +195,29 @@ void Number2D::SetDistance(float distance)
 	m_NumDistance = distance;
 }
 
-void Number2D::SetVertexShader(VertexShader* pVS)
+void Number2D::SetVertexShader(VertexShader* pVS,bool MemoryDelete)
 {
-	if (m_pVertexShader != nullptr)
+	if (MemoryDelete)
 	{
-		delete m_pVertexShader;
-		m_pVertexShader = nullptr;
+		if (m_pVertexShader != nullptr)
+		{
+			delete m_pVertexShader;
+			m_pVertexShader = nullptr;
+		}
 	}
 
 	m_pVertexShader = pVS;
 }
 
-void Number2D::SetPixelShader(PixelShader* pPS)
+void Number2D::SetPixelShader(PixelShader* pPS, bool MemoryDelete)
 {
-	if (m_pPixelShader != nullptr)
+	if (MemoryDelete)
 	{
-		delete m_pPixelShader;
-		m_pPixelShader = nullptr;
+		if (m_pPixelShader != nullptr)
+		{
+			delete m_pPixelShader;
+			m_pPixelShader = nullptr;
+		}
 	}
 
 	m_pPixelShader = pPS;

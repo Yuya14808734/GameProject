@@ -161,13 +161,13 @@ void ShaderManager::AllReleaseShader()
 	{
 		delete VertexShader.second;
 	}
+	m_pVertexShaders.clear();
 
-	for (auto PixelShader : m_pVertexShaders)
+	for (auto PixelShader : m_pPixelShaders)
 	{
 		delete PixelShader.second;
 	}
 	//=================================
 
-	m_pVertexShaders.clear();
 	m_pPixelShaders.clear();
 }

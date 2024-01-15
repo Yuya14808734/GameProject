@@ -1,5 +1,5 @@
 #pragma once
-#include "Character_Base.h"
+#include "Character_Attack.h"
 #include "Effect_Manager.h"
 
 class Character00_AttackS2 : public Character_AttackState

@@ -1,13 +1,14 @@
 #pragma once
+#include "SceneBase_State.h"
 
-
-class SceneGame_EndState
+class SceneGame_EndState : public Scene_State
 {
 public:
 	SceneGame_EndState() {};
 	~SceneGame_EndState() override {};
 
-	virtual void Init() override;
-	virtual void Uninit() override;
-	virtual void Update() override;
+	void Init() override;
+	void Uninit() override;
+	void Update() override;
+	void Draw() override;
 };

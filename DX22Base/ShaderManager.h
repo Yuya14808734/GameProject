@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 
-#define CreateShaderPath(ShaderName) ((std::string("Assets/Shader") + std::string(ShaderName) + std::string(".cso")).c_str())
+#define CreateShaderPath(ShaderName) ((std::string("Assets/Shader/") + std::string(ShaderName) + std::string(".cso")).c_str())
 
 class ShaderManager
 {

@@ -1,5 +1,5 @@
 #pragma once
-#include "Character_Base.h"
+#include "Character_Attack.h"
 
 class Character00_Attack13 : public Character_AttackState
 {

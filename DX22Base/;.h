@@ -10,8 +10,6 @@
 #include "StatePattern.h"
 
 class Character;
-class Character_State;
-class Character_Attack;
 
 class Character
 {
@@ -164,7 +162,6 @@ public:
 	virtual State* SetNextState(STATE NextState) = 0;
 	virtual void SetDefaultCollider() = 0;	//最初の当たり判定に戻す(キャラクターの当たり判定をいじった場合
 
-	
 protected:
 	//===============================================================================
 	//変数一覧
@@ -344,11 +341,13 @@ public:
 
 	//------------------------------------------------------------------------------
 	void SetCharacterController(PlayerController* pController); 	//コントローラーを設定
-	/*Cppに実装しています*/
+	/*Cppで実装をしています
+	*/
 
 	//------------------------------------------------------------------------------
 	void SetStage(Stage* pStage);								//ステージを設定
-	/*Cppに実装しています*/
+	/*Cppで実装をしています
+	*/
 
 	//------------------------------------------------------------------------------
 	void SetMoveParameter(const MOVEPARAMETER& MoveParameter)	//動きに関するパラメータを設定
