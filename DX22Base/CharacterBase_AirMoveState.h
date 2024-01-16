@@ -11,4 +11,3 @@ public:
 	virtual void Uninit() override;
 	virtual void Update() override;
 };
-

@@ -18,11 +18,5 @@ public:
 
 private:
 
-	int m_FrameCount = 0;					//アタックをしているときに使うカウント
-	float m_AnimeTime = 0.0f;				//アニメーションのタイム
 	CharacterStateWindow m_stateWindow;		//キャラクターのデバッグウィンドウ
-	//unsigned int m_FrameCount = 0;
-	int m_HitAttackStopCount = 0;			//ヒットストップのカウント
-	bool m_PushButton = false;
-
 };

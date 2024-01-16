@@ -4,15 +4,33 @@
 void SceneGame_StartState::Init()
 {
 	m_Count = 0;
+
+	for (auto copy : (*m_pCharacters))
+	{
+		copy->SetNextState(Character::STATE::State_StartAnime);
+		copy->ChangeNextState();
+	}
 }
 
 void SceneGame_StartState::Uninit()
 {
-
+	for (auto copy : (*m_pCharacters))
+	{
+		copy->SetNextState(Character::STATE::State_Idle);
+		copy->ChangeNextState();
+	}
 }
 
 void SceneGame_StartState::Update()
 {
+	//=====<キャラクターのアップデート>=====
+	//ここで攻撃や移動などのアップデートを行う
+	for (std::vector<Character*>::iterator it = m_pCharacters->begin();
+		it != m_pCharacters->end(); it++)
+	{
+		(*it)->Character_Update();				//キャラクターのアップデートを行う
+	}
+
 	m_pGameStartCountUI->Update();
 
 	m_Count++;

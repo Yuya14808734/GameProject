@@ -16,6 +16,7 @@
 #include "Character00_JumpState.h"
 #include "Character00_LeanBackState.h"
 #include "Character00_RespawnState.h"
+#include "Character00_StartAnimation.h"
 #include "Character00_WakeUpState.h"
 #include "Character00_WalkState.h"
 //==============================================
@@ -67,6 +68,7 @@ void Character_00::Init()
 	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_ARpose2.fbx", "Pose2", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_WAIT00.fbx", "Idle", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_UMATOBI00.fbx", "Umatobi", "UnityChan");
+	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_WAIT01.fbx", "WAIT01", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_WAIT04.fbx", "WAIT04", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_WALK00_F.fbx", "Walk", "UnityChan");
 	ModelDrawer::LoadAnime("Assets/unitychan/unitychan_RUN00_F.fbx", "Dash", "UnityChan");
@@ -89,9 +91,7 @@ void Character_00::Init()
 
 	m_stateWindow.SetCharacter(this);
 
-	SetNextState(Character::STATE::State_Idle);
-
-	m_FrameCount = 0;
+	SetNextState(Character::STATE::State_StartAnime);
 
 	m_DamageUI.SetCharacterIconImage("Assets/CharacterImage/IconImage_UnityChan.png");
 }
@@ -146,6 +146,9 @@ State* Character_00::SetNextState(STATE NextState)
 		break;
 	case Character::STATE::State_LeanBack:
 		m_CharacterStateContext.SetNextState(new Character00_LeanBackState());
+		break; 
+	case Character::STATE::State_StartAnime:
+		m_CharacterStateContext.SetNextState(new Character00_StartAnimationState());
 		break;
 	case Character::STATE::State_Respawn:
 		m_CharacterStateContext.SetNextState(new Character00_RespawnState());

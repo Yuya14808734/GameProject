@@ -22,7 +22,9 @@ public:
 		LEFT,
 		UP,
 		DOWN,
-		MAX
+		FRONT,
+		BACK,
+		MAX,
 	};
 
 	enum class STATE : int
@@ -41,6 +43,7 @@ public:
 		State_Jump,
 		State_LeanBack,
 		State_Respawn,
+		State_StartAnime,
 		State_WakeUp,
 		State_Walk,
 		State_Attack11,
@@ -252,6 +255,21 @@ public:
 	{ m_NowLookDir = Character::LOOKDIR::LEFT;
 		m_Parameter.Rotate =
 			CQuaternion::AngleAxis(CVector3::GetUp(), -90.0f); }
+
+	//------------------------------------------------------------------------------
+	void SetLookFront()											//ëOÇå¸Ç©ÇπÇÈ
+	{
+		m_NowLookDir = Character::LOOKDIR::FRONT;
+		m_Parameter.Rotate =
+			CQuaternion::AngleAxis(CVector3::GetUp(), 180.0f);}
+
+	//------------------------------------------------------------------------------
+	void SetLookBack()											//å„ÇÎÇå¸Ç©ÇπÇÈ
+	{
+		m_NowLookDir = Character::LOOKDIR::BACK;
+		m_Parameter.Rotate =
+			CQuaternion::AngleAxis(CVector3::GetUp(), 0.0f);
+	}
 
 	//------------------------------------------------------------------------------
 	void SetNowLook() 											//ç°ê›íËÇµÇƒÇ¢ÇÈï˚å¸Ç÷å¸Ç©ÇπÇÈ
