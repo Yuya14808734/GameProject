@@ -14,6 +14,7 @@ public:
 	void Init() override;
 	void Uninit() override;
 	void Update() override;
+	void Draw() override;
 	void HitCharacter(Character* pHitCharacter) override;
 
 private:
@@ -21,6 +22,6 @@ private:
 	float m_AnimeTime = 0.0f;
 	bool m_PushButton = false;
 	int m_HitAttackStopCount = 0;
-	Effekseer::Handle m_AirNEffect;
+	Effekseer::Handle m_efkHnd_Sword;
 };
 

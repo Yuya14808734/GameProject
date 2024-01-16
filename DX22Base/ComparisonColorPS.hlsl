@@ -21,6 +21,6 @@ float4 main(PS_IN pin) : SV_TARGET
 	Color.x = max(ComparisonColor.x, Color.x);
 	Color.y = max(ComparisonColor.y, Color.y);
 	Color.z = max(ComparisonColor.z, Color.z);
-	Color.w = max(ComparisonColor.w, Color.w);
+
 	return Color;
 }

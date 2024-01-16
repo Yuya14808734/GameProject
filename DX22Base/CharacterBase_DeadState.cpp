@@ -21,6 +21,7 @@ void CharacterBase_DeadState::Update()
 		{
 			//まだストックがある場合
 			m_pCharacter->SetNextState(Character::STATE::State_Respawn);
+			m_pCharacter->SetCheckDead(true);
 		}
 		else
 		{

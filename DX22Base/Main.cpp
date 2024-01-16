@@ -85,6 +85,7 @@ void MainLoop()
 	PlayerController::PlayerController_Update();
 
 	g_pGame->Update();
+	EffectManager::EffectUpdate();
 
 	//====================================================
 	//•`‰æ
@@ -97,9 +98,8 @@ void MainLoop()
 			CameraManager::GetInstance().GetSceneCamera()->GetViewMatrix(),
 			CameraManager::GetInstance().GetSceneCamera()->GetProjectionMatrix());
 	}
-	g_pGame->Draw();
 
-	EffectManager::Draw();
+	g_pGame->Draw();
 
 	MiniWindow::WindowDrawUpdate();
 	g_pGame->MiniWindowUpdate();

@@ -32,10 +32,10 @@ void Character00_AttackAirN::Init()
 		m_pAttackCollider->push_back(Attack);
 	}
 
-	m_AirNEffect = EffectManager::GetManager()->Play(EffectManager::GetEffect("C00_AirN"), 0, 0, 0);
-	EffectManager::GetManager()->SetLocation(m_AirNEffect,
-		{ ColliderBasePos.x, ColliderBasePos.y + 1.0f, ColliderBasePos.z + 1.0f });
-	EffectManager::GetManager()->SetScale(m_AirNEffect, 1.0f, 1.0f, 1.0f);
+	m_efkHnd_Sword = EffectManager::GetManager()->Play(EffectManager::GetEffect("C00_AirN"), 0, 0, 0);
+	EffectManager::GetManager()->SetLocation(m_efkHnd_Sword,
+		{ ColliderBasePos.x, ColliderBasePos.y + 1.0f, ColliderBasePos.z + 0.3f });
+	EffectManager::GetManager()->SetScale(m_efkHnd_Sword, 1.0f, 1.0f, 1.0f);
 
 	m_pModelDrawer->PlayAnime("WAIT04", true);
 
@@ -44,7 +44,7 @@ void Character00_AttackAirN::Init()
 
 void Character00_AttackAirN::Uninit()
 {
-	EffectManager::GetManager()->StopEffect(m_AirNEffect);
+	EffectManager::GetManager()->StopEffect(m_efkHnd_Sword);
 	(*m_pAttackCollider).clear();
 	m_pCharacter->SetDefaultCollider();
 }
@@ -90,7 +90,7 @@ void Character00_AttackAirN::Update()
 	if (HitTriggerCharacterBit != 0x00)
 	{
 		m_HitAttackStopCount = m_HitStopFrame;
-		EffectManager::GetManager()->SetPaused(m_AirNEffect, true);
+		EffectManager::GetManager()->SetPaused(m_efkHnd_Sword, true);
 	}
 
 	//攻撃を当てたヒットストップが終わるまで動かない
@@ -101,7 +101,7 @@ void Character00_AttackAirN::Update()
 		//攻撃が当たった時のストップが消える
 		if (m_HitAttackStopCount == 0)
 		{
-			EffectManager::GetManager()->SetPaused(m_AirNEffect, false);
+			EffectManager::GetManager()->SetPaused(m_efkHnd_Sword, false);
 		}
 
 		return;
@@ -167,13 +167,21 @@ void Character00_AttackAirN::Update()
 	m_pCharacterParameter->Pos += m_pCharacterParameter->Velocity;
 	//=====================================================
 
-	EffectManager::GetManager()->SetLocation(m_AirNEffect, { m_pCharacterParameter->Pos.x,m_pCharacterParameter->Pos.y + 1.0f,m_pCharacterParameter->Pos.z + 1.0f });
+	EffectManager::GetManager()->SetLocation(
+		m_efkHnd_Sword, { 
+			m_pCharacterParameter->Pos.x,
+			m_pCharacterParameter->Pos.y + 1.0f,
+			m_pCharacterParameter->Pos.z + 0.3f });
 	for (int i = 0; i < 4; i++)
 	{
 		(*m_pAttackCollider)[i].m_BoxCollider.SetBasePos(m_pCharacterParameter->Pos);
 	}
 }
 
+void Character00_AttackAirN::Draw()
+{
+	EffectManager::EffectDraw(m_efkHnd_Sword);
+}
 
 void Character00_AttackAirN::HitCharacter(Character* pHitCharacter)
 {

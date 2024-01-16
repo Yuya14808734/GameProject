@@ -14,6 +14,7 @@ public:
 	void Init() override;
 	void Uninit() override;
 	void Update() override;
+	void Draw() override;
 	void HitCharacter(Character* pHitCharacter) override;
 
 private:
@@ -23,6 +24,6 @@ private:
 	int m_HitAttackStopCount = 0;
 
 	//エフェクトの変数
-	Effekseer::Handle m_SwordHandle;
+	Effekseer::Handle m_efkHnd_Sword;
 };
 

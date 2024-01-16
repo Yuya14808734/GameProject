@@ -8,6 +8,7 @@
 Effekseer::ManagerRef EffectManager::m_efkManager;
 EffekseerRendererDX11::RendererRef EffectManager::m_efkRenderer;
 std::map<std::string, Effekseer::EffectRef> EffectManager::m_Effect;
+unsigned int EffectManager::m_EffectTimeCount;
 
 void EffectManager::EffectInit()
 {
@@ -30,6 +31,8 @@ void EffectManager::EffectInit()
 	m_efkManager->SetModelLoader(m_efkRenderer->CreateModelLoader());
 	m_efkManager->SetMaterialLoader(m_efkRenderer->CreateMaterialLoader());
 	m_efkManager->SetCurveLoader(Effekseer::MakeRefPtr<Effekseer::CurveLoader>());
+
+	m_EffectTimeCount = 0;
 
 	//===============================================================================
 	//エフェクトの追加
@@ -64,33 +67,22 @@ Effekseer::EffectRef EffectManager::GetEffect(std::string EffectName)
 	return m_Effect[EffectName];
 }
 
-void EffectManager::Add_Effect(std::string name, const char16_t* filePath)
+void EffectManager::EffectUpdate()
 {
-	std::map<std::string, Effekseer::EffectRef>::iterator it = m_Effect.find(name);
-
-	//見つかった場合
-	if (it != m_Effect.end()) {
-		return;
-	}
-	//追加
-	m_Effect.insert(std::make_pair(name, Effekseer::EffectRef{}));
-
-	m_Effect[name] =
-		Effekseer::Effect::Create(m_efkManager, filePath);
+	m_EffectTimeCount++;
 }
 
-void EffectManager::Draw()
+void EffectManager::EffectDraw(Effekseer::Handle Handle)
 {
 	//カメラを持ってくる
 	CameraBase* pCamera = CameraManager::GetInstance().GetSceneCamera();
 
-	if(pCamera == nullptr)
+	if (pCamera == nullptr)
 	{
 		return;
 	}
 
 	//EffekSeer-------------------------------------------------------------------------
-	static unsigned int Time = 0;
 
 	DirectX::XMFLOAT3 Camera_Pos = pCamera->GetPos_xmfloat();
 	DirectX::XMFLOAT3 Camera_Look = pCamera->GetLook_xmfloat();
@@ -117,7 +109,7 @@ void EffectManager::Draw()
 	m_efkManager->SetLayerParameter(0, layerParameter);
 
 	//時間を更新する
-	m_efkRenderer->SetTime(Time);
+	m_efkRenderer->SetTime(m_EffectTimeCount);
 
 	//マネージャーの更新
 	Effekseer::Manager::UpdateParameter updateParameter;
@@ -128,6 +120,7 @@ void EffectManager::Draw()
 
 	//カメラ行列を設定
 	m_efkRenderer->SetCameraMatrix(cameraMatrix);
+
 	//エフェクトの描画開始処理を行う
 	m_efkRenderer->BeginRendering();
 
@@ -137,10 +130,24 @@ void EffectManager::Draw()
 	drawParameter.ZFar = 1.0f;
 	drawParameter.ViewProjectionMatrix =
 		m_efkRenderer->GetCameraProjectionMatrix();
-	m_efkManager->Draw(drawParameter);
+	m_efkManager->DrawHandle(Handle);
 
 	//エフェクトの描画終了処理を行う
 	m_efkRenderer->EndRendering();
 
-	Time++;
+}
+
+void EffectManager::Add_Effect(std::string name, const char16_t* filePath)
+{
+	std::map<std::string, Effekseer::EffectRef>::iterator it = m_Effect.find(name);
+
+	//見つかった場合
+	if (it != m_Effect.end()) {
+		return;
+	}
+	//追加
+	m_Effect.insert(std::make_pair(name, Effekseer::EffectRef{}));
+
+	m_Effect[name] =
+		Effekseer::Effect::Create(m_efkManager, filePath);
 }

@@ -44,6 +44,8 @@ void Character::Character_Init()
 	SetDefaultCollider();
 	//============================================================================
 
+	m_IsCheckDead = true;
+
 	Init();
 
 	ChangeNextState();
@@ -73,9 +75,14 @@ void Character::Character_Update()
 	m_CharacterStateContext.StateUpdate();
 
 	//========================================
-	// 各ステータスが切り替わっていたら
+	// 上でステータスが切り替わっていたら
 	//========================================
 	ChangeNextState();
+
+	//========================================
+	// デットラインを越えていたら
+	//========================================
+	CheckDeadLineOver();
 
 	//========================================
 	// 位置の設定
@@ -99,6 +106,9 @@ void Character::Character_Draw()
 	m_CharacterModel.SetPosition(m_Parameter.Pos);
 	m_CharacterModel.SetRotate(m_Parameter.Rotate);
 	m_CharacterModel.Draw();
+
+	//エフェクトなどの描画
+	m_CharacterStateContext.StateDraw();
 }
 
 void Character::Character_UIDraw()
@@ -143,6 +153,28 @@ void Character::ChangeNextState()
 		pState->SetBlowAwayParameter(&m_BlowAwayParameter);
 
 		m_CharacterStateContext.StateInit();
+	}
+}
+
+void Character::CheckDeadLineOver()
+{
+	//========================================
+	// デットラインを越えていたらゲームオーバーにする
+	//========================================
+	if(!m_IsCheckDead)
+	{
+		return;
+	}
+
+	if (
+		m_pStage->GetDeadLineLeftX() > m_Parameter.Pos.x ||
+		m_pStage->GetDeadLineRightX() < m_Parameter.Pos.x ||
+		m_pStage->GetDeadLineTopY() < m_Parameter.Pos.y ||
+		m_pStage->GetDeadLineBottomY() > m_Parameter.Pos.y)
+	{
+		SetNextState(Character::STATE::State_Dead);
+		ChangeNextState();
+		m_IsCheckDead = false;	//判定が終わるまでチェックしないようにする
 	}
 }
 

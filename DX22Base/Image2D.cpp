@@ -41,12 +41,12 @@ void Image2D::Draw()
 		return;
 	}
 
-	PrevDraw();
-
 	if(!m_IsVisible)
 	{
 		return;
 	}
+
+	PrevDraw();
 
 	//シェーダーの変更
 	if (m_pVertexShader != nullptr)

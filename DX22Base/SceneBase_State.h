@@ -7,6 +7,7 @@
 #include "Camera01_Game.h"
 #include "Select01_CharacterList.h"
 #include "GameUI00_StartCount.h"
+#include "GameUI01_GameEndText.h"
 #include "Image3D.h"
 
 class Scene_State : public State
@@ -37,6 +38,9 @@ public:
 	void SetStartCountUI(GameStartCountUI* pStartCountUI)
 	{ m_pGameStartCountUI = pStartCountUI; }
 
+	void SetEndTextUI(GameEndText* pGameEndTextUI) 
+	{ m_pGameEndTextUI = pGameEndTextUI; }
+
 protected:
 	std::vector<Character*>* m_pCharacters = nullptr;	//キャラクターの情報
 	SceneGame* m_pGameScene = nullptr;					//今のゲームシーン
@@ -44,4 +48,5 @@ protected:
 	CameraGame* m_pGameCamera = nullptr;				//ゲームのカメラ
 	Image3D* m_pBackGround = nullptr;					//バックグラウンド
 	GameStartCountUI* m_pGameStartCountUI = nullptr;	//最初のカウントUI
+	GameEndText* m_pGameEndTextUI = nullptr;			//ゲームエンドUI
 };

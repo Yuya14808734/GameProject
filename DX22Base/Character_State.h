@@ -32,6 +32,7 @@ public:
 	virtual void Init() {};
 	virtual void Uninit() {};
 	virtual void Update() {};
+	virtual void Draw() {};
 
 private:
 	Character_State::TYPE m_StateType = Character_State::TYPE::MAX;

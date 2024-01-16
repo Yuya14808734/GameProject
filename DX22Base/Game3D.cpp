@@ -36,11 +36,7 @@ Game3D::Game3D()
 }
 Game3D::~Game3D()
 {
-
 	SelectCharacterList::ReleaseTexture();
-
-
-
 
 	CScene::DestroyScene();									//ƒV[ƒ“‚Ìíœ
 	CameraManager::GetInstance().DestroyAllCamera(true);	//‚·‚×‚Ä‚ÌƒJƒƒ‰‚Ìíœ

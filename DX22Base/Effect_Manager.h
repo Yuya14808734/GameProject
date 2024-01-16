@@ -21,11 +21,13 @@ public:
 	static Effekseer::ManagerRef& GetManager();
 	static void Add_Effect(std::string EffectName, const char16_t* FileName);	//エフェクト情報の追加
 	static Effekseer::EffectRef GetEffect(std::string EffectName);
-	static void Draw();
+	static void EffectUpdate();
+	static void EffectDraw(Effekseer::Handle EffectHandle);
 private:
 	static Effekseer::ManagerRef m_efkManager;
 	static EffekseerRendererDX11::RendererRef m_efkRenderer;
 	static std::map<std::string, Effekseer::EffectRef> m_Effect;
+	static unsigned int m_EffectTimeCount;
 };
 
 #endif // !EFFECT_MANAGER_H

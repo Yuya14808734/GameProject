@@ -22,9 +22,6 @@ bool ColliderDraw = false;
 
 void SceneGame::Init()
 {
-	//=====<ゲーム開始に設定>=====
-	m_GameState = GAMESTATE::GAMESTART;
-
 	//=====<カメラの生成>=====
 	CameraManager::GetInstance().CreateCamera(new CameraGame(), "GameCamera");
 	CameraGameStart* pCameraGameStart = new CameraGameStart();
@@ -74,6 +71,7 @@ void SceneGame::Init()
 	m_pGameCamera->SetStage(m_pStage);
 	pCameraGameStart->SetCharacter(m_Characters);
 
+	//=====<ゲーム開始に設定>=====
 	SetNextState(SceneGame::GAMESTATE::GAMESTART);
 	ChangeNextState();
 }
@@ -211,6 +209,7 @@ void SceneGame::ChangeNextState()
 		pState->SetGameCamera(m_pGameCamera);
 		pState->SetBackGround(&m_BackGround);
 		pState->SetStartCountUI(&m_GameStartCountUI);
+		pState->SetEndTextUI(&m_GameEndTextUI);
 
 		//初期化処理
 		m_GameSceneStateContext.StateInit();

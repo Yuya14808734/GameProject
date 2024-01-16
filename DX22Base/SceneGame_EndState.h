@@ -11,4 +11,7 @@ public:
 	void Uninit() override;
 	void Update() override;
 	void Draw() override;
+
+private:
+	int m_SceneChangeCount = 0;
 };

@@ -6,6 +6,7 @@
 #include "Camera01_Game.h"
 #include "Select01_CharacterList.h"
 #include "GameUI00_StartCount.h"
+#include "GameUI01_GameEndText.h"
 #include "Image3D.h"
 #include "StatePattern.h"
 #include "Player_Controller.h"
@@ -43,7 +44,8 @@ private:
 	Image3D m_BackGround;
 
 	GameStartCountUI m_GameStartCountUI;
-	int m_GameStartFrameCount = 0;
+	//int m_GameStartFrameCount = 0;
+	GameEndText m_GameEndTextUI;
 
 	PlayerController* m_pFirstController = nullptr;
 	PlayerController* m_pSecondController = nullptr;

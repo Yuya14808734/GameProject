@@ -37,6 +37,9 @@ void SceneGame_PlayState::Update()
 
 	//=====<キャラクターとステージの当たり判定>=====
 	Collision_Player_Stage();
+
+	//=====<キャラクターのどちらかがストックが無くなったら>=====
+	CheckGameEnd();
 }
 
 void SceneGame_PlayState::Draw()
@@ -273,5 +276,21 @@ void SceneGame_PlayState::Collision_Player_Stage()
 				}
 			}
 		}
+	}
+}
+
+void SceneGame_PlayState::CheckGameEnd()
+{
+	bool isGameOver = false;
+
+	for (std::vector<Character*>::iterator it = m_pCharacters->begin();
+		it != m_pCharacters->end(); it++)
+	{
+		isGameOver = isGameOver || (*it)->GetGameOver();
+	}
+
+	if (isGameOver)
+	{
+		m_pGameScene->SetNextState(SceneGame::GAMESTATE::GAMEEND);
 	}
 }

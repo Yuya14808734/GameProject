@@ -37,13 +37,13 @@ void Character00_AttackS2::Init()
 		m_pAttackCollider->push_back(Attack);
 	};	
 
-	m_SwordHandle = EffectManager::GetManager()->Play(EffectManager::GetEffect("C00_S2"),0,0,0);
-	EffectManager::GetManager()->SetLocation(m_SwordHandle, 
+	m_efkHnd_Sword = EffectManager::GetManager()->Play(EffectManager::GetEffect("C00_S2"),0,0,0);
+	EffectManager::GetManager()->SetLocation(m_efkHnd_Sword, 
 		{ m_pCharacterParameter->Pos.x + (1.5f * DirectValue),
 		m_pCharacterParameter->Pos.y + (m_pCharacterCollider->GetSize().y * 0.5f),
 		m_pCharacterParameter->Pos.z });
-	EffectManager::GetManager()->SetScale(m_SwordHandle, 1.0f,1.0f,1.0f);
-	EffectManager::GetManager()->SetRotation(m_SwordHandle, 
+	EffectManager::GetManager()->SetScale(m_efkHnd_Sword, 1.0f,1.0f,1.0f);
+	EffectManager::GetManager()->SetRotation(m_efkHnd_Sword, 
 		0.0f,
 		(m_pCharacter->GetLook() == Character::LOOKDIR::RIGHT ?
 			3.14f : 0.0f)
@@ -56,7 +56,7 @@ void Character00_AttackS2::Init()
 
 void Character00_AttackS2::Uninit()
 {
-	EffectManager::GetManager()->StopEffect(m_SwordHandle);
+	EffectManager::GetManager()->StopEffect(m_efkHnd_Sword);
 
 	m_pAttackCollider->clear();
 }
@@ -99,7 +99,7 @@ void Character00_AttackS2::Update()
 	if (HitTriggerCharacterBit != 0x00)
 	{
 		m_HitAttackStopCount = m_HitStopFrame;
-		EffectManager::GetManager()->SetPaused(m_SwordHandle, true);
+		EffectManager::GetManager()->SetPaused(m_efkHnd_Sword, true);
 	}
 
 	//攻撃を当てたヒットストップが終わるまで動かない
@@ -110,7 +110,7 @@ void Character00_AttackS2::Update()
 		//攻撃が当たった時のストップが消える
 		if (m_HitAttackStopCount == 0)
 		{
-			EffectManager::GetManager()->SetPaused(m_SwordHandle, false);
+			EffectManager::GetManager()->SetPaused(m_efkHnd_Sword, false);
 		}
 
 		return;
@@ -154,6 +154,11 @@ void Character00_AttackS2::Update()
 		(*m_pAttackCollider)[AttackNum].m_Use = true;
 	}
 	//=====================================================
+}
+
+void Character00_AttackS2::Draw()
+{
+	EffectManager::EffectDraw(m_efkHnd_Sword);
 }
 
 void Character00_AttackS2::HitCharacter(Character* pHitCharacter)

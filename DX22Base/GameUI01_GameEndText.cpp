@@ -1,12 +1,11 @@
 #include "GameUI01_GameEndText.h"
 #include "Main.h"
 #include "ShaderManager.h"
+#include "Input.h"
 
 GameEndText::GameEndText()
 {
 	//ÉVÉFÅ[É_Å[ÇÃçÏê¨
-	SetVertexShader(
-		ShaderManager::CreateVertexShader("ComparisonColorPS", CreateShaderPath("ComparisonColorPS")));
 	SetPixelShader(
 		ShaderManager::CreatePixelShader("ComparisonColorPS", CreateShaderPath("ComparisonColorPS")));
 
@@ -21,9 +20,14 @@ GameEndText::GameEndText()
 	m_BasePos = CVector2(
 		static_cast<float>(GetAppWidth() * 0.5f), 
 		static_cast<float>(GetAppHeight()) * 0.5f);
+	m_size = CVector2(640.0f, 304.0f);
 
 	//ç≈èâÇÕï`âÊÇµÇ»Ç¢
 	m_IsVisible = false;
+
+	m_CamparisonColor = DirectX::XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
+
+	m_Shake = m_Flash = m_Small = false;
 }
 
 GameEndText::~GameEndText()
@@ -33,57 +37,65 @@ GameEndText::~GameEndText()
 
 void GameEndText::Update()
 {
-	switch (m_DrawState)
-	{
-	case GameEndText::SMALLER:
-		SmallerUpdate();
-		break;
-	case GameEndText::SHAKE:
-		ShakeUpdate();
-		break;
-	case GameEndText::NORMAL:
-		NormalUpdate();
-		break;
-	}
+	SmallerUpdate();
+	ShakeUpdate();
+	FlashUpdate();
+	FadeInUpdate();
 }
 
 void GameEndText::PrevDraw()
 {
 	m_pConstantBuffer_ComparisonColor->Write(&m_CamparisonColor);
-	m_pConstantBuffer_ComparisonColor->BindVS(0);
+	m_pConstantBuffer_ComparisonColor->BindPS(0);
 }
 
-void GameEndText::SetStartSize(const CVector3 & size)
+void GameEndText::SetStartSize(const CVector2 & size)
 {
 	m_StartSize = size;
 }
 
-void GameEndText::SetEndSize(const CVector3 & size)
+void GameEndText::SetEndSize(const CVector2 & size)
 {
 	m_EndSize = size;
 }
 
 void GameEndText::StartAnimetion()
 {
-	m_DrawState = GameEndText::DRAWSTATE::SMALLER;
-	m_TimeCount = 0.0f;
+	StartSmaller();
+	StartFade();
 	m_IsVisible = true;
 }
 
+void GameEndText::EndAnimetion()
+{
+	EndSmaller();
+	EndShake();
+	EndFlash();
+	EndFade();
+}
+
+
 void GameEndText::SmallerUpdate()
 {
-	m_TimeCount += 1.0f / 60.0f;
-	
-	//è¨Ç≥Ç≠Ç∑ÇÈéûä‘Çí¥Ç¶ÇƒÇ¢ÇΩÇÁ
-	if (m_TimeCount > m_LerpEndTime)
+	if (!m_Small)
 	{
-		m_DrawState = DRAWSTATE::SHAKE;
-		m_size = m_EndSize;
-		m_TimeCount = 0.0f;
 		return;
 	}
 
-	float LerpPercent = m_TimeCount / m_LerpEndTime;
+	m_SmallTimeCount += 1.0f / 60.0f;
+	
+	//è¨Ç≥Ç≠Ç∑ÇÈéûä‘Çí¥Ç¶ÇƒÇ¢ÇΩÇÁ
+	if (m_SmallTimeCount > m_SmallEndTime)
+	{
+		m_size = m_EndSize;
+		EndSmaller();
+		EndFade();
+		StartShake();
+		StartFlash();
+		return;
+	}
+
+	float LerpPercent = m_SmallTimeCount / m_SmallEndTime;
 	//ï‚ä‘ÇégÇ¡ÇƒÉTÉCÉYÇïœçX
 	m_size = (m_StartSize * (1.0f - LerpPercent)) + (m_EndSize * LerpPercent);
 
@@ -91,33 +103,130 @@ void GameEndText::SmallerUpdate()
 	m_color.w = LerpPercent;
 }
 
+
 void GameEndText::ShakeUpdate()
 {
-	m_TimeCount += 1.0f / 60.0f;
+	if (!m_Shake)
+	{
+		return;
+	}
+
+	m_ShakeTimeCount += 1.0f / 60.0f;
 	
 	//óhÇÁÇ∑éûä‘Çí¥Ç¶ÇƒÇ¢ÇΩÇÁ
-	if (m_TimeCount > m_LerpEndTime)
+	if (m_ShakeTimeCount > m_SmallEndTime)
 	{
-		m_DrawState = DRAWSTATE::NORMAL;
-		m_TimeCount = 0.0f;
 		m_pos = CVector2::GetZero();
+		EndShake();
 		return;
 	}
 
 	//óhÇÁÇ∑èàóù
 	//ècâ°-500~500ÇÃä‘ÇÃêîílÇ≈ÉâÉìÉ_ÉÄÇ…óhÇÁÇµÇƒÇ‚ÇÈ
 	m_pos = CVector2(
-		static_cast<float>((rand() % 1000) + 1) - 500.0f,
-		static_cast<float>((rand() % 1000) + 1) - 500.0f
+		static_cast<float>((rand() % 10) + 1) - 5.0f,
+		static_cast<float>((rand() % 10) + 1) - 5.0f
 	);
 }
 
-void GameEndText::NormalUpdate()
+
+void GameEndText::FlashUpdate()
 {
+	if (!m_Flash)
+	{
+		return;
+	}
+
 	//ç≈èâÇÃàÍïbÇÃÇ›îíÇ≠ÇµÇƒÇ‚ÇÈ
-	m_TimeCount += 1.0f / 60.0f;
+	m_FlashTimeCount += 1.0f / 60.0f;
 
-	float ChangeColorPercent = m_TimeCount / m_TextChangeColorTime;
+	m_CamparisonColor = DirectX::XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
 
-	//shaderÇ…è„ÇÃêîílÇìnÇ∑
+	float ChangeColorPercent = m_FlashTimeCount / m_TextFlashEndTime;
+
+	if (m_FlashTimeCount >= m_TextFlashEndTime)
+	{
+		ChangeColorPercent = 1.0f;
+		EndFlash();
+	}
+
+	m_CamparisonColor.x =
+	m_CamparisonColor.y =
+	m_CamparisonColor.z = sinf(ChangeColorPercent * DirectX::XM_PI);
+
+}
+
+void GameEndText::FadeInUpdate()
+{
+	if (!m_Fade)
+	{
+		return;
+	}
+
+	//ç≈èâÇÃàÍïbÇÃÇ›îíÇ≠ÇµÇƒÇ‚ÇÈ
+	m_FadeTimeCount += 1.0f / 60.0f;
+
+	m_CamparisonColor = DirectX::XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
+
+	float ChangeColorPercent = m_FadeTimeCount / m_FadeEndTime;
+	
+	if (m_FadeTimeCount >= m_FadeEndTime)
+	{
+		ChangeColorPercent = 1.0f;
+		EndFade();
+	}
+
+	float Radian = (ChangeColorPercent * DirectX::XM_PI) + (DirectX::XM_PI * 0.5f);
+	
+	m_CamparisonColor.x =
+		m_CamparisonColor.y =
+		m_CamparisonColor.z = (sinf(Radian) * 0.5f) + 0.5f;
+}
+
+void GameEndText::StartSmaller()
+{
+	m_Small = true;
+	m_SmallTimeCount = 0.0f;
+}
+
+void GameEndText::StartShake()
+{
+	m_Shake = true;
+	m_ShakeTimeCount = 0.0f;
+}
+
+void GameEndText::StartFlash()
+{
+	m_Flash = true;
+	m_FlashTimeCount = 0.0f;
+}
+
+void GameEndText::StartFade()
+{
+	m_Fade = true;
+	m_FadeTimeCount = 0.0f;
+}
+
+void GameEndText::EndSmaller()
+{
+	m_Small = false;
+	m_SmallTimeCount = m_SmallEndTime;
+}
+
+void GameEndText::EndShake()
+{
+	m_Shake = false;
+	m_ShakeTimeCount = m_ShakeEndTime;
+}
+
+void GameEndText::EndFlash()
+{
+	m_Flash = false;
+	m_FlashTimeCount = m_TextFlashEndTime;
+}
+
+void GameEndText::EndFade()
+{
+	m_Fade = false;
+	m_FadeTimeCount = m_FadeEndTime;
 }

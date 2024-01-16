@@ -147,6 +147,7 @@ public:
 	void Character_UIDraw();							//UIの描画
 	void DrawCollider();								//コライダーの描画
 	void ChangeNextState();								//次のステートへ変更
+	void CheckDeadLineOver();								//ゲームオーバーをしているか確認
 
 	//===============================================================================
 	//継承先で実装する関数
@@ -178,6 +179,8 @@ protected:
 	int						 m_CharacterStock = 0;			//ストック
 	float					 m_DamagePercentage = 0.0f;		//ダメージの量
 	bool					 m_Invincible = false;			//無敵か否か
+	bool					 m_GameOver = false;			//ゲームオーバーしているか
+	bool					 m_IsCheckDead = false;			//死ぬ判定を連続でしないようにする
 	BoxCollider				 m_CharacterCollider;			//プレイヤーの当たり判定
 	std::vector<ATTACKPARAM> m_AttackCollider;				//攻撃したときの当たり判定
 	Character_DamageUI		 m_DamageUI;					//ダメージUI
@@ -301,6 +304,21 @@ public:
 	//------------------------------------------------------------------------------
 	bool IsInvincible()											//無敵か否か取得
 	{ return m_Invincible; }
+
+	//------------------------------------------------------------------------------
+	void SetGameOver(bool GameOver)								//ゲームオーバーを設定
+	{ m_GameOver = GameOver; }
+	
+	//------------------------------------------------------------------------------
+	bool GetGameOver()											//ゲームオーバーを取得
+	{ return m_GameOver; }
+
+	//------------------------------------------------------------------------------
+	void SetCheckDead(bool dead)								//死んだ判定をするか
+	{ m_IsCheckDead = dead; }
+	//------------------------------------------------------------------------------
+	bool IsCheckDead()											//死んだ判定をするか取得
+	{ return m_GameOver; }
 
 	//------------------------------------------------------------------------------
 	BoxCollider* GetCharacterCollider() const					//キャラクターの当たり判定を取得

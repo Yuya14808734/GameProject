@@ -16,6 +16,7 @@ private:
 	void Collision_Player_Player();
 	void Collision_Attack_Player();
 	void Collision_Player_Stage();
+	void CheckGameEnd();
 
 private:
 	int m_VisibleGo_CountTime = 0;
