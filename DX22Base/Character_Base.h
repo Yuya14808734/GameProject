@@ -354,7 +354,9 @@ public:
 
 	//------------------------------------------------------------------------------
 	void Character_HitCeiling()									//天井に当たったことを設定
-	{ m_Parameter.HitCeiling = true; }
+	{
+		m_Parameter.Velocity.y = 0.0f;
+		m_Parameter.HitCeiling = true;	}
 
 	//------------------------------------------------------------------------------
 	bool GetHitCeling()											//前のフレームで天井に当たったか取得

@@ -161,10 +161,18 @@ void SceneGame_PlayState::Collision_Attack_Player()
 				AbsOldDistanceZ < HitSize.z)
 			{
 				CVector3 newPos = (*it_Character)->GetPos();
-				float MoveDist = DiffPos.y < 0.0f ?
-					HitSize.y - (pCharacterCollider->GetType() == BoxCollider::BOXTYPE::FOOT ? (pCharacterCollider->GetSize().y * 0.5f) : 0.0f) :	//上からあたった
-					-HitSize.y;	//下からあたった
-				newPos.y = (*it_Stage).GetBasePos().y + MoveDist;
+				float MoveDist = DiffPos.y < 0.0f ?			//Yの動く量
+					//----------------------------------------------------------
+					HitSize.y -							//上からあたった時の処理
+					(pCharacterCollider->GetType() == BoxCollider::BOXTYPE::FOOT ?
+						(pCharacterCollider->GetSize().y * 0.5f) : 0.0f) :
+					//----------------------------------------------------------
+					-HitSize.y -							//下からあたった時の処理
+					(pCharacterCollider->GetType() == BoxCollider::BOXTYPE::FOOT ?
+						(pCharacterCollider->GetSize().y * 0.5f) : 0.0f);
+					//----------------------------------------------------------
+
+				newPos.y = (*it_Stage).GetBasePos().y + MoveDist;	//ステージからの距離で設定
 				(*it_Character)->SetPos(newPos);
 
 				//上から移動したか下から移動したかで判定
@@ -180,30 +188,30 @@ void SceneGame_PlayState::Collision_Attack_Player()
 		}
 
 		//Zの移動だけの当たり判定
-		for (std::vector<BoxCollider>::iterator it_Stage = pStageCollider->begin();
-			it_Stage != pStageCollider->end(); it_Stage++)
-		{
+		//for (std::vector<BoxCollider>::iterator it_Stage = pStageCollider->begin();
+		//	it_Stage != pStageCollider->end(); it_Stage++)
+		//{
 
-			CVector3 DiffPos = (*it_Character)->GetPos() - (*it_Character)->GetOldPos();		//前の位置から今の位置まで移動したベクトル
-			CVector3 HitSize = (pCharacterCollider->GetSize() + (*it_Stage).GetSize()) * 0.5f;
-			float NowDistanceX = pCharacterCollider->GetBasePos().x - (*it_Stage).GetBasePos().x;
-			float AbsNowDistanceX = fabsf(NowDistanceX);
-			float NowDistanceY = pCharacterCollider->GetBasePos().y - (*it_Stage).GetBasePos().y;
-			float AbsNowDistanceY = fabsf(NowDistanceY);
-			float NowDistanceZ = pCharacterCollider->GetBasePos().z - DiffPos.z - (*it_Stage).GetBasePos().z;
-			float AbsNowDistanceZ = fabsf(NowDistanceZ);
+		//	CVector3 DiffPos = (*it_Character)->GetPos() - (*it_Character)->GetOldPos();		//前の位置から今の位置まで移動したベクトル
+		//	CVector3 HitSize = (pCharacterCollider->GetSize() + (*it_Stage).GetSize()) * 0.5f;
+		//	float NowDistanceX = pCharacterCollider->GetBasePos().x - (*it_Stage).GetBasePos().x;
+		//	float AbsNowDistanceX = fabsf(NowDistanceX);
+		//	float NowDistanceY = pCharacterCollider->GetBasePos().y - (*it_Stage).GetBasePos().y;
+		//	float AbsNowDistanceY = fabsf(NowDistanceY);
+		//	float NowDistanceZ = pCharacterCollider->GetBasePos().z - DiffPos.z - (*it_Stage).GetBasePos().z;
+		//	float AbsNowDistanceZ = fabsf(NowDistanceZ);
 
-			//Zの移動だけして当たっていたら
-			if (AbsNowDistanceX < HitSize.x &&
-				AbsNowDistanceY < HitSize.y &&
-				AbsNowDistanceZ < HitSize.z)
-			{
-				CVector3 newPos = (*it_Character)->GetPos();
-				float MoveDist = DiffPos.z < 0.0f ? HitSize.z : -HitSize.z;
-				newPos.z = (*it_Stage).GetBasePos().z + MoveDist;
-				(*it_Character)->SetPos(newPos);
-			}
-		}
+		//	//Zの移動だけして当たっていたら
+		//	if (AbsNowDistanceX < HitSize.x &&
+		//		AbsNowDistanceY < HitSize.y &&
+		//		AbsNowDistanceZ < HitSize.z)
+		//	{
+		//		CVector3 newPos = (*it_Character)->GetPos();
+		//		float MoveDist = DiffPos.z < 0.0f ? HitSize.z : -HitSize.z;
+		//		newPos.z = (*it_Stage).GetBasePos().z + MoveDist;
+		//		(*it_Character)->SetPos(newPos);
+		//	}
+		//}
 	}
 }
 
