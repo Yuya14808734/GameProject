@@ -6,11 +6,13 @@ class CameraGameStart : public CameraBase
 {
 private:
 	static constexpr float m_CharacterLerpTime = 0.3f;
-	static constexpr float m_CharacterLookTime = 0.7f;
+	static constexpr float m_CharacterLookTime = 1.3f;
 
 public:
-	CameraGameStart();
-	~CameraGameStart();
+	CameraGameStart() {};
+	~CameraGameStart() {};
+	void Init() override;
+	void Uninit() override;
 	void Update() override;
 	void ChangeInit() override;
 	void ChangeUninit() override;

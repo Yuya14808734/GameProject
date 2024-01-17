@@ -101,8 +101,8 @@ void MainLoop()
 
 	g_pGame->Draw();
 
-	MiniWindow::WindowDrawUpdate();
-	g_pGame->MiniWindowUpdate();
+	//MiniWindow::WindowDrawUpdate();
+	//g_pGame->MiniWindowUpdate();
 
 	EndDrawDX();
 

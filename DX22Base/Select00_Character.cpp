@@ -21,8 +21,10 @@ SelectCharacter::SelectCharacter()
 
 	//キャラクターを出すボードのUI
 	//ボードの色を変更
-	SetBoardColor(SelectCharacter::BOARDCOLOR::BLACK);
-	m_CharacterBoardImage.m_size = CVector2(640.0f, 451.0f) * 0.45f;
+	m_CharacterUnconnectBoardImage.SetTexture("Assets/UI/SelectBoard_Black.png");
+	m_CharacterUnconnectBoardImage.m_size = 
+		m_CharacterConnectBoardImage.m_size =
+		CVector2(640.0f, 451.0f) * 0.45f;
 
 	//フレームの読み込み
 	m_FrameImage.SetTexture("Assets/UI/SelectFrame.png");
@@ -56,6 +58,8 @@ SelectCharacter::SelectCharacter()
 	m_SelectedImage.SetTexture("Assets/UI/SelectedImage.png");
 	m_SelectedImage.m_pos = CVector2(59.0f, 20.0f);
 	m_SelectedImage.m_size = CVector2(131.0f, 131.0f);
+
+
 }
 
 SelectCharacter::~SelectCharacter()
@@ -87,7 +91,14 @@ void SelectCharacter::Update()
 void SelectCharacter::BoardDraw()
 {
 	//=========<後ろの背景にあるボードの描画>========================================================
-	m_CharacterBoardImage.Draw();
+	if (m_pSelectController == nullptr)
+	{
+		m_CharacterUnconnectBoardImage.Draw();
+	}
+	else
+	{
+		m_CharacterConnectBoardImage.Draw();
+	}
 	//===============================================================================================
 
 	//=========<コントローラーが接続されていない場合(コントローラーが接続されるまで待つ)>===========
@@ -197,14 +208,11 @@ void SelectCharacter::SetBoardColor(BOARDCOLOR color)
 {
 	switch (color)
 	{
-	case SelectCharacter::BOARDCOLOR::BLACK:
-		m_CharacterBoardImage.SetTexture("Assets/UI/SelectBoard_Black.png");
-		break;
 	case SelectCharacter::BOARDCOLOR::RED:
-		m_CharacterBoardImage.SetTexture("Assets/UI/SelectBoard_Red.png");
+		m_CharacterConnectBoardImage.SetTexture("Assets/UI/SelectBoard_Red.png");
 		break;
 	case SelectCharacter::BOARDCOLOR::BLUE:
-		m_CharacterBoardImage.SetTexture("Assets/UI/SelectBoard_Blue.png");
+		m_CharacterConnectBoardImage.SetTexture("Assets/UI/SelectBoard_Blue.png");
 		break;
 	}
 }
@@ -260,9 +268,17 @@ void SelectCharacter::ChangeNowController(PlayerController* Controller)
 
 void SelectCharacter::SetNowCharacter(SelectCharacterList::CHARACTER NowCharacter)
 {
-	m_NowSelectCharacter = static_cast<int>(NowCharacter);
-	m_NowSelectCharacter =	//キャラクターが異常な数字の場合、正常な数字にする
-		m_NowSelectCharacter % static_cast<int>(SelectCharacterList::CHARACTER::MAX);
+	switch (NowCharacter)
+	{
+	case SelectCharacterList::CHARACTER::NONE:
+	case SelectCharacterList::CHARACTER::MAX:
+		m_NowSelectCharacter = static_cast<int>(
+			SelectCharacterList::CHARACTER::UNITYCHAN);
+		break;
+	default:
+		m_NowSelectCharacter = static_cast<int>(NowCharacter);
+		break;
+	}
 }
 
 bool SelectCharacter::IsDecided()
@@ -283,7 +299,8 @@ SelectCharacterList::CHARACTER SelectCharacter::GetSelectCharacter()
 void SelectCharacter::SetBoardPos(const CVector3& pos)
 {
 	//各イメージのベース位置を変更
-	m_CharacterBoardImage.m_BasePos =
+	m_CharacterUnconnectBoardImage.m_BasePos = 
+	m_CharacterConnectBoardImage.m_BasePos =
 	m_ConnectBackGround_Image.m_BasePos =
 	m_ConnectBackGround_Frame.m_BasePos =
 	m_NoConnectText.m_BasePos =

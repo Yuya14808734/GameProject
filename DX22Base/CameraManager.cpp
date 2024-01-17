@@ -41,29 +41,14 @@ void CameraManager::SetSceneCamera(std::string CameraName)
 		return;
 	}
 
-	//‚ ‚ê‚Îİ’è
-	m_pNowCamera = m_CameraList[CameraName];
-}
-
-bool CameraManager::CreateCamera(CameraBase* pCamera, std::string CameraName)
-{
-	//ƒJƒƒ‰‚ª‚ ‚é‚©‚ğ’T‚·
-	std::map<std::string, CameraBase*>::iterator it = m_CameraList.find(CameraName);
-
-	if (it != m_CameraList.end())
+	if (m_pNowCamera != nullptr)
 	{
-		if (pCamera != nullptr)
-		{
-			delete pCamera;
-		}
-
-		return false;
+		m_pNowCamera->Uninit();
 	}
 
-	//‚È‚¯‚ê‚Î’Ç‰Á‚·‚é
-	m_CameraList.insert(std::make_pair(CameraName, pCamera));
-
-	return true;
+	//‚ ‚ê‚Îİ’è
+	m_pNowCamera = m_CameraList[CameraName];
+	m_pNowCamera->Init();
 }
 
 CameraBase* CameraManager::GetCamera(std::string CameraName)

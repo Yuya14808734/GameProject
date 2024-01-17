@@ -9,6 +9,10 @@ void CharacterBase_DeadState::Init()
 void CharacterBase_DeadState::Uninit()
 {
 	m_ChangeStateCount = 0;
+
+	//キャラクターで初期化しないといけないものを初期化
+	m_pCharacter->SetDamage(0.0f);
+
 }
 
 void CharacterBase_DeadState::Update()

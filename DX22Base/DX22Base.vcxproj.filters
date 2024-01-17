@@ -226,6 +226,12 @@
     <Filter Include="ヘッダー ファイル\04_Game\09_Pattern\00_State">
       <UniqueIdentifier>{0592f260-c867-4d83-8552-69f8351412f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\04_Game\10_Title">
+      <UniqueIdentifier>{bcfe8123-a206-423a-8eae-9f7d802331e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\10_Title">
+      <UniqueIdentifier>{9f792c2e-3268-4bfe-bb85-2df150573265}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BlendState.cpp">
@@ -540,6 +546,15 @@
     <ClCompile Include="Character00_StartAnimation.cpp">
       <Filter>ソース ファイル\04_Game\03_Character\Character_00\State</Filter>
     </ClCompile>
+    <ClCompile Include="Scene02_Title.cpp">
+      <Filter>ソース ファイル\04_Game\00_Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="PushButtonText.cpp">
+      <Filter>ソース ファイル\04_Game\10_Title</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneTitle_TitleScreenState.cpp">
+      <Filter>ソース ファイル\04_Game\01_SceneState\01_Title</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -836,9 +851,6 @@
     <ClInclude Include="SceneGame_EndState.h">
       <Filter>ヘッダー ファイル\04_Game\01_SceneState\02_Game</Filter>
     </ClInclude>
-    <ClInclude Include="SceneBase_State.h">
-      <Filter>ヘッダー ファイル\04_Game\01_SceneState\00_Base</Filter>
-    </ClInclude>
     <ClInclude Include="Character_State.h">
       <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase</Filter>
     </ClInclude>
@@ -850,6 +862,21 @@
     </ClInclude>
     <ClInclude Include="Character00_StartAnimation.h">
       <Filter>ヘッダー ファイル\04_Game\03_Character\Character_00\00_State</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene02_Title.h">
+      <Filter>ヘッダー ファイル\04_Game\00_Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="PushButtonText.h">
+      <Filter>ヘッダー ファイル\04_Game\10_Title</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneGame_BaseState.h">
+      <Filter>ヘッダー ファイル\04_Game\01_SceneState\02_Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneTitle_BaseState.h">
+      <Filter>ヘッダー ファイル\04_Game\01_SceneState\01_Title</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneTitle_TitleScreenState.h">
+      <Filter>ヘッダー ファイル\04_Game\01_SceneState\01_Title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

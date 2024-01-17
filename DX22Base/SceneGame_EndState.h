@@ -1,7 +1,7 @@
 #pragma once
-#include "SceneBase_State.h"
+#include "SceneGame_BaseState.h"
 
-class SceneGame_EndState : public Scene_State
+class SceneGame_EndState : public SceneGame_BaseState
 {
 public:
 	SceneGame_EndState() {};

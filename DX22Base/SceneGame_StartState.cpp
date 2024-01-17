@@ -35,17 +35,17 @@ void SceneGame_StartState::Update()
 
 	m_Count++;
 
-	if (m_Count == 1 * 60)
+	if (m_Count == 2 * 60)
 	{
 		m_pGameStartCountUI->SetNumDraw(2);
 	}
 
-	if (m_Count == 2 * 60)
+	if (m_Count == 3 * 60)
 	{
 		m_pGameStartCountUI->SetNumDraw(1);
 	}
 
-	if (m_Count == 3 * 60)
+	if (m_Count == 4 * 60)
 	{
 		m_pGameStartCountUI->SetGoDraw(true);
 		CameraManager::GetInstance().SetSceneCamera("GameCamera");
@@ -72,7 +72,10 @@ void SceneGame_StartState::Draw()
 		copy->Character_UIDraw();
 	}
 
-	m_pGameStartCountUI->Draw();
+	if (m_Count > 1 * 60)
+	{
+		m_pGameStartCountUI->Draw();
+	}
 
 	EnableDepth(true);
 }

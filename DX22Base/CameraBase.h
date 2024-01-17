@@ -9,6 +9,8 @@ class CameraBase
 public :
 	CameraBase();
 	virtual ~CameraBase();
+	virtual void Init();
+	virtual void Uninit();
 	virtual void Update() = 0;
 	virtual void ChangeInit();
 	virtual void ChangeUninit();

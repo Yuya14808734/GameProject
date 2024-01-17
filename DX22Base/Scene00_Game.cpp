@@ -23,11 +23,12 @@ bool ColliderDraw = false;
 void SceneGame::Init()
 {
 	//=====<カメラの生成>=====
-	CameraManager::GetInstance().CreateCamera(new CameraGame(), "GameCamera");
-	CameraGameStart* pCameraGameStart = new CameraGameStart();
-	CameraManager::GetInstance().CreateCamera(pCameraGameStart, "GameStartCamera");
+	CameraManager::GetInstance().CreateCamera<CameraGame>("GameCamera");
+	CameraManager::GetInstance().CreateCamera<CameraGameStart>("GameStartCamera");
 	CameraManager::GetInstance().SetSceneCamera("GameStartCamera");
 	m_pGameCamera = static_cast<CameraGame*>(CameraManager::GetInstance().GetCamera("GameCamera"));
+	CameraGameStart* pCameraGameStart = 
+		static_cast<CameraGameStart*>(CameraManager::GetInstance().GetCamera("GameStartCamera"));
 
 	//=====<ステージの作成>=====
 	m_pStage = new Stage00();
@@ -166,6 +167,10 @@ Character* SceneGame::CreateCharacter(SelectCharacterList::CHARACTER CharacterNu
 	case SelectCharacterList::CHARACTER::UNITYCHAN:
 		m_Characters.push_back(new Character_00());
 		break;
+	case SelectCharacterList::CHARACTER::NONE:
+	case SelectCharacterList::CHARACTER::MAX:
+		m_Characters.push_back(new Character_00());
+		break;
 	}
 
 	auto it = m_Characters.end();
@@ -202,7 +207,7 @@ void SceneGame::ChangeNextState()
 		m_GameSceneStateContext.ChangeNextState();
 
 		//今のステートの各変数を設定
-		Scene_State* pState = static_cast<Scene_State*>(m_GameSceneStateContext.GetNowState());
+		SceneGame_BaseState* pState = static_cast<SceneGame_BaseState*>(m_GameSceneStateContext.GetNowState());
 		pState->SetScene(this);
 		pState->SetCharacters(&m_Characters);
 		pState->SetStage(m_pStage);

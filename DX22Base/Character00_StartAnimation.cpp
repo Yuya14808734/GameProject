@@ -72,23 +72,18 @@ void Character00_StartAnimationState::InitAnime(const std::string& AnimeName)
 
 void Character00_StartAnimationState::LookStageCenter()
 {
-	CameraBase* pCamera = CameraManager::GetInstance().GetSceneCamera();
+	//中心より右にいたら左、左にいたら右を向かせる
+	bool Right =
+		(m_pCharacterParameter->Pos.x - 0.0f > 0.0f);
 
-	//カメラより右にいたら左、左にいたら右を向かせる
-	if (pCamera != nullptr)
+	if (Right)
 	{
-		bool Right =
-			(m_pCharacterParameter->Pos.x -	pCamera->GetPos().x	> 0.0f);
-
-		if (Right)
-		{
-			//キャラクターが右にいる
-			m_pCharacter->SetLookLeft();
-		}
-		else
-		{
-			//キャラクターが左にいる
-			m_pCharacter->SetLookRight();
-		}
+		//キャラクターが右にいる
+		m_pCharacter->SetLookLeft();
+	}
+	else
+	{
+		//キャラクターが左にいる
+		m_pCharacter->SetLookRight();
 	}
 }

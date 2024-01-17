@@ -11,7 +11,6 @@
 #include "StatePattern.h"
 #include "Player_Controller.h"
 
-
 class SceneGame : public CScene
 {
 public:
@@ -44,12 +43,10 @@ private:
 	Image3D m_BackGround;
 
 	GameStartCountUI m_GameStartCountUI;
-	//int m_GameStartFrameCount = 0;
 	GameEndText m_GameEndTextUI;
 
 	PlayerController* m_pFirstController = nullptr;
 	PlayerController* m_pSecondController = nullptr;
-
 
 public:
 	std::vector<Character*>& GetCharacter()

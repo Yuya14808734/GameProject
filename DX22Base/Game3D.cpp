@@ -6,9 +6,11 @@
 #include "CameraManager.h"
 #include "ModelDrawer.h"
 #include "Collider.h"
+#include "Select01_CharacterList.h"
+
 #include "Scene00_Game.h"
 #include "Scene01_Select.h"
-#include "Select01_CharacterList.h"
+#include "Scene02_Title.h"
 
 Game3D::Game3D()
 {
@@ -34,6 +36,7 @@ Game3D::Game3D()
 	SelectCharacterList::LoadTexture();
 
 }
+
 Game3D::~Game3D()
 {
 	SelectCharacterList::ReleaseTexture();

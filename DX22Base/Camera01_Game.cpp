@@ -5,15 +5,24 @@ CameraGame::CameraGame()
 	:m_pCharacterVector(nullptr),
 	m_pStage(nullptr)
 {
+	
+}
+
+CameraGame::~CameraGame()
+{
+
+}
+
+void CameraGame::Init()
+{
 	m_pos = m_look = CVector3::GetZero();
 
 	m_pos.y = m_look.y = 3.0f;
 	m_pos.z = -30.0f;
 }
 
-CameraGame::~CameraGame()
+void CameraGame::Uninit()
 {
-
 }
 
 void CameraGame::Update()

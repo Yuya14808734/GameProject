@@ -12,6 +12,14 @@ CameraBase::~CameraBase()
 
 }
 
+void CameraBase::Init()
+{
+}
+
+void CameraBase::Uninit()
+{
+}
+
 void CameraBase::ChangeInit()
 {
 

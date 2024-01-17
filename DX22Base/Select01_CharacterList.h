@@ -9,7 +9,8 @@ public:
 	enum class CHARACTER : int
 	{
 		UNITYCHAN = 0,
-		MAX
+		MAX,
+		NONE,
 	};
 
 public:

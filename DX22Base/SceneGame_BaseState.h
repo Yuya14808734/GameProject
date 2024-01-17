@@ -10,11 +10,11 @@
 #include "GameUI01_GameEndText.h"
 #include "Image3D.h"
 
-class Scene_State : public State
+class SceneGame_BaseState : public State
 {
 public:
-	Scene_State() {};
-	virtual ~Scene_State() override {};
+	SceneGame_BaseState() {};
+	virtual ~SceneGame_BaseState() override {};
 	virtual void Init() override {};
 	virtual void Update() override {};
 	virtual void Draw() override {};

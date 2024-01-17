@@ -8,6 +8,8 @@ class CameraGame : public CameraBase
 public:
 	CameraGame();
 	~CameraGame();
+	void Init() override;
+	void Uninit() override;
 	void Update() override;
 	void ChangeInit() override;
 	void ChangeUninit() override;

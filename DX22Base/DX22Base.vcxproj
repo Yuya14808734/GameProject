@@ -168,12 +168,15 @@
     <ClCompile Include="Character_Attack.cpp" />
     <ClCompile Include="Character_State.cpp" />
     <ClCompile Include="Fade.cpp" />
+    <ClCompile Include="PushButtonText.cpp" />
+    <ClCompile Include="Scene02_Title.cpp" />
     <ClCompile Include="SceneGame_StartState.cpp" />
     <ClCompile Include="SceneGame_GamePlayState.cpp" />
     <ClCompile Include="SceneGame_EndState.cpp" />
     <ClCompile Include="GameUI01_GameEndText.cpp" />
     <ClCompile Include="Image3D.cpp" />
     <ClCompile Include="OffScreenRenderingClass.cpp" />
+    <ClCompile Include="SceneTitle_TitleScreenState.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="GameUI00_StartCount.cpp" />
     <ClCompile Include="Scene00_Game.cpp" />
@@ -304,7 +307,9 @@
     <ClInclude Include="Character_Attack.h" />
     <ClInclude Include="Character_State.h" />
     <ClInclude Include="Fade.h" />
-    <ClInclude Include="SceneBase_State.h" />
+    <ClInclude Include="PushButtonText.h" />
+    <ClInclude Include="Scene02_Title.h" />
+    <ClInclude Include="SceneGame_BaseState.h" />
     <ClInclude Include="SceneGame_StartState.h" />
     <ClInclude Include="SceneGame_GamePlayState.h" />
     <ClInclude Include="SceneGame_EndState.h" />
@@ -348,6 +353,8 @@
     <ClInclude Include="SamplerState.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scene01_Select.h" />
+    <ClInclude Include="SceneTitle_BaseState.h" />
+    <ClInclude Include="SceneTitle_TitleScreenState.h" />
     <ClInclude Include="Select00_Character.h" />
     <ClInclude Include="Select01_CharacterList.h" />
     <ClInclude Include="Select02_SlideReadyToFightText.h" />

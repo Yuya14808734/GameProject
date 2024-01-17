@@ -7,7 +7,7 @@ class CScene
 {
 public:
 	static CScene* GetScene();	//シーンの取得
-	template<typename T>				
+	template<typename T>			
 	static T* SetScene();				//次のシーンの設定
 	static void SceneChange();			//次のシーンの切り替え
 	static void DestroyScene();			//シーンの削除
