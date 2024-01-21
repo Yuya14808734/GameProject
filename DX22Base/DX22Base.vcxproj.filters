@@ -492,7 +492,7 @@
     <ClCompile Include="Scene01_Select.cpp">
       <Filter>ソース ファイル\04_Game\00_Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Camera02_Select.cpp">
+    <ClCompile Include="Camera02_NoMove.cpp">
       <Filter>ソース ファイル\04_Game\02_Camera</Filter>
     </ClCompile>
     <ClCompile Include="Select00_Character.cpp">
@@ -578,6 +578,9 @@
     </ClCompile>
     <ClCompile Include="GameUI02_StockCount.cpp">
       <Filter>ソース ファイル\04_Game\08_GameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene03_Result.cpp">
+      <Filter>ソース ファイル\04_Game\00_Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -719,7 +722,7 @@
     <ClInclude Include="Scene01_Select.h">
       <Filter>ヘッダー ファイル\04_Game\00_Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Camera02_Select.h">
+    <ClInclude Include="Camera02_NoMove.h">
       <Filter>ヘッダー ファイル\04_Game\02_Camera</Filter>
     </ClInclude>
     <ClInclude Include="Select00_Character.h">
@@ -907,6 +910,9 @@
     </ClInclude>
     <ClInclude Include="GameUI02_StockCount.h">
       <Filter>ヘッダー ファイル\04_Game\08_GameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene03_Result.h">
+      <Filter>ヘッダー ファイル\04_Game\00_Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

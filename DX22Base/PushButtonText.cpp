@@ -72,3 +72,9 @@ void PushButtonText::Draw()
 	m_PushAButtonText.Draw();
 	m_PushEnterButtonText.Draw();
 }
+
+void PushButtonText::SetPos(const CVector3& pos)
+{
+	m_PushEnterButtonText.SetPos(pos);
+	m_PushAButtonText.SetPos(pos);
+}

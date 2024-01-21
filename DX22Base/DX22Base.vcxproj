@@ -155,7 +155,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera00_Debug.cpp" />
-    <ClCompile Include="Camera02_Select.cpp" />
+    <ClCompile Include="Camera02_NoMove.cpp" />
     <ClCompile Include="Camera03_GameStart.cpp" />
     <ClCompile Include="Character00_AttackDS.cpp" />
     <ClCompile Include="Character00_DeadState.cpp" />
@@ -172,6 +172,7 @@
     <ClCompile Include="GameUI02_StockCount.cpp" />
     <ClCompile Include="PushButtonText.cpp" />
     <ClCompile Include="Scene02_Title.cpp" />
+    <ClCompile Include="Scene03_Result.cpp" />
     <ClCompile Include="SceneGame_StartState.cpp" />
     <ClCompile Include="SceneGame_GamePlayState.cpp" />
     <ClCompile Include="SceneGame_EndState.cpp" />
@@ -267,7 +268,7 @@
   <ItemGroup>
     <ClInclude Include="Camera00_Debug.h" />
     <ClInclude Include="Camera01_Game.h" />
-    <ClInclude Include="Camera02_Select.h" />
+    <ClInclude Include="Camera02_NoMove.h" />
     <ClInclude Include="Camera03_GameStart.h" />
     <ClInclude Include="Character00_AirMoveState.h" />
     <ClInclude Include="Character00_Attack11.h" />
@@ -313,6 +314,7 @@
     <ClInclude Include="GameUI02_StockCount.h" />
     <ClInclude Include="PushButtonText.h" />
     <ClInclude Include="Scene02_Title.h" />
+    <ClInclude Include="Scene03_Result.h" />
     <ClInclude Include="SceneGame_BaseState.h" />
     <ClInclude Include="SceneGame_StartState.h" />
     <ClInclude Include="SceneGame_GamePlayState.h" />

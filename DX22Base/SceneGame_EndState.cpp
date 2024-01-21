@@ -1,6 +1,6 @@
 #include "SceneGame_EndState.h"
 #include "Scene.h"
-#include "Scene01_Select.h"
+#include "Scene03_Result.h"
 
 void SceneGame_EndState::Init()
 {
@@ -24,8 +24,25 @@ void SceneGame_EndState::Update()
 
 	if (m_SceneChangeCount > 60 * 3)
 	{
+		//次のシーンにリザルト結果を送る
+		int WinPlayerNum = 0;
+		for (Character* pCharacter : (*m_pCharacters))
+		{
+			if (pCharacter->GetStock() > 0)
+			{
+				unsigned int BitPlayerNum = pCharacter->GetCharacterBit();
+
+				WinPlayerNum =
+					static_cast<int>(log2f(static_cast<float>(BitPlayerNum)));
+				WinPlayerNum++;
+			}
+		}
+
+		//勝ったプレイヤー番号を設定
+		SceneResult::SetWinPlayerNum(WinPlayerNum);
+
 		//シーンの切り替え
-		CScene::SetScene<SceneSelect>();
+		CScene::SetScene<SceneResult>();
 	}
 }
 

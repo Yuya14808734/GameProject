@@ -1,5 +1,14 @@
+// ====================================================================================
+// インクルード
+// ====================================================================================
+
 #include "Select01_CharacterList.h"
 #include "Input.h"
+
+
+// ====================================================================================
+// static
+// ====================================================================================
 
 bool SelectCharacterList::m_CharacterImageLoad = false;
 std::array <Image2D, static_cast<int>(SelectCharacterList::CHARACTER::MAX)> SelectCharacterList::m_CharacterStandImages;
@@ -64,6 +73,10 @@ std::array<Image2D, static_cast<int>(SelectCharacterList::CHARACTER::MAX)>& Sele
 {
 	return m_CharacterIconImages;
 }
+
+// ====================================================================================
+// dynamic
+// ====================================================================================
 
 SelectCharacterList::SelectCharacterList()
 {

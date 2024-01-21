@@ -81,6 +81,11 @@ void CameraManager::DestroyCamera(std::string CameraName, bool MemoryDelete)
 
 	if (MemoryDelete)
 	{
+		if ((*it).second == m_pNowCamera)
+		{
+			m_pNowCamera = nullptr;
+		}
+
 		delete (*it).second;
 	}
 
@@ -100,4 +105,6 @@ void CameraManager::DestroyAllCamera(bool MemoryDelete)
 	}
 
 	m_CameraList.clear();
+
+	m_pNowCamera = nullptr;
 }

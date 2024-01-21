@@ -1,9 +1,17 @@
+// ====================================================================================
+// インクルード
+// ====================================================================================
+
 #include "Scene01_Select.h"
 #include "CameraManager.h"
 #include <array>
 #include "Main.h"
 #include "Scene.h"
 #include "Scene00_Game.h"
+
+// ====================================================================================
+// static
+// ====================================================================================
 
 PlayerController* SceneSelect::m_pFirstPlayerController = nullptr;
 PlayerController* SceneSelect::m_pSecondPlayerController = nullptr;
@@ -30,6 +38,10 @@ SelectCharacterList::CHARACTER SceneSelect::GetSecondPlayerCharacter()
 {
 	return m_SecondPlayerCharacter;
 }
+
+// ====================================================================================
+// dynamic
+// ====================================================================================
 
 void SceneSelect::Init()
 {
@@ -74,7 +86,7 @@ void SceneSelect::Init()
 	m_CharactersText.m_pos = CVector3(WindowCenterPos.x, 100.0f, 0.0f);
 	m_CharactersText.m_size = CVector2(400.0f, 194.0f);
 
-	m_BackGroundImage.SetTexture("Assets/UI/SelectBackGround.png");
+	m_BackGroundImage.SetTexture("Assets/BackGroundImage/SelectBackGround.png");
 	m_BackGroundImage.m_pos = WindowCenterPos;
 	m_BackGroundImage.m_size = WindowSize;
 

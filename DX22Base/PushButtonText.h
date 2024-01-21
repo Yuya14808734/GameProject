@@ -27,6 +27,7 @@ public:
 	~PushButtonText();
 	void Update();
 	void Draw();
+	void SetPos(const CVector3& pos);
 
 private:
 	PushEnterButtonText m_PushEnterButtonText;

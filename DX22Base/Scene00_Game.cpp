@@ -95,7 +95,8 @@ void SceneGame::Uninit()
 	delete m_pStage;
 
 	//=====<ƒJƒƒ‰‚Ìíœ>=====
-	CameraManager::GetInstance().DestroyCamera("DebugCamera", true);
+	CameraManager::GetInstance().DestroyCamera("GameStartCamera", true);
+	CameraManager::GetInstance().DestroyCamera("GameCamera", true);
 }
 
 void SceneGame::Update()

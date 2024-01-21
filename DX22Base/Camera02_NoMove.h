@@ -1,14 +1,12 @@
 #pragma once
 #include "CameraBase.h"
 
-class CameraSelect : public CameraBase
+class CameraNoMove : public CameraBase
 {
 public:
-	CameraSelect();
-	~CameraSelect();
+	CameraNoMove();
+	~CameraNoMove();
 	void Update() override;
 	void ChangeInit() override;
 	void ChangeUninit() override;
-
-
 };

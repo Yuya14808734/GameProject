@@ -13,6 +13,10 @@ public:
 		NONE,
 	};
 
+	// ====================================================================================
+	// static
+	// ====================================================================================
+
 public:
 	static void LoadTexture();
 	static void ReleaseTexture();
@@ -23,6 +27,10 @@ private:
 	static bool m_CharacterImageLoad;
 	static std::array <Image2D, static_cast<int>(CHARACTER::MAX)> m_CharacterStandImages;
 	static std::array <Image2D, static_cast<int>(CHARACTER::MAX)> m_CharacterIconImages;
+
+	// ====================================================================================
+	// dynamic
+	// ====================================================================================
 
 public:
 	SelectCharacterList();
