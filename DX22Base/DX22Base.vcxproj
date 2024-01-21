@@ -167,6 +167,8 @@
     <ClCompile Include="CharacterBase_RespawnState.cpp" />
     <ClCompile Include="Character_Attack.cpp" />
     <ClCompile Include="Character_State.cpp" />
+    <ClCompile Include="EffectBase.cpp" />
+    <ClCompile Include="Effect00_Dead.cpp" />
     <ClCompile Include="FadeOut00_GameStart.cpp" />
     <ClCompile Include="FadeBase.cpp" />
     <ClCompile Include="GameUI02_StockCount.cpp" />
@@ -309,6 +311,8 @@
     <ClInclude Include="CharacterBase_WalkState.h" />
     <ClInclude Include="Character_Attack.h" />
     <ClInclude Include="Character_State.h" />
+    <ClInclude Include="EffectBase.h" />
+    <ClInclude Include="Effect00_Dead.h" />
     <ClInclude Include="FadeOut00_GameStart.h" />
     <ClInclude Include="FadeBase.h" />
     <ClInclude Include="GameUI02_StockCount.h" />

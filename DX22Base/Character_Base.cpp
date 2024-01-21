@@ -3,6 +3,8 @@
 #include "Character_Attack.h"
 #include "Scene.h"
 #include "Scene00_Game.h"
+#include "Effect00_Dead.h"
+#include "CameraManager.h"
 
 int Character::m_NewPlayerBit = 0x01;
 
@@ -166,15 +168,23 @@ void Character::CheckDeadLineOver()
 		return;
 	}
 
-	if (
-		m_pStage->GetDeadLineLeftX() > m_Parameter.Pos.x ||
-		m_pStage->GetDeadLineRightX() < m_Parameter.Pos.x ||
-		m_pStage->GetDeadLineTopY() < m_Parameter.Pos.y ||
-		m_pStage->GetDeadLineBottomY() > m_Parameter.Pos.y)
+	if (m_pStage->GetDeadLineRightX()	< m_Parameter.Pos.x ||
+		m_pStage->GetDeadLineLeftX()	> m_Parameter.Pos.x ||
+		m_pStage->GetDeadLineTopY()		< m_Parameter.Pos.y ||
+		m_pStage->GetDeadLineBottomY()	> m_Parameter.Pos.y)
 	{
 		SetNextState(Character::STATE::State_Dead);
 		ChangeNextState();
 		m_IsCheckDead = false;	//判定が終わるまでチェックしないようにする
+
+		//キャラクターのストックを描画する
+		SceneGame* pGameScene = dynamic_cast<SceneGame*>(CScene::GetScene());
+
+		if (pGameScene == nullptr) { return; }
+
+		EffectDead* pEffectDead = new EffectDead();
+		pEffectDead->PlayDeadEffect(m_Parameter.Pos,-m_Parameter.Pos);
+		pGameScene->GetEffectVector()->push_back(pEffectDead);
 	}
 }
 

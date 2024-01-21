@@ -582,6 +582,12 @@
     <ClCompile Include="Scene03_Result.cpp">
       <Filter>ソース ファイル\04_Game\00_Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Effect00_Dead.cpp">
+      <Filter>ソース ファイル\04_Game\05_Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectBase.cpp">
+      <Filter>ソース ファイル\03_Assets\EffekSeer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -913,6 +919,12 @@
     </ClInclude>
     <ClInclude Include="Scene03_Result.h">
       <Filter>ヘッダー ファイル\04_Game\00_Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect00_Dead.h">
+      <Filter>ヘッダー ファイル\04_Game\05_Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectBase.h">
+      <Filter>ヘッダー ファイル\03_Assets\EffekSeer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

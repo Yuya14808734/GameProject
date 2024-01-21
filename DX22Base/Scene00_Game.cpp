@@ -79,6 +79,9 @@ void SceneGame::Init()
 
 void SceneGame::Uninit()
 {
+	//=====<エフェクトの削除>=====
+	SceneGame::EffectRelease();
+
 	//=====<ステートのの削除>=====
 	m_GameSceneStateContext.ReleaseAllState();
 
@@ -110,6 +113,8 @@ void SceneGame::Update()
 	m_GameSceneStateContext.StateUpdate();
 
 	ChangeNextState();
+
+	SceneGame::EffectUpdate();
 }
 
 void SceneGame::Draw()
@@ -151,9 +156,9 @@ void SceneGame::Draw()
 		}
 	}
 
-	m_GameSceneStateContext.StateDraw();
+	EffectDraw();
 
-	
+	m_GameSceneStateContext.StateDraw();
 }
 
 Character* SceneGame::CreateCharacter(int Num)
@@ -221,4 +226,48 @@ void SceneGame::ChangeNextState()
 		//初期化処理
 		m_GameSceneStateContext.StateInit();
 	}
+}
+
+void SceneGame::EffectUpdate()
+{
+	for (std::vector<EffectBase*>::iterator it = m_Effects.begin(); it != m_Effects.end();)
+	{
+		(*it)->Update();
+
+		if ((*it)->GetisDestroy())
+		{
+			//削除
+			delete (*it);
+			it = m_Effects.erase(it);
+			continue;
+		}
+
+		it++;
+	}
+}
+
+void SceneGame::EffectDraw()
+{
+	for (EffectBase* pEffect : m_Effects)
+	{
+		pEffect->Draw();
+	}
+}
+
+void SceneGame::EffectPause()
+{
+	for (EffectBase* pEffect : m_Effects)
+	{
+		pEffect->PausedEffect();
+	}
+}
+
+void SceneGame::EffectRelease()
+{
+	for (EffectBase* pEffect : m_Effects)
+	{
+		delete pEffect;
+	}
+
+	m_Effects.clear();
 }

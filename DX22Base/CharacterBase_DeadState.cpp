@@ -1,6 +1,7 @@
 #include "CharacterBase_DeadState.h"
 #include "Scene00_Game.h"
 #include "SceneGame_GamePlayState.h"
+#include "Effect00_Dead.h"
 
 void CharacterBase_DeadState::Init()
 {
