@@ -217,7 +217,7 @@
     <ClCompile Include="CharacterBase_LeanBackState.cpp" />
     <ClCompile Include="CharacterBase_WakeUpState.cpp" />
     <ClCompile Include="Player_Controller.cpp" />
-    <ClCompile Include="Character_DamageUI.cpp" />
+    <ClCompile Include="GameUI03_CharacterDamageUI.cpp" />
     <ClCompile Include="CharacterBase_DashState.cpp" />
     <ClCompile Include="CharacterBase_DownState.cpp" />
     <ClCompile Include="CharacterBase_IdleState.cpp" />
@@ -336,7 +336,7 @@
     <ClInclude Include="Character_00.h" />
     <ClInclude Include="Character_Base.h" />
     <ClInclude Include="Player_Controller.h" />
-    <ClInclude Include="Character_DamageUI.h" />
+    <ClInclude Include="GameUI03_CharacterDamageUI.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="DirectX.h" />

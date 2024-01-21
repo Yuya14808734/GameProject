@@ -121,9 +121,6 @@
     <Filter Include="ソース ファイル\04_Game\03_Character\CharacterBase\00_State">
       <UniqueIdentifier>{7c58496e-fcde-468b-a9ba-c2a5f19e4b63}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\04_Game\03_Character\CharacterBase\01_UI">
-      <UniqueIdentifier>{17e7d51e-7c35-478b-8878-1123591835b2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\04_Game\04_Stage">
       <UniqueIdentifier>{db577238-41ce-43ee-89d6-c4bbc6cd6831}</UniqueIdentifier>
     </Filter>
@@ -192,9 +189,6 @@
     </Filter>
     <Filter Include="ヘッダー ファイル\04_Game\03_Character\CharacterBase">
       <UniqueIdentifier>{830d77a3-51fa-4890-b786-bfdf1462d361}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\03_Character\CharacterBase\01_UI">
-      <UniqueIdentifier>{f154daf0-9f8c-4eed-823e-956135b06a58}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\04_Game\03_Character\CharacterBase\00_State">
       <UniqueIdentifier>{f9972334-697e-4669-921b-a47d174d37f8}</UniqueIdentifier>
@@ -423,9 +417,6 @@
     <ClCompile Include="WinUtil.cpp">
       <Filter>ソース ファイル\00_Main</Filter>
     </ClCompile>
-    <ClCompile Include="Character_DamageUI.cpp">
-      <Filter>ソース ファイル\04_Game\03_Character\CharacterBase\01_UI</Filter>
-    </ClCompile>
     <ClCompile Include="Number2D.cpp">
       <Filter>ソース ファイル\03_Assets\2D</Filter>
     </ClCompile>
@@ -588,6 +579,9 @@
     <ClCompile Include="EffectBase.cpp">
       <Filter>ソース ファイル\03_Assets\EffekSeer</Filter>
     </ClCompile>
+    <ClCompile Include="GameUI03_CharacterDamageUI.cpp">
+      <Filter>ソース ファイル\04_Game\08_GameUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -715,9 +709,6 @@
     </ClInclude>
     <ClInclude Include="CharacterStateWindow.h">
       <Filter>ヘッダー ファイル\04_Game\07_MiniWindow</Filter>
-    </ClInclude>
-    <ClInclude Include="Character_DamageUI.h">
-      <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase\01_UI</Filter>
     </ClInclude>
     <ClInclude Include="Number2D.h">
       <Filter>ヘッダー ファイル\03_Assets\2D</Filter>
@@ -925,6 +916,9 @@
     </ClInclude>
     <ClInclude Include="EffectBase.h">
       <Filter>ヘッダー ファイル\03_Assets\EffekSeer</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI03_CharacterDamageUI.h">
+      <Filter>ヘッダー ファイル\04_Game\08_GameUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
