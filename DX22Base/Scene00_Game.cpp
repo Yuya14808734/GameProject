@@ -215,6 +215,7 @@ void SceneGame::ChangeNextState()
 		pState->SetBackGround(&m_BackGround);
 		pState->SetStartCountUI(&m_GameStartCountUI);
 		pState->SetEndTextUI(&m_GameEndTextUI);
+		pState->SetStockCountUI(&m_StockCountUI);
 
 		//‰Šú‰»ˆ—
 		m_GameSceneStateContext.StateInit();

@@ -1,9 +1,31 @@
 #include "CharacterBase_DeadState.h"
+#include "Scene00_Game.h"
+#include "SceneGame_GamePlayState.h"
 
 void CharacterBase_DeadState::Init()
 {
 	m_ChangeStateCount = 0;	//ステータスを変えるまでの時間をカウントする
 	m_pCharacter->SetStock(m_pCharacter->GetStock() - 1);
+	
+
+	//ゲームオーバーを描画するのでストックは描画しない
+	if (m_pCharacter->GetStock() == 0)
+	{
+		return;
+	}
+
+	//キャラクターのストックを描画する
+	SceneGame* pGameScene = dynamic_cast<SceneGame*>(CScene::GetScene());
+	
+	if (pGameScene == nullptr) { return; }
+
+	SceneGame_PlayState* pGamePlayState = 
+		dynamic_cast<SceneGame_PlayState*>
+		(pGameScene->GetStateContext()->GetNowState());
+
+	if (pGamePlayState == nullptr) { return; }
+
+	pGamePlayState->DrawCharacterStock();
 }
 
 void CharacterBase_DeadState::Uninit()

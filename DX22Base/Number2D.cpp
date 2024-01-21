@@ -11,6 +11,7 @@ Number2D::Number2D()
 	, m_UVpos({ 0.0f,0.0f })
 	, m_UVsize({ 1.0f,1.0f })
 	, m_color({ 1.0f,1.0f,1.0f,1.0f })
+	, m_IsVisible(true)
 	, m_UseDistance(false)
 	, m_NumDistance(1.0f)
 	, m_Number(0)
@@ -40,6 +41,11 @@ void Number2D::PrevDraw()
 
 void Number2D::Draw()
 {
+	if (!m_IsVisible)
+	{
+		return;
+	}
+
 	if (m_pTexture == nullptr)
 	{
 		return;

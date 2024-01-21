@@ -8,6 +8,7 @@
 #include "Select01_CharacterList.h"
 #include "GameUI00_StartCount.h"
 #include "GameUI01_GameEndText.h"
+#include "GameUI02_StockCount.h"
 #include "Image3D.h"
 
 class SceneGame_BaseState : public State
@@ -41,6 +42,9 @@ public:
 	void SetEndTextUI(GameEndText* pGameEndTextUI) 
 	{ m_pGameEndTextUI = pGameEndTextUI; }
 
+	void SetStockCountUI(StockCountUI* pStockCountUI) 
+	{ m_pStockCountUI = pStockCountUI; }
+
 protected:
 	std::vector<Character*>* m_pCharacters = nullptr;	//キャラクターの情報
 	SceneGame* m_pGameScene = nullptr;					//今のゲームシーン
@@ -49,4 +53,5 @@ protected:
 	Image3D* m_pBackGround = nullptr;					//バックグラウンド
 	GameStartCountUI* m_pGameStartCountUI = nullptr;	//最初のカウントUI
 	GameEndText* m_pGameEndTextUI = nullptr;			//ゲームエンドUI
+	StockCountUI* m_pStockCountUI = nullptr;			//ストックが減った時のUI
 };

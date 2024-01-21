@@ -17,7 +17,12 @@ public:
 	virtual ~Image2D();
 	virtual void Update();
 	void Draw();
+protected:
+	virtual void PrevDraw();
+
+public:
 	void SetTexture(const char* FilePath);
+	void SetTexture(ID3D11ShaderResourceView* pTextureResource);
 	void ReleaseTexture();
 	void SetPos(const DirectX::XMFLOAT3& pos);
 	void SetPos(const CVector3& pos);
@@ -35,11 +40,9 @@ public:
 	void SetVertexShader(VertexShader* pVS,bool MemoryDelete = false);
 	void SetPixelShader(PixelShader* pPS, bool MemoryDelete = false);
 
-protected:
-	virtual void PrevDraw();
-
 private:
 	ID3D11ShaderResourceView* m_pTexture = nullptr;
+	bool m_isPathLoad = false;
 	VertexShader* m_pVertexShader = nullptr;
 	PixelShader* m_pPixelShader = nullptr;
 public:

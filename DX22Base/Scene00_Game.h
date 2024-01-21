@@ -7,6 +7,7 @@
 #include "Select01_CharacterList.h"
 #include "GameUI00_StartCount.h"
 #include "GameUI01_GameEndText.h"
+#include "GameUI02_StockCount.h"
 #include "Image3D.h"
 #include "StatePattern.h"
 #include "Player_Controller.h"
@@ -16,7 +17,8 @@ class SceneGame : public CScene
 public:
 	enum class GAMESTATE : int
 	{
-		GAMESTART = 0,
+		GAMELOAD = 0,
+		GAMESTART,
 		GAMEPLAY,
 		GAMEEND,
 		MAX,
@@ -37,18 +39,22 @@ private:
 private:
 	GAMESTATE m_GameState = GAMESTATE::MAX;
 	StateContext m_GameSceneStateContext;
-	std::vector<Character*> m_Characters;	//キャラクターの情報
-	Stage* m_pStage;						//ステージの情報
+	std::vector<Character*> m_Characters;		//キャラクターの情報
+	Stage* m_pStage;							//ステージの情報
 	CameraGame* m_pGameCamera = nullptr;		//ゲームのカメラ
 	Image3D m_BackGround;
 
 	GameStartCountUI m_GameStartCountUI;
 	GameEndText m_GameEndTextUI;
+	StockCountUI m_StockCountUI;
 
 	PlayerController* m_pFirstController = nullptr;
 	PlayerController* m_pSecondController = nullptr;
 
 public:
+	StateContext* GetStateContext()		
+	{return &m_GameSceneStateContext;}
+
 	std::vector<Character*>& GetCharacter()
 	{ return m_Characters;}
 

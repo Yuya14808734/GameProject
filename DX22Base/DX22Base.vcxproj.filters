@@ -232,6 +232,24 @@
     <Filter Include="ヘッダー ファイル\04_Game\10_Title">
       <UniqueIdentifier>{9f792c2e-3268-4bfe-bb85-2df150573265}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\04_Game\11_Fade">
+      <UniqueIdentifier>{ca9fa5d7-9918-4e19-9385-99b5cc4fca81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\11_Fade">
+      <UniqueIdentifier>{be3f3eed-4c14-47c1-9a46-422ba3b8e9e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\11_Fade\FadeOut">
+      <UniqueIdentifier>{d3e3c4fc-d127-4456-95ea-d126a613065e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\11_Fade\FadeIn">
+      <UniqueIdentifier>{c3600c5d-141d-4384-9840-2df5fa4fbfea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\11_Fade\FadeIn">
+      <UniqueIdentifier>{5102f77c-8a07-4c9b-bd86-e3c928fdadc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\11_Fade\FadeOut">
+      <UniqueIdentifier>{0199c62f-05ec-4aa4-8b8e-d0ffeada30cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BlendState.cpp">
@@ -540,7 +558,7 @@
     <ClCompile Include="SceneGame_EndState.cpp">
       <Filter>ソース ファイル\04_Game\01_SceneState\02_Game</Filter>
     </ClCompile>
-    <ClCompile Include="Fade.cpp">
+    <ClCompile Include="FadeBase.cpp">
       <Filter>ソース ファイル\02_System</Filter>
     </ClCompile>
     <ClCompile Include="Character00_StartAnimation.cpp">
@@ -554,6 +572,12 @@
     </ClCompile>
     <ClCompile Include="SceneTitle_TitleScreenState.cpp">
       <Filter>ソース ファイル\04_Game\01_SceneState\01_Title</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeOut00_GameStart.cpp">
+      <Filter>ソース ファイル\04_Game\11_Fade\FadeOut</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI02_StockCount.cpp">
+      <Filter>ソース ファイル\04_Game\08_GameUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -857,7 +881,7 @@
     <ClInclude Include="Character_Attack.h">
       <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase</Filter>
     </ClInclude>
-    <ClInclude Include="Fade.h">
+    <ClInclude Include="FadeBase.h">
       <Filter>ヘッダー ファイル\02_System</Filter>
     </ClInclude>
     <ClInclude Include="Character00_StartAnimation.h">
@@ -877,6 +901,12 @@
     </ClInclude>
     <ClInclude Include="SceneTitle_TitleScreenState.h">
       <Filter>ヘッダー ファイル\04_Game\01_SceneState\01_Title</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeOut00_GameStart.h">
+      <Filter>ヘッダー ファイル\04_Game\11_Fade\FadeOut</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI02_StockCount.h">
+      <Filter>ヘッダー ファイル\04_Game\08_GameUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -900,6 +930,9 @@
       <Filter>リソース ファイル\VertexShader</Filter>
     </FxCompile>
     <FxCompile Include="ComparisonColorPS.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="DirectWipePS.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
   </ItemGroup>

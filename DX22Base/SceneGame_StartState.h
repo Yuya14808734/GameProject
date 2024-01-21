@@ -1,5 +1,6 @@
 #pragma once
 #include "SceneGame_BaseState.h"
+#include "FadeOut00_GameStart.h"
 
 class SceneGame_StartState : public SceneGame_BaseState
 {
@@ -14,4 +15,5 @@ public:
 
 protected:
 	int m_Count = 0;
+	FadeOutWipe m_FadeOut;
 };

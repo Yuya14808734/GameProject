@@ -49,6 +49,7 @@ public:
 	CVector2 m_UVpos;
 	CVector2 m_UVsize;
 	DirectX::XMFLOAT4 m_color;
+	bool m_IsVisible = true;
 	bool m_UseDistance = false;
 	float m_NumDistance = 0.0f;
 protected:

@@ -204,8 +204,6 @@ void SetDefaultRenderTargets()
 {
 	g_pContext->OMSetRenderTargets(1, &g_pRTV, g_pDSV);
 
-	g_pContext->OMSetRenderTargets(1, &g_pRTV, g_pDSV);
-
 	// ビューポート設定
 	D3D11_VIEWPORT viewport;
 	viewport.Width = (FLOAT)GetAppWidth();

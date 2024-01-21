@@ -187,10 +187,10 @@ protected:
 	BoxCollider				 m_CharacterCollider;			//プレイヤーの当たり判定
 	std::vector<ATTACKPARAM> m_AttackCollider;				//攻撃したときの当たり判定
 	Character_DamageUI		 m_DamageUI;					//ダメージUI
-	Stage*					 m_pStage = nullptr;			//ステージの情報が入る
 	MOVEPARAMETER			 m_MoveParameter;				//歩く速さなどの動きのパラメータ
 	JUMPPARAMETER			 m_JumpParameter;				//ジャンプ力などのパラメータ
 	BLOWAWAYPARAMETER		 m_BlowAwayParameter;			//吹っ飛ばし力などのパラメータ
+	Stage*					 m_pStage = nullptr;			//ステージの情報が入る
 
 public:
 	//===============================================================================

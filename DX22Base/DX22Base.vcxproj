@@ -167,7 +167,9 @@
     <ClCompile Include="CharacterBase_RespawnState.cpp" />
     <ClCompile Include="Character_Attack.cpp" />
     <ClCompile Include="Character_State.cpp" />
-    <ClCompile Include="Fade.cpp" />
+    <ClCompile Include="FadeOut00_GameStart.cpp" />
+    <ClCompile Include="FadeBase.cpp" />
+    <ClCompile Include="GameUI02_StockCount.cpp" />
     <ClCompile Include="PushButtonText.cpp" />
     <ClCompile Include="Scene02_Title.cpp" />
     <ClCompile Include="SceneGame_StartState.cpp" />
@@ -306,7 +308,9 @@
     <ClInclude Include="CharacterBase_WalkState.h" />
     <ClInclude Include="Character_Attack.h" />
     <ClInclude Include="Character_State.h" />
-    <ClInclude Include="Fade.h" />
+    <ClInclude Include="FadeOut00_GameStart.h" />
+    <ClInclude Include="FadeBase.h" />
+    <ClInclude Include="GameUI02_StockCount.h" />
     <ClInclude Include="PushButtonText.h" />
     <ClInclude Include="Scene02_Title.h" />
     <ClInclude Include="SceneGame_BaseState.h" />
@@ -379,6 +383,14 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)Assets\Shader\%(Filename).cso</ObjectFileOutput>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="DirectWipePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="ModelVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>

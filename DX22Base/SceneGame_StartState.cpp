@@ -10,10 +10,16 @@ void SceneGame_StartState::Init()
 		copy->SetNextState(Character::STATE::State_StartAnime);
 		copy->ChangeNextState();
 	}
+
+	m_FadeOut.CreateFadeOutRenderTarget();
+	m_FadeOut.SetWipeTime(3.0f);
+	m_FadeOut.SetDirection({ 1.0f,1.0f });
 }
 
 void SceneGame_StartState::Uninit()
 {
+	m_FadeOut.ReleaseRenderTarget();
+
 	for (auto copy : (*m_pCharacters))
 	{
 		copy->SetNextState(Character::STATE::State_Idle);
@@ -24,6 +30,8 @@ void SceneGame_StartState::Uninit()
 void SceneGame_StartState::Update()
 {
 	//=====<キャラクターのアップデート>=====
+	m_FadeOut.Update();
+
 	//ここで攻撃や移動などのアップデートを行う
 	for (std::vector<Character*>::iterator it = m_pCharacters->begin();
 		it != m_pCharacters->end(); it++)
@@ -76,6 +84,8 @@ void SceneGame_StartState::Draw()
 	{
 		m_pGameStartCountUI->Draw();
 	}
+
+	m_FadeOut.Draw();
 
 	EnableDepth(true);
 }

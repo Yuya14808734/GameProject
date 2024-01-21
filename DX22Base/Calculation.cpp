@@ -47,7 +47,7 @@ CVector2::CVector2(float x, float y)
 CVector2::CVector2(int x, int y)
 {
 	this->x = static_cast<float>(x);
-	this->y = static_cast<float>(x);
+	this->y = static_cast<float>(y);
 }
 
 

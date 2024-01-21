@@ -12,6 +12,8 @@ public:
 	void Update() override;
 	void Draw() override;
 
+	void DrawCharacterStock();
+
 private:
 	void Collision_Player_Player();
 	void Collision_Attack_Player();

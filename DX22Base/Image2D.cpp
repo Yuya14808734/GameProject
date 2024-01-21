@@ -3,6 +3,7 @@
 
 Image2D::Image2D()
 	:m_pTexture(nullptr)
+	, m_isPathLoad(false)
 	, m_pVertexShader(nullptr)
 	, m_pPixelShader(nullptr)
 	, m_BasePos({0.0f,0.0f,0.0f})
@@ -18,11 +19,7 @@ Image2D::Image2D()
 
 Image2D::~Image2D()
 {
-	if (m_pTexture != nullptr)
-	{
-		m_pTexture->Release();
-		m_pTexture = nullptr;
-	}
+	ReleaseTexture();
 }
 
 void Image2D::Update()
@@ -36,15 +33,15 @@ void Image2D::PrevDraw()
 
 void Image2D::Draw()
 {
-	if (m_pTexture == nullptr)
+	if (!m_IsVisible)
 	{
 		return;
 	}
 
-	if(!m_IsVisible)
+	if (m_pTexture == nullptr)
 	{
 		return;
-	}
+	}	
 
 	PrevDraw();
 
@@ -109,21 +106,32 @@ void Image2D::Draw()
 
 void Image2D::SetTexture(const char* FilePath)
 {
-	if (m_pTexture != nullptr)
-	{
-		m_pTexture->Release();
-		m_pTexture = nullptr;
-	}
+	ReleaseTexture();
 
 	LoadTextureFromFile(FilePath, &m_pTexture);
+
+	m_isPathLoad = true;
+}
+
+void Image2D::SetTexture(ID3D11ShaderResourceView* pTextureResource)
+{
+	ReleaseTexture();
+
+	m_pTexture = pTextureResource;
+
+	m_isPathLoad = false;
 }
 
 void Image2D::ReleaseTexture()
 {
-	if (m_pTexture != nullptr)
+	//パスでロードをしていた場合
+	if (m_isPathLoad)
 	{
-		m_pTexture->Release();
-		m_pTexture = nullptr;
+		if (m_pTexture != nullptr)
+		{
+			m_pTexture->Release();
+			m_pTexture = nullptr;
+		}
 	}
 }
 

@@ -40,6 +40,9 @@ void SceneGame_PlayState::Update()
 
 	//=====<キャラクターのどちらかがストックが無くなったら>=====
 	CheckGameEnd();
+
+	//=====<ストックの動き>=====
+	m_pStockCountUI->Update();
 }
 
 void SceneGame_PlayState::Draw()
@@ -67,7 +70,21 @@ void SceneGame_PlayState::Draw()
 		m_pGameStartCountUI->Draw();
 	}
 
+	m_pStockCountUI->Draw();
+
 	EnableDepth(true);
+}
+
+void SceneGame_PlayState::DrawCharacterStock()
+{
+	if ((*m_pCharacters).size() > 2)
+	{
+		return;
+	}
+
+	m_pStockCountUI->LerpStart(
+		(*m_pCharacters)[0]->GetStock(),
+		(*m_pCharacters)[1]->GetStock());
 }
 
 void SceneGame_PlayState::Collision_Player_Player()
