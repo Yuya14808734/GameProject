@@ -174,5 +174,13 @@ void FadeInWipe::SetWipeSize()
 
 void FadeInWipe::SetWipeTexture()
 {
-	SetTexture(m_pRenderTarget_WipeTexture->GetResource());
+	if (m_pRenderTarget_WipeTexture == nullptr)
+	{
+		SetTexture("Assets/Texture/Fire.png");
+	}
+	else
+	{
+		SetTexture(m_pRenderTarget_WipeTexture->GetResource());
+	}
+
 }

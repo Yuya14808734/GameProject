@@ -14,9 +14,10 @@ SlidReadyToFightText::SlidReadyToFightText()
 	m_SlidImage02.m_size = m_SlidImage01.m_size;
 	m_SlidImage02.m_pos.x -= (m_SlidImage01.m_size.x + m_SlidImage02.m_size.x) * 0.5f;
 
-	m_BackGround.SetTexture("Assets/UI/ReadyToFightBackGroundImage.png");
-	m_BackGround.m_pos = CVector3(WindowSize.x * 0.5f, WindowSize.y * 0.5f, 0.0f);
-	m_BackGround.m_size = WindowSize;
+	m_HideImage.SetTexture("Assets/Texture/WhiteTexture.png");
+	m_HideImage.m_color = DirectX::XMFLOAT4(0.0f, 0.0f, 0.0f, 0.6f);
+	m_HideImage.m_pos = CVector3(WindowSize.x * 0.5f, WindowSize.y * 0.5f, 0.0f);
+	m_HideImage.m_size = WindowSize;
 
 	m_ReadyText.SetTexture("Assets/UI/ReadyToFightImage.png");
 	m_ReadyText.m_pos = CVector3(WindowSize.x * 0.5f, WindowSize.y * 0.5f, 0.0f);
@@ -56,7 +57,7 @@ void SlidReadyToFightText::Update()
 
 void SlidReadyToFightText::Draw()
 {
-	m_BackGround.Draw();
+	m_HideImage.Draw();
 
 	//å„ÇÎÇÃê¸Çï`âÊ
 	m_SlidImage01.Draw();

@@ -5,8 +5,10 @@
 class SceneTitle_TitleScreenState : public SceneTitle_BaseState
 {
 public:
-	SceneTitle_TitleScreenState();
-	~SceneTitle_TitleScreenState();
+	SceneTitle_TitleScreenState() {};
+	~SceneTitle_TitleScreenState() override{};
+	void Init() override;
+	void Uninit() override;
 	void Update() override;
 	void Draw() override;
 

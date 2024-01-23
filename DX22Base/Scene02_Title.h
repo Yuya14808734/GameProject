@@ -6,6 +6,7 @@
 
 class SceneTitle : public CScene
 {
+private:
 	enum class TITLESTATE : int
 	{
 		TITLEDRAW = 0,

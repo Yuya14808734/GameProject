@@ -4,22 +4,35 @@
 #include "Image3D.h"
 #include "StatePattern.h"
 #include "PushButtonText.h"
+#include "PraiseWinnerPlayerText.h"
 #include "FadeIn00_GameEnd.h"
+
 
 class SceneResult : public CScene
 {
-	// ====================================================================================
-	// static
-	// ====================================================================================
+// ====================================================================================
+// enum
+// ====================================================================================
+public:
+	enum class RESULTSTATE : int
+	{
+		RESULTDRAWWINNERNUM = 0,
+		RESULTDRAW,
+		MAX,
+	};
+
+// ====================================================================================
+// static
+// ====================================================================================
 private:
 	static int m_WinCharacterNum;
 
 public:
 	static void SetWinPlayerNum(int Num);
 
-	// ====================================================================================
-	// dynamic
-	// ====================================================================================
+// ====================================================================================
+// dynamic
+// ====================================================================================
 
 private:
 	const float m_WinDrawTime = 1.0f;
@@ -31,12 +44,19 @@ public:
 	void Update() override;
 	void Draw() override;
 
+	State* SetNextState(RESULTSTATE ResultState);		//ステートの設定
+	void ChangeNextState();						//ステートの取得
+
 private:
+	StateContext m_ResultStateContext;
+
+	float m_CountTime = 0.0f;
 	Image2D m_BackGround;
 	Image2D* m_pCharacterImage = nullptr;
 	Image2D m_WinPanelImage;
 	PushButtonText m_PushButtonTextImage;
-	float m_CountTime = 0.0f;
 	FadeInWipe m_StartWipeFade;
+	PraiseWinnerPlayerText m_PraiseWinnerPlayerText;
+	Image2D m_WinnerPlayerNum;
 };
 

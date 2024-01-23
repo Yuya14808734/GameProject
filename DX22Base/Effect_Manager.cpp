@@ -122,6 +122,8 @@ void EffectManager::EffectDraw(Effekseer::Handle Handle)
 	//カメラ行列を設定
 	m_efkRenderer->SetCameraMatrix(cameraMatrix);
 
+	m_efkManager;
+
 	//エフェクトの描画開始処理を行う
 	m_efkRenderer->BeginRendering();
 

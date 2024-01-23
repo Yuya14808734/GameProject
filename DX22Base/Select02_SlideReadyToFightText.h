@@ -14,7 +14,7 @@ public:
 	void StartSlide();
 
 private:
-	Image2D m_BackGround;
+	Image2D m_HideImage;
 	Image2D m_SlidImage01;
 	Image2D m_SlidImage02;
 	Image2D m_ReadyText;

@@ -6,9 +6,11 @@ class SceneTitle_BaseState : public State
 {
 public:
 	SceneTitle_BaseState() {};
-	~SceneTitle_BaseState() {};
-	void Update() override {};
-	void Draw() override {};
+	virtual ~SceneTitle_BaseState() {};
+	virtual void Init() override {};
+	virtual void Uninit() override {};
+	virtual void Update() override {};
+	virtual void Draw() override {};
 
 private:
 

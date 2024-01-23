@@ -1,7 +1,7 @@
 #include "SceneTitle_TitleScreenState.h"
 #include "Main.h"
 
-SceneTitle_TitleScreenState::SceneTitle_TitleScreenState()
+void SceneTitle_TitleScreenState::Init()
 {
 	m_TitleName.SetTexture("Assets/UI/TitleImage.png");
 	m_TextUnderLine.SetTexture("Assets/UI/PushTextUnderLine.png");
@@ -18,7 +18,7 @@ SceneTitle_TitleScreenState::SceneTitle_TitleScreenState()
 	m_TextUnderLine.SetSize(CVector2(400.0f, 18.0f) * 2.0f);
 }
 
-SceneTitle_TitleScreenState::~SceneTitle_TitleScreenState()
+void SceneTitle_TitleScreenState::Uninit()
 {
 
 }

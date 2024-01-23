@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include "StatePattern.h"
 #include "Player_Controller.h"
 #include "Select00_Character.h"
 #include "Select01_CharacterList.h"

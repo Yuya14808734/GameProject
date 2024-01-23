@@ -8,6 +8,11 @@
 #include "Main.h"
 #include "Player_Controller.h"
 
+
+//ステートのインクルード
+#include "SceneResult_DrawWinnerNumState.h"
+#include "SceneResult_DrawResult.h"
+
 // ====================================================================================
 // static
 // ====================================================================================
@@ -82,9 +87,8 @@ void SceneResult::Init()
 		static_cast<float>(GetAppHeight()) * 0.7f
 		, 0.0f));
 
-	//=====<fadeを始める>=====
-	m_StartWipeFade.SetFadeStart(true);
-	m_StartWipeFade.WipeSetting(0.5f, CVector2(1.0f, 1.0f));
+	SetNextState(SceneResult::RESULTSTATE::RESULTDRAWWINNERNUM);
+	ChangeNextState();
 }
 
 void SceneResult::Uninit()
@@ -93,43 +97,54 @@ void SceneResult::Uninit()
 
 void SceneResult::Update()
 {
-	//=====<fadeのアップデート>=====
-	m_StartWipeFade.Update();
+	m_ResultStateContext.StateUpdate();
 
-	//=====<押してほしいボタンのテキストを切り替える>=====
-	m_PushButtonTextImage.Update();
-	
-	//=====<各コントローラーを取得してEnterかAが押されたら次のシーンに移動する>=====
-	for (auto copyController : PlayerController::GetPlayerControllers())
-	{
-		if (copyController.IsTriggerReturn())
-		{
-			CScene::SetScene<SceneSelect>();
-		}
-	}
+	ChangeNextState();
 }
 
 void SceneResult::Draw()
 {
-	//=====<UIの描画>=====
-	EnableDepth(false);
+	m_ResultStateContext.StateDraw();
+}
 
-	//背景の描画
-	m_BackGround.Draw();
+State* SceneResult::SetNextState(RESULTSTATE ResultState)
+{
+	switch (ResultState)
+	{
+	case SceneResult::RESULTSTATE::RESULTDRAWWINNERNUM:
+		m_ResultStateContext.SetNextState(new SceneResult_DrawWinnderNumState());
+		break;
+	case SceneResult::RESULTSTATE::RESULTDRAW:
+		m_ResultStateContext.SetNextState(new SceneResult_DrawResult());
+		break;
+	}
 
-	//[Win]のテキスト描画
-	m_WinPanelImage.Draw();
+	return m_ResultStateContext.GetNextState();
+}
 
-	//キャラクター画像の位置を設定
-	m_pCharacterImage->m_pos = CVector2(908.0f, 368.0f);
-	m_pCharacterImage->m_size = CVector2(435.0f, 640.0f) * 1.3f;
-	m_pCharacterImage->Draw();
+void SceneResult::ChangeNextState()
+{
+	if (m_ResultStateContext.GetNextState() != nullptr)
+	{
+		//終了処理
+		m_ResultStateContext.StateUninit();
 
-	//[押してください]の描画
-	m_PushButtonTextImage.Draw();
+		//次のステートに変更
+		m_ResultStateContext.ChangeNextState();
 
-	//フェードの描画
-	m_StartWipeFade.Draw();
+		//今のステートの各変数を設定
+		SceneResult_BaseState* pSceneResult_BaseState =
+			static_cast<SceneResult_BaseState*>(m_ResultStateContext.GetNowState());
+		pSceneResult_BaseState->SetSceneResult(this);
+		pSceneResult_BaseState->SetBackGround(&m_BackGround);
+		pSceneResult_BaseState->SetCharacterImage(m_pCharacterImage);
+		pSceneResult_BaseState->SetFadeInWipe(&m_StartWipeFade);
+		pSceneResult_BaseState->SetPushButtonTextImage(&m_PushButtonTextImage);
+		pSceneResult_BaseState->SetPraiseWinnerPlayerText(&m_PraiseWinnerPlayerText);
+		pSceneResult_BaseState->SetWinnerPlayerNum(&m_WinnerPlayerNum);
+		pSceneResult_BaseState->SetWinPanelImage(&m_WinPanelImage);
 
-	EnableDepth(true);
+		//初期化処理
+		m_ResultStateContext.StateInit();
+	}
 }

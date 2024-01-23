@@ -171,6 +171,7 @@
     <ClCompile Include="Effect00_Dead.cpp" />
     <ClCompile Include="FadeIn00_GameEnd.cpp" />
     <ClCompile Include="FadeBase.cpp" />
+    <ClCompile Include="FadeIn01_ColorFade.cpp" />
     <ClCompile Include="GameUI02_StockCount.cpp" />
     <ClCompile Include="PushButtonText.cpp" />
     <ClCompile Include="Scene02_Title.cpp" />
@@ -182,6 +183,8 @@
     <ClCompile Include="GameUI01_GameEndText.cpp" />
     <ClCompile Include="Image3D.cpp" />
     <ClCompile Include="OffScreenRenderingClass.cpp" />
+    <ClCompile Include="SceneResult_DrawResult.cpp" />
+    <ClCompile Include="SceneResult_DrawWinnerNumState.cpp" />
     <ClCompile Include="SceneTitle_TitleScreenState.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="GameUI00_StartCount.cpp" />
@@ -265,6 +268,7 @@
     <ClCompile Include="TextureClass.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Image2D.cpp" />
+    <ClCompile Include="PraiseWinnerPlayerText.cpp" />
     <ClCompile Include="WinUtil.cpp" />
     <ClCompile Include="XboxKeyboard.cpp" />
   </ItemGroup>
@@ -316,6 +320,7 @@
     <ClInclude Include="Effect00_Dead.h" />
     <ClInclude Include="FadeIn00_GameEnd.h" />
     <ClInclude Include="FadeBase.h" />
+    <ClInclude Include="FadeIn01_ColorFade.h" />
     <ClInclude Include="GameUI02_StockCount.h" />
     <ClInclude Include="PushButtonText.h" />
     <ClInclude Include="Scene02_Title.h" />
@@ -365,6 +370,9 @@
     <ClInclude Include="SamplerState.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scene01_Select.h" />
+    <ClInclude Include="SceneResult_BaseState.h" />
+    <ClInclude Include="SceneResult_DrawResult.h" />
+    <ClInclude Include="SceneResult_DrawWinnerNumState.h" />
     <ClInclude Include="SceneTitle_BaseState.h" />
     <ClInclude Include="SceneTitle_TitleScreenState.h" />
     <ClInclude Include="Select00_Character.h" />
@@ -380,6 +388,7 @@
     <ClInclude Include="TextureClass.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Image2D.h" />
+    <ClInclude Include="PraiseWinnerPlayerText.h" />
     <ClInclude Include="WinUtil.h" />
     <ClInclude Include="XboxKeyboard.h" />
   </ItemGroup>

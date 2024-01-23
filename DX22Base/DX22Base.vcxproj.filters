@@ -244,6 +244,18 @@
     <Filter Include="ヘッダー ファイル\04_Game\11_Fade\FadeOut">
       <UniqueIdentifier>{0199c62f-05ec-4aa4-8b8e-d0ffeada30cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\04_Game\01_SceneState\03_Result">
+      <UniqueIdentifier>{448fe984-7279-48cb-aeab-535ebc44f907}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\01_SceneState\03_Result">
+      <UniqueIdentifier>{b6789a25-1b63-4ba5-aec5-52942d870620}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\12_Result">
+      <UniqueIdentifier>{1d1b4660-6ac3-4120-bb8b-2c8be6054c8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\12_Result">
+      <UniqueIdentifier>{b68c4f64-f944-431f-91e0-6e32b2132996}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BlendState.cpp">
@@ -585,6 +597,18 @@
     <ClCompile Include="SceneGame_DisConnectControllerState.cpp">
       <Filter>ソース ファイル\04_Game\01_SceneState\02_Game</Filter>
     </ClCompile>
+    <ClCompile Include="FadeIn01_ColorFade.cpp">
+      <Filter>ソース ファイル\04_Game\11_Fade\FadeIn</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneResult_DrawWinnerNumState.cpp">
+      <Filter>ソース ファイル\04_Game\01_SceneState\03_Result</Filter>
+    </ClCompile>
+    <ClCompile Include="PraiseWinnerPlayerText.cpp">
+      <Filter>ソース ファイル\04_Game\12_Result</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneResult_DrawResult.cpp">
+      <Filter>ソース ファイル\04_Game\01_SceneState\03_Result</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -925,6 +949,21 @@
     </ClInclude>
     <ClInclude Include="SceneGame_DisConnectControllerState.h">
       <Filter>ヘッダー ファイル\04_Game\01_SceneState\02_Game</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeIn01_ColorFade.h">
+      <Filter>ヘッダー ファイル\04_Game\11_Fade\FadeIn</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneResult_BaseState.h">
+      <Filter>ヘッダー ファイル\04_Game\01_SceneState\03_Result</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneResult_DrawWinnerNumState.h">
+      <Filter>ヘッダー ファイル\04_Game\01_SceneState\03_Result</Filter>
+    </ClInclude>
+    <ClInclude Include="PraiseWinnerPlayerText.h">
+      <Filter>ヘッダー ファイル\04_Game\12_Result</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneResult_DrawResult.h">
+      <Filter>ヘッダー ファイル\04_Game\01_SceneState\03_Result</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
