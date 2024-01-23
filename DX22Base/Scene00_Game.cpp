@@ -17,9 +17,6 @@
 #include "SceneGame_GamePlayState.h"
 #include "SceneGame_EndState.h"
 
-
-bool ColliderDraw = false;
-
 void SceneGame::Init()
 {
 	//=====<カメラの生成>=====
@@ -119,45 +116,6 @@ void SceneGame::Update()
 
 void SceneGame::Draw()
 {
-	m_BackGround.Draw();
-
-	//=====<当たり判定の描画>=====
-	if (IsKeyTrigger(VK_RETURN))
-	{
-		ColliderDraw = !ColliderDraw;
-	}
-
-	if (ColliderDraw)
-	{
-		m_pStage->StageColliderDraw();
-		for (Character* CharacterCopy : m_Characters)
-		{
-			CharacterCopy->DrawCollider();
-
-			//キャラクターが攻撃していなければ次のキャラクターに
-			if (static_cast<Character_State*>(CharacterCopy->GetStateContext()->GetNowState())
-				->GetType() != Character_State::TYPE::ATTACK)
-			{
-				continue;
-			}
-
-			std::vector<Character::ATTACKPARAM>& attackVector
-				= CharacterCopy->GetAttackCollider();
-
-			for (Character::ATTACKPARAM& AttackCopy : attackVector)
-			{
-				if (!AttackCopy.m_Use)
-				{
-					continue;
-				}
-				AttackCopy.m_BoxCollider.DrawCollider();
-			}
-
-		}
-	}
-
-	EffectDraw();
-
 	m_GameSceneStateContext.StateDraw();
 }
 
@@ -222,6 +180,7 @@ void SceneGame::ChangeNextState()
 		pState->SetStartCountUI(&m_GameStartCountUI);
 		pState->SetEndTextUI(&m_GameEndTextUI);
 		pState->SetStockCountUI(&m_StockCountUI);
+		pState->SetEffect(&m_Effects);
 
 		//初期化処理
 		m_GameSceneStateContext.StateInit();

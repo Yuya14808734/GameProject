@@ -25,12 +25,14 @@ public:
 public:
 	FadeInWipe();
 	~FadeInWipe() override;
-	void SetWipeTime(float time);
-	void SetDirection(DirectX::XMFLOAT2 Direction);
-	void SetWipeTexture();
+	void WipeSetting(float WipeTime, const CVector2& Direction);
 
 private:
-	void FadeStartInit() override;
+
+	void SetWipeTime(float time);
+	void SetWipeDirection(const CVector2& WipeDirection);
+	void SetWipeSize();
+	void SetWipeTexture();
 	void FadeUpdate() override;
 	void PrevDraw() override;
 

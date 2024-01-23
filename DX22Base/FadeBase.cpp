@@ -31,6 +31,11 @@ void FadeBase::Update()
 	}
 
 	FadeUpdate();
+
+	if (m_FadeEnd)
+	{
+		m_FadeStart = false;
+	}
 }
 
 void FadeBase::FadeStartInit()

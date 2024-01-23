@@ -56,6 +56,9 @@ void SceneGame_StartState::Update()
 
 void SceneGame_StartState::Draw()
 {
+	//=====<”wŒi‚Ì•`‰æ>=====
+	m_pBackGround->Draw();
+
 	//=====<ƒXƒe[ƒW‚Ì•`‰æ>=====
 	m_pStage->Stage_Draw();
 
@@ -63,6 +66,12 @@ void SceneGame_StartState::Draw()
 	for (Character* copy : (*m_pCharacters))
 	{
 		copy->Character_Draw();
+	}
+
+	//=====<ƒGƒtƒFƒNƒg‚Ì•`‰æ>=====
+	for (EffectBase* pEffect : (*m_pEffects))
+	{
+		pEffect->Draw();
 	}
 
 	//=====<UI‚Ì•`‰æ>=====

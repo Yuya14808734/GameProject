@@ -169,7 +169,7 @@
     <ClCompile Include="Character_State.cpp" />
     <ClCompile Include="EffectBase.cpp" />
     <ClCompile Include="Effect00_Dead.cpp" />
-    <ClCompile Include="FadeIn00_GameStart.cpp" />
+    <ClCompile Include="FadeIn00_GameEnd.cpp" />
     <ClCompile Include="FadeBase.cpp" />
     <ClCompile Include="GameUI02_StockCount.cpp" />
     <ClCompile Include="PushButtonText.cpp" />

@@ -20,7 +20,9 @@ private:
 	void Collision_Player_Stage();
 	void CheckGameEnd();
 
+	void ColliderDraw();
+
 private:
 	int m_VisibleGo_CountTime = 0;
-
+	bool m_ColliderDraw = false;
 };

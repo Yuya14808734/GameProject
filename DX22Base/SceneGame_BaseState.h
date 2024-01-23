@@ -45,6 +45,9 @@ public:
 	void SetStockCountUI(StockCountUI* pStockCountUI) 
 	{ m_pStockCountUI = pStockCountUI; }
 
+	void SetEffect(std::vector<EffectBase*>* pEffects) 
+	{ m_pEffects = pEffects; }
+
 protected:
 	std::vector<Character*>* m_pCharacters = nullptr;	//キャラクターの情報
 	SceneGame* m_pGameScene = nullptr;					//今のゲームシーン
@@ -54,4 +57,5 @@ protected:
 	GameStartCountUI* m_pGameStartCountUI = nullptr;	//最初のカウントUI
 	GameEndText* m_pGameEndTextUI = nullptr;			//ゲームエンドUI
 	StockCountUI* m_pStockCountUI = nullptr;			//ストックが減った時のUI
+	std::vector<EffectBase*>* m_pEffects = nullptr;//エフェクト情報が入った
 };

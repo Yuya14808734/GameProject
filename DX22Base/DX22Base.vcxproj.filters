@@ -579,7 +579,7 @@
     <ClCompile Include="GameUI03_CharacterDamageUI.cpp">
       <Filter>ソース ファイル\04_Game\08_GameUI</Filter>
     </ClCompile>
-    <ClCompile Include="FadeIn00_GameStart.cpp">
+    <ClCompile Include="FadeIn00_GameEnd.cpp">
       <Filter>ソース ファイル\04_Game\11_Fade\FadeIn</Filter>
     </ClCompile>
   </ItemGroup>

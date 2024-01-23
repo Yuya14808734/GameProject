@@ -64,6 +64,15 @@ void SceneResult::Init()
 	m_WinPanelImage.m_size = CVector2(400.0f,151.0f);
 
 	//=====<キャラクター画像の取得>=====
+	switch (static_cast<SelectCharacterList::CHARACTER>(WinCharacter))
+	{
+	case SelectCharacterList::CHARACTER::NONE:
+	case SelectCharacterList::CHARACTER::MAX:
+		WinCharacter =
+			static_cast<int>(SelectCharacterList::CHARACTER::UNITYCHAN);
+		break;
+	}
+
 	m_pCharacterImage = 
 		&((SelectCharacterList::GetCharacterStandImageList())[WinCharacter]);
 
@@ -73,8 +82,9 @@ void SceneResult::Init()
 		static_cast<float>(GetAppHeight()) * 0.7f
 		, 0.0f));
 
-	//=====<計測変数を初期化>=====
-	m_CountTime = 0.0f;
+	//=====<fadeを始める>=====
+	m_StartWipeFade.SetFadeStart(true);
+	m_StartWipeFade.WipeSetting(1.0f, CVector2(1.0f, 1.0f));
 }
 
 void SceneResult::Uninit()
@@ -83,11 +93,8 @@ void SceneResult::Uninit()
 
 void SceneResult::Update()
 {
-	//=====<計測変数を初期化>=====
-	m_CountTime += 1.0f / 60.0f;
-
-	//=====<>=====
-
+	//=====<fadeのアップデート>=====
+	m_StartWipeFade.Update();
 
 	//=====<押してほしいボタンのテキストを切り替える>=====
 	m_PushButtonTextImage.Update();
@@ -108,7 +115,7 @@ void SceneResult::Draw()
 	EnableDepth(false);
 
 	//背景の描画
-	m_BackGround.Draw();	
+	m_BackGround.Draw();
 
 	//[Win]のテキスト描画
 	m_WinPanelImage.Draw();

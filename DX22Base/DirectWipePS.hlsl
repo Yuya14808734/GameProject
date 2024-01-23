@@ -18,9 +18,8 @@ SamplerState samp : register(s0);
 float4 main(PS_IN pin) : SV_TARGET
 {
 	 float4 color = BaseTex.Sample(samp, pin.uv);
-
 	 //ピクセル座標をワイプ方向に射影する
-	 float t = dot(wipeDirection, pin.uv.xy);
+	 float t = dot(wipeDirection, pin.pos.xy);
 	 clip(t - wipeSize);
 
 	 return color;

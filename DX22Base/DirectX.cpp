@@ -17,7 +17,7 @@ ID3D11Device* g_pDevice;
 ID3D11DeviceContext* g_pContext;
 IDXGISwapChain* g_pSwapChain;
 ID3D11RenderTargetView* g_pNowRTV[4] = { nullptr ,nullptr, nullptr, nullptr};		//レンダーターゲット
-int						g_DefRTVNum = 0;
+int						g_NowRTVNum = 0;
 ID3D11DepthStencilView* g_pNowDSV = nullptr;		//深度バッファ情報
 ID3D11RenderTargetView* g_pDefaultRTV = nullptr;	//レンダーターゲット
 ID3D11DepthStencilView* g_pDefaultDSV = nullptr;	//深度バッファ情報
@@ -120,7 +120,7 @@ HRESULT InitDX(HWND hWnd, UINT width, UINT height, bool fullscreen)
 	{
 		hr = g_pDevice->CreateRenderTargetView(pBackBuffer, NULL, &g_pDefaultRTV);
 		g_pContext->OMSetRenderTargets(1, &g_pDefaultRTV, nullptr);
-		g_DefRTVNum = 1;
+		g_NowRTVNum = 1;
 	}
 
 	//深度バッファ用のテクスチャ作成
@@ -193,7 +193,7 @@ void SetRenderTargets(UINT num, RenderTarget ** ppViews, DepthStencil * pView)
 
 	if (num > 4) num = 4;
 
-	g_DefRTVNum = num;
+	g_NowRTVNum = num;
 
 	UINT i = 0;
 	for (; i < num; ++i)
@@ -232,7 +232,7 @@ void SetDefaultRenderTargets()
 	
 	g_pNowRTV[0] = g_pDefaultRTV;			//デフォルトのRTVを今使っているRTVに設定
 	g_pNowDSV = g_pDefaultDSV;			//デフォルトのDSVを今使っているDSVに設定
-	g_DefRTVNum = 1;
+	g_NowRTVNum = 1;
 
 	//設定されなかったレンダーターゲットはnullptrを入れる
 	for (UINT i = 1; i < 4; ++i)
@@ -257,20 +257,16 @@ void EnableDepth(bool enable)
 	if (enable)
 	{
 		g_pContext->OMSetRenderTargets(
-			g_DefRTVNum, 
-			//&g_pDefaultRTV,
+			g_NowRTVNum, 
 			g_pNowRTV,
-			
-			//g_pDefaultDSV
 			g_pNowDSV
 		);
 	}
 	else
 	{
 		g_pContext->OMSetRenderTargets(
-			g_DefRTVNum,
-			&g_pDefaultRTV,
-			//g_pNowRTV,
+			g_NowRTVNum,
+			g_pNowRTV,
 			nullptr);
 	}
 }

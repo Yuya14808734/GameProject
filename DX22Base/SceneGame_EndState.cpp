@@ -48,6 +48,7 @@ void SceneGame_EndState::Update()
 
 		//=====<次の描画でレンダーターゲットに書き込みを行う>=====
 		m_WipeTextureWrite = true;
+		SetWipeTexture();
 
 		//シーンの切り替え
 		CScene::SetScene<SceneResult>();
@@ -56,8 +57,8 @@ void SceneGame_EndState::Update()
 
 void SceneGame_EndState::Draw()
 {
-	//=====<レンダーターゲットへ描画>=====
-	SetRenderTargetTexture();
+	//=====<背景描画>=====
+	m_pBackGround->Draw();
 
 	//=====<ステージの描画>=====
 	m_pStage->Stage_Draw();
@@ -66,6 +67,12 @@ void SceneGame_EndState::Draw()
 	for (Character* copy : (*m_pCharacters))
 	{
 		copy->Character_Draw();
+	}
+
+	//=====<エフェクトの描画>=====
+	for (EffectBase* pEffect : (*m_pEffects))
+	{
+		pEffect->Draw();
 	}
 
 	//=====<UIの描画>=====
@@ -81,7 +88,7 @@ void SceneGame_EndState::Draw()
 	EnableDepth(true);
 }
 
-void SceneGame_EndState::SetRenderTargetTexture()
+void SceneGame_EndState::SetWipeTexture()
 {
 	//=====<フェードで使うレンダーターゲットを設定するか>=====
 	if (m_WipeTextureWrite)
@@ -92,6 +99,9 @@ void SceneGame_EndState::SetRenderTargetTexture()
 		//=====<深度バッファ有効>=====
 		EnableDepth(true);
 
+		//=====<背景描画>=====
+		m_pBackGround->Draw();
+
 		//=====<ステージの描画>=====
 		m_pStage->Stage_Draw();
 
@@ -99,6 +109,12 @@ void SceneGame_EndState::SetRenderTargetTexture()
 		for (Character* copy : (*m_pCharacters))
 		{
 			copy->Character_Draw();
+		}
+
+		//=====<エフェクトの描画>=====
+		for (EffectBase* pEffect : (*m_pEffects))
+		{
+			pEffect->Draw();
 		}
 
 		//=====<UIの描画>=====
@@ -116,8 +132,5 @@ void SceneGame_EndState::SetRenderTargetTexture()
 		//=====<デフォルトのレンダーターゲットに戻す>=====
 		SetDefaultRenderTargets();
 		EnableDepth(true);
-
-		//=====<今描画したレンダーターゲットを渡してやる>=====
-		FadeInWipe::SetRenderTargets_WipeTexture();
 	}
 }

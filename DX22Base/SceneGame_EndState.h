@@ -13,7 +13,7 @@ public:
 	void Update() override;
 	void Draw() override;
 
-	void SetRenderTargetTexture();
+	void SetWipeTexture();
 
 private:
 	int m_SceneChangeCount = 0;

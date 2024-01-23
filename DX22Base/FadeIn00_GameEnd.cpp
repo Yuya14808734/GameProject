@@ -12,6 +12,9 @@ DepthStencil* FadeInWipe::m_pDepthStencil_WipeTexture = nullptr;
 
 void FadeInWipe::CreateRenderTarget_WipeTexture()
 {
+	// =====<念のため消しておく>=====
+	ReleaseRenderTargets_WipeTexture();
+
 	// =====<レンダーターゲットの作成>=====
 	if (m_pRenderTarget_WipeTexture == nullptr)
 	{
@@ -89,11 +92,6 @@ FadeInWipe::~FadeInWipe()
 	delete m_pConstuntBuffer;
 }
 
-void FadeInWipe::FadeStartInit()
-{
-	
-}
-
 void FadeInWipe::FadeUpdate()
 {
 	//=====<WipeTimeが設定していなければ出る>=====
@@ -105,13 +103,9 @@ void FadeInWipe::FadeUpdate()
 	//=====<左上から透明にしていくため数値を上げていく>=====
 	m_CountTime += (1.0f / 60.0f);
 
-	//=====<どれくらいの割合を隠すか>=====
-	m_WipeSize = m_CountTime / m_WipeTime;
-
-	//=====<すべて見えるようになったらtrueにする>=====
+	////=====<すべて見えるようになったらtrueにする>=====
 	if (m_CountTime > m_WipeTime)
 	{
-		m_CountTime = m_WipeTime;
 		m_FadeEnd = true;
 	}
 }
@@ -119,10 +113,19 @@ void FadeInWipe::FadeUpdate()
 void FadeInWipe::PrevDraw()
 {
 	//=====<定数バッファで渡すfloat4の値設定>=====
+	float NowSize = (m_CountTime / m_WipeTime) * m_WipeSize;
+
 	DirectX::XMFLOAT4 CB =
-	{ m_WipeDirection.x,m_WipeDirection.y,m_WipeSize,0.0f };
+	{ m_WipeDirection.x,m_WipeDirection.y,NowSize,0.0f };
 	m_pConstuntBuffer->Write(&CB);
 	m_pConstuntBuffer->BindPS(0);
+}
+
+void FadeInWipe::WipeSetting(float WipeTime, const CVector2& WipeDirection)
+{
+	SetWipeTime(WipeTime);
+	SetWipeDirection(WipeDirection);
+	SetWipeTexture();
 }
 
 void FadeInWipe::SetWipeTime(float time)
@@ -130,10 +133,43 @@ void FadeInWipe::SetWipeTime(float time)
 	m_WipeTime = time;
 }
 
-void FadeInWipe::SetDirection(DirectX::XMFLOAT2 Direction)
+void FadeInWipe::SetWipeDirection(const CVector2& Direction)
 {
 	m_WipeDirection = Direction;
 	m_WipeDirection = m_WipeDirection.normalize();
+	SetWipeSize();
+}
+
+void FadeInWipe::SetWipeSize()
+{
+	//=====<ウィンドウの大きさを設定>=====
+	CVector2 WindowSize = 
+		CVector2(
+			static_cast<float>(GetAppWidth()),
+			static_cast<float>(GetAppHeight()));
+
+	//=====<今のDirectionでどっちが早く画面の端につくのかを調べる>=====
+	//下で使う変数の作成
+	float Width_Percent		= m_WipeDirection.x / WindowSize.x;
+	float Height_Percent	= m_WipeDirection.y / WindowSize.y;
+	CVector2 WindowWipeVector;
+	float WindowPercent = 0.0f;
+
+	//早く着く方の大きさを画面サイズにしたときの長さを調べる
+	if (Width_Percent > Height_Percent)
+	{
+		//横の方が早く着く場合、縦の大きさを使って正方形にする
+		WindowPercent = m_WipeDirection.y * (WindowSize.y / m_WipeDirection.y);
+	}
+	else
+	{
+		//縦の方が早く着く場合、横の大きさを使って正方形にする
+		WindowPercent = m_WipeDirection.x * (WindowSize.x / m_WipeDirection.x);
+	}
+
+	//=====<斜めの長さを調べてワイプする長さとする>=====
+	WindowWipeVector = m_WipeDirection * WindowPercent;
+	m_WipeSize = WindowWipeVector.length();
 }
 
 void FadeInWipe::SetWipeTexture()

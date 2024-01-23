@@ -28,15 +28,18 @@ public:
 	// Get/Set関数
 	// ================================
 
+	//フェードを始める
 	void SetFadeStart(bool start) 
 	{
 		m_FadeStart = start; 
 		if (m_FadeStart) { FadeStartInit(); }
 	}
 
+	//フェードを止める
 	void SetFadeStop(bool stop) 
 	{ m_FadeStop = stop; }
 
+	//フェードが止まっているか
 	bool GetFadeEnd() 
 	{ return m_FadeEnd; }
 };

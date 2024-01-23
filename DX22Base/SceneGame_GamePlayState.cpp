@@ -48,6 +48,12 @@ void SceneGame_PlayState::Update()
 
 void SceneGame_PlayState::Draw()
 {
+	//=====<背景の描画>=====
+	m_pBackGround->Draw();
+
+	//=====<当たり判定の描画>=====
+	ColliderDraw();
+
 	//=====<ステージの描画>=====
 	m_pStage->Stage_Draw();
 
@@ -55,6 +61,12 @@ void SceneGame_PlayState::Draw()
 	for (Character* copy : (*m_pCharacters))
 	{
 		copy->Character_Draw();
+	}
+
+	//=====<エフェクトの描画>=====
+	for (EffectBase* pEffect : (*m_pEffects))
+	{
+		pEffect->Draw();
 	}
 
 	//=====<UIの描画>=====
@@ -292,5 +304,42 @@ void SceneGame_PlayState::CheckGameEnd()
 	if (isGameOver)
 	{
 		m_pGameScene->SetNextState(SceneGame::GAMESTATE::GAMEEND);
+	}
+}
+
+void SceneGame_PlayState::ColliderDraw()
+{
+	//=====<当たり判定の描画>=====
+	if (IsKeyTrigger(VK_RETURN))
+	{
+		m_ColliderDraw = !m_ColliderDraw;
+	}
+
+	if (m_ColliderDraw)
+	{
+		m_pStage->StageColliderDraw();
+		for (Character* CharacterCopy : (*m_pCharacters))
+		{
+			CharacterCopy->DrawCollider();
+
+			//キャラクターが攻撃していなければ次のキャラクターに
+			if (static_cast<Character_State*>(CharacterCopy->GetStateContext()->GetNowState())
+				->GetType() != Character_State::TYPE::ATTACK)
+			{
+				continue;
+			}
+
+			std::vector<Character::ATTACKPARAM>& attackVector
+				= CharacterCopy->GetAttackCollider();
+
+			for (Character::ATTACKPARAM& AttackCopy : attackVector)
+			{
+				if (!AttackCopy.m_Use)
+				{
+					continue;
+				}
+				AttackCopy.m_BoxCollider.DrawCollider();
+			}
+		}
 	}
 }
