@@ -141,6 +141,7 @@ public:
 
 public:
 	CQuaternion();
+	~CQuaternion() {};
 	CQuaternion(float x,float y,float z,float w);
 	CQuaternion(float AngleX, float AngleY, float AngleZ);
 	CQuaternion(CVector3 Angle);

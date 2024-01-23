@@ -564,9 +564,6 @@
     <ClCompile Include="SceneTitle_TitleScreenState.cpp">
       <Filter>ソース ファイル\04_Game\01_SceneState\01_Title</Filter>
     </ClCompile>
-    <ClCompile Include="FadeOut00_GameStart.cpp">
-      <Filter>ソース ファイル\04_Game\11_Fade\FadeOut</Filter>
-    </ClCompile>
     <ClCompile Include="GameUI02_StockCount.cpp">
       <Filter>ソース ファイル\04_Game\08_GameUI</Filter>
     </ClCompile>
@@ -581,6 +578,9 @@
     </ClCompile>
     <ClCompile Include="GameUI03_CharacterDamageUI.cpp">
       <Filter>ソース ファイル\04_Game\08_GameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeIn00_GameStart.cpp">
+      <Filter>ソース ファイル\04_Game\11_Fade\FadeIn</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -902,9 +902,6 @@
     <ClInclude Include="SceneTitle_TitleScreenState.h">
       <Filter>ヘッダー ファイル\04_Game\01_SceneState\01_Title</Filter>
     </ClInclude>
-    <ClInclude Include="FadeOut00_GameStart.h">
-      <Filter>ヘッダー ファイル\04_Game\11_Fade\FadeOut</Filter>
-    </ClInclude>
     <ClInclude Include="GameUI02_StockCount.h">
       <Filter>ヘッダー ファイル\04_Game\08_GameUI</Filter>
     </ClInclude>
@@ -919,6 +916,9 @@
     </ClInclude>
     <ClInclude Include="GameUI03_CharacterDamageUI.h">
       <Filter>ヘッダー ファイル\04_Game\08_GameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeIn00_GameEnd.h">
+      <Filter>ヘッダー ファイル\04_Game\11_Fade\FadeIn</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

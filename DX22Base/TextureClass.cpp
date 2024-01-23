@@ -122,7 +122,7 @@ RenderTarget::~RenderTarget()
 }
 void RenderTarget::Clear()
 {
-	static float color[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	static float color[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	Clear(color);
 }
 void RenderTarget::Clear(const float* color)

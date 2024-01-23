@@ -16,8 +16,11 @@ Effekseer::Handle g_efkHandle;
 ID3D11Device* g_pDevice;
 ID3D11DeviceContext* g_pContext;
 IDXGISwapChain* g_pSwapChain;
-ID3D11RenderTargetView* g_pRTV;		//レンダーターゲット
-ID3D11DepthStencilView* g_pDSV;		//深度バッファ情報
+ID3D11RenderTargetView* g_pNowRTV[4] = { nullptr ,nullptr, nullptr, nullptr};		//レンダーターゲット
+int						g_DefRTVNum = 0;
+ID3D11DepthStencilView* g_pNowDSV = nullptr;		//深度バッファ情報
+ID3D11RenderTargetView* g_pDefaultRTV = nullptr;	//レンダーターゲット
+ID3D11DepthStencilView* g_pDefaultDSV = nullptr;	//深度バッファ情報
 
 ID3D11Device* GetDevice()
 {
@@ -115,8 +118,11 @@ HRESULT InitDX(HWND hWnd, UINT width, UINT height, bool fullscreen)
 	// バックバッファへのポインタを指定してレンダーターゲットビューを作成
 	if (SUCCEEDED(hr))
 	{
-		hr = g_pDevice->CreateRenderTargetView(pBackBuffer, NULL, &g_pRTV);
-		g_pContext->OMSetRenderTargets(1, &g_pRTV, nullptr);
+		hr = g_pDevice->CreateRenderTargetView(pBackBuffer, NULL, &g_pDefaultRTV);
+		g_pContext->OMSetRenderTargets(1, &g_pDefaultRTV, nullptr);
+		g_pNowRTV[0] = g_pDefaultRTV;			//デフォルトのRTVを今使っているRTVに設定
+		g_pNowDSV = g_pDefaultDSV;			//デフォルトのDSVを今使っているDSVに設定
+		g_DefRTVNum = 1;
 	}
 
 	//深度バッファ用のテクスチャ作成
@@ -132,11 +138,11 @@ HRESULT InitDX(HWND hWnd, UINT width, UINT height, bool fullscreen)
 	D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
 	dsvDesc.Format = dsvTexDesc.Format;
 	dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
-	hr = g_pDevice->CreateDepthStencilView(pDSVTex, &dsvDesc, &g_pDSV);
+	hr = g_pDevice->CreateDepthStencilView(pDSVTex, &dsvDesc, &g_pDefaultDSV);
 	if (FAILED(hr)) { return hr; }
 	
 	//描画先(レンダーターゲット)と深度バッファを設定
-	g_pContext->OMSetRenderTargets(1, &g_pRTV, g_pDSV);
+	g_pContext->OMSetRenderTargets(1, &g_pDefaultRTV, g_pDefaultDSV);
 
 	//--- ビューポート
 	D3D11_VIEWPORT viewPort;
@@ -164,14 +170,14 @@ void UninitDX()
 void BeginDrawDX()
 {
 	float color[4] = { 0.8f, 0.8f, 0.9f, 1.0f };
-	g_pContext->ClearRenderTargetView(g_pRTV, color);
+	g_pContext->ClearRenderTargetView(g_pDefaultRTV, color);
 
 	//深度バッファの内容を毎フレームクリア
 	//クリアしないと、以前描きこんだ情報が残って
 	//新しく3Dを描画しようとしても、
 	//裏にいるとみなされて深度テストされる
 	g_pContext->ClearDepthStencilView(
-		g_pDSV, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
+		g_pDefaultDSV, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
 		1.0f, 0
 	);
 }
@@ -185,9 +191,26 @@ void SetRenderTargets(UINT num, RenderTarget ** ppViews, DepthStencil * pView)
 	static ID3D11RenderTargetView* rtvs[4];
 
 	if (num > 4) num = 4;
-	for (UINT i = 0; i < num; ++i)
+
+	g_DefRTVNum = num;
+
+	UINT i = 0;
+	for (; i < num; ++i)
+	{
+		g_pNowRTV[i] =	//今使っているレンダーターゲットに保存
 		rtvs[i] = ppViews[i]->GetView();
+	}
+
+	//上で入れられなかった部分はnullptrを入れる
+	for (; i < 4; i++)
+	{
+		g_pNowRTV[i] = nullptr;
+	}
+
+	//レンダーターゲットを設定
 	g_pContext->OMSetRenderTargets(num, rtvs, pView ? pView->GetView() : nullptr);
+
+
 
 	// ビューポートの設定
 	D3D11_VIEWPORT vp;
@@ -202,8 +225,19 @@ void SetRenderTargets(UINT num, RenderTarget ** ppViews, DepthStencil * pView)
 
 void SetDefaultRenderTargets()
 {
-	g_pContext->OMSetRenderTargets(1, &g_pRTV, g_pDSV);
+	g_pContext->OMSetRenderTargets(1, &g_pDefaultRTV, g_pDefaultDSV);
+	
+	g_pNowRTV[0] = g_pDefaultRTV;			//デフォルトのRTVを今使っているRTVに設定
+	g_pNowDSV = g_pDefaultDSV;			//デフォルトのDSVを今使っているDSVに設定
+	g_DefRTVNum = 1;
 
+	//設定されなかったレンダーターゲットはnullptrを入れる
+	for (UINT i = 1; i < 4; ++i)
+	{
+		g_pNowRTV[i] = nullptr;
+	}
+
+	
 	// ビューポート設定
 	D3D11_VIEWPORT viewport;
 	viewport.Width = (FLOAT)GetAppWidth();
@@ -220,11 +254,11 @@ void EnableDepth(bool enable)
 	if (enable)
 	{
 		g_pContext->OMSetRenderTargets(
-			1, &g_pRTV, g_pDSV);
+			g_DefRTVNum, g_pNowRTV, g_pNowDSV);
 	}
 	else
 	{
 		g_pContext->OMSetRenderTargets(
-			1, &g_pRTV, nullptr);
+			g_DefRTVNum, g_pNowRTV, nullptr);
 	}
 }

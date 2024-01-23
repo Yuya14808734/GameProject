@@ -23,7 +23,7 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{fac33454-6bfc-4c9c-9a76-69d40070ed6a}</ProjectGuid>
     <RootNamespace>DX22Base</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -169,7 +169,7 @@
     <ClCompile Include="Character_State.cpp" />
     <ClCompile Include="EffectBase.cpp" />
     <ClCompile Include="Effect00_Dead.cpp" />
-    <ClCompile Include="FadeOut00_GameStart.cpp" />
+    <ClCompile Include="FadeIn00_GameStart.cpp" />
     <ClCompile Include="FadeBase.cpp" />
     <ClCompile Include="GameUI02_StockCount.cpp" />
     <ClCompile Include="PushButtonText.cpp" />
@@ -313,7 +313,7 @@
     <ClInclude Include="Character_State.h" />
     <ClInclude Include="EffectBase.h" />
     <ClInclude Include="Effect00_Dead.h" />
-    <ClInclude Include="FadeOut00_GameStart.h" />
+    <ClInclude Include="FadeIn00_GameEnd.h" />
     <ClInclude Include="FadeBase.h" />
     <ClInclude Include="GameUI02_StockCount.h" />
     <ClInclude Include="PushButtonText.h" />

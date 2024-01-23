@@ -448,15 +448,11 @@ CQuaternion::CQuaternion(float AngleX, float AngleY, float AngleZ)
 
 CQuaternion::CQuaternion(CVector3 Angle)
 	:CQuaternion(Angle.x, Angle.y, Angle.z)
-{
-
-}
+{}
 
 CQuaternion::CQuaternion(const DirectX::XMFLOAT4& f)
 	:CQuaternion(f.x,f.y,f.z,f.w)
-{
-	
-}
+{}
 
 CQuaternion CQuaternion::operator*(const CQuaternion& q)
 {
@@ -478,7 +474,7 @@ const CVector3& CQuaternion::RotateVector(const CVector3& vec) const
 	
 	DirectX::XMFLOAT4 inv_f;
 	DirectX::XMStoreFloat4(&inv_f, Q.v);
-	CQuaternion inv_q(-inv_f.x,-inv_f.y,-inv_f.z,inv_f.w);	//逆クォータニオン(共役)
+	CQuaternion inv_q( -inv_f.x, -inv_f.y, -inv_f.z, inv_f.w);	//逆クォータニオン(共役)
 
 	//ベクトルの計算
 	CQuaternion mq;
@@ -528,9 +524,10 @@ CQuaternion& CQuaternion::AngleAxis(const CVector3& Axis, float Angle)
 
 CQuaternion& CQuaternion::RadianAxis(const CVector3& Axis, float Radian)
 {
-	CQuaternion r_q; 
+	CQuaternion r_q;
 	CVector3 NormalAxis = Axis.normalize();
-	DirectX::XMVECTOR axis_v = DirectX::XMLoadFloat3(&NormalAxis.f);
+	DirectX::XMFLOAT4 f4 = DirectX::XMFLOAT4(NormalAxis.x, NormalAxis.y, NormalAxis.z, 0.0f);
+	DirectX::XMVECTOR axis_v = DirectX::XMLoadFloat4(&f4);
 
 	r_q.v = DirectX::XMQuaternionRotationNormal(axis_v, Radian);
 

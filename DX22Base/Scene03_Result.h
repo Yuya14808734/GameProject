@@ -4,6 +4,7 @@
 #include "Image3D.h"
 #include "StatePattern.h"
 #include "PushButtonText.h"
+#include "FadeIn00_GameEnd.h"
 
 class SceneResult : public CScene
 {
@@ -36,6 +37,6 @@ private:
 	Image2D m_WinPanelImage;
 	PushButtonText m_PushButtonTextImage;
 	float m_CountTime = 0.0f;
-
+	FadeInWipe m_StartWipeFade;
 };
 

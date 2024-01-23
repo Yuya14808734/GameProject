@@ -3,6 +3,7 @@
 #include "Player_Controller.h"
 #include "Scene01_Select.h"
 #include "SceneTitle_TitleScreenState.h"
+#include "TextureClass.h"
 
 void SceneTitle::Init()
 {
@@ -22,6 +23,7 @@ void SceneTitle::Init()
 
 void SceneTitle::Uninit()
 {
+	
 }
 
 void SceneTitle::Update()
@@ -42,11 +44,13 @@ void SceneTitle::Update()
 
 void SceneTitle::Draw()
 {
+	//=====<‰æ–Ê•`‰æ>=====
 	EnableDepth(false);
-
+	
 	m_BackGround.Draw();
 
 	m_TitleStateContext.StateDraw();
+
 	
 	EnableDepth(true);
 }
