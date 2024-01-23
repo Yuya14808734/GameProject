@@ -120,8 +120,6 @@ HRESULT InitDX(HWND hWnd, UINT width, UINT height, bool fullscreen)
 	{
 		hr = g_pDevice->CreateRenderTargetView(pBackBuffer, NULL, &g_pDefaultRTV);
 		g_pContext->OMSetRenderTargets(1, &g_pDefaultRTV, nullptr);
-		g_pNowRTV[0] = g_pDefaultRTV;			//デフォルトのRTVを今使っているRTVに設定
-		g_pNowDSV = g_pDefaultDSV;			//デフォルトのDSVを今使っているDSVに設定
 		g_DefRTVNum = 1;
 	}
 
@@ -153,6 +151,9 @@ HRESULT InitDX(HWND hWnd, UINT width, UINT height, bool fullscreen)
 	viewPort.MinDepth = 0.0f;
 	viewPort.MaxDepth = 1.0f;
 	g_pContext->RSSetViewports(1, &viewPort);
+
+	g_pNowRTV[0] = g_pDefaultRTV;			//デフォルトのRTVを今使っているRTVに設定
+	g_pNowDSV = g_pDefaultDSV;			//デフォルトのDSVを今使っているDSVに設定
 
 	return S_OK;
 }
@@ -207,6 +208,8 @@ void SetRenderTargets(UINT num, RenderTarget ** ppViews, DepthStencil * pView)
 		g_pNowRTV[i] = nullptr;
 	}
 
+	g_pNowDSV = pView->GetView();
+
 	//レンダーターゲットを設定
 	g_pContext->OMSetRenderTargets(num, rtvs, pView ? pView->GetView() : nullptr);
 
@@ -254,11 +257,20 @@ void EnableDepth(bool enable)
 	if (enable)
 	{
 		g_pContext->OMSetRenderTargets(
-			g_DefRTVNum, g_pNowRTV, g_pNowDSV);
+			g_DefRTVNum, 
+			//&g_pDefaultRTV,
+			g_pNowRTV,
+			
+			//g_pDefaultDSV
+			g_pNowDSV
+		);
 	}
 	else
 	{
 		g_pContext->OMSetRenderTargets(
-			g_DefRTVNum, g_pNowRTV, nullptr);
+			g_DefRTVNum,
+			&g_pDefaultRTV,
+			//g_pNowRTV,
+			nullptr);
 	}
 }
