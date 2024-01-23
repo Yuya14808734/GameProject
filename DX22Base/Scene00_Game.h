@@ -22,6 +22,7 @@ public:
 		GAMESTART,
 		GAMEPLAY,
 		GAMEEND,
+		GAMEDISCONNECTCONTROLLER,
 		MAX,
 	};
 
@@ -57,6 +58,8 @@ private:
 
 	PlayerController* m_pFirstController = nullptr;
 	PlayerController* m_pSecondController = nullptr;
+
+	bool m_isDisConnectController = false;
 
 public:
 	StateContext* GetStateContext()		

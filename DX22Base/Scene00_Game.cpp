@@ -16,6 +16,7 @@
 #include "SceneGame_StartState.h"
 #include "SceneGame_GamePlayState.h"
 #include "SceneGame_EndState.h"
+#include "SceneGame_DisConnectControllerState.h"
 
 void SceneGame::Init()
 {
@@ -69,9 +70,14 @@ void SceneGame::Init()
 	m_pGameCamera->SetStage(m_pStage);
 	pCameraGameStart->SetCharacter(m_Characters);
 
+	//=====<コントローラーが解除されているか>=====
+	m_isDisConnectController = false;
+
 	//=====<ゲーム開始に設定>=====
 	SetNextState(SceneGame::GAMESTATE::GAMESTART);
 	ChangeNextState();
+
+	
 }
 
 void SceneGame::Uninit()
@@ -101,16 +107,29 @@ void SceneGame::Uninit()
 
 void SceneGame::Update()
 {
-	//コントローラーが抜かれたらゲームを終了する
-	if (!m_pFirstController->IsConnect() && !m_pSecondController->IsConnect())
-	{
-		//コントローラーが抜かれた
+	//=====<コントローラーが抜かれたらゲームを終了する>=====
+	if (!m_isDisConnectController)
+	{	
+		//もう入らないようにする
+		m_isDisConnectController = true;
+
+		if (!m_pFirstController->IsConnect() || !m_pSecondController->IsConnect())
+		{
+			//コントローラーが抜かれた
+			SetNextState(SceneGame::GAMESTATE::GAMEDISCONNECTCONTROLLER);
+			ChangeNextState();
+			return;
+		}
 	}
 
+	//=====<ゲームシーンのステートのアップデート>=====
 	m_GameSceneStateContext.StateUpdate();
 
+	//=====<ゲームシーンのステートの入れ替え>=====
 	ChangeNextState();
 
+
+	//=====<エフェクトのアップデート>=====
 	SceneGame::EffectUpdate();
 }
 
@@ -154,6 +173,9 @@ State* SceneGame::SetNextState(GAMESTATE NextState)
 		break;
 	case SceneGame::GAMESTATE::GAMEEND:
 		m_GameSceneStateContext.SetNextState(new SceneGame_EndState());
+		break;
+	case SceneGame::GAMESTATE::GAMEDISCONNECTCONTROLLER:
+		m_GameSceneStateContext.SetNextState(new SceneGame_DisConnectControllerState());
 		break;
 	}
 

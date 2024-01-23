@@ -84,7 +84,7 @@ void SceneResult::Init()
 
 	//=====<fade‚ðŽn‚ß‚é>=====
 	m_StartWipeFade.SetFadeStart(true);
-	m_StartWipeFade.WipeSetting(1.0f, CVector2(1.0f, 1.0f));
+	m_StartWipeFade.WipeSetting(0.5f, CVector2(1.0f, 1.0f));
 }
 
 void SceneResult::Uninit()

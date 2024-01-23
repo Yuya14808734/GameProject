@@ -175,6 +175,7 @@
     <ClCompile Include="PushButtonText.cpp" />
     <ClCompile Include="Scene02_Title.cpp" />
     <ClCompile Include="Scene03_Result.cpp" />
+    <ClCompile Include="SceneGame_DisConnectControllerState.cpp" />
     <ClCompile Include="SceneGame_StartState.cpp" />
     <ClCompile Include="SceneGame_GamePlayState.cpp" />
     <ClCompile Include="SceneGame_EndState.cpp" />
@@ -320,6 +321,7 @@
     <ClInclude Include="Scene02_Title.h" />
     <ClInclude Include="Scene03_Result.h" />
     <ClInclude Include="SceneGame_BaseState.h" />
+    <ClInclude Include="SceneGame_DisConnectControllerState.h" />
     <ClInclude Include="SceneGame_StartState.h" />
     <ClInclude Include="SceneGame_GamePlayState.h" />
     <ClInclude Include="SceneGame_EndState.h" />

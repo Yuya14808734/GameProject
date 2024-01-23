@@ -9,6 +9,7 @@ CameraManager& CameraManager::GetInstance()
 
 CameraManager::CameraManager()
 	:m_pNowCamera(nullptr)
+	, m_isUpdate(true)
 {
 
 }
@@ -20,6 +21,9 @@ CameraManager::~CameraManager()
 
 void CameraManager::CameraUpdate()
 {
+	if (!m_isUpdate)
+	{ return; }
+
 	if (m_pNowCamera != nullptr)
 	{
 		m_pNowCamera->Update();
@@ -107,4 +111,14 @@ void CameraManager::DestroyAllCamera(bool MemoryDelete)
 	m_CameraList.clear();
 
 	m_pNowCamera = nullptr;
+}
+
+void CameraManager::StopCamera()
+{
+	m_isUpdate = false;
+}
+
+void CameraManager::ReStartCamera()
+{
+	m_isUpdate = true;
 }
