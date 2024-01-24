@@ -7,10 +7,11 @@ public:
 	SceneResult_DrawResult() {};
 	~SceneResult_DrawResult() override {};
 
-
 	void Init() override;
 	void Uninit() override;
 	void Update() override;
 	void Draw() override;
 private:
+	int m_nFrameCount = 0;
+
 };

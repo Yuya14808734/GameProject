@@ -9,6 +9,8 @@ void SceneResult_DrawWinnderNumState::Init()
 	m_pStartWipeFade->SetFadeStart(true);
 	m_pStartWipeFade->WipeSetting(0.5f, CVector2(1.0f, 1.0f));
 
+	m_pHideImage->m_color = DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 0.75f);
+
 	m_nCount = 0;
 }
 
@@ -20,12 +22,11 @@ void SceneResult_DrawWinnderNumState::Update()
 {
 	m_nCount++;
 
-	if (m_nCount == 60) { m_pPraiseWinnerPlayerText->StartFadeIn_LetterMove(); }
-	if (m_nCount == 120) { m_pPraiseWinnerPlayerText->StartFadeIn_WinnerNum(); }
-	if (m_nCount == 210) { m_pPraiseWinnerPlayerText->StartFadeOut_LetterMove(); }
-	if (m_nCount == 210) { m_pPraiseWinnerPlayerText->StartFadeOut_WinnerNum(); }
-
-
+	//=====<各画像のフェードイン・アウトのタイミング設定>=====
+	if (m_nCount == 60)  { m_pPraiseWinnerPlayerText->StartFadeIn_LetterMove(0.8f); }
+	if (m_nCount == 120) { m_pPraiseWinnerPlayerText->StartFadeIn_WinnerNum(0.5f);	}
+	if (m_nCount == 250) { m_pPraiseWinnerPlayerText->StartFadeOut_LetterMove(0.5f);}
+	if (m_nCount == 250) { m_pPraiseWinnerPlayerText->StartFadeOut_WinnerNum(0.5f); }
 
 	//=====<フェードの更新>=====
 	m_pStartWipeFade->Update();
@@ -33,7 +34,20 @@ void SceneResult_DrawWinnderNumState::Update()
 	//=====<文字を動かす>=====
 	m_pPraiseWinnerPlayerText->Update();
 
-	
+	//=====<後ろを隠している画像のアルファを0にしていく>=====
+	const int AlphaChangeFrame = 300;
+	if (m_nCount > AlphaChangeFrame)
+	{
+		float Percent = static_cast<float>(m_nCount - AlphaChangeFrame) / 20.0f;
+		Percent = 1.0f - Percent;
+		m_pHideImage->m_color.w = 0.75f * Percent;
+	}
+
+	//=====<次のステートの読み込み>=====
+	if (m_nCount > 340)
+	{
+		m_pSceneResult->SetNextState(SceneResult::RESULTSTATE::RESULTDRAW);
+	}	
 }
 
 void SceneResult_DrawWinnderNumState::Draw()
@@ -44,7 +58,10 @@ void SceneResult_DrawWinnderNumState::Draw()
 	//背景の描画
 	m_pBackGround->Draw();
 
-	//[WINNER]のテキスト描画
+	//後ろを隠してやる白い画像の描画
+	m_pHideImage->Draw();
+
+	//[WINNER]と勝ったプレイヤーの番号のテキスト描画
 	m_pPraiseWinnerPlayerText->Draw();
 
 	//フェードの描画

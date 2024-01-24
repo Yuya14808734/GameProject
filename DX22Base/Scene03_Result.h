@@ -6,7 +6,8 @@
 #include "PushButtonText.h"
 #include "PraiseWinnerPlayerText.h"
 #include "FadeIn00_GameEnd.h"
-
+#include "ResultWinnerCharacterImage.h"
+#include "ResultWinnerNumPanel.h"
 
 class SceneResult : public CScene
 {
@@ -25,7 +26,7 @@ public:
 // static
 // ====================================================================================
 private:
-	static int m_WinCharacterNum;
+	static int m_WinPlayerNum;
 
 public:
 	static void SetWinPlayerNum(int Num);
@@ -39,6 +40,9 @@ private:
 	const float m_CharacterDrawTime = 1.0f;
 
 public:
+	SceneResult() {}
+	~SceneResult() override {}
+
 	void Init() override;
 	void Uninit() override;
 	void Update() override;
@@ -52,11 +56,11 @@ private:
 
 	float m_CountTime = 0.0f;
 	Image2D m_BackGround;
-	Image2D* m_pCharacterImage = nullptr;
-	Image2D m_WinPanelImage;
+	ResultWinnerCharacterImage m_pResultWinnerCharacterImage;
+	ResultWinnerNumPanel m_ResultWinnerNumPanel;
 	PushButtonText m_PushButtonTextImage;
 	FadeInWipe m_StartWipeFade;
 	PraiseWinnerPlayerText m_PraiseWinnerPlayerText;
 	Image2D m_WinnerPlayerNum;
+	Image2D m_HideImage;
 };
-

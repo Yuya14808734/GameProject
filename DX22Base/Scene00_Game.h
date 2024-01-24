@@ -27,6 +27,9 @@ public:
 	};
 
 public:
+	SceneGame() {};
+	~SceneGame() override {};
+
 	void Init() override;
 	void Uninit() override;
 	void Update() override;

@@ -22,6 +22,9 @@ private:
 	static SelectCharacterList::CHARACTER m_SecondPlayerCharacter;
 
 public:
+	SceneSelect() {}
+	~SceneSelect() override {}
+
 	void Init() override;
 	void Uninit() override;
 	void Update() override;

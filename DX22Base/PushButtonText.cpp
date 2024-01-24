@@ -38,6 +38,8 @@ PushEnterButtonText::~PushEnterButtonText()
 PushButtonText::PushButtonText()
 {
 	m_Time = 0.0f;
+	m_PushAButtonText.m_color.w = 0.0f;
+	m_PushEnterButtonText.m_color.w = 0.0f;
 }
 
 PushButtonText::~PushButtonText()
@@ -77,4 +79,15 @@ void PushButtonText::SetPos(const CVector3& pos)
 {
 	m_PushEnterButtonText.SetPos(pos);
 	m_PushAButtonText.SetPos(pos);
+}
+
+void PushButtonText::SetScale(float scale)
+{
+	float SizeChangeScalePercent = 50.0f / 53.0f;
+	m_PushEnterButtonText.m_size = CVector2(640.0f, 53.0f) 
+		* SizeChangeScalePercent * scale;
+	
+	SizeChangeScalePercent = 50.0f / 71.0f;
+	m_PushAButtonText.m_size = CVector2(640.0f, 71.0f) 
+		* SizeChangeScalePercent * scale;
 }

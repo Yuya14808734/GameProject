@@ -16,11 +16,11 @@
 // ====================================================================================
 // static
 // ====================================================================================
-int SceneResult::m_WinCharacterNum = 0;
+int SceneResult::m_WinPlayerNum = 0;
 
 void SceneResult::SetWinPlayerNum(int Num)
 {
-	m_WinCharacterNum = Num;
+	m_WinPlayerNum = Num;
 }
 
 // ====================================================================================
@@ -41,45 +41,28 @@ void SceneResult::Init()
 
 	//=====<勝ったキャラクターの番号を取得>=====
 	int WinCharacter = static_cast<int>(SelectCharacterList::CHARACTER::NONE);
-
-	//=====<キャラクターの画像を設定>=====
-	switch (m_WinCharacterNum)
+	switch (m_WinPlayerNum)
 	{
 	case 1:
 	//1Pが勝っていたら
-	WinCharacter 
-		= static_cast<int>(SceneSelect::GetFirstPlayerCharacter());
-	m_WinPanelImage.SetTexture("Assets/UI/Win1Player.png");
+	WinCharacter = static_cast<int>(SceneSelect::GetFirstPlayerCharacter());
 		break;
 	case 2:
 	//2Pが勝っていたら
-	WinCharacter 
-		= static_cast<int>(SceneSelect::GetSecondPlayerCharacter());
-	m_WinPanelImage.SetTexture("Assets/UI/Win2Player.png");
-		break;
-	default:
-	//ほぼないけど他の場合
-		WinCharacter = 0;
-		m_WinPanelImage.SetTexture("Assets/UI/Win1Player.png");
+	WinCharacter = static_cast<int>(SceneSelect::GetSecondPlayerCharacter());
 		break;
 	}
 
-	//=====<[Win]の画像の場所設定>=====
-	m_WinPanelImage.m_pos = CVector3(320.0f, 205.0f, 0.0f);
-	m_WinPanelImage.m_size = CVector2(400.0f,151.0f);
+	//=====<キャラクターの画像を設定>=====	
+	m_pResultWinnerCharacterImage.SetCharacterImage(WinCharacter);
 
-	//=====<キャラクター画像の取得>=====
-	switch (static_cast<SelectCharacterList::CHARACTER>(WinCharacter))
-	{
-	case SelectCharacterList::CHARACTER::NONE:
-	case SelectCharacterList::CHARACTER::MAX:
-		WinCharacter =
-			static_cast<int>(SelectCharacterList::CHARACTER::UNITYCHAN);
-		break;
-	}
+	//=====<パネルの画像を設定>=====
+	m_ResultWinnerNumPanel.SetPanelImage(m_WinPlayerNum);
 
-	m_pCharacterImage = 
-		&((SelectCharacterList::GetCharacterStandImageList())[WinCharacter]);
+	//=====<画面全体を隠す画像を設定>=====
+	m_HideImage.SetTexture("Assets/Texture/WhiteTexture.png");
+	m_HideImage.m_pos = WindowSize * 0.5f;
+	m_HideImage.m_size = WindowSize;
 
 	//=====<押してくださいテキストの場所設定>=====
 	m_PushButtonTextImage.SetPos(CVector3(
@@ -87,6 +70,7 @@ void SceneResult::Init()
 		static_cast<float>(GetAppHeight()) * 0.7f
 		, 0.0f));
 
+	//=====<次のステートを設定>=====
 	SetNextState(SceneResult::RESULTSTATE::RESULTDRAWWINNERNUM);
 	ChangeNextState();
 }
@@ -137,12 +121,13 @@ void SceneResult::ChangeNextState()
 			static_cast<SceneResult_BaseState*>(m_ResultStateContext.GetNowState());
 		pSceneResult_BaseState->SetSceneResult(this);
 		pSceneResult_BaseState->SetBackGround(&m_BackGround);
-		pSceneResult_BaseState->SetCharacterImage(m_pCharacterImage);
+		pSceneResult_BaseState->SetResultWinnerCharacterImage(&m_pResultWinnerCharacterImage);
 		pSceneResult_BaseState->SetFadeInWipe(&m_StartWipeFade);
 		pSceneResult_BaseState->SetPushButtonTextImage(&m_PushButtonTextImage);
 		pSceneResult_BaseState->SetPraiseWinnerPlayerText(&m_PraiseWinnerPlayerText);
 		pSceneResult_BaseState->SetWinnerPlayerNum(&m_WinnerPlayerNum);
-		pSceneResult_BaseState->SetWinPanelImage(&m_WinPanelImage);
+		pSceneResult_BaseState->SetResultWinnerNumPanel(&m_ResultWinnerNumPanel);
+		pSceneResult_BaseState->SetHideImage(&m_HideImage);
 
 		//初期化処理
 		m_ResultStateContext.StateInit();

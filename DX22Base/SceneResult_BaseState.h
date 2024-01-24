@@ -5,6 +5,8 @@
 #include "FadeIn00_GameEnd.h"
 #include "PraiseWinnerPlayerText.h"
 #include "Scene03_Result.h"
+#include "ResultWinnerCharacterImage.h"
+#include "ResultWinnerNumPanel.h"
 
 class SceneResult_BaseState : public State
 {
@@ -27,11 +29,11 @@ public:
 	void SetBackGround(Image2D* pBackGround) 
 	{ m_pBackGround = pBackGround; }
 
-	void SetCharacterImage(Image2D* pCharacterImage) 
-	{ m_pCharacterImage = pCharacterImage; }
+	void SetResultWinnerCharacterImage(ResultWinnerCharacterImage* pResultWinnerCharacterImage)
+	{ m_pResultWinnerCharacterImage = pResultWinnerCharacterImage; }
 
-	void SetWinPanelImage(Image2D* pWinPanelImage) 
-	{ m_pWinPanelImage = pWinPanelImage; }
+	void SetResultWinnerNumPanel(ResultWinnerNumPanel* pResultWinnerNumPanel)
+	{ m_pResultWinnerNumPanel = pResultWinnerNumPanel; }
 
 	void SetPushButtonTextImage(PushButtonText* pPushButtonTextImage) 
 	{ m_pPushButtonTextImage = pPushButtonTextImage; }
@@ -45,13 +47,17 @@ public:
 	void SetWinnerPlayerNum(Image2D* pWinnerPlayerNum) 
 	{ m_pWinnerPlayerNum = pWinnerPlayerNum; }
 
+	void SetHideImage(Image2D* pHideImage) 
+	{ m_pHideImage = pHideImage; }
+
 protected:
 	SceneResult* m_pSceneResult = nullptr;
 	Image2D* m_pBackGround = nullptr;
-	Image2D* m_pCharacterImage = nullptr;
-	Image2D* m_pWinPanelImage = nullptr;
+	ResultWinnerCharacterImage* m_pResultWinnerCharacterImage = nullptr;
+	ResultWinnerNumPanel* m_pResultWinnerNumPanel = nullptr;
 	PushButtonText* m_pPushButtonTextImage = nullptr;
 	FadeInWipe* m_pStartWipeFade = nullptr;
 	PraiseWinnerPlayerText* m_pPraiseWinnerPlayerText = nullptr;
 	Image2D* m_pWinnerPlayerNum = nullptr;
+	Image2D* m_pHideImage = nullptr;
 };

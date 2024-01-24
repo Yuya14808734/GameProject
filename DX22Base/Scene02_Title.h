@@ -15,6 +15,10 @@ private:
 	};
 
 public:
+	SceneTitle() {}
+	~SceneTitle() override {}
+
+
 	void Init() override;
 	void Uninit() override;
 	void Update() override;

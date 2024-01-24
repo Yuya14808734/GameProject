@@ -28,9 +28,10 @@ public:
 	void Update();
 	void Draw();
 	void SetPos(const CVector3& pos);
+	void SetScale(float scale);
 
 private:
 	PushEnterButtonText m_PushEnterButtonText;
-	PushAButtonText m_PushAButtonText;
+	PushAButtonText		m_PushAButtonText;
 	float m_Time = 0.0f;
 };

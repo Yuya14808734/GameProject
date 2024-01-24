@@ -17,6 +17,11 @@ private:
 	static CScene* m_pNextScene;		//Ÿ‚ÌƒV[ƒ“‚Ìî•ñ
 
 public :
+
+	CScene() {};
+	virtual ~CScene() {};
+
+public:
 	virtual void Init();
 	virtual void Uninit();
 	virtual void Update();

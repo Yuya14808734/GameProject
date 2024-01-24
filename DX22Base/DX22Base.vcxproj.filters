@@ -609,6 +609,12 @@
     <ClCompile Include="SceneResult_DrawResult.cpp">
       <Filter>ソース ファイル\04_Game\01_SceneState\03_Result</Filter>
     </ClCompile>
+    <ClCompile Include="ResultWinnerCharacterImage.cpp">
+      <Filter>ソース ファイル\04_Game\12_Result</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultWinnerNumPanel.cpp">
+      <Filter>ソース ファイル\04_Game\12_Result</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -964,6 +970,12 @@
     </ClInclude>
     <ClInclude Include="SceneResult_DrawResult.h">
       <Filter>ヘッダー ファイル\04_Game\01_SceneState\03_Result</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultWinnerCharacterImage.h">
+      <Filter>ヘッダー ファイル\04_Game\12_Result</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultWinnerNumPanel.h">
+      <Filter>ヘッダー ファイル\04_Game\12_Result</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
