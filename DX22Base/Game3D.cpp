@@ -35,7 +35,7 @@ Game3D::Game3D()
 	m_pBlend->Bind();
 
 	ModelDrawer::InitModels();			//モデルの初期化	
-	CScene::SetScene<SceneResult>();	//シーンの初期化
+	CScene::SetScene<SceneGame>();	//シーンの初期化
 
 	SelectCharacterList::LoadTexture();
 

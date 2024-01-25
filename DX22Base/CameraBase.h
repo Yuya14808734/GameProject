@@ -16,6 +16,10 @@ public :
 	virtual void ChangeUninit();
 	DirectX::XMFLOAT4X4 GetViewMatrix();
 	DirectX::XMFLOAT4X4 GetProjectionMatrix();
+	void SetPos(const CVector3& pos);
+	void SetPos(const DirectX::XMFLOAT3& pos);
+	void SetLookPos(const CVector3& pos);
+	void SetLookPos(const DirectX::XMFLOAT3& pos);
 	const CVector3& GetPos();
 	const CVector3& GetLookPos();
 	DirectX::XMFLOAT3 GetPos_xmfloat();

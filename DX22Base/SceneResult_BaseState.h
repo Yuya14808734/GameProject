@@ -7,6 +7,7 @@
 #include "Scene03_Result.h"
 #include "ResultWinnerCharacterImage.h"
 #include "ResultWinnerNumPanel.h"
+#include "Effect_Manager.h"
 
 class SceneResult_BaseState : public State
 {
@@ -50,6 +51,9 @@ public:
 	void SetHideImage(Image2D* pHideImage) 
 	{ m_pHideImage = pHideImage; }
 
+	void SetEffect_FlowerBlizzard(Effekseer::Handle* pEffect) 
+	{ m_pEfkHnd_FlowerBlizzard = pEffect; }
+
 protected:
 	SceneResult* m_pSceneResult = nullptr;
 	Image2D* m_pBackGround = nullptr;
@@ -60,4 +64,5 @@ protected:
 	PraiseWinnerPlayerText* m_pPraiseWinnerPlayerText = nullptr;
 	Image2D* m_pWinnerPlayerNum = nullptr;
 	Image2D* m_pHideImage = nullptr;
+	Effekseer::Handle* m_pEfkHnd_FlowerBlizzard;
 };

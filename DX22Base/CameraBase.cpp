@@ -62,6 +62,26 @@ DirectX::XMFLOAT4X4 CameraBase::GetProjectionMatrix()
 	return mat;
 }
 
+void CameraBase::SetPos(const CVector3 & pos)
+{
+	m_pos = pos;
+}
+
+void CameraBase::SetPos(const DirectX::XMFLOAT3 & pos)
+{
+	m_pos.f = pos;
+}
+
+void CameraBase::SetLookPos(const CVector3 & pos)
+{
+	m_look = pos;
+}
+
+void CameraBase::SetLookPos(const DirectX::XMFLOAT3 & pos)
+{
+	m_look.f = pos;
+}
+
 const CVector3& CameraBase::GetPos()
 {
 	return m_pos;

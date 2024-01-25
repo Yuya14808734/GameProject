@@ -8,6 +8,7 @@
 #include "FadeIn00_GameEnd.h"
 #include "ResultWinnerCharacterImage.h"
 #include "ResultWinnerNumPanel.h"
+#include "Effect_Manager.h"
 
 class SceneResult : public CScene
 {
@@ -63,4 +64,5 @@ private:
 	PraiseWinnerPlayerText m_PraiseWinnerPlayerText;
 	Image2D m_WinnerPlayerNum;
 	Image2D m_HideImage;
+	Effekseer::Handle m_efkHnd_FlowerBlizzard;
 };

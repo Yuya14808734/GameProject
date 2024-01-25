@@ -7,6 +7,8 @@
 #include "Select01_CharacterList.h"
 #include "Main.h"
 #include "Player_Controller.h"
+#include "CameraManager.h"
+#include "Camera02_NoMove.h"
 
 
 //ステートのインクルード
@@ -73,6 +75,18 @@ void SceneResult::Init()
 	//=====<次のステートを設定>=====
 	SetNextState(SceneResult::RESULTSTATE::RESULTDRAWWINNERNUM);
 	ChangeNextState();
+
+	//カメラの作成
+	CameraNoMove* pCamera = static_cast<CameraNoMove*>(
+		CameraManager::GetInstance().CreateCamera<CameraNoMove>("NoMoveCamera"));
+	CameraManager::GetInstance().SetSceneCamera("NoMoveCamera");
+	pCamera->SetPos(CVector3(0.0f, 0.0f, -10.0f));
+	pCamera->SetLookPos(CVector3(0.0f, 0.0f, 0.0f));
+
+	m_efkHnd_FlowerBlizzard = EffectManager::GetManager()->Play(EffectManager::GetEffect("WinnerEffect"), 0, 0, 0);
+	EffectManager::GetManager()->SetLocation(m_efkHnd_FlowerBlizzard,
+		{ 0.0f,0.0f,0.0f });
+	EffectManager::GetManager()->SetScale(m_efkHnd_FlowerBlizzard, 10.0f, 10.0f, 10.0f);
 }
 
 void SceneResult::Uninit()
@@ -89,6 +103,10 @@ void SceneResult::Update()
 void SceneResult::Draw()
 {
 	m_ResultStateContext.StateDraw();
+	EnableDepth(true);
+	EffectManager::EffectDraw(m_efkHnd_FlowerBlizzard);
+	EnableDepth(true);
+
 }
 
 State* SceneResult::SetNextState(RESULTSTATE ResultState)
@@ -128,6 +146,7 @@ void SceneResult::ChangeNextState()
 		pSceneResult_BaseState->SetWinnerPlayerNum(&m_WinnerPlayerNum);
 		pSceneResult_BaseState->SetResultWinnerNumPanel(&m_ResultWinnerNumPanel);
 		pSceneResult_BaseState->SetHideImage(&m_HideImage);
+		pSceneResult_BaseState->SetEffect_FlowerBlizzard(&m_efkHnd_FlowerBlizzard);
 
 		//初期化処理
 		m_ResultStateContext.StateInit();
