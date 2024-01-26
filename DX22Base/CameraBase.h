@@ -29,14 +29,23 @@ public :
 	float GetNearLength();
 	float GetFarLength();
 
+
+	CVector3 GetRightVector();
+	CVector3 GetUpVector();
+
+	void CreateEnclosingPlane();	
+
 protected:
 	CVector3 m_pos;
 	CVector3 m_look;
-	CVector3 m_up;	//ビュー行列の設定に必要な変数
-	float m_fovy;
-	float m_aspect;
-	float m_near;
-	float m_far;	//プロジェクション行列の設定に必要な変数
+	CVector3 m_up;		//ビュー行列の設定に必要な変数
+	float m_fovy;		//カメラ縦方向の画角
+	float m_aspect;		//縦を1とした横の比率
+	float m_near;		//どこから映すか
+	float m_far;		//どこまで映すか
+
+	DirectX::XMFLOAT4 m_Planes[4];	//視野錐台で使う面
+
 };
 
 

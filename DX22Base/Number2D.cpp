@@ -83,8 +83,8 @@ void Number2D::Draw()
 		DirectX::XMMatrixTranspose(
 			DirectX::XMMatrixOrthographicOffCenterLH(
 				0.0f,			//画面左端の座標
-				GetAppWidth(),	//画面右端の座標
-				GetAppHeight(),	//画面下端の座標
+				static_cast<float>(GetAppWidth()),	//画面右端の座標
+				static_cast<float>(GetAppHeight()),	//画面下端の座標
 				0.0f,			//画面上端の座標
 				-1.0f,			//2方向で写せる最小値
 				1.0f			//2方向で写せる最大値
@@ -140,7 +140,7 @@ void Number2D::SetPos(const CVector2& pos)
 	m_pos = pos;
 }
 
-const CVector2& Number2D::GetPos()
+CVector2 Number2D::GetPos()
 {
 	return m_pos;
 }
@@ -155,7 +155,7 @@ void Number2D::SetSize(const CVector2& size)
 	m_size = size;
 }
 
-const CVector2& Number2D::GetSize()
+CVector2 Number2D::GetSize()
 {
 	return m_size;
 }

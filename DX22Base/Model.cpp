@@ -163,7 +163,7 @@ Model::AnimeNo Model::AddAnimation(const char* file)
 		{
 			aiVector3D val = pChannel->mPositionKeys[i].mValue;
 			channelIt->pos[i].value = DirectX::XMFLOAT3(val.x * m_modelScale, val.y * m_modelScale, val.z * m_modelScale);
-			channelIt->pos[i].time = pChannel->mPositionKeys[i].mTime / pAnime->mTicksPerSecond;
+			channelIt->pos[i].time = static_cast<float>(pChannel->mPositionKeys[i].mTime / pAnime->mTicksPerSecond);
 		}
 		// 回転
 		channelIt->quat.resize(pChannel->mNumRotationKeys);
@@ -171,7 +171,7 @@ Model::AnimeNo Model::AddAnimation(const char* file)
 		{
 			aiQuaternion val = pChannel->mRotationKeys[i].mValue;
 			channelIt->quat[i].value = DirectX::XMFLOAT4(val.x, val.y, val.z, val.w);
-			channelIt->quat[i].time = pChannel->mRotationKeys[i].mTime / pAnime->mTicksPerSecond;
+			channelIt->quat[i].time = static_cast<float>(pChannel->mRotationKeys[i].mTime / pAnime->mTicksPerSecond);
 		}
 		// 拡縮
 		channelIt->scale.resize(pChannel->mNumScalingKeys);
@@ -179,13 +179,13 @@ Model::AnimeNo Model::AddAnimation(const char* file)
 		{
 			aiVector3D val = pChannel->mScalingKeys[i].mValue;
 			channelIt->scale[i].value = DirectX::XMFLOAT3(val.x, val.y, val.z);
-			channelIt->scale[i].time = pChannel->mScalingKeys[i].mTime / pAnime->mTicksPerSecond;
+			channelIt->scale[i].time = static_cast<float>(pChannel->mScalingKeys[i].mTime / pAnime->mTicksPerSecond);
 		}
 
 		channelIt++;
 	}
 
-	return m_animes.size() - 1;
+	return static_cast<int>(m_animes.size()) - 1;
 }
 
 void Model::Step(float tick)
@@ -235,8 +235,8 @@ void Model::SetAnimeTime(AnimeNo no, float time)
 	//==========================================
 	//よくわからないのでメモ
 	//SetAnimeTimeでアニメーションの時間を設定しても
-	//step呼ばないと動かなかったので、
-	//stepに似せました。
+	//step関数を呼ばないと動かなかったので、
+	//この関数をstep関数に似せました。
 	//が、ブレンドたぶんできない気がする
 	//==========================================
 
@@ -397,11 +397,12 @@ void Model::MakeNodes(const void* pScene)
 		m_nodes.push_back(node);
 
 		// ノード名に基づく参照リスト作成
-		NodeIndex index = m_nodes.size() - 1;
+		NodeIndex index = static_cast<NodeIndex>(static_cast<int>(m_nodes.size()) - 1);
 		m_boneMapping.insert(MappingKey(node.name, index));
 
 		// 子要素に関しても変換
-		for (int i = 0; i < pNode->mNumChildren; ++i)
+		int NodeNum = static_cast<int>(pNode->mNumChildren);
+		for (int i = 0; i < NodeNum; ++i)
 		{
 			m_nodes[index].children[i] = AssimpNodeConvert(pNode->mChildren[i], index);
 		}
@@ -450,7 +451,7 @@ void Model::MakeBoneWeight(const void* scene, int i)
 
 				// ウェイト
 				unsigned int weightNum = pScene->mMeshes[i]->mBones[j]->mNumWeights;
-				for (int k = 0; k < weightNum; ++k)
+				for (unsigned int k = 0; k < weightNum; ++k)
 				{
 					aiVertexWeight weight = pScene->mMeshes[i]->mBones[j]->mWeights[k];
 					for (int l = 0; l < 4; ++l)
@@ -479,7 +480,7 @@ void Model::MakeBoneWeight(const void* scene, int i)
 			std::function<int(int)> FindNodeFunc = [&FindNodeFunc, this, pScene](int index)
 			{
 				std::string name = m_nodes[index].name;
-				for (int i = 0; i < pScene->mNumMeshes; ++i)
+				for (unsigned int i = 0; i < pScene->mNumMeshes; ++i)
 					if (name == pScene->mMeshes[i]->mName.data)
 					{
 						return FindNodeFunc(m_nodes[index].parent);
@@ -516,7 +517,7 @@ void Model::MakeBoneWeight(const void* scene, int i)
 void Model::UpdateBoneMatrix(int i)
 {
 	DirectX::XMFLOAT4X4 boneMat[MAX_BONE];
-	int j;
+	unsigned int j;
 	for (j = 0; j < m_pMeshes[i].boneNum && j < MAX_BONE; ++j)
 	{
 		DirectX::XMStoreFloat4x4(&boneMat[j],

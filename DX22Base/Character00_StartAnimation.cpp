@@ -3,6 +3,8 @@
 
 void Character00_StartAnimationState::Init()
 {
+
+	if(m_pCharacter->GetCharacterBit() != 2)
 	InitAnime("WAIT01");
 	m_NowAnimeState = Character00_StartAnimationState::AnimationState::Start;
 
@@ -45,6 +47,7 @@ void Character00_StartAnimationState::StartAnimeUpdate()
 		m_NowAnimeState = Character00_StartAnimationState::AnimationState::Idle; 
 		LookStageCenter();
 		InitAnime("Idle");
+		return;
 	}
 	
 	m_pModelDrawer->SetAnimeTime(AnimeTime);

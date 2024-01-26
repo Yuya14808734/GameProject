@@ -27,10 +27,10 @@ public:
 	void Draw();
 	void SetPos(const DirectX::XMFLOAT3& pos);
 	void SetPos(const CVector2& pos);
-	const CVector2& GetPos();
+	CVector2 GetPos();
 	void SetSize(const DirectX::XMFLOAT2& size);
 	void SetSize(const CVector2& size);
-	const CVector2& GetSize();
+	CVector2 GetSize();
 	void SetNumberTexture(const char* FilePath, int SplitX, int SplitY);
 	void SetNumber(int Num);
 	void SetUseDistance(bool useDistance);

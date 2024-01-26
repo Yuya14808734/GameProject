@@ -124,3 +124,34 @@ float CameraBase::GetFarLength()
 {
 	return m_far;
 }
+
+CVector3 CameraBase::GetRightVector()
+{
+	return m_up.cross(m_look).normalize();
+}
+
+CVector3 CameraBase::GetUpVector()
+{
+	return m_up;
+}
+
+void CameraBase::CreateEnclosingPlane()
+{
+	CVector3 rightVec = GetRightVector();
+	CVector3 upVec = GetUpVector();
+	float RotateRadianX = DirectX::XMConvertToRadians(m_fovy * 0.5f * m_aspect);
+	float RotateRadianY = DirectX::XMConvertToRadians(m_fovy * 0.5f);
+
+	//è„ÇÃñ 
+	CVector3 TopPlaneVector = CQuaternion::RadianAxis(rightVec, -RotateRadianX).RotateVector(upVec * -1.0f);
+
+	//â∫ÇÃñ 
+	CVector3 BottomPlaneVector = CQuaternion::RadianAxis(rightVec, RotateRadianX).RotateVector(upVec);
+
+	//ç∂ÇÃñ 
+	CVector3 LeftPlaneVector = CQuaternion::RadianAxis(upVec, -RotateRadianY).RotateVector(rightVec);
+
+	//âEÇÃñ 
+	CVector3 RightPlaneVector = CQuaternion::RadianAxis(upVec, RotateRadianX).RotateVector(rightVec * -1.0f);
+
+}

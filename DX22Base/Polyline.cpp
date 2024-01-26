@@ -49,7 +49,8 @@ float4 main(PS_IN pin) : SV_TARGET {
 	m_pVertices = new Vertex[vtxNum];
 	for (int i = 0; i < vtxNum; ++i)
 	{
-		m_pVertices[i].uv = DirectX::XMFLOAT2(i / (vtxNum - 1.0f), i % 2);
+		m_pVertices[i].uv = DirectX::XMFLOAT2(static_cast<float>(i) / 
+			(static_cast<float>(vtxNum) - 1.0f), static_cast<float>(i % 2));
 		m_pVertices[i].color =
 			DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	}
@@ -104,7 +105,7 @@ void GeometoryPolyline::SetPoint(int index, Point point)
 }
 void GeometoryPolyline::PushPoint(Point point)
 {
-	for (int i = m_points.size() - 1; i > 0; --i)
+	for (int i = static_cast<int>(m_points.size()) - 1; i > 0; --i)
 	{
 		m_points[i] = m_points[i - 1];
 	}
@@ -121,7 +122,7 @@ GeometoryPolyline::Point GeometoryPolyline::GetPoint(int index)
 }
 int GeometoryPolyline::GetPointNum()
 {
-	return m_points.size();
+	return static_cast<int>(m_points.size());
 }
 void GeometoryPolyline::SetTexture(ID3D11ShaderResourceView* pTex)
 {
