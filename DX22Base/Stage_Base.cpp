@@ -49,26 +49,6 @@ std::vector<CVector3>* Stage::GetCharacterStartPos() const
 	return const_cast<std::vector<CVector3>*>(&m_CharacterStartPos);
 }
 
-float Stage::GetCameraMaxRightX()
-{
-	return m_CameraMaxRightX;
-}
-
-float Stage::GetCameraMaxLeftX()
-{
-	return m_CameraMaxLeftX;
-}
-
-float Stage::GetCameraMaxTopY()
-{
-	return m_CameraMaxTopY;
-}
-
-float Stage::GetCameraMaxBottomY()
-{
-	return m_CameraMaxBottomY;
-}
-
 float Stage::GetDeadLineRightX()
 {
 	return m_DeadLineRightX;

@@ -361,12 +361,12 @@ bool CVector3::operator != (const CVector3& v) const
 	return (x != v.x || y != v.y || z != v.z);
 }
 
-CVector3 CVector3::cross(CVector3 v) const
+CVector3 CVector3::cross(const CVector3& v) const
 {
 	return CVector3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);
 }
 
-float CVector3::distance(CVector3 v) const
+float CVector3::distance(const CVector3& v) const
 {
 	return CVector3(x - v.x, y - v.y, z - v.z).length();
 }

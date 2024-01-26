@@ -14,6 +14,7 @@ public:
 	~PraiseWinnerPlayerText();
 	void Update();
 	void Draw();
+	void SetWinPlayerNum(int WinPlayerNum);
 
 private:
 	//=====<“®‚«ŠÖ”>=====

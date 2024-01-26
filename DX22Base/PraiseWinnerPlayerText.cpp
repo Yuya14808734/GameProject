@@ -20,7 +20,7 @@ PraiseWinnerPlayerText::PraiseWinnerPlayerText()
 		m_WinnerLetters[i].m_color.w = 0.0f;
 	}
 
-	m_WinnerPlayerNumImage.SetTexture("Assets/UI/ImageTextPlayer_1.png");
+	
 	m_WinnerPlayerNumImage.m_size = CVector2(640.0f, 88.0f);
 	m_WinnerPlayerNumImage.m_color.w = 0.0f;
 	m_WinnerPlayerNumImage.m_IsVisible = true;
@@ -73,6 +73,20 @@ void PraiseWinnerPlayerText::Draw()
 
 	//m_WinnerPlayerNumImage.m_IsVisible = true;
 	m_WinnerPlayerNumImage.Draw();
+}
+
+void PraiseWinnerPlayerText::SetWinPlayerNum(int WinPlayerNum)
+{
+	switch (WinPlayerNum)
+	{
+	case 1:
+		m_WinnerPlayerNumImage.SetTexture("Assets/UI/ImageTextPlayer_1.png");
+		break;
+	case 2:
+		m_WinnerPlayerNumImage.SetTexture("Assets/UI/ImageTextPlayer_2.png");
+		break;
+	}
+
 }
 
 void PraiseWinnerPlayerText::SetLetterMovePercent(float Percent)

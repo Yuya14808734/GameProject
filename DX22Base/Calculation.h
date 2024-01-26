@@ -111,8 +111,8 @@ public:
 	bool operator == (const CVector3&) const;
 	bool operator != (const CVector3&) const;
 
-	CVector3 cross(CVector3 v) const;
-	float distance(CVector3 v) const;
+	CVector3 cross(const CVector3& v) const;
+	float distance(const CVector3& v) const;
 	float dot(CVector3 v) const;
 	float length() const;
 	CVector3 normalize() const;

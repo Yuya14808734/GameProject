@@ -61,6 +61,9 @@ void SceneResult::Init()
 	//=====<パネルの画像を設定>=====
 	m_ResultWinnerNumPanel.SetPanelImage(m_WinPlayerNum);
 
+	//=====<勝ったプレイヤーの番号を表示するテキストの設定>=====
+	m_PraiseWinnerPlayerText.SetWinPlayerNum(m_WinPlayerNum);
+
 	//=====<画面全体を隠す画像を設定>=====
 	m_HideImage.SetTexture("Assets/Texture/WhiteTexture.png");
 	m_HideImage.m_pos = WindowSize * 0.5f;

@@ -94,12 +94,6 @@ void Stage00::Init()
 	characterstartpos = CVector3(0.0f, 0.0f, 0.0f);
 	m_CharacterStartPos.push_back(characterstartpos);
 
-
-	m_CameraMaxRightX	= 3.0f;
-	m_CameraMaxLeftX	= -3.0f;
-	m_CameraMaxTopY		= 15.0f;
-	m_CameraMaxBottomY	= -15.0f;
-
 	m_DeadLineRightX	= 30.0f;
 	m_DeadLineLeftX		= -30.0f;
 	m_DeadLineTopY		= 20.0f;
