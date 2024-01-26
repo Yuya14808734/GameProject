@@ -74,12 +74,12 @@ public:
 	bool GetTriggerDownArrow();
 	bool GetPressLeftArrow();
 	bool GetTriggerLeftArrow();
-	const CVector2& GetMoveInput();
+	const CVector2 GetMoveInput();
 	bool GetLeftSmash();
 	bool GetJumpTrigger();
 	bool GetJumpPress();
 	bool GetAttack();
-	const CVector2& GetLeftInputVector();
+	const CVector2 GetLeftInputVector();
 	bool GetWakeUp();
 
 private:

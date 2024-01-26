@@ -200,12 +200,12 @@ const CVector2& CVector2::GetOne()
 	return m_One;
 }
 
-const CVector2& CVector2::GetRotateRadius(float Radius)
+CVector2 CVector2::GetRotateRadius(float Radius)
 {
 	return CVector2(0.0f, 1.0f).rotateRadius(Radius);
 }
 
-const CVector2& CVector2::GetAngleVector(float Angle)
+CVector2 CVector2::GetAngleVector(float Angle)
 {
 	return CVector2(0.0f, 1.0f).rotateAngle(Angle);
 }
@@ -467,7 +467,7 @@ CQuaternion CQuaternion::operator*=(const CQuaternion& q)
 	return *this;
 }
 
-const CVector3& CQuaternion::RotateVector(const CVector3& vec) const
+CVector3 CQuaternion::RotateVector(const CVector3& vec) const
 {
 	CQuaternion Q = (*this);
 	CQuaternion vq(vec.x, vec.y, vec.z,1.0f);	//ベクトルをクォータニオンに置き換える
@@ -485,17 +485,17 @@ const CVector3& CQuaternion::RotateVector(const CVector3& vec) const
 	DirectX::XMFLOAT4 f4;
 	DirectX::XMStoreFloat4(&f4, mq.v);
 
-	return DirectX::XMFLOAT3(f4.x, f4.y, f4.z);
+	return CVector3(f4.x, f4.y, f4.z);
 }
 
-const DirectX::XMFLOAT4& CQuaternion::GetValue() const
+DirectX::XMFLOAT4 CQuaternion::GetValue() const
 {
 	DirectX::XMFLOAT4 f;
 	DirectX::XMStoreFloat4(&f, this->v);
 	return f;
 }
 
-const CQuaternion& CQuaternion::normalize() const
+CQuaternion CQuaternion::normalize() const
 {
 	CQuaternion normalq;
 	normalq.v = DirectX::XMQuaternionNormalize(this->v);
@@ -516,13 +516,13 @@ void CQuaternion::SetQuaternion(float AngleX, float AngleY, float AngleZ)
 		DirectX::XMConvertToRadians(AngleZ));
 }
 
-CQuaternion& CQuaternion::AngleAxis(const CVector3& Axis, float Angle)
+CQuaternion CQuaternion::AngleAxis(const CVector3& Axis, float Angle)
 {
 	float radian = DirectX::XMConvertToRadians(Angle);
 	return RadianAxis(Axis, radian);
 }
 
-CQuaternion& CQuaternion::RadianAxis(const CVector3& Axis, float Radian)
+CQuaternion CQuaternion::RadianAxis(const CVector3& Axis, float Radian)
 {
 	CQuaternion r_q;
 	CVector3 NormalAxis = Axis.normalize();
@@ -534,7 +534,7 @@ CQuaternion& CQuaternion::RadianAxis(const CVector3& Axis, float Radian)
 	return r_q;
 }
 
-CQuaternion& CQuaternion::LookAt(const CVector3& Pos)
+CQuaternion CQuaternion::LookAt(const CVector3& Pos)
 {
 	CQuaternion q;
 	return q;

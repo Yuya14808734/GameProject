@@ -36,10 +36,7 @@ void EffectDead::PlayDeadEffect(CVector3 pos, CVector3 Direction)
 
 	m_efkHnd_Dead = EffectManager::GetManager()->
 		Play(EffectManager::GetEffect("DeadEffect"), 
-			static_cast<int>(pos.x),
-			static_cast<int>(pos.y),
-			static_cast<int>(pos.z)
-		);
+			pos.x, pos.y, pos.z);
 
 	EffectManager::GetManager()->SetScale(m_efkHnd_Dead, 5.0f, 5.0f, 5.0f);
 	EffectManager::GetManager()->SetRotation(m_efkHnd_Dead, 0.0f, 0.0f, Radian);

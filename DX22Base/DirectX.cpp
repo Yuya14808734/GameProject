@@ -146,8 +146,8 @@ HRESULT InitDX(HWND hWnd, UINT width, UINT height, bool fullscreen)
 	D3D11_VIEWPORT viewPort;
 	viewPort.TopLeftX = 0.0f;
 	viewPort.TopLeftY = 0.0f;
-	viewPort.Width = width;
-	viewPort.Height = height;
+	viewPort.Width = static_cast<FLOAT>(width);
+	viewPort.Height = static_cast<FLOAT>(height);
 	viewPort.MinDepth = 0.0f;
 	viewPort.MaxDepth = 1.0f;
 	g_pContext->RSSetViewports(1, &viewPort);

@@ -187,7 +187,7 @@ void CreateGeometoryBox()
 	MeshBuffer::Description desc = {};
 	desc.pVtx = vtx;
 	desc.vtxCount = 4 * 6;
-	desc.vtxSize = sizeof(float) *5.0f;
+	desc.vtxSize = static_cast<UINT>(sizeof(float) *5.0f);
 	desc.pIdx = idx;
 	desc.idxCount = 6 * 6;
 	desc.idxSize = sizeof(int);

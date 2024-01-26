@@ -147,11 +147,15 @@ void Character00_AttackS2::Update()
 	const int AttackAllFrame = AttackEndFrame - AttackStartFrame;
 
 	int AttackFrame = m_FrameCount - AttackStartFrame;
-	int AttackNum = AttackFrame / (AttackAllFrame / static_cast<float>(m_pAttackCollider->size()));
 
-	if (AttackNum >= 0 && AttackNum < static_cast<float>(m_pAttackCollider->size()))
+	if (AttackFrame >= 0)
 	{
-		(*m_pAttackCollider)[AttackNum].m_Use = true;
+		int AttackNum = AttackFrame / (AttackAllFrame / static_cast<int>(m_pAttackCollider->size()));
+	
+		if (AttackNum >= 0 && AttackNum < static_cast<float>(m_pAttackCollider->size()))
+		{
+			(*m_pAttackCollider)[AttackNum].m_Use = true;
+		}
 	}
 	//=====================================================
 }

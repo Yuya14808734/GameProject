@@ -139,13 +139,13 @@ Model::AnimeNo Model::AddAnimation(const char* file)
 
 	// アニメーション設定
 	anime.StartTime = 1.0f / static_cast<float>(pAnime->mTicksPerSecond);
-	anime.totalTime = pAnime->mDuration / pAnime->mTicksPerSecond;
+	anime.totalTime = static_cast<float>(pAnime->mDuration / pAnime->mTicksPerSecond);
 	anime.channels.resize(pAnime->mNumChannels);
 	std::vector<Channel>::iterator channelIt = anime.channels.begin();
 	while (channelIt != anime.channels.end())
 	{
 		// チャンネル(ボーン)別にデータを設定
-		int channelIdx = channelIt - anime.channels.begin();
+		int channelIdx = static_cast<int>(channelIt - anime.channels.begin());
 		aiNodeAnim* pChannel = pAnime->mChannels[channelIdx];
 		Mapping::iterator mappingIt = m_boneMapping.find(pChannel->mNodeName.data);
 		if (mappingIt == m_boneMapping.end())
@@ -210,6 +210,7 @@ void Model::Step(float tick)
 
 	// アニメーション時間更新
 	UpdateAnime(m_playNo, tick);
+
 	if (m_blendNo != ANIME_NONE)
 	{
 		UpdateAnime(m_blendNo, tick);

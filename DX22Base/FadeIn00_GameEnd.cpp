@@ -28,8 +28,7 @@ void FadeInWipe::CreateRenderTarget_WipeTexture()
 	{
 		m_pDepthStencil_WipeTexture = new DepthStencil();
 		m_pDepthStencil_WipeTexture->Create(
-			static_cast<float>(GetAppWidth()),
-			static_cast<float>(GetAppHeight()), false);
+			static_cast<UINT>(GetAppWidth()),static_cast<UINT>(GetAppHeight()), false);
 	}
 }
 

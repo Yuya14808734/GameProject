@@ -51,7 +51,7 @@ void MiniWindow::WindowDrawUpdate()
 void MiniWindow::Init_MiniWindow()
 {
 	m_MiniWindowVector.push_back(this);
-	int i = m_MiniWindowVector.size();
+	int i = static_cast<int>(m_MiniWindowVector.size());
 	m_WindowName = "Window" + std::to_string(i);
 
 	Init();

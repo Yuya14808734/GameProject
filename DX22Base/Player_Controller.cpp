@@ -286,7 +286,7 @@ bool PlayerController::GetTriggerLeftArrow()
 	return GetBitTrigger(TRIGGERBIT::LEFTARROW);
 }
 
-const CVector2& PlayerController::GetMoveInput()
+const CVector2 PlayerController::GetMoveInput()
 {
 	CVector2 returnVec;
 	switch (m_ControllerType)
@@ -362,7 +362,7 @@ bool PlayerController::GetAttack()
 	return returnAttack;
 }
 
-const CVector2& PlayerController::GetLeftInputVector()
+const CVector2 PlayerController::GetLeftInputVector()
 {
 	CVector2 returnVec;
 	switch (m_ControllerType)

@@ -13,6 +13,7 @@
 #include "MiniWindow.h"
 #include "Player_Controller.h"
 #include "ShaderManager.h"
+#include "ModelDrawer.h"
 
 //--- íËêîíËã`
 const unsigned int SCREEN_WIDTH = 1280;
@@ -59,12 +60,14 @@ void MainInit()
 	PlayerController::PlayerController_Init();
 	MiniWindow::WindowInit();
 	EffectManager::EffectInit();
+	ModelDrawer::InitModels();
 
 	g_pGame = new Game3D();
 }
 void MainUninit()
 {
 	delete g_pGame;
+	ModelDrawer::UninitModels();
 	EffectManager::EffectUninit();
 	MiniWindow::WindowUninit();
 	ShaderManager::UninitShaders();

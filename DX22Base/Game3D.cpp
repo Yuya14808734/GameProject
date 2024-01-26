@@ -2,15 +2,12 @@
 // インクルード
 // ====================================================
 #include "Game3D.h"
-#include "Model.h"
-#include "Shader.h"
-#include "Scene.h"
 #include "CameraManager.h"
-#include "ModelDrawer.h"
 #include "Collider.h"
 #include "Select01_CharacterList.h"
 
 // =====<シーンファイルのインクルード>=====
+#include "Scene.h"
 #include "Scene00_Game.h"
 #include "Scene01_Select.h"
 #include "Scene02_Title.h"
@@ -34,8 +31,9 @@ Game3D::Game3D()
 	m_pBlend->Create(blend);
 	m_pBlend->Bind();
 
-	ModelDrawer::InitModels();			//モデルの初期化	
-	CScene::SetScene<SceneGame>();	//シーンの初期化
+	
+	//=====<シーンの初期化>=====
+	CScene::SetScene<SceneGame>();
 
 	SelectCharacterList::LoadTexture();
 

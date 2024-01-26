@@ -111,7 +111,7 @@ void EffectManager::EffectDraw(Effekseer::Handle Handle)
 	m_efkManager->SetLayerParameter(0, layerParameter);
 
 	//時間を更新する
-	m_efkRenderer->SetTime(m_EffectTimeCount);
+	m_efkRenderer->SetTime(static_cast<float>(m_EffectTimeCount));
 
 	//マネージャーの更新
 	Effekseer::Manager::UpdateParameter updateParameter;

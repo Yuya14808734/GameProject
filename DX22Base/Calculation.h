@@ -61,8 +61,8 @@ public:
 	static const CVector2& GetRight();
 	static const CVector2& GetZero();
 	static const CVector2& GetOne();
-	static const CVector2& GetRotateRadius(float Radius);
-	static const CVector2& GetAngleVector(float Angle);
+	static CVector2 GetRotateRadius(float Radius);
+	static CVector2 GetAngleVector(float Angle);
 
 private: 
 	static const CVector2 m_Right;
@@ -111,9 +111,9 @@ public:
 	bool operator == (const CVector3&) const;
 	bool operator != (const CVector3&) const;
 
-	CVector3 cross(CVector3) const;
-	float distance(CVector3) const;
-	float dot(CVector3) const;
+	CVector3 cross(CVector3 v) const;
+	float distance(CVector3 v) const;
+	float dot(CVector3 v) const;
 	float length() const;
 	CVector3 normalize() const;
 	CVector3 Abs() const;
@@ -148,14 +148,14 @@ public:
 	CQuaternion(const DirectX::XMFLOAT4& f);
 	CQuaternion operator*  (const CQuaternion& q);
 	CQuaternion operator*= (const CQuaternion& q);
-	const CVector3& RotateVector(const CVector3& vec) const;
-	const DirectX::XMFLOAT4& GetValue() const;
-	const CQuaternion& normalize() const;
+	CVector3 RotateVector(const CVector3& vec) const;
+	DirectX::XMFLOAT4 GetValue() const;
+	CQuaternion normalize() const;
 	void SetQuaternion(float x, float y, float z, float w);
 	void SetQuaternion(float AngleX, float AngleY, float AngleZ);
 
 public:
-	static CQuaternion& AngleAxis(const CVector3& Axis, float Angle);
-	static CQuaternion& RadianAxis(const CVector3& Axis, float Radian);
-	static CQuaternion& LookAt(const CVector3& Pos);
+	static CQuaternion AngleAxis(const CVector3& Axis, float Angle);
+	static CQuaternion RadianAxis(const CVector3& Axis, float Radian);
+	static CQuaternion LookAt(const CVector3& Pos);
 };
