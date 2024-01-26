@@ -231,21 +231,21 @@ PlaneCollider::~PlaneCollider()
 
 }
 
-void PlaneCollider::setplane(CVector3 p, CVector3 n)
+void PlaneCollider::setplane(const CVector3& p, const CVector3& n)
 {
 	//法線を正規化しておく
-	n = n.normalize();
+	CVector3 NormalVector = n.normalize();
 
 	//平面のa,b,cを設定
-	a = n.x;
-	b = n.y;
-	c = n.z;
+	a = NormalVector.x;
+	b = NormalVector.y;
+	c = NormalVector.z;
 
 	//平面のdを設定
-	d = -((n.x * p.x) + (n.y * p.y) + (n.z * p.z));
+	d = -((a * p.x) + (b * p.y) + (c * p.z));
 }
 
-void PlaneCollider::setplane(TriangleCollider t)
+void PlaneCollider::setplane(const TriangleCollider& t)
 {
 	CVector3 v0, v1;
 	v0 = t.p[1] - t.p[0];
@@ -255,7 +255,7 @@ void PlaneCollider::setplane(TriangleCollider t)
 	setplane(t.p[0], dotvec);
 }
 
-void PlaneCollider::setplane(SquareCollider sq)
+void PlaneCollider::setplane(const SquareCollider& sq)
 {
 	CVector3 v0, v1;
 	v0 = sq.p[1] - sq.p[0];
@@ -265,14 +265,14 @@ void PlaneCollider::setplane(SquareCollider sq)
 	setplane(sq.p[0], dotvec);
 }
 
-float PlaneCollider::LengthPoint(CVector3 p)
+float PlaneCollider::LengthPoint(const CVector3& p)
 {
 	float l;
 	l = a * p.x + b * p.y + c * p.z + d;
 	return l;
 }
 
-RayHitParam PlaneCollider::CollisionRay(Ray rays)
+RayHitParam PlaneCollider::CollisionRay(const Ray& rays)
 {
 	RayHitParam temp = {};
 
@@ -333,7 +333,7 @@ TriangleCollider::TriangleCollider()
 	settriangle(CVector3(0.0f, 0.0f, 0.0f), CVector3(1.0f, 0.0f, 0.0f), CVector3(0.0f, 0.0f, 1.0f));
 }
 
-TriangleCollider::TriangleCollider(CVector3 p1, CVector3 p2, CVector3 p3)
+TriangleCollider::TriangleCollider(const CVector3& p1, const CVector3& p2, const CVector3& p3)
 {
 	settriangle(p1, p2, p3);
 }
@@ -348,7 +348,7 @@ TriangleCollider::~TriangleCollider()
 
 }
 
-void TriangleCollider::settriangle(CVector3 p1, CVector3 p2, CVector3 p3)
+void TriangleCollider::settriangle(const CVector3& p1, const CVector3& p2, const CVector3& p3)
 {
 	p[0] = p1;
 	p[1] = p2;
@@ -360,14 +360,14 @@ void TriangleCollider::settriangle(CVector3* point)
 	settriangle(point[0], point[1], point[2]);
 }
 
-bool TriangleCollider::PointInner(CVector3 checkpoint)
+bool TriangleCollider::PointInner(const CVector3& point)
 {
 	bool temp = false;
 
 	//各頂点からポイントに向かうベクトル
-	CVector3 vt0 = checkpoint - p[0];
-	CVector3 vt1 = checkpoint - p[1];
-	CVector3 vt2 = checkpoint - p[2];
+	CVector3 vt0 = point - p[0];
+	CVector3 vt1 = point - p[1];
+	CVector3 vt2 = point - p[2];
 
 	//各頂点から次の座標に向かうベクトル
 	CVector3 v0 = p[1] - p[0];
@@ -391,7 +391,7 @@ bool TriangleCollider::PointInner(CVector3 checkpoint)
 	return temp;
 }
 
-RayHitParam TriangleCollider::CollisionRay(Ray rays)
+RayHitParam TriangleCollider::CollisionRay(const Ray& rays)
 {
 	RayHitParam tempparam = {};
 	PlaneCollider copyplane(*this);	//このポリゴンを面にする
@@ -425,7 +425,7 @@ SquareCollider::SquareCollider()
 	setsquare(CVector3(-0.5f, 0.0f, 0.5f), CVector3(0.5f, 0.0f, 0.5f), CVector3(-0.5f, 0.0f, -0.5f), CVector3(0.5f, 0.0f, -0.5f));
 }
 
-SquareCollider::SquareCollider(CVector3 p1, CVector3 p2, CVector3 p3, CVector3 p4)
+SquareCollider::SquareCollider(const CVector3& p1, const CVector3& p2, const CVector3& p3, const CVector3& p4)
 {
 	setsquare(p1, p2, p3, p4);
 }
@@ -435,7 +435,7 @@ SquareCollider::~SquareCollider()
 
 }
 
-void SquareCollider::setsquare(CVector3 p1, CVector3 p2, CVector3 p3, CVector3 p4)
+void SquareCollider::setsquare(const CVector3& p1, const CVector3& p2, const CVector3& p3, const CVector3& p4)
 {
 	p[0] = p1;
 	p[1] = p2;
@@ -443,7 +443,7 @@ void SquareCollider::setsquare(CVector3 p1, CVector3 p2, CVector3 p3, CVector3 p
 	p[3] = p4;
 }
 
-bool SquareCollider::PointInner(CVector3 checkpoint)
+bool SquareCollider::PointInner(const CVector3& point)
 {
 	bool temp = false;
 
@@ -451,11 +451,11 @@ bool SquareCollider::PointInner(CVector3 checkpoint)
 	TriangleCollider t1(p[0], p[1], p[2]);
 	TriangleCollider t2(p[1], p[2], p[3]);
 
-	if (t1.PointInner(checkpoint))
+	if (t1.PointInner(point))
 	{
 		temp = true;
 	}
-	else if (t2.PointInner(checkpoint))
+	else if (t2.PointInner(point))
 	{
 		temp = true;
 	}
@@ -463,7 +463,7 @@ bool SquareCollider::PointInner(CVector3 checkpoint)
 	return temp;
 }
 
-RayHitParam SquareCollider::CollisionRay(Ray rays)
+RayHitParam SquareCollider::CollisionRay(const Ray& rays)
 {
 	RayHitParam tempparam = {};
 	PlaneCollider copyplane(*this);	//このポリゴンを面にする
@@ -492,7 +492,7 @@ RayHitParam SquareCollider::CollisionRay(Ray rays)
 //=====================================================================
 //レイ当たり判定
 
-Ray::Ray(CVector3 p, CVector3 d)
+Ray::Ray(const CVector3& p, const CVector3& d)
 {
 	setray(p, d);
 }
@@ -502,7 +502,7 @@ Ray::~Ray()
 
 }
 
-void Ray::setray(CVector3 p, CVector3 d)
+void Ray::setray(const CVector3& p, const CVector3& d)
 {
 	pos = p;
 	direct = d;

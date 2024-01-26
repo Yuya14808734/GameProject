@@ -21,6 +21,7 @@ struct GeometoryVertex
 };
 
 //--- プロトタイプ宣言
+void CreateGeometoryPlane();
 void CreateGeometoryBox();
 void CreateGeometorySphere();
 void CreateGeometoryCylinder();
@@ -31,6 +32,7 @@ void CreateGeometoryConstantBuffer();
 void UpdateGeometoryMatrix();
 
 //--- グローバル変数
+MeshBuffer* g_pGeometoryPlane;
 MeshBuffer* g_pGeometoryBox;
 MeshBuffer* g_pGeometorySphere;
 MeshBuffer* g_pGeometoryCylinder;
@@ -46,6 +48,7 @@ HRESULT InitGeometory()
 {
 	CreateGeometoryShader();
 	CreateGeometoryConstantBuffer();
+	CreateGeometoryPlane();
 	CreateGeometoryBox();
 	CreateGeometorySphere();
 	CreateGeometoryCylinder();
@@ -60,6 +63,7 @@ void UninitGeometory()
 	GEOMETORY_SAFE_DELETE(g_pGeometoryCylinder);
 	GEOMETORY_SAFE_DELETE(g_pGeometorySphere);
 	GEOMETORY_SAFE_DELETE(g_pGeometoryBox);
+	GEOMETORY_SAFE_DELETE(g_pGeometoryPlane);
 	GEOMETORY_SAFE_DELETE(g_pGeometoryPS);
 	GEOMETORY_SAFE_DELETE(g_pGeometoryVS);
 }
@@ -92,6 +96,16 @@ void SetGeometoryVPMatrix(DirectX::XMFLOAT4X4 view, DirectX::XMFLOAT4X4 proj)
 	g_geometoryMat[1] = view;
 	g_geometoryMat[2] = proj;
 }
+
+void DrawPlane()
+{
+	UpdateGeometoryMatrix();
+	g_pGeometoryVS->Bind();
+	g_pGeometoryPS->Bind();
+	g_pGeometoryWVP->BindVS(0);
+	g_pGeometoryPlane->Draw();
+}
+
 void DrawBox()
 {
 	UpdateGeometoryMatrix();
@@ -129,6 +143,39 @@ void DrawCapsule()
 }
 void DrawArrow()
 {
+}
+
+void CreateGeometoryPlane()
+{
+	GeometoryVertex vtx[] = {
+		//Z面
+		{{-0.5f, 0.5f,0.0f}, {0.0f,0.0f}},
+		{{ 0.5f, 0.5f,0.0f}, {1.0f,0.0f}},
+		{{-0.5f,-0.5f,0.0f}, {0.0f,1.0f}},
+		{{ 0.5f,-0.5f,0.0f}, {1.0f,1.0f}},
+
+		//Z面
+		{{ 0.5f, 0.5f, 0.0f}, {0.0f,0.0f}},
+		{{-0.5f, 0.5f, 0.0f}, {1.0f,0.0f}},
+		{{ 0.5f,-0.5f, 0.0f}, {0.0f,1.0f}},
+		{{-0.5f,-0.5f, 0.0f}, {1.0f,1.0f}},
+
+	};
+
+	int idx[] = { 
+		0,1,2,2,1,3,		//-Z面
+		4,5,6,6,5,7,		//Z面
+	};
+
+	MeshBuffer::Description desc = {};
+	desc.pVtx = vtx;
+	desc.vtxCount = 4 * 2;
+	desc.vtxSize = static_cast<UINT>(sizeof(float) * 5.0f);
+	desc.pIdx = idx;
+	desc.idxCount = 6 * 2;
+	desc.idxSize = sizeof(int);
+	desc.topology = D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+	g_pGeometoryPlane = new MeshBuffer(desc);
 }
 
 void CreateGeometoryBox()

@@ -14,6 +14,7 @@ void SetGeometoryRotation(float x, float y, float z);
 void SetGeometoryScaling(const CVector3& v);
 void SetGeometoryScaling(float x, float y, float z);
 void SetGeometoryVPMatrix(DirectX::XMFLOAT4X4 view, DirectX::XMFLOAT4X4 proj);
+void DrawPlane();
 void DrawBox();
 void DrawSphere();
 void DrawCylinder();

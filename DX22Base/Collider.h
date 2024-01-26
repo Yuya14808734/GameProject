@@ -89,11 +89,11 @@ public:
 	PlaneCollider(TriangleCollider t);
 	PlaneCollider(SquareCollider sq);
 	~PlaneCollider();
-	void setplane(CVector3 p, CVector3 n);
-	void setplane(TriangleCollider t);
-	void setplane(SquareCollider sq);
-	float LengthPoint(CVector3 p);
-	RayHitParam CollisionRay(Ray rays);
+	void setplane(const CVector3& p,const CVector3& n);
+	void setplane(const TriangleCollider& t);
+	void setplane(const SquareCollider& sq);
+	float LengthPoint(const CVector3& p);
+	RayHitParam CollisionRay(const Ray& rays);
 };
 
 class TriangleCollider
@@ -103,13 +103,13 @@ public:
 
 public:
 	TriangleCollider();
-	TriangleCollider(CVector3 p1, CVector3 p2, CVector3 p3);
+	TriangleCollider(const CVector3& p1, const CVector3& p2, const CVector3& p3);
 	TriangleCollider(CVector3* points);
 	~TriangleCollider();
-	void settriangle(CVector3 p1, CVector3 p2, CVector3 p3);
+	void settriangle(const CVector3& p1, const CVector3& p2, const CVector3& p3);
 	void settriangle(CVector3* point);
-	bool PointInner(CVector3 point);
-	RayHitParam CollisionRay(Ray rays);
+	bool PointInner(const CVector3& point);
+	RayHitParam CollisionRay(const Ray& rays);
 };
 
 class SquareCollider
@@ -119,11 +119,11 @@ public:
 
 public:
 	SquareCollider();
-	SquareCollider(CVector3 p1, CVector3 p2, CVector3 p3, CVector3 p4);
+	SquareCollider(const CVector3& p1, const CVector3& p2, const CVector3& p3, const CVector3& p4);
 	~SquareCollider();
-	void setsquare(CVector3 p1, CVector3 p2, CVector3 p3, CVector3 p4);
-	bool PointInner(CVector3 point);
-	RayHitParam CollisionRay(Ray rays);
+	void setsquare(const CVector3& p1, const CVector3& p2, const CVector3& p3, const CVector3& p4);
+	bool PointInner(const CVector3& point);
+	RayHitParam CollisionRay(const Ray& rays);
 
 };
 
@@ -134,7 +134,7 @@ public:
 	CVector3 direct;
 public:
 	Ray();
-	Ray(CVector3 p, CVector3 d);
+	Ray(const CVector3& p, const CVector3& d);
 	~Ray();
-	void setray(CVector3 p, CVector3 d);
+	void setray(const CVector3& p, const CVector3& d);
 };
