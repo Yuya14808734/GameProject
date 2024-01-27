@@ -3,6 +3,7 @@
 #define CAMERABASE
 #include <DirectXMath.h>
 #include "Calculation.h"
+#include "Collider.h"
 
 class CameraBase 
 {
@@ -33,7 +34,8 @@ public :
 	CVector3 GetRightVector();
 	CVector3 GetUpVector();
 
-	void CreateEnclosingPlane();	
+	void CreateViewingFrustum();
+	bool CheckInObject(const CVector3& Point, float Radius);
 
 protected:
 	CVector3 m_pos;
@@ -44,7 +46,7 @@ protected:
 	float m_near;		//‚Ç‚±‚©‚ç‰f‚·‚©
 	float m_far;		//‚Ç‚±‚Ü‚Å‰f‚·‚©
 
-	DirectX::XMFLOAT4 m_Planes[4];	//‹–ì‘ä‚Åg‚¤–Ê
+	PlaneCollider m_Planes[6];	//‹–ì‘ä‚Åg‚¤–Ê
 
 };
 

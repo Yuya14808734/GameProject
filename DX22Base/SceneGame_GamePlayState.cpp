@@ -1,10 +1,13 @@
 #include "SceneGame_GamePlayState.h"
 #include "Character_State.h"
 #include "Character_Attack.h"
+#include "CameraManager.h"
 
 void SceneGame_PlayState::Init()
 {
 	m_VisibleGo_CountTime = 0;
+
+	CameraManager::GetInstance().SetSceneCamera("GameCamera");
 }
 
 void SceneGame_PlayState::Uninit()

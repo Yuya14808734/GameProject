@@ -53,6 +53,7 @@ public:
 	void SetRotate(const CQuaternion& rotate);
 	void SetRotate(const CVector3& rotate);
 	const CQuaternion& GetRotate();
+	void SetCulling(bool culling, float Length);
 
 private:
 	ModelInformation* m_pModelInfo = nullptr;
@@ -65,6 +66,8 @@ private:
 	float m_AnimTime = 0.0f;
 	bool m_AnimeNow = false;
 	bool m_AnimeLoop = false;
+	bool m_isCheckDraw = false;
+	float m_ObjectSize = 0.0f;
 	VertexShader* m_pVertexShader = nullptr;
 	PixelShader* m_pPixelShader = nullptr;
 };

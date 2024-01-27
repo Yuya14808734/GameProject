@@ -18,12 +18,16 @@
 #include "SceneGame_EndState.h"
 #include "SceneGame_DisConnectControllerState.h"
 
+bool Trigger = false;
+
+
 void SceneGame::Init()
 {
 	//=====<ƒJƒƒ‰‚Ì¶¬>=====
 	CameraManager::GetInstance().CreateCamera<CameraGame>("GameCamera");
 	CameraManager::GetInstance().CreateCamera<CameraGameStart>("GameStartCamera");
-	CameraManager::GetInstance().SetSceneCamera("GameStartCamera");
+	CameraManager::GetInstance().CreateCamera<CameraDebug>("DebugCamera");
+	CameraManager::GetInstance().SetSceneCamera("DebugCamera");
 	m_pGameCamera = static_cast<CameraGame*>(CameraManager::GetInstance().GetCamera("GameCamera"));
 	CameraGameStart* pCameraGameStart = 
 		static_cast<CameraGameStart*>(CameraManager::GetInstance().GetCamera("GameStartCamera"));
@@ -77,7 +81,7 @@ void SceneGame::Init()
 	SetNextState(SceneGame::GAMESTATE::GAMESTART);
 	ChangeNextState();
 
-	
+	Trigger = false;
 }
 
 void SceneGame::Uninit()

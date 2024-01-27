@@ -5,6 +5,8 @@ void SceneGame_StartState::Init()
 {
 	m_Count = 0;
 
+	CameraManager::GetInstance().SetSceneCamera("GameStartCamera");
+
 	for (auto copy : (*m_pCharacters))
 	{
 		copy->SetNextState(Character::STATE::State_StartAnime);
@@ -49,7 +51,7 @@ void SceneGame_StartState::Update()
 	if (m_Count == 4 * 60)
 	{
 		m_pGameStartCountUI->SetGoDraw(true);
-		CameraManager::GetInstance().SetSceneCamera("GameCamera");
+		//CameraManager::GetInstance().SetSceneCamera("GameCamera");
 		m_pGameScene->SetNextState(SceneGame::GAMESTATE::GAMEPLAY);
 	}
 }

@@ -9,6 +9,7 @@
 #include "Sound.h"
 #include "Effect_Manager.h"
 #include "CameraManager.h"
+#include "CameraBase.h"
 #include "XboxKeyboard.h"
 #include "MiniWindow.h"
 #include "Player_Controller.h"
@@ -100,6 +101,7 @@ void MainLoop()
 		SetGeometoryVPMatrix(
 			CameraManager::GetInstance().GetSceneCamera()->GetViewMatrix(),
 			CameraManager::GetInstance().GetSceneCamera()->GetProjectionMatrix());
+			CameraManager::GetInstance().GetSceneCamera()->CreateViewingFrustum();
 	}
 
 	g_pGame->Draw();

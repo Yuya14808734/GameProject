@@ -1,4 +1,5 @@
 #include "CameraBase.h"
+#include "Geometory.h"
 
 CameraBase::CameraBase()
 	:m_pos(0.0f, 0.0f, 0.0f), m_look(0.0f, 0.0f, 1.0f), m_up(0.0f, 1.0f, 0.0f),
@@ -127,7 +128,8 @@ float CameraBase::GetFarLength()
 
 CVector3 CameraBase::GetRightVector()
 {
-	return m_up.cross(m_look).normalize();
+	CVector3 lookVec = m_look - m_pos;
+	return m_up.cross(lookVec).normalize();
 }
 
 CVector3 CameraBase::GetUpVector()
@@ -135,23 +137,66 @@ CVector3 CameraBase::GetUpVector()
 	return m_up;
 }
 
-void CameraBase::CreateEnclosingPlane()
+void CameraBase::CreateViewingFrustum()
 {
 	CVector3 rightVec = GetRightVector();
 	CVector3 upVec = GetUpVector();
-	float RotateRadianX = DirectX::XMConvertToRadians(m_fovy * 0.5f * m_aspect);
-	float RotateRadianY = DirectX::XMConvertToRadians(m_fovy * 0.5f);
+	CVector3 fowardVec = m_look - m_pos;
+	fowardVec = fowardVec.normalize();
+	//カメラの縦の角度を出す
+	float RotateRadianAxisX = DirectX::XMConvertToRadians(m_fovy * 0.5f);
+	
+	//=====<縦と奥行きで縦の三角形を作る>=====
+	//縦の角度に対した高さをだす
+	float Height = sinf(RotateRadianAxisX);
+	//縦の角度に大した奥行の長さを出す
+	float DepthLength = cosf(RotateRadianAxisX);
+	
+	//=====<横での長さを出して横でも三角形を作リ角度を出す>=====
+	//縦の長さに割合をかけて横の長さを出す
+	float Width = Height * m_aspect;
+	//縦の長さと横の長さで角度を出す
+	float RotateRadianAxisY = atan2f(Width, DepthLength);
 
 	//上の面
-	CVector3 TopPlaneVector = CQuaternion::RadianAxis(rightVec, -RotateRadianX).RotateVector(upVec * -1.0f);
-
+	CVector3 TopPlaneVector = CQuaternion::RadianAxis(rightVec, -RotateRadianAxisX)
+		.RotateVector(upVec * -1.0f);
+	m_Planes[0].setplane(m_pos, TopPlaneVector);
+	 
 	//下の面
-	CVector3 BottomPlaneVector = CQuaternion::RadianAxis(rightVec, RotateRadianX).RotateVector(upVec);
+	CVector3 BottomPlaneVector = CQuaternion::RadianAxis(rightVec, RotateRadianAxisX)
+		.RotateVector(upVec);
+	m_Planes[1].setplane(m_pos, BottomPlaneVector);
 
 	//左の面
-	CVector3 LeftPlaneVector = CQuaternion::RadianAxis(upVec, -RotateRadianY).RotateVector(rightVec);
+	CVector3 LeftPlaneVector = CQuaternion::RadianAxis(upVec, -RotateRadianAxisY)
+		.RotateVector(rightVec);
+	m_Planes[2].setplane(m_pos, LeftPlaneVector);
 
 	//右の面
-	CVector3 RightPlaneVector = CQuaternion::RadianAxis(upVec, RotateRadianX).RotateVector(rightVec * -1.0f);
+	CVector3 RightPlaneVector = CQuaternion::RadianAxis(upVec, RotateRadianAxisY)
+		.RotateVector(rightVec * -1.0f);
+	m_Planes[3].setplane(m_pos, RightPlaneVector);
 
+	//手前の面
+	m_Planes[4].setplane(m_pos + fowardVec * m_near, fowardVec);
+
+	//後ろの面
+	m_Planes[5].setplane(m_pos + fowardVec * m_far, -fowardVec);
+}
+
+bool CameraBase::CheckInObject(const CVector3& Point, float Radius)
+{
+	for (int i = 0; i < 6; i++)
+	{
+		float Length = m_Planes[i].LengthPoint(Point);
+
+		//平面との距離が半径のマイナスより小さければ見えないことになる
+		if (Length < -Radius)
+		{
+			return false;
+		}
+	}
+
+	return true;
 }

@@ -105,6 +105,7 @@ void Character::Character_Draw()
 	//========================================
 	// キャラクターの描画
 	//========================================
+	m_CharacterModel.SetCulling(true, 2.0f);
 	m_CharacterModel.SetPosition(m_Parameter.Pos);
 	m_CharacterModel.SetRotate(m_Parameter.Rotate);
 	m_CharacterModel.Draw();

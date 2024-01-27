@@ -49,11 +49,12 @@ void CameraGame::Update()
 
 	std::vector<Character*>::iterator Character_It = (*m_pCharacterVector).begin();
 
+	//一番最初のキャラクターから比較をしていく
 	MaxRightX = MaxLeftX = (*Character_It)->GetPos().x; 
 	MaxTopY	= MaxBottomY = (*Character_It)->GetPos().y;
 	Character_It++;
 
-	//キャラクターがいる一番淵の位置を取得
+	//今までのキャラクターと比べて一番端が変わるかを確認
 	for (; Character_It != (*m_pCharacterVector).end(); Character_It++)
 	{
 		CVector3 CharacterPos = (*Character_It)->GetPos();
@@ -75,13 +76,14 @@ void CameraGame::Update()
 		}
 	}
 
-	//デットラインより少しずらした位置を設定する
+	//デットラインより少しずらした位置をカメラが見れる橋として設定する
 	float StageCanSeeLineRightX = m_pStage->GetDeadLineRightX() - 3.0f;
 	float StageCanSeeLineLeftX = m_pStage->GetDeadLineLeftX() + 3.0f;
 	float StageCanSeeLineTopY = m_pStage->GetDeadLineTopY() - 3.0f;
 	float StageCanSeeLineBottomY = m_pStage->GetDeadLineBottomY() + 3.0f;
 	
-	//デットライン近くにいた場合、デットラインを映したくないので位置変更
+	//設定したキャラクターの端の位置が
+	//デットラインを超えていた場合、デットラインを映したくないので位置変更
 	if (StageCanSeeLineRightX < MaxRightX)
 	{
 		MaxRightX = StageCanSeeLineRightX;
@@ -104,24 +106,26 @@ void CameraGame::Update()
 	//=====<キャラクターとキャラクターの中間を取って移動する位置を設定>=====
 	const float NearZ = -7.0f;				//一番近くに置けるカメラ座標
 	const float FarZ = -20.0f;				//一番遠くに置けるカメラ座標
-	const float NearDistance = 4.0f;		//これ距離より短ければカメラが一番近くなる
-	const float FarDistance = 10.0f;		//この距離より遠ければカメラが一番遠い距離に行く
-	float NowDistance = sqrtf(powf(MaxRightX - MaxLeftX, 2.0f) + powf(MaxTopY - MaxBottomY, 2.0f));
+	const float NearDistance = 4.0f;		//斜めがこの長さに近くなるとZがNearZになる
+	const float FarDistance = 10.0f;		//斜めがこの長さに近くなるとZがFarZになる
+	float HypotenuseDistance =				//端にいるキャラクター同士の位置の斜めの長さが入る
+		sqrtf(powf(MaxRightX - MaxLeftX, 2.0f) + powf(MaxTopY - MaxBottomY, 2.0f));
 
 	//カメラが行くべき座標
 	CVector3 GotoPos;
 
 	//XとYを設定
+	//キャラクター同士の真ん中の位置に移動
 	GotoPos.x = (MaxRightX - MaxLeftX) / 2.0f + MaxLeftX;
 	GotoPos.y = (MaxTopY - MaxBottomY) / 2.0f + MaxBottomY + 2.0f;
 
 	//Zを設定
-	if (NowDistance < NearDistance)
+	if (HypotenuseDistance < NearDistance)
 	{
 		//カメラが行ける距離より近ければ
 		GotoPos.z = NearZ;
 	}
-	else if (NowDistance > FarDistance)
+	else if (HypotenuseDistance > FarDistance)
 	{
 		//カメラが行ける距離より遠ければ
 		GotoPos.z = FarZ;
@@ -129,13 +133,13 @@ void CameraGame::Update()
 	else
 	{
 		//上の二つで無ければ
-		float PerDistance = NowDistance - NearDistance;
+		float PerDistance = HypotenuseDistance - NearDistance;
 		float Percent = PerDistance / (FarDistance - NearDistance);
 		GotoPos.z = (FarZ - NearZ) * Percent + NearZ;
 	}
 	//======================================================================
 
-	//=====<Zが0でカメラが見ている4端の位置を特定する>=============================
+	//=====<Zが0の位置でカメラが見ている4端の位置を特定する>=============================
 	float CameraVerticalRadian = DirectX::XMConvertToRadians(m_fovy / 2.0f);		//カメラのカメラ縦方向の画角をラジアンに
 	float SlantingLength = (1.0f / cosf(CameraVerticalRadian)) * GotoPos.z;			//上の変数を使って斜めの長さを出す
 	float CameraCanLookLengthY =													//三平方の定理を使って縦の長さを出す

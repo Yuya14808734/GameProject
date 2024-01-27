@@ -231,6 +231,8 @@ ModelDrawer::ModelDrawer()
 	m_AnimTime(0.0f),
 	m_AnimeNow(false),
 	m_AnimeLoop(false),
+	m_isCheckDraw(false),
+	m_ObjectSize(0.0f),
 	m_pVertexShader(m_pDefaultVertexShader),
 	m_pPixelShader(nullptr)
 {
@@ -242,12 +244,24 @@ ModelDrawer::~ModelDrawer()
 
 void ModelDrawer::Draw()
 {
-	CameraBase* pCamera = CameraManager::GetInstance().GetSceneCamera();
+	CameraBase* pCamera = 
+		CameraManager::GetInstance().GetSceneCamera();
+		;
 
 	if (pCamera == nullptr)
 	{
 		return;
 	}
+
+	if(m_isCheckDraw)
+	{
+		//Ž‹‘ä‚Ì’†‚É“ü‚Á‚Ä‚¢‚é‚©‚Å•`‰æ‚·‚é‚©‚ðŒˆ‚ß‚é
+		if (!pCamera->CheckInObject(m_pos, m_ObjectSize))
+		{
+			return;
+		}
+	}
+	
 
 	if (m_pModelInfo == nullptr)
 	{
@@ -433,4 +447,10 @@ void ModelDrawer::SetRotate(const CVector3& rotate)
 const CQuaternion& ModelDrawer::GetRotate()
 {
 	return m_rotate;
+}
+
+void ModelDrawer::SetCulling(bool culling, float size)
+{
+	m_isCheckDraw = culling;
+	m_ObjectSize = size;
 }
