@@ -99,8 +99,8 @@ void PraiseWinnerPlayerText::SetLetterMovePercent(float Percent)
 
 	//=====<各文字の設定>=====
 	float EasePercent = 1.0f - powf(1.0f - NormalizePercent, 3);			//幅で使う割合
-	float NowDistance = m_LetterDistance * EasePercent;
-	NowDistance = NowDistance + (Percent * 5.0f);
+	float NowDistance = (m_LetterDistance + (Percent * 5.0f));
+	NowDistance = NowDistance * EasePercent;
 
 	float LeftEddgePos = (static_cast<float>(GetAppWidth()) * 0.5f)			//左端の位置
 		- (NowDistance * 2.5f);

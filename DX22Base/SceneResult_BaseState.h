@@ -64,5 +64,5 @@ protected:
 	PraiseWinnerPlayerText* m_pPraiseWinnerPlayerText = nullptr;
 	Image2D* m_pWinnerPlayerNum = nullptr;
 	Image2D* m_pHideImage = nullptr;
-	Effekseer::Handle* m_pEfkHnd_FlowerBlizzard;
+	Effekseer::Handle* m_pEfkHnd_FlowerBlizzard = nullptr;
 };

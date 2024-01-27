@@ -32,7 +32,10 @@ public:
 	void SetFadeStart(bool start) 
 	{
 		m_FadeStart = start; 
-		if (m_FadeStart) { FadeStartInit(); }
+		if (m_FadeStart) { 
+			FadeStartInit(); 
+			m_IsVisible = true;
+		}
 	}
 
 	//フェードを止める

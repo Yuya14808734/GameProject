@@ -151,24 +151,6 @@
     <Filter Include="ヘッダー ファイル\04_Game\01_SceneState">
       <UniqueIdentifier>{bb808754-2fe4-48a7-ae82-5337405fbb63}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\01_SceneState\01_Title">
-      <UniqueIdentifier>{4c7c8d09-6eb2-454b-9dc7-fd8002d163c8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\01_SceneState\02_Game">
-      <UniqueIdentifier>{202eff30-1c2d-4817-aa06-fda0859f5a65}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\04_Game\01_SceneState\00_Base">
-      <UniqueIdentifier>{481d0f47-9937-4d5f-a446-f11d7188c9f4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\04_Game\01_SceneState\01_Title">
-      <UniqueIdentifier>{61b7914f-1d3e-42b9-85b0-cdc2a1f39e00}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\04_Game\01_SceneState\02_Game">
-      <UniqueIdentifier>{e8dec61f-384e-4400-826e-c5dfe06d0a78}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\04_Game\01_SceneState\00_Base">
-      <UniqueIdentifier>{19fd2bf8-42bc-443b-bb2e-cdfb310f1571}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\04_Game\00_Scene">
       <UniqueIdentifier>{d8ebe295-101d-4581-a794-852ce5b3c13a}</UniqueIdentifier>
     </Filter>
@@ -255,6 +237,24 @@
     </Filter>
     <Filter Include="ヘッダー ファイル\04_Game\12_Result">
       <UniqueIdentifier>{b68c4f64-f944-431f-91e0-6e32b2132996}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\01_SceneState\02_Title">
+      <UniqueIdentifier>{61b7914f-1d3e-42b9-85b0-cdc2a1f39e00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\01_SceneState\00_Game">
+      <UniqueIdentifier>{e8dec61f-384e-4400-826e-c5dfe06d0a78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\01_SceneState\01_Select">
+      <UniqueIdentifier>{88c87b85-bd17-4b52-b622-2e818dead7ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\01_SceneState\00_Game">
+      <UniqueIdentifier>{202eff30-1c2d-4817-aa06-fda0859f5a65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\01_SceneState\02_Title">
+      <UniqueIdentifier>{4c7c8d09-6eb2-454b-9dc7-fd8002d163c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\01_SceneState\01_Select">
+      <UniqueIdentifier>{87bed96e-3657-455f-952d-53aca2b48e64}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -553,13 +553,13 @@
       <Filter>ソース ファイル\01_DirectX</Filter>
     </ClCompile>
     <ClCompile Include="SceneGame_StartState.cpp">
-      <Filter>ソース ファイル\04_Game\01_SceneState\02_Game</Filter>
+      <Filter>ソース ファイル\04_Game\01_SceneState\00_Game</Filter>
     </ClCompile>
     <ClCompile Include="SceneGame_GamePlayState.cpp">
-      <Filter>ソース ファイル\04_Game\01_SceneState\02_Game</Filter>
+      <Filter>ソース ファイル\04_Game\01_SceneState\00_Game</Filter>
     </ClCompile>
     <ClCompile Include="SceneGame_EndState.cpp">
-      <Filter>ソース ファイル\04_Game\01_SceneState\02_Game</Filter>
+      <Filter>ソース ファイル\04_Game\01_SceneState\00_Game</Filter>
     </ClCompile>
     <ClCompile Include="FadeBase.cpp">
       <Filter>ソース ファイル\02_System</Filter>
@@ -574,7 +574,7 @@
       <Filter>ソース ファイル\04_Game\10_Title</Filter>
     </ClCompile>
     <ClCompile Include="SceneTitle_TitleScreenState.cpp">
-      <Filter>ソース ファイル\04_Game\01_SceneState\01_Title</Filter>
+      <Filter>ソース ファイル\04_Game\01_SceneState\02_Title</Filter>
     </ClCompile>
     <ClCompile Include="GameUI02_StockCount.cpp">
       <Filter>ソース ファイル\04_Game\08_GameUI</Filter>
@@ -595,7 +595,7 @@
       <Filter>ソース ファイル\04_Game\11_Fade\FadeIn</Filter>
     </ClCompile>
     <ClCompile Include="SceneGame_DisConnectControllerState.cpp">
-      <Filter>ソース ファイル\04_Game\01_SceneState\02_Game</Filter>
+      <Filter>ソース ファイル\04_Game\01_SceneState\00_Game</Filter>
     </ClCompile>
     <ClCompile Include="FadeIn01_ColorFade.cpp">
       <Filter>ソース ファイル\04_Game\11_Fade\FadeIn</Filter>
@@ -900,13 +900,13 @@
       <Filter>ヘッダー ファイル\01_DirectX</Filter>
     </ClInclude>
     <ClInclude Include="SceneGame_StartState.h">
-      <Filter>ヘッダー ファイル\04_Game\01_SceneState\02_Game</Filter>
+      <Filter>ヘッダー ファイル\04_Game\01_SceneState\00_Game</Filter>
     </ClInclude>
     <ClInclude Include="SceneGame_GamePlayState.h">
-      <Filter>ヘッダー ファイル\04_Game\01_SceneState\02_Game</Filter>
+      <Filter>ヘッダー ファイル\04_Game\01_SceneState\00_Game</Filter>
     </ClInclude>
     <ClInclude Include="SceneGame_EndState.h">
-      <Filter>ヘッダー ファイル\04_Game\01_SceneState\02_Game</Filter>
+      <Filter>ヘッダー ファイル\04_Game\01_SceneState\00_Game</Filter>
     </ClInclude>
     <ClInclude Include="Character_State.h">
       <Filter>ヘッダー ファイル\04_Game\03_Character\CharacterBase</Filter>
@@ -927,13 +927,13 @@
       <Filter>ヘッダー ファイル\04_Game\10_Title</Filter>
     </ClInclude>
     <ClInclude Include="SceneGame_BaseState.h">
-      <Filter>ヘッダー ファイル\04_Game\01_SceneState\02_Game</Filter>
+      <Filter>ヘッダー ファイル\04_Game\01_SceneState\00_Game</Filter>
     </ClInclude>
     <ClInclude Include="SceneTitle_BaseState.h">
-      <Filter>ヘッダー ファイル\04_Game\01_SceneState\01_Title</Filter>
+      <Filter>ヘッダー ファイル\04_Game\01_SceneState\02_Title</Filter>
     </ClInclude>
     <ClInclude Include="SceneTitle_TitleScreenState.h">
-      <Filter>ヘッダー ファイル\04_Game\01_SceneState\01_Title</Filter>
+      <Filter>ヘッダー ファイル\04_Game\01_SceneState\02_Title</Filter>
     </ClInclude>
     <ClInclude Include="GameUI02_StockCount.h">
       <Filter>ヘッダー ファイル\04_Game\08_GameUI</Filter>
@@ -954,7 +954,7 @@
       <Filter>ヘッダー ファイル\04_Game\11_Fade\FadeIn</Filter>
     </ClInclude>
     <ClInclude Include="SceneGame_DisConnectControllerState.h">
-      <Filter>ヘッダー ファイル\04_Game\01_SceneState\02_Game</Filter>
+      <Filter>ヘッダー ファイル\04_Game\01_SceneState\00_Game</Filter>
     </ClInclude>
     <ClInclude Include="FadeIn01_ColorFade.h">
       <Filter>ヘッダー ファイル\04_Game\11_Fade\FadeIn</Filter>

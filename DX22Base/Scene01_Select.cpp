@@ -91,6 +91,13 @@ void SceneSelect::Init()
 	m_BackGroundImage.m_size = WindowSize;
 
 	m_ReadyToFightTextImage.StartSlide();
+
+	m_ColorFade.m_pos = WindowCenterPos;
+	m_ColorFade.m_size = WindowSize;
+	m_ColorFade.m_color = DirectX::XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
+	m_isLoadNextScene = false;
+
+	m_state = SceneSelect::SELECTSTATE::SELECT;
 }
 
 void SceneSelect::Uninit()
@@ -99,6 +106,19 @@ void SceneSelect::Uninit()
 }
 
 void SceneSelect::Update()
+{
+	switch (m_state)
+	{
+	case SceneSelect::SELECTSTATE::SELECT:
+		SelectUpdate();
+		break;
+	case SceneSelect::SELECTSTATE::LOAD:
+		LoadUpdate();
+		break;
+	}	
+}
+
+void SceneSelect::SelectUpdate()
 {
 	//=========<コントローラーが切れていたら情報を削除する>=========
 	ControllerDisconnect();
@@ -133,9 +153,21 @@ void SceneSelect::Update()
 			m_FirstPlayerCharacter = m_SelectFirstCharacter.GetSelectCharacter();
 			m_SecondPlayerCharacter = m_SelectSecondCharacter.GetSelectCharacter();
 
-			//シーンの切り替え
-			CScene::SetScene<SceneGame>();
+			m_ColorFade.SetFadeTime(0.3f);
+			m_ColorFade.SetFadeStart(true);
+			m_state = SELECTSTATE::LOAD;			
 		}
+	}
+}
+
+void SceneSelect::LoadUpdate()
+{
+	m_ColorFade.Update();
+
+	if (m_ColorFade.GetFadeEnd())
+	{
+		//シーンの切り替え
+		CScene::SetScene<SceneGame>();
 	}
 }
 
@@ -176,6 +208,8 @@ void SceneSelect::Draw()
 	{
 		m_ReadyToFightTextImage.Draw();
 	}
+
+	m_ColorFade.Draw();
 
 	EnableDepth(true);
 	//======================================================================
@@ -305,3 +339,5 @@ void SceneSelect::ControllerRelease()
 		}
 	}
 }
+
+

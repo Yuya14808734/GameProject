@@ -6,9 +6,17 @@
 #include "Select01_CharacterList.h"
 #include "Select02_SlideReadyToFightText.h"
 #include "Image2D.h"
+#include "FadeIn01_ColorFade.h"
 
 class SceneSelect : public CScene
 {
+	enum class SELECTSTATE : int
+	{
+		SELECT = 0,
+		LOAD,
+		MAX
+	};
+
 public:
 	static PlayerController* GetFirstPlayerController();
 	static PlayerController* GetSecondPlayerController();
@@ -34,10 +42,17 @@ public:
 	void ControllerRelease();
 
 private:
+	void SelectUpdate();
+	void LoadUpdate();
+
+private:
+	SELECTSTATE m_state = SELECTSTATE::MAX;
 	SelectCharacterList m_CharacterList;
 	SelectCharacter m_SelectFirstCharacter;
 	SelectCharacter m_SelectSecondCharacter;
 	Image2D m_CharactersText;
 	Image2D m_BackGroundImage;
 	SlidReadyToFightText m_ReadyToFightTextImage;
+	FadeInColorFade m_ColorFade;
+	bool m_isLoadNextScene = false;
 };

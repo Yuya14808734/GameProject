@@ -33,7 +33,7 @@ Game3D::Game3D()
 
 	
 	//=====<ƒV[ƒ“‚Ì‰Šú‰»>=====
-	CScene::SetScene<SceneGame>();
+	CScene::SetScene<SceneTitle>();
 
 	SelectCharacterList::LoadTexture();
 
@@ -49,12 +49,7 @@ Game3D::~Game3D()
 	delete m_pBlend;
 }
 void Game3D::Update()
-{
-	if (CameraManager::GetInstance().GetSceneCamera() != CameraManager::GetInstance().GetCamera("GameCamera"))
-	{
-		CameraManager::GetInstance().GetCamera("GameCamera")->Update();
-	}
-	
+{	
 	CameraManager::GetInstance().CameraUpdate();
 	CScene::GetScene()->Update();
 }

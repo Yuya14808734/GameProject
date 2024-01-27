@@ -3,8 +3,6 @@
 
 void Character00_StartAnimationState::Init()
 {
-
-	if(m_pCharacter->GetCharacterBit() != 2)
 	InitAnime("WAIT01");
 	m_NowAnimeState = Character00_StartAnimationState::AnimationState::Start;
 
