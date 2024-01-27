@@ -1,4 +1,4 @@
-#include "FadeIn01_ColorFade.h"
+#include "FadeOut00_ColorFade.h"
 #include "Main.h"
 
 FadeInColorFade::FadeInColorFade()

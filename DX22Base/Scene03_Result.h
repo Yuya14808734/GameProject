@@ -64,5 +64,5 @@ private:
 	PraiseWinnerPlayerText m_PraiseWinnerPlayerText;
 	Image2D m_WinnerPlayerNum;
 	Image2D m_HideImage;
-	Effekseer::Handle m_efkHnd_FlowerBlizzard;
+	Effekseer::Handle m_efkHnd_FlowerBlizzard = 0;
 };

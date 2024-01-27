@@ -6,7 +6,7 @@
 #include "Select01_CharacterList.h"
 #include "Select02_SlideReadyToFightText.h"
 #include "Image2D.h"
-#include "FadeIn01_ColorFade.h"
+#include "FadeOut00_ColorFade.h"
 
 class SceneSelect : public CScene
 {

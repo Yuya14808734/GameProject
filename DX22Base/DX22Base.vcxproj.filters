@@ -256,6 +256,15 @@
     <Filter Include="ヘッダー ファイル\04_Game\01_SceneState\01_Select">
       <UniqueIdentifier>{87bed96e-3657-455f-952d-53aca2b48e64}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\04_Game\01_SceneState\04_Load">
+      <UniqueIdentifier>{75dec6ba-1dff-4786-9f97-5a161396f3f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\13_Load">
+      <UniqueIdentifier>{33f6cd9c-dd80-401b-bfd6-914aaef14ca5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\04_Game\13_Load">
+      <UniqueIdentifier>{5fe87770-e5b4-4284-8dbc-05d2fb364889}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BlendState.cpp">
@@ -597,9 +606,6 @@
     <ClCompile Include="SceneGame_DisConnectControllerState.cpp">
       <Filter>ソース ファイル\04_Game\01_SceneState\00_Game</Filter>
     </ClCompile>
-    <ClCompile Include="FadeIn01_ColorFade.cpp">
-      <Filter>ソース ファイル\04_Game\11_Fade\FadeIn</Filter>
-    </ClCompile>
     <ClCompile Include="SceneResult_DrawWinnerNumState.cpp">
       <Filter>ソース ファイル\04_Game\01_SceneState\03_Result</Filter>
     </ClCompile>
@@ -614,6 +620,12 @@
     </ClCompile>
     <ClCompile Include="ResultWinnerNumPanel.cpp">
       <Filter>ソース ファイル\04_Game\12_Result</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene04_Load.cpp">
+      <Filter>ソース ファイル\04_Game\00_Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeOut00_ColorFade.cpp">
+      <Filter>ソース ファイル\04_Game\11_Fade\FadeOut</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -956,9 +968,6 @@
     <ClInclude Include="SceneGame_DisConnectControllerState.h">
       <Filter>ヘッダー ファイル\04_Game\01_SceneState\00_Game</Filter>
     </ClInclude>
-    <ClInclude Include="FadeIn01_ColorFade.h">
-      <Filter>ヘッダー ファイル\04_Game\11_Fade\FadeIn</Filter>
-    </ClInclude>
     <ClInclude Include="SceneResult_BaseState.h">
       <Filter>ヘッダー ファイル\04_Game\01_SceneState\03_Result</Filter>
     </ClInclude>
@@ -976,6 +985,12 @@
     </ClInclude>
     <ClInclude Include="ResultWinnerNumPanel.h">
       <Filter>ヘッダー ファイル\04_Game\12_Result</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene04_Load.h">
+      <Filter>ヘッダー ファイル\04_Game\00_Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeOut00_ColorFade.h">
+      <Filter>ヘッダー ファイル\04_Game\11_Fade\FadeOut</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
