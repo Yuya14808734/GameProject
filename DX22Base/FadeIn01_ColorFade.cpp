@@ -1,7 +1,6 @@
-#include "FadeOut00_ColorFade.h"
-#include "Main.h"
+#include "FadeIn01_ColorFade.h"
 
-FadeOutColorFade::FadeOutColorFade()
+FadeInColorFade::FadeInColorFade()
 {
 	//=====<ƒJƒEƒ“ƒg‚Ì‰Šú‰»>=====
 	m_CountTime = 0.0f;
@@ -13,11 +12,11 @@ FadeOutColorFade::FadeOutColorFade()
 	m_FadeTime = 1.0f;
 }
 
-FadeOutColorFade::~FadeOutColorFade()
+FadeInColorFade::~FadeInColorFade()
 {
 }
 
-void FadeOutColorFade::FadeUpdate()
+void FadeInColorFade::FadeUpdate()
 {
 	m_CountTime += 1.0f / 60.0f;
 
@@ -27,12 +26,10 @@ void FadeOutColorFade::FadeUpdate()
 		m_CountTime = m_FadeTime;
 	}
 
-	m_color.w = m_CountTime / m_FadeTime;
-
+	m_color.w = 1.0f - (m_CountTime / m_FadeTime);
 }
 
-
-void FadeOutColorFade::SetFadeTime(float time)
+void FadeInColorFade::SetFadeTime(float time)
 {
 	m_FadeTime = time;
 }

@@ -47,6 +47,12 @@ GameStartCountUI::GameStartCountUI()
 
 GameStartCountUI::~GameStartCountUI()
 {
+	if (m_pPattern != nullptr)
+	{
+		m_pPattern->Release();
+		m_pPattern = nullptr;
+	}
+
 	delete m_ConstantBuffer_SecondTextureUV;
 }
 

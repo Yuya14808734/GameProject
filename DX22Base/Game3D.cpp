@@ -12,6 +12,7 @@
 #include "Scene01_Select.h"
 #include "Scene02_Title.h"
 #include "Scene03_Result.h"
+#include "Scene04_Load.h"
 
 Game3D::Game3D()
 {

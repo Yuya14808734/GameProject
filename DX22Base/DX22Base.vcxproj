@@ -171,6 +171,7 @@
     <ClCompile Include="Effect00_Dead.cpp" />
     <ClCompile Include="FadeIn00_GameEnd.cpp" />
     <ClCompile Include="FadeBase.cpp" />
+    <ClCompile Include="FadeIn01_ColorFade.cpp" />
     <ClCompile Include="FadeOut00_ColorFade.cpp" />
     <ClCompile Include="GameUI02_StockCount.cpp" />
     <ClCompile Include="PushButtonText.cpp" />
@@ -186,6 +187,9 @@
     <ClCompile Include="GameUI01_GameEndText.cpp" />
     <ClCompile Include="Image3D.cpp" />
     <ClCompile Include="OffScreenRenderingClass.cpp" />
+    <ClCompile Include="SceneLoad_CharacterDrawState.cpp" />
+    <ClCompile Include="SceneLoad_LoadState.cpp" />
+    <ClCompile Include="SceneLoad_PanelMoveState.cpp" />
     <ClCompile Include="SceneResult_DrawResult.cpp" />
     <ClCompile Include="SceneResult_DrawWinnerNumState.cpp" />
     <ClCompile Include="SceneTitle_TitleScreenState.cpp" />
@@ -272,6 +276,9 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Image2D.cpp" />
     <ClCompile Include="PraiseWinnerPlayerText.cpp" />
+    <ClCompile Include="VersusCharacterImageMove.cpp" />
+    <ClCompile Include="VersusCharacterPanelMove.cpp" />
+    <ClCompile Include="VersusTextAnime.cpp" />
     <ClCompile Include="WinUtil.cpp" />
     <ClCompile Include="XboxKeyboard.cpp" />
   </ItemGroup>
@@ -323,8 +330,11 @@
     <ClInclude Include="Effect00_Dead.h" />
     <ClInclude Include="FadeIn00_GameEnd.h" />
     <ClInclude Include="FadeBase.h" />
+    <ClInclude Include="FadeIn01_ColorFade.h" />
     <ClInclude Include="FadeOut00_ColorFade.h" />
     <ClInclude Include="GameUI02_StockCount.h" />
+    <ClInclude Include="SceneLoad_LoadState.h" />
+    <ClInclude Include="VersusCharacterPanelMove.h" />
     <ClInclude Include="PushButtonText.h" />
     <ClInclude Include="ResultWinnerNumPanel.h" />
     <ClInclude Include="Scene02_Title.h" />
@@ -375,6 +385,9 @@
     <ClInclude Include="SamplerState.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scene01_Select.h" />
+    <ClInclude Include="SceneLoad_BaseState.h" />
+    <ClInclude Include="SceneLoad_CharacterDrawState.h" />
+    <ClInclude Include="SceneLoad_PanelMoveState.h" />
     <ClInclude Include="SceneResult_BaseState.h" />
     <ClInclude Include="SceneResult_DrawResult.h" />
     <ClInclude Include="SceneResult_DrawWinnerNumState.h" />
@@ -395,6 +408,8 @@
     <ClInclude Include="Image2D.h" />
     <ClInclude Include="PraiseWinnerPlayerText.h" />
     <ClInclude Include="ResultWinnerCharacterImage.h" />
+    <ClInclude Include="VersusCharacterImageMove.h" />
+    <ClInclude Include="VersusTextAnime.h" />
     <ClInclude Include="WinUtil.h" />
     <ClInclude Include="XboxKeyboard.h" />
   </ItemGroup>
@@ -432,6 +447,13 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)Assets\Shader\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="MultiplyTexturePS_ShapeCut.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="MultiplyTextureVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>

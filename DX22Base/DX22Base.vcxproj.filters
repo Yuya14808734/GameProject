@@ -265,6 +265,9 @@
     <Filter Include="ソース ファイル\04_Game\13_Load">
       <UniqueIdentifier>{5fe87770-e5b4-4284-8dbc-05d2fb364889}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\04_Game\01_SceneState\04_Load">
+      <UniqueIdentifier>{50b8a066-79f0-4853-8d9a-6e433507bc5a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BlendState.cpp">
@@ -626,6 +629,27 @@
     </ClCompile>
     <ClCompile Include="FadeOut00_ColorFade.cpp">
       <Filter>ソース ファイル\04_Game\11_Fade\FadeOut</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeIn01_ColorFade.cpp">
+      <Filter>ソース ファイル\04_Game\11_Fade\FadeIn</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneLoad_CharacterDrawState.cpp">
+      <Filter>ソース ファイル\04_Game\01_SceneState\04_Load</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneLoad_PanelMoveState.cpp">
+      <Filter>ソース ファイル\04_Game\01_SceneState\04_Load</Filter>
+    </ClCompile>
+    <ClCompile Include="VersusCharacterImageMove.cpp">
+      <Filter>ソース ファイル\04_Game\13_Load</Filter>
+    </ClCompile>
+    <ClCompile Include="VersusCharacterPanelMove.cpp">
+      <Filter>ソース ファイル\04_Game\13_Load</Filter>
+    </ClCompile>
+    <ClCompile Include="VersusTextAnime.cpp">
+      <Filter>ソース ファイル\04_Game\13_Load</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneLoad_LoadState.cpp">
+      <Filter>ソース ファイル\04_Game\01_SceneState\04_Load</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -992,6 +1016,30 @@
     <ClInclude Include="FadeOut00_ColorFade.h">
       <Filter>ヘッダー ファイル\04_Game\11_Fade\FadeOut</Filter>
     </ClInclude>
+    <ClInclude Include="FadeIn01_ColorFade.h">
+      <Filter>ヘッダー ファイル\04_Game\11_Fade\FadeIn</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneLoad_PanelMoveState.h">
+      <Filter>ヘッダー ファイル\04_Game\01_SceneState\04_Load</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneLoad_CharacterDrawState.h">
+      <Filter>ヘッダー ファイル\04_Game\01_SceneState\04_Load</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneLoad_BaseState.h">
+      <Filter>ヘッダー ファイル\04_Game\01_SceneState\04_Load</Filter>
+    </ClInclude>
+    <ClInclude Include="VersusCharacterPanelMove.h">
+      <Filter>ヘッダー ファイル\04_Game\13_Load</Filter>
+    </ClInclude>
+    <ClInclude Include="VersusTextAnime.h">
+      <Filter>ヘッダー ファイル\04_Game\13_Load</Filter>
+    </ClInclude>
+    <ClInclude Include="VersusCharacterImageMove.h">
+      <Filter>ヘッダー ファイル\04_Game\13_Load</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneLoad_LoadState.h">
+      <Filter>ヘッダー ファイル\04_Game\01_SceneState\04_Load</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui\imgui.natstepfilter">
@@ -1017,6 +1065,9 @@
       <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
     <FxCompile Include="DirectWipePS.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="MultiplyTexturePS_ShapeCut.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
   </ItemGroup>

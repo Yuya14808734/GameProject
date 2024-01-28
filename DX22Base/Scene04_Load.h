@@ -1,19 +1,19 @@
 #pragma once
 #include "Scene.h"
 #include "Image2D.h"
-#include "Image3D.h"
 #include "StatePattern.h"
-#include "FadeOut00_ColorFade.h"
+#include "VersusCharacterPanelMove.h"
+#include "VersusCharacterImageMove.h"
+#include "VersusTextAnime.h"
 
 class SceneLoad : public CScene
 {
 private:
 	enum class LOADSTATE : int
 	{
-		FADEIN = 0,
-		ANIMATION,
-		LOAD,
-		FADEOUT,
+		PANELMOVE = 0,		//パネルを動かす
+		CHARACTERDRAW,		//キャラクターを描画
+		LOAD,				//ロード
 		MAX,
 	};
 
@@ -32,6 +32,9 @@ public:
 private:
 	StateContext m_LoadStateContext;
 	Image2D m_BackGround;
-	FadeInColorFade m_ColorFade;
+	std::vector<VersusCharacterPanelMove*> m_CharacterMovePanels;
+	std::vector<VersusCharacterImageMove*> m_CharacterImage;
+	VersusTextAnime m_VersusTextAnime;
+
 };
 

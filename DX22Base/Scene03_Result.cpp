@@ -94,6 +94,8 @@ void SceneResult::Init()
 
 void SceneResult::Uninit()
 {
+	m_ResultStateContext.StateUninit();
+	m_ResultStateContext.ReleaseAllState();
 }
 
 void SceneResult::Update()

@@ -23,7 +23,8 @@ void SceneTitle::Init()
 
 void SceneTitle::Uninit()
 {
-	
+	m_TitleStateContext.StateUninit();
+	m_TitleStateContext.ReleaseAllState();
 }
 
 void SceneTitle::Update()

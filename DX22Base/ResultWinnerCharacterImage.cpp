@@ -38,7 +38,8 @@ void ResultWinnerCharacterImage::Update()
 		(m_StartPos * (1.0f - m_Percent)) +
 		(m_EndPos * m_Percent);
 
-	m_pWinnerCharacterImage->m_color.w = m_Percent;
+	m_CharacterAlpha = m_Percent;
+	
 }
 
 void ResultWinnerCharacterImage::Draw()
@@ -48,7 +49,8 @@ void ResultWinnerCharacterImage::Draw()
 	{ return; }
 
 	m_pWinnerCharacterImage->m_pos = m_CharacterDrawPos;
-	m_pWinnerCharacterImage->m_size = CVector2(435.0f, 640.0f) * 1.3f;;
+	m_pWinnerCharacterImage->m_size = CVector2(435.0f, 640.0f) * 1.3f;
+	m_pWinnerCharacterImage->m_color.w = m_CharacterAlpha;
 	m_pWinnerCharacterImage->Draw();
 }
 

@@ -53,6 +53,6 @@ private:
 	Image2D m_CharactersText;
 	Image2D m_BackGroundImage;
 	SlidReadyToFightText m_ReadyToFightTextImage;
-	FadeInColorFade m_ColorFade;
+	FadeOutColorFade m_ColorFade;
 	bool m_isLoadNextScene = false;
 };

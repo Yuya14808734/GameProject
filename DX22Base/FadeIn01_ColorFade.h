@@ -5,11 +5,11 @@
 #include "Calculation.h"
 #include "ConstantBuffer.h"
 
-class FadeOutColorFade : public FadeBase
+class FadeInColorFade : public FadeBase
 {
 public:
-	FadeOutColorFade();
-	~FadeOutColorFade() override;
+	FadeInColorFade();
+	~FadeInColorFade() override;
 	void SetFadeTime(float time);
 private:
 	void FadeUpdate() override;
