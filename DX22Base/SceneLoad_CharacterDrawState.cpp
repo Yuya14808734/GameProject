@@ -48,6 +48,11 @@ void SceneLoad_CharacterDrawState::Update()
 		m_pVersusIconImage->StartFadeIn();
 	}
 
+	if (m_FrameCount == 150)
+	{
+		m_pScene->SetNextState(SceneLoad::LOADSTATE::LOAD);
+	}
+
 	for (VersusCharacterImageMove* copy : (*m_pCharacterImages))
 	{
 		copy->Update();

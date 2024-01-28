@@ -34,7 +34,7 @@ Game3D::Game3D()
 
 	
 	//=====<ƒV[ƒ“‚Ì‰Šú‰»>=====
-	CScene::SetScene<SceneLoad>();
+	CScene::SetScene<SceneTitle>();
 
 	SelectCharacterList::LoadTexture();
 

@@ -7,7 +7,7 @@
 #include <array>
 #include "Main.h"
 #include "Scene.h"
-#include "Scene00_Game.h"
+#include "Scene04_Load.h"
 
 // ====================================================================================
 // static
@@ -112,8 +112,8 @@ void SceneSelect::Update()
 	case SceneSelect::SELECTSTATE::SELECT:
 		SelectUpdate();
 		break;
-	case SceneSelect::SELECTSTATE::LOAD:
-		LoadUpdate();
+	case SceneSelect::SELECTSTATE::FADE:
+		FadeUpdate();
 		break;
 	}	
 }
@@ -155,19 +155,19 @@ void SceneSelect::SelectUpdate()
 
 			m_ColorFade.SetFadeTime(0.3f);
 			m_ColorFade.SetFadeStart(true);
-			m_state = SELECTSTATE::LOAD;			
+			m_state = SELECTSTATE::FADE;			
 		}
 	}
 }
 
-void SceneSelect::LoadUpdate()
+void SceneSelect::FadeUpdate()
 {
 	m_ColorFade.Update();
 
 	if (m_ColorFade.GetFadeEnd())
 	{
 		//ÉVÅ[ÉìÇÃêÿÇËë÷Ç¶
-		CScene::SetScene<SceneGame>();
+		CScene::SetScene<SceneLoad>();
 	}
 }
 

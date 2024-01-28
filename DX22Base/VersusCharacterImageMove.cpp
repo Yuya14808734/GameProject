@@ -68,6 +68,7 @@ void VersusCharacterImageMove::SetCharacterImage(SelectCharacterList::CHARACTER 
 {
 	switch (CharacterNum)
 	{
+	case SelectCharacterList::CHARACTER::UNITYCHAN:
 	case SelectCharacterList::CHARACTER::NONE:
 	case SelectCharacterList::CHARACTER::MAX:
 		CharacterNum = SelectCharacterList::CHARACTER::UNITYCHAN;

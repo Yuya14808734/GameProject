@@ -13,7 +13,7 @@ class SceneSelect : public CScene
 	enum class SELECTSTATE : int
 	{
 		SELECT = 0,
-		LOAD,
+		FADE,
 		MAX
 	};
 
@@ -43,7 +43,7 @@ public:
 
 private:
 	void SelectUpdate();
-	void LoadUpdate();
+	void FadeUpdate();
 
 private:
 	SELECTSTATE m_state = SELECTSTATE::MAX;
