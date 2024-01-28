@@ -73,6 +73,9 @@ public:
 	//=======================================================
 	void SetStartFade() {
 		m_state = VersusCharacterPanelMove::MOVESTATE::FADEIN;
+		m_FramePanelImage.m_IsVisible =
+			m_BackPanelImage.m_IsVisible =
+			m_CharacterImage.m_IsVisible = true;
 	}
 
 	void SetFadeTime(float FadeInTime, float MoveTime, float FadeOutTime)
@@ -100,6 +103,8 @@ public:
 		m_BackPanelImage.m_size = 
 			m_FramePanelImage.m_size =
 			m_CharacterImage.m_size = size; 
+		m_FramePanelImage.m_size.x += 5.0f;
+		m_FramePanelImage.m_size.y += 5.0f;
 	}
 
 	void SetColor(const DirectX::XMFLOAT4& color) {

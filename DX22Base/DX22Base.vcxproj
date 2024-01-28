@@ -278,6 +278,7 @@
     <ClCompile Include="PraiseWinnerPlayerText.cpp" />
     <ClCompile Include="VersusCharacterImageMove.cpp" />
     <ClCompile Include="VersusCharacterPanelMove.cpp" />
+    <ClCompile Include="VersusIconAnime.cpp" />
     <ClCompile Include="VersusTextAnime.cpp" />
     <ClCompile Include="WinUtil.cpp" />
     <ClCompile Include="XboxKeyboard.cpp" />
@@ -409,6 +410,7 @@
     <ClInclude Include="PraiseWinnerPlayerText.h" />
     <ClInclude Include="ResultWinnerCharacterImage.h" />
     <ClInclude Include="VersusCharacterImageMove.h" />
+    <ClInclude Include="VersusIconAnime.h" />
     <ClInclude Include="VersusTextAnime.h" />
     <ClInclude Include="WinUtil.h" />
     <ClInclude Include="XboxKeyboard.h" />

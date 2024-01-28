@@ -15,9 +15,11 @@ public:
 protected:
 	SceneLoad* m_pScene = nullptr;
 	Image2D* m_pBackGround = nullptr;
+	Image2D* m_pHideImage = nullptr;
 	std::vector<VersusCharacterPanelMove*>* m_pCharacterMovePanels = nullptr;
 	std::vector<VersusCharacterImageMove*>* m_pCharacterImages = nullptr;
 	VersusTextAnime* m_pVersusTextAnime = nullptr;
+	VersusIconAnime* m_pVersusIconImage = nullptr;
 
 public:
 	void SetScene(SceneLoad* pScene) 
@@ -25,6 +27,9 @@ public:
 
 	void SetBackGround(Image2D* pBackGround) 
 	{ m_pBackGround = pBackGround; }
+
+	void SetHideImage(Image2D* pHideImage) 
+	{ m_pHideImage = pHideImage; }
 
 	void SetCharacterMovePanels(std::vector<VersusCharacterPanelMove*>* pCharacterMovePanels) 
 	{ m_pCharacterMovePanels = pCharacterMovePanels; }
@@ -34,4 +39,7 @@ public:
 
 	void SetVersusTextAnime(VersusTextAnime* pVersusTextAnime) 
 	{ m_pVersusTextAnime = pVersusTextAnime; }
+
+	void SetVersusIconImage(VersusIconAnime* pVersusIconImage) 
+	{ m_pVersusIconImage = pVersusIconImage; }
 };

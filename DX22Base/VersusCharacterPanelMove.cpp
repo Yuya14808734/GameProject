@@ -67,16 +67,11 @@ void ShapeCutCharacterPanel::SetCharacterImage(SelectCharacterList::CHARACTER Ch
 	switch (Character)
 	{
 	case SelectCharacterList::CHARACTER::UNITYCHAN:
-		LoadTextureFromFile("Assets/CharacterImage/StandImage_UnityChan.png", &m_pCharacterImage);
-		m_BaseImageSize_Character = CVector2(435.0f,640.0f);
-		SetCharacterUVPos(CVector2(0.1f, -0.2f));
-		SetCharacterUVScale(0.5f);
-		break;
 	case SelectCharacterList::CHARACTER::MAX:
 	case SelectCharacterList::CHARACTER::NONE:
 		LoadTextureFromFile("Assets/CharacterImage/StandImage_UnityChan.png", &m_pCharacterImage);
 		m_BaseImageSize_Character = CVector2(435.0f,640.0f);
-		SetCharacterUVPos(CVector2(0.1f, -0.2f));
+		SetCharacterUVPos(CVector2(0.1f, -0.05f));
 		SetCharacterUVScale(0.5f);
 		break;
 	}
@@ -113,7 +108,11 @@ VersusCharacterPanelMove::VersusCharacterPanelMove()
 {
 	m_FramePanelImage.SetTexture("Assets/UI/CharacterBackPanel_Frame.png");
 
-	SetSize(CVector2(147.0f, 320.0f) * 1.8f);
+	SetSize(CVector2(147.0f, 320.0f) * 2.3f);
+
+	m_FramePanelImage.m_IsVisible =
+		m_BackPanelImage.m_IsVisible =
+		m_CharacterImage.m_IsVisible = false;
 }
 
 VersusCharacterPanelMove::~VersusCharacterPanelMove()
@@ -177,7 +176,7 @@ void VersusCharacterPanelMove::FadeInUpdate()
 		m_state = VersusCharacterPanelMove::MOVESTATE::MOVE;
 	}
 
-	SetColor(DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, Percent));
+	SetColor(DirectX::XMFLOAT4(Percent, Percent, Percent, Percent));
 
 	CVector3 DrawPos = (m_FadeStartPos * (1.0f - Percent)) + (m_MoveStartPos * Percent);
 	SetPos(DrawPos);
@@ -214,7 +213,7 @@ void VersusCharacterPanelMove::FadeOutUpdate()
 		m_state = VersusCharacterPanelMove::MOVESTATE::MAX;
 	}
 
-	SetColor(DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f - Percent));
+	SetColor(DirectX::XMFLOAT4(1.0f - Percent, 1.0f - Percent, 1.0f - Percent, 1.0f - Percent));
 
 	CVector3 DrawPos = (m_MoveEndPos * (1.0f - Percent)) + (m_FadeEndPos * Percent);
 	SetPos(DrawPos);

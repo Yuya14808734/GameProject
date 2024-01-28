@@ -8,14 +8,18 @@ public:
 	~VersusTextAnime() override;
 	void Update() override;
 
-	void StartLerp();
+	void StartFadeIn();
+	void StartFadeOut();
 private:
-	void PrevDraw() override;
+	void FadeInUpdate();
+	void FadeOutUpdate();
 
 private:
 	float m_Count = 0.0f;
-	bool m_isStartLerp = false;
+	bool m_isFadeIn = false;
+	bool m_isFadeOut = false;
 	float m_LerpTime = 0.0f;
+	float m_FadeOutPercent = 0.0f;
 	CVector2 m_StartSize;
 	CVector2 m_EndSize;
 

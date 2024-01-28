@@ -5,10 +5,11 @@
 #include "VersusCharacterPanelMove.h"
 #include "VersusCharacterImageMove.h"
 #include "VersusTextAnime.h"
+#include "VersusIconAnime.h"
 
 class SceneLoad : public CScene
 {
-private:
+public:
 	enum class LOADSTATE : int
 	{
 		PANELMOVE = 0,		//ƒpƒlƒ‹‚ð“®‚©‚·
@@ -35,6 +36,8 @@ private:
 	std::vector<VersusCharacterPanelMove*> m_CharacterMovePanels;
 	std::vector<VersusCharacterImageMove*> m_CharacterImage;
 	VersusTextAnime m_VersusTextAnime;
+	Image2D m_HideImage;
+	VersusIconAnime m_VersusIcon;
 
 };
 

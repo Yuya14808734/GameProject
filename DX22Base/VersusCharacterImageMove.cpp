@@ -44,7 +44,7 @@ void VersusCharacterImageMove::Update()
 	m_CharacterAlpha = m_Percent;
 }
 
-void VersusCharacterImageMove::PrevDraw()
+void VersusCharacterImageMove::Draw()
 {
 	//‰æ‘œ‚ªÝ’è‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Î
 	if (m_pCharacterImage == nullptr)
@@ -53,7 +53,7 @@ void VersusCharacterImageMove::PrevDraw()
 	}
 
 	m_pCharacterImage->m_pos = m_CharacterDrawPos;
-	m_pCharacterImage->m_size = CVector2(435.0f, 640.0f) * 1.3f;
+	m_pCharacterImage->m_size = m_ImageSize;
 	m_pCharacterImage->m_color.w = m_CharacterAlpha;
 	m_pCharacterImage->Draw();
 }
@@ -71,6 +71,7 @@ void VersusCharacterImageMove::SetCharacterImage(SelectCharacterList::CHARACTER 
 	case SelectCharacterList::CHARACTER::NONE:
 	case SelectCharacterList::CHARACTER::MAX:
 		CharacterNum = SelectCharacterList::CHARACTER::UNITYCHAN;
+		m_ImageSize = CVector2(435.0f, 640.0f) * 1.1f;
 		break;
 	}
 

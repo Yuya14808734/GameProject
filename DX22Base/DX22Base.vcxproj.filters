@@ -651,6 +651,9 @@
     <ClCompile Include="SceneLoad_LoadState.cpp">
       <Filter>ソース ファイル\04_Game\01_SceneState\04_Load</Filter>
     </ClCompile>
+    <ClCompile Include="VersusIconAnime.cpp">
+      <Filter>ソース ファイル\04_Game\13_Load</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -1039,6 +1042,9 @@
     </ClInclude>
     <ClInclude Include="SceneLoad_LoadState.h">
       <Filter>ヘッダー ファイル\04_Game\01_SceneState\04_Load</Filter>
+    </ClInclude>
+    <ClInclude Include="VersusIconAnime.h">
+      <Filter>ヘッダー ファイル\04_Game\13_Load</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

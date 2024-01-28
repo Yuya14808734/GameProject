@@ -1,5 +1,6 @@
 #include "Scene04_Load.h"
 #include "Scene01_Select.h"
+#include "Main.h"
 
 //=========================================
 // 各ステートのインクルード
@@ -11,12 +12,26 @@
 
 void SceneLoad::Init()
 {	
+	CVector2 WindowSize(
+	static_cast<float>(GetAppWidth()),
+	static_cast<float>(GetAppHeight())
+		);
+
 	//=====<描画するキャラクターを設定>=====
 	for (int i = 0; i < 2; i++)
 	{
 		m_CharacterMovePanels.push_back(new VersusCharacterPanelMove());
 		m_CharacterImage.push_back(new VersusCharacterImageMove());
 	}
+
+	m_HideImage.SetTexture("Assets/Texture/WhiteTexture.png");
+	m_HideImage.m_color = DirectX::XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
+	m_HideImage.m_size = WindowSize;
+	m_HideImage.m_pos = WindowSize * 0.5f;
+
+	m_BackGround.SetTexture("Assets/BackGroundImage/LoadBackGround.png");
+	m_BackGround.m_size = WindowSize;
+	m_BackGround.m_pos = WindowSize * 0.5f;
 
 	SetNextState(SceneLoad::LOADSTATE::PANELMOVE);
 	ChangeNextState();
@@ -83,9 +98,11 @@ void SceneLoad::ChangeNextState()
 
 		pState->SetScene(this);
 		pState->SetBackGround(&m_BackGround);
+		pState->SetHideImage(&m_HideImage);
 		pState->SetCharacterMovePanels(&m_CharacterMovePanels);
 		pState->SetCharacterImages(&m_CharacterImage);
 		pState->SetVersusTextAnime(&m_VersusTextAnime);
+		pState->SetVersusIconImage(&m_VersusIcon);
 		
 		//初期化処理
 		m_LoadStateContext.StateInit();

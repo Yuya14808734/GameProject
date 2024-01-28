@@ -2,20 +2,18 @@
 #include "Image2D.h"
 #include "Select01_CharacterList.h"
 
-class VersusCharacterImageMove : public Image2D
+class VersusCharacterImageMove
 {
 public:
 	VersusCharacterImageMove();
-	~VersusCharacterImageMove() override;
-	void Update() override;
+	~VersusCharacterImageMove();
+	void Update();
+	void Draw();
 
 	void StartAnimation();
 	void SetCharacterImage(SelectCharacterList::CHARACTER CharacterNum);
 	void SetAnimeTime(float time);
 	void SetLerpPos(const CVector3& StartPos, const CVector3& EndPos);
-
-private:
-	void PrevDraw() override;
 
 private:
 	Image2D* m_pCharacterImage = nullptr;
@@ -27,4 +25,5 @@ private:
 
 	CVector3 m_StartPos;
 	CVector3 m_EndPos;
+	CVector2 m_ImageSize;
 };

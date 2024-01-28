@@ -4,12 +4,15 @@
 class SceneLoad_PanelMoveState : public SceneLoad_BaseState
 {
 public:
-	SceneLoad_PanelMoveState();
-	~SceneLoad_PanelMoveState() override;
+	SceneLoad_PanelMoveState() {};
+	~SceneLoad_PanelMoveState() override {};
 
 	void Init() override;
 	void Uninit() override;
 	void Update() override;
 	void Draw() override;
 private:
+	int m_FrameCount = 0;
+	int m_DrawPanelNum = 0;
+
 };

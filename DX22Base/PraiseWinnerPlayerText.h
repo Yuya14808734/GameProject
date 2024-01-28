@@ -50,10 +50,10 @@ private:
 	float	m_WinnerLetters_Alpha = 0.0f;
 
 	//=====<文字のフェードイン>=====
-	float	m_LetterMoveFadeInTime = 0.0f;
+	float	m_LetterMoveFadeInTime		= 0.0f;
 	bool	m_isLeetterMoveFadeIn		= false;
 	float	m_LetterMoveFadeInCount		= 0.0f;
-	float	m_LetterMoveFadePercent = 0.0f;
+	float	m_LetterMoveFadePercent		= 0.0f;
 	
 	//=====<文字のフェードアウト>=====
 	float	m_LetterMoveFadeOutTime = 0.0f;

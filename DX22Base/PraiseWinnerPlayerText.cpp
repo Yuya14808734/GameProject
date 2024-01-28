@@ -71,7 +71,6 @@ void PraiseWinnerPlayerText::Draw()
 		m_WinnerLetters[Num[i]].Draw();
 	}
 
-	//m_WinnerPlayerNumImage.m_IsVisible = true;
 	m_WinnerPlayerNumImage.Draw();
 }
 
