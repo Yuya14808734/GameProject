@@ -19,6 +19,7 @@ void CharacterBase_JumpInState::Update()
 {
 	m_pCharacterParameter->JumpCharageCount++;
 
+
 	//ジャンプボタンの押している長さによってジャンプしている力を変えてやる
 	if (m_pController->GetJumpTrigger())
 	{

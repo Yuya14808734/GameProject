@@ -52,9 +52,10 @@ void CharacterBase_JumpState::Update()
 		m_pCharacter->SetNextState(Character::STATE::State_AttackAirN); //弱の設定
 	}
 
-	m_pCharacterParameter->Velocity.y *= m_pJumpParameter->JumpUpReduction;		//重力を掛ける
+	m_pCharacterParameter->Velocity.y 
+		*= m_pJumpParameter->JumpUpReduction;		//1より小さい数値を掛ける
 
-	//重力制御(最大の落下速度になったら)
+	//重力制御(最高の落下速度になったら)(一応の処理)
 	if (m_pCharacterParameter->Velocity.y < m_pJumpParameter->DefaultFallSpeed)
 	{
 		m_pCharacterParameter->Velocity.y = m_pJumpParameter->DefaultFallSpeed;

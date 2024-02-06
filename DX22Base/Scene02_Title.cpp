@@ -8,14 +8,17 @@
 void SceneTitle::Init()
 {
 	//===<‰æ‘œ‚Ì“Ç‚Ýž‚Ýˆ—>===
-	m_BackGround.SetTexture("Assets/UI/TitleBackGround.png");
+	m_BackGround00.SetTexture("Assets/BackGroundImage/BackGround00.png");
+	m_BackGround01.SetTexture("Assets/BackGroundImage/TitleBackGround.png");
 	
 	CVector2 WindowSize = 
 		CVector2(static_cast<float>(GetAppWidth()), static_cast<float>(GetAppHeight()));
 
 	//===<”wŒi‚ÌƒTƒCƒY‚Ì•ÏX>===
-	m_BackGround.SetPos(WindowSize * 0.5f);
-	m_BackGround.SetSize(WindowSize);
+	m_BackGround00.m_pos = 
+		m_BackGround01.m_pos = (WindowSize * 0.5f);
+	m_BackGround00.m_size =
+		m_BackGround01.m_size = (WindowSize);
 
 	SetNextState(SceneTitle::TITLESTATE::TITLEDRAW);
 	ChangeNextState();
@@ -48,7 +51,8 @@ void SceneTitle::Draw()
 	//=====<‰æ–Ê•`‰æ>=====
 	EnableDepth(false);
 	
-	m_BackGround.Draw();
+	m_BackGround00.Draw();
+	m_BackGround01.Draw();
 
 	m_TitleStateContext.StateDraw();
 

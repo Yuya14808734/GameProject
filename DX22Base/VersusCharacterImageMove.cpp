@@ -77,8 +77,8 @@ void VersusCharacterImageMove::SetCharacterImage(SelectCharacterList::CHARACTER 
 	}
 
 	m_pCharacterImage =
-		&((SelectCharacterList::GetCharacterStandImageList())
-			[static_cast<int>(CharacterNum)]);
+		(&((SelectCharacterList::GetCharacterStandImageList())
+			[static_cast<int>(CharacterNum)]));
 }
 
 void VersusCharacterImageMove::SetAnimeTime(float time)

@@ -3,7 +3,7 @@
 
 void SceneTitle_TitleScreenState::Init()
 {
-	m_TitleName.SetTexture("Assets/UI/TitleImage.png");
+	m_TitleName.SetTexture("Assets/UI/TitleImage00.png");
 	m_TextUnderLine.SetTexture("Assets/UI/PushTextUnderLine.png");
 
 	CVector2 WindowSize =

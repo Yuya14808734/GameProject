@@ -29,5 +29,6 @@ public:
 
 private:
 	StateContext m_TitleStateContext;
-	Image2D m_BackGround;
+	Image2D m_BackGround00;
+	Image2D m_BackGround01;
 };

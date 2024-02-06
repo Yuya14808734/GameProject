@@ -48,7 +48,8 @@ void CharacterBase_FallDownState::Update()
 		m_pCharacterParameter->Velocity.x *= m_pMoveParameter->AirDrag;	//‹ó‹C’ïR‚ðŠ|‚¯‚é
 	}
 
-	m_pCharacterParameter->Velocity.y += m_pJumpParameter->FallDownGravity;			//d—Í‚ðŠ|‚¯‚é
+	m_pCharacterParameter->Velocity.y 
+		+= m_pJumpParameter->FallDownGravity;			//d—Í‚ð‘«‚·
 
 	//d—Í§Œä(Å‘å‚Ì—Ž‰º‘¬“x‚É‚È‚Á‚½‚ç)
 	if (m_pCharacterParameter->Velocity.y < m_pJumpParameter->DefaultFallSpeed)
