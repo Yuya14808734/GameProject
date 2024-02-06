@@ -14,7 +14,7 @@ public:
 	static void Draw();
 
 	static void SetOffset(DirectX::XMFLOAT2 offset);
-	static void SetSize(DirectX::XMFLOAT2 size);
+	static void SetSize(DirectX::XMFLOAT2 size,bool Inverted = false);
 	static void SetUVPos(DirectX::XMFLOAT2 pos);
 	static void SetUVScale(DirectX::XMFLOAT2 scale);
 	static void SetColor(DirectX::XMFLOAT4 color);

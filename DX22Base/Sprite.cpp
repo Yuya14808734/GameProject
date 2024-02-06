@@ -126,10 +126,20 @@ void Sprite::SetOffset(DirectX::XMFLOAT2 offset)
 	m_param[0].x = offset.x;
 	m_param[0].y = offset.y;
 }
-void Sprite::SetSize(DirectX::XMFLOAT2 size)
+
+void Sprite::SetSize(DirectX::XMFLOAT2 size, bool Inverted)
 {
-	m_param[0].z = size.x;
-	m_param[0].w = size.y;
+	//è„â∫îΩì]Ç∑ÇÈÇ©
+	if (!Inverted)
+	{
+		m_param[0].z = size.x;
+		m_param[0].w = size.y;
+	}
+	else
+	{
+		m_param[0].z = size.x;
+		m_param[0].w = -size.y;
+	}	
 }
 
 void Sprite::SetUVPos(DirectX::XMFLOAT2 pos)
@@ -137,11 +147,13 @@ void Sprite::SetUVPos(DirectX::XMFLOAT2 pos)
 	m_param[1].x = pos.x;
 	m_param[1].y = pos.y;
 }
+
 void Sprite::SetUVScale(DirectX::XMFLOAT2 scale)
 {
 	m_param[1].z = scale.x;
 	m_param[1].w = scale.y;
 }
+
 void Sprite::SetColor(DirectX::XMFLOAT4 color)
 {
 	m_param[2] = color;

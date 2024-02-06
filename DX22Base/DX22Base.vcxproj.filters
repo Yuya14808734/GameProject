@@ -654,6 +654,9 @@
     <ClCompile Include="VersusIconAnime.cpp">
       <Filter>ソース ファイル\04_Game\13_Load</Filter>
     </ClCompile>
+    <ClCompile Include="GameUI04_OnHeadUI.cpp">
+      <Filter>ソース ファイル\04_Game\08_GameUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -1045,6 +1048,9 @@
     </ClInclude>
     <ClInclude Include="VersusIconAnime.h">
       <Filter>ヘッダー ファイル\04_Game\13_Load</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI04_OnHeadUI.h">
+      <Filter>ヘッダー ファイル\04_Game\08_GameUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

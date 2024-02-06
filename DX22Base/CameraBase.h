@@ -37,6 +37,8 @@ public :
 	void CreateViewingFrustum();
 	bool CheckInObject(const CVector3& Point, float Radius);
 
+	CVector2 ChangeScreenPos(const CVector3& Pos3D);
+
 protected:
 	CVector3 m_pos;
 	CVector3 m_look;

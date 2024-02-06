@@ -1,5 +1,6 @@
 #include "CameraBase.h"
 #include "Geometory.h"
+#include "Main.h"
 
 CameraBase::CameraBase()
 	:m_pos(0.0f, 0.0f, 0.0f), m_look(0.0f, 0.0f, 1.0f), m_up(0.0f, 1.0f, 0.0f),
@@ -199,4 +200,62 @@ bool CameraBase::CheckInObject(const CVector3& Point, float Radius)
 	}
 
 	return true;
+}
+
+CVector2 CameraBase::ChangeScreenPos(const CVector3& Pos3D)
+{
+	CVector2 ScreenSize(
+	static_cast<float>(GetAppWidth()),
+	static_cast<float>(GetAppHeight()));
+
+	//変数を作成する
+	DirectX::XMVECTOR XMVEC_WorldPos = DirectX::XMLoadFloat3(&Pos3D.f);
+
+	//ビューマトリクスルの作成
+	DirectX::XMVECTOR XMVEC_CamPos	= DirectX::XMLoadFloat3(&m_pos.f);
+	DirectX::XMVECTOR XMVEC_CamLook = DirectX::XMLoadFloat3(&m_look.f);
+	DirectX::XMVECTOR XMVEC_ComUp	= DirectX::XMLoadFloat3(&m_up.f);
+
+	DirectX::XMMATRIX XMMAT_View = DirectX::XMMatrixLookAtLH(
+		XMVEC_CamPos,
+		XMVEC_CamLook,
+		XMVEC_ComUp
+	);
+
+	DirectX::XMMATRIX XMMAT_Projection =
+		DirectX::XMMatrixPerspectiveFovLH(
+		DirectX::XMConvertToRadians(m_fovy),
+			ScreenSize.x / ScreenSize.y,
+			m_near,m_far);
+
+	XMVEC_WorldPos = DirectX::XMVector3Transform(XMVEC_WorldPos, XMMAT_View);
+	XMVEC_WorldPos = DirectX::XMVector3Transform(XMVEC_WorldPos, XMMAT_Projection);
+
+	float w = ScreenSize.x * 0.5f;
+	float h = ScreenSize.y * 0.5f;
+
+	DirectX::XMMATRIX XMMAT_ViewPort = {
+		w,		0.0f,	0.0f,	0.0f,
+		0.0f,	-h,		0.0f,	0.0f,
+		0.0f,	0.0f,	1.0f,	0.0f,
+		w,		h,		0.0f,	1.0f
+	};
+
+	DirectX::XMFLOAT3 XMF3_WorldPos;
+	DirectX::XMStoreFloat3(&XMF3_WorldPos, XMVEC_WorldPos);
+
+	//zで割って-1～1の範囲に収める
+	//スクリーン変換
+	DirectX::XMVECTOR XMVECTOR_2DPos = DirectX::XMVectorSet(
+		XMF3_WorldPos.x / XMF3_WorldPos.z,
+		XMF3_WorldPos.y / XMF3_WorldPos.z,
+		1.0f, 1.0f);
+
+	XMVECTOR_2DPos =
+		DirectX::XMVector3Transform(XMVECTOR_2DPos, XMMAT_ViewPort);
+
+	DirectX::XMFLOAT3 XMF3_2DPos;
+	DirectX::XMStoreFloat3(&XMF3_2DPos, XMVECTOR_2DPos);
+
+	return CVector2(XMF3_2DPos.x,XMF3_2DPos.y);
 }

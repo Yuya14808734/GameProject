@@ -2,12 +2,15 @@
 #include "Calculation.h"
 #include "Collider.h"
 #include "ModelDrawer.h"
+#include "Image2D.h"
+#include "Image3D.h"
 #include <vector>
 #include "GameUI03_CharacterDamageUI.h"
 #include "XboxKeyboard.h"
 #include "Player_Controller.h"
 #include "Stage_Base.h"
 #include "StatePattern.h"
+#include "GameUI04_OnHeadUI.h"
 
 class Character;
 class Character_State;
@@ -187,6 +190,7 @@ protected:
 	BoxCollider				 m_CharacterCollider;			//プレイヤーの当たり判定
 	std::vector<ATTACKPARAM> m_AttackCollider;				//攻撃したときの当たり判定
 	Character_DamageUI		 m_DamageUI;					//ダメージUI
+	OnHeadUI				 m_OnHeadUI;					//頭上のUI 
 	MOVEPARAMETER			 m_MoveParameter;				//歩く速さなどの動きのパラメータ
 	JUMPPARAMETER			 m_JumpParameter;				//ジャンプ力などのパラメータ
 	BLOWAWAYPARAMETER		 m_BlowAwayParameter;			//吹っ飛ばし力などのパラメータ
@@ -306,6 +310,12 @@ public:
 	void SetDamage(float damage)								//ダメージを設定
 	{ m_DamagePercentage = damage; }
 
+	//------------------------------------------------------------------------------
+	void SetOnHeadUI(const char* pFilePathName) {
+		m_OnHeadUI.SetTexture(pFilePathName);
+		
+	}
+	 
 	//------------------------------------------------------------------------------
 	void SetStock(int stock) 									//ストックを設定
 	{ m_CharacterStock = stock;

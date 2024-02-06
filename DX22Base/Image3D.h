@@ -11,7 +11,7 @@ class Image3D
 {
 public:
 	Image3D();
-	~Image3D();
+	virtual ~Image3D();
 	virtual void Update();
 	void Draw();
 	void SetTexture(const char* FilePath);

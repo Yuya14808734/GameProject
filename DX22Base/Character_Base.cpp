@@ -40,6 +40,10 @@ void Character::Character_Init()
 	m_DamageUI.SetPos(BasePos + (PosDistance * static_cast<float>(PlayerNum)));
 	m_CharacterStock = 3;
 	m_DamageUI.SetStockNum(m_CharacterStock);
+
+	m_OnHeadUI.SetCharacter(this);
+	m_OnHeadUI.SetHeadTexture(PlayerNum + 1);
+
 	//============================================================================
 
 	//=====<“–‚½‚è”»’è‚ÌÝ’è>=============================================
@@ -54,6 +58,7 @@ void Character::Character_Init()
 
 	m_Parameter.JumpCount = 0;
 	Character_ColliderInit();
+
 }
 
 void Character::Character_Uninit()
@@ -96,6 +101,8 @@ void Character::Character_Update()
 	//========================================
 	m_DamageUI.GetDamageUI()->SetNumber(static_cast<int>(m_DamagePercentage));
 	m_DamageUI.Update();
+
+	m_OnHeadUI.Update();
 }
 
 void Character::Character_Draw()
@@ -119,7 +126,8 @@ void Character::Character_UIDraw()
 	//========================================
 	// UI‚Ì•`‰æ
 	//========================================
-	m_DamageUI.Draw();
+	m_OnHeadUI.Draw();
+	m_DamageUI.Draw();	
 }
 
 void Character::DrawCollider()

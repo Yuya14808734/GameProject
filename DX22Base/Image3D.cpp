@@ -10,9 +10,9 @@ Image3D::Image3D()
 	, m_pos(CVector3(0.0f,0.0f,0.0f))
 	, m_size(CVector2(1.0f,1.0f))
 	, m_scale(CVector3(1.0f, 1.0f, 1.0f))
-	, m_rotate(CVector3(0.0f, 180.0f, 0.0f))
-	, m_UVpos({ 0.0f,1.0f })
-	, m_UVsize({ 1.0f,-1.0f })
+	, m_rotate(CVector3(0.0f, 0.0f, 0.0f))
+	, m_UVpos({ 0.0f,0.0f })
+	, m_UVsize({ 1.0f,1.0f })
 	, m_color({ 1.0f,1.0f,1.0f,1.0f })
 	, m_Billboard(false)
 {
@@ -98,7 +98,7 @@ void Image3D::Draw()
 	Sprite::SetWorld(mat[0]);
 	Sprite::SetView(mat[1]);
 	Sprite::SetProjection(mat[2]);
-	Sprite::SetSize(m_size.f);
+	Sprite::SetSize(m_size.f,true);
 	Sprite::SetUVPos(m_UVpos.f);
 	Sprite::SetUVScale(m_UVsize.f);
 	Sprite::SetTexture(m_pTexture);

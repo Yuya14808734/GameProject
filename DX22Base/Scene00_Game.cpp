@@ -64,6 +64,8 @@ void SceneGame::Init()
 	m_BackGround.SetSize(CVector2(1200.0f,800.0f));
 	m_BackGround.SetScale(CVector3::GetOne() * 0.2f);
 
+
+
 	//=====<各オブジェクトに渡したいオブジェクトポインタがあるならここでする>=====
 	for (Character* pCharacter : m_Characters)
 	{

@@ -53,3 +53,4 @@ void Character_State::SetBlowAwayParameter(Character::BLOWAWAYPARAMETER * pBlowA
 {
 	m_pBlowAwayParameter = pBlowAwayParameter;
 }
+
