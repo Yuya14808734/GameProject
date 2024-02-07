@@ -657,6 +657,9 @@
     <ClCompile Include="GameUI04_OnHeadUI.cpp">
       <Filter>ソース ファイル\04_Game\08_GameUI</Filter>
     </ClCompile>
+    <ClCompile Include="Effect01_SingleSmoke.cpp">
+      <Filter>ソース ファイル\04_Game\05_Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -1051,6 +1054,9 @@
     </ClInclude>
     <ClInclude Include="GameUI04_OnHeadUI.h">
       <Filter>ヘッダー ファイル\04_Game\08_GameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect01_SingleSmoke.h">
+      <Filter>ヘッダー ファイル\04_Game\05_Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
