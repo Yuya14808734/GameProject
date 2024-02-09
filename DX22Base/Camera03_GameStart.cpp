@@ -39,7 +39,9 @@ void CameraGameStart::Update()
 
 void CameraGameStart::ChangeInit()
 {
-
+	m_pos = m_StartPos;
+	m_Time = 0.0f;
+	m_NowLookCharacterNum = 0;
 }
 
 void CameraGameStart::ChangeUninit()

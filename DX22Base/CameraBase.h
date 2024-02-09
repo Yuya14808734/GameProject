@@ -38,18 +38,33 @@ public :
 	bool CheckInObject(const CVector3& Point, float Radius);
 
 	CVector2 ChangeScreenPos(const CVector3& Pos3D);
+	void SetOrtho(bool ortho);							//平行投影
 
 protected:
 	CVector3 m_pos;
 	CVector3 m_look;
-	CVector3 m_up;		//ビュー行列の設定に必要な変数
-	float m_fovy;		//カメラ縦方向の画角
-	float m_aspect;		//縦を1とした横の比率
-	float m_near;		//どこから映すか
-	float m_far;		//どこまで映すか
+	CVector3 m_up;					//ビュー行列の設定に必要な変数
 
-	PlaneCollider m_Planes[6];	//視野錐台で使う面
+	PlaneCollider m_Planes[6];		//視野錐台で使う面
 
+	//============================================================
+	// 透視投影を行う場合の変数
+	//============================================================
+	float m_fovy	= 0.0f;					//カメラ縦方向の画角
+	float m_aspect	= 0.0f;					//縦を1とした横の比率
+	
+	//============================================================
+	// 並行投影を行う場合の変数
+	//============================================================
+	bool m_isOrtho		= false;		//平行投影を行うか
+	float m_ViewWidth	= 0.0f;
+	float m_ViewHeight	= 0.0f; 
+	
+	//============================================================
+	// 共通で使う変数
+	//============================================================
+	float m_near = 0.0f;					//どこから映すか
+	float m_far = 0.0f;					//どこまで映すか
 };
 
 

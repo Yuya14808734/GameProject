@@ -5,12 +5,10 @@ CameraGame::CameraGame()
 	:m_pCharacterVector(nullptr),
 	m_pStage(nullptr)
 {
-	
 }
 
 CameraGame::~CameraGame()
 {
-
 }
 
 void CameraGame::Init()
@@ -193,6 +191,7 @@ void CameraGame::Update()
 
 void CameraGame::ChangeInit()
 {
+	Init();
 }
 
 void CameraGame::ChangeUninit()

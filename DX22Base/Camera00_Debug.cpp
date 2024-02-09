@@ -52,15 +52,3 @@ void CameraDebug::Update()
 
 	m_look = CVector3::GetZero();
 }
-
-void CameraDebug::ChangeInit()
-{
-}
-
-void CameraDebug::ChangeUninit()
-{
-}
-
-void CameraDebug::SetCharacter(Character * pCharacter)
-{
-}

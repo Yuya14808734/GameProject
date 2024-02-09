@@ -32,10 +32,11 @@ private:
 	bool m_isUpdate = false;
 };
 
+//カメラの作成
 template<typename T>
 T* CameraManager::CreateCamera(std::string CameraName)
 {
-	//カメラがあるかを探す
+	//同じ名前のカメラがあるかを探す
 	std::map<std::string, CameraBase*>::iterator it = m_CameraList.find(CameraName);
 
 	if (it != m_CameraList.end())
@@ -47,6 +48,9 @@ T* CameraManager::CreateCamera(std::string CameraName)
 
 	//なければ追加する
 	m_CameraList.insert(std::make_pair(CameraName, returnValue));
+
+	//カメラの初期化
+	static_cast<CameraBase*>(returnValue)->Init();
 
 	return returnValue;
 }

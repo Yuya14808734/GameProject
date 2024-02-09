@@ -4,7 +4,9 @@
 
 CameraBase::CameraBase()
 	:m_pos(0.0f, 0.0f, 0.0f), m_look(0.0f, 0.0f, 1.0f), m_up(0.0f, 1.0f, 0.0f),
-	m_fovy(60.0f), m_aspect(16.0f / 9.0f), m_near(0.2f), m_far(100.0f)
+	m_fovy(60.0f), m_aspect(16.0f / 9.0f),
+	m_isOrtho(false), m_ViewWidth(10.0f), m_ViewHeight(10.0f),
+	m_near(0.2f), m_far(100.0f)
 {
 
 };
@@ -52,14 +54,29 @@ DirectX::XMFLOAT4X4 CameraBase::GetProjectionMatrix()
 {
 	DirectX::XMFLOAT4X4 mat;
 	DirectX::XMMATRIX proj;
-	/*メンバー変数を元にプロジェクション行列を作成し、転置済みの行列として戻り値を返す*/
-	float FovAngleY = DirectX::XMConvertToRadians(m_fovy);//カメラ縦方向の画角
-	float AspectRatio = m_aspect;//縦を1とした横の比率
-	float NearZ = m_near;//どこから映すか
-	float FarZ = m_far;//どこまで映すか
-	proj = DirectX::XMMatrixPerspectiveFovLH(FovAngleY, AspectRatio, NearZ, FarZ);//プロジェクション座標系行列の作成
-	proj = XMMatrixTranspose(proj);//転置
-	DirectX::XMStoreFloat4x4(&mat, proj);//最適化
+
+	if (!m_isOrtho)
+	{
+		//========================================================================
+		// 透視投影を行う
+		//========================================================================
+
+		/*メンバー変数を元にプロジェクション行列を作成し、転置済みの行列として戻り値を返す*/
+		float FovAngleY = DirectX::XMConvertToRadians(m_fovy);//カメラ縦方向の画角
+		proj = DirectX::XMMatrixPerspectiveFovLH(FovAngleY, m_aspect, m_near, m_far);//プロジェクション座標系行列の作成
+		proj = XMMatrixTranspose(proj);//転置
+		DirectX::XMStoreFloat4x4(&mat, proj);//最適化
+	}
+	else
+	{
+		//========================================================================
+		// 平行投影を行う
+		//========================================================================
+
+		proj = DirectX::XMMatrixOrthographicLH(m_ViewHeight, m_ViewWidth, m_near, m_far);
+		proj = DirectX::XMMatrixTranspose(proj);
+		DirectX::XMStoreFloat4x4(&mat, proj);
+	}	
 
 	return mat;
 }
@@ -258,4 +275,9 @@ CVector2 CameraBase::ChangeScreenPos(const CVector3& Pos3D)
 	DirectX::XMStoreFloat3(&XMF3_2DPos, XMVECTOR_2DPos);
 
 	return CVector2(XMF3_2DPos.x,XMF3_2DPos.y);
+}
+
+void CameraBase::SetOrtho(bool ortho)
+{
+	m_isOrtho = ortho;
 }

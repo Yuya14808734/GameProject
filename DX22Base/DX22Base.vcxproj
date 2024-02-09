@@ -157,6 +157,7 @@
     <ClCompile Include="Camera00_Debug.cpp" />
     <ClCompile Include="Camera02_NoMove.cpp" />
     <ClCompile Include="Camera03_GameStart.cpp" />
+    <ClCompile Include="Camera04_Light.cpp" />
     <ClCompile Include="Character00_AttackDS.cpp" />
     <ClCompile Include="Character00_DeadState.cpp" />
     <ClCompile Include="Character00_GameOverState.cpp" />
@@ -176,6 +177,7 @@
     <ClCompile Include="FadeOut00_ColorFade.cpp" />
     <ClCompile Include="GameUI02_StockCount.cpp" />
     <ClCompile Include="GameUI04_OnHeadUI.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="PushButtonText.cpp" />
     <ClCompile Include="ResultWinnerCharacterImage.cpp" />
     <ClCompile Include="ResultWinnerNumPanel.cpp" />
@@ -290,6 +292,7 @@
     <ClInclude Include="Camera01_Game.h" />
     <ClInclude Include="Camera02_NoMove.h" />
     <ClInclude Include="Camera03_GameStart.h" />
+    <ClInclude Include="Camera04_Light.h" />
     <ClInclude Include="Character00_AirMoveState.h" />
     <ClInclude Include="Character00_Attack11.h" />
     <ClInclude Include="Character00_Attack12.h" />
@@ -338,6 +341,7 @@
     <ClInclude Include="FadeOut00_ColorFade.h" />
     <ClInclude Include="GameUI02_StockCount.h" />
     <ClInclude Include="GameUI04_OnHeadUI.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="SceneLoad_LoadState.h" />
     <ClInclude Include="VersusCharacterPanelMove.h" />
     <ClInclude Include="PushButtonText.h" />

@@ -8,9 +8,6 @@ public:
 	CameraDebug();
 	~CameraDebug();
 	void Update() override;
-	void ChangeInit() override;
-	void ChangeUninit() override;
-	void SetCharacter(Character* pCharacter);
 
 private:
 	Character* m_pCharacter = nullptr;
