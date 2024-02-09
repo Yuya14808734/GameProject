@@ -2,6 +2,7 @@
 #include "Main.h"
 #include "Scene01_Select.h"
 #include "Scene01_Select.h"
+#include "Effect_Manager.h"
 
 void SceneLoad_CharacterDrawState::Init()
 {
@@ -27,6 +28,12 @@ void SceneLoad_CharacterDrawState::Init()
 
 	m_pVersusIconImage->SetLerpSize(2.0f, 1.3f);
 	m_pVersusIconImage->SetLerpTime(1.0f);
+
+	(*m_pEfkHnd_FireSparks) = 
+		EffectManager::GetManager()->Play(EffectManager::GetEffect("FireSparksEffect"), 0, 0, 0);
+	EffectManager::GetManager()->SetLocation(*m_pEfkHnd_FireSparks,
+		{ 0.0f,0.0f,0.0f });
+	EffectManager::GetManager()->SetScale(*m_pEfkHnd_FireSparks, 10.0f, 10.0f, 10.0f);
 }
 
 void SceneLoad_CharacterDrawState::Uninit()
@@ -48,7 +55,7 @@ void SceneLoad_CharacterDrawState::Update()
 		m_pVersusIconImage->StartFadeIn();
 	}
 
-	if (m_FrameCount == 150)
+	if (m_FrameCount == 500)
 	{
 		m_pScene->SetNextState(SceneLoad::LOADSTATE::LOAD);
 	}
@@ -78,4 +85,7 @@ void SceneLoad_CharacterDrawState::Draw()
 	m_pVersusIconImage->Draw();
 
 	EnableDepth(true);
+
+	EffectManager::EffectDraw(*m_pEfkHnd_FireSparks);
+
 }

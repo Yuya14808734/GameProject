@@ -42,6 +42,7 @@ void EffectManager::EffectInit()
 	EffectManager::Add_Effect("C00_AirN", u"Assets/Effect/Character00/Character00_AttackAirN.efkefc");
 	EffectManager::Add_Effect("DeadEffect", u"Assets/Effect/GameEffect/DeadEffect.efkefc");
 	EffectManager::Add_Effect("WinnerEffect", u"Assets/Effect/WinnerEffect.efkefc");
+	EffectManager::Add_Effect("FireSparksEffect", u"Assets/Effect/FireSparks.efkefc");
 
 	//===============================================================================
 }

@@ -20,6 +20,7 @@ protected:
 	std::vector<VersusCharacterImageMove*>* m_pCharacterImages = nullptr;
 	VersusTextAnime* m_pVersusTextAnime = nullptr;
 	VersusIconAnime* m_pVersusIconImage = nullptr;
+	Effekseer::Handle* m_pEfkHnd_FireSparks = nullptr;
 
 public:
 	void SetScene(SceneLoad* pScene) 
@@ -42,4 +43,7 @@ public:
 
 	void SetVersusIconImage(VersusIconAnime* pVersusIconImage) 
 	{ m_pVersusIconImage = pVersusIconImage; }
+
+	void SetFireSparks(Effekseer::Handle* pFireSparksEffect) 
+	{ m_pEfkHnd_FireSparks = pFireSparksEffect; }
 };

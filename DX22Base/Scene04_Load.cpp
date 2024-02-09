@@ -9,6 +9,8 @@
 #include "SceneLoad_CharacterDrawState.h"
 #include "SceneLoad_PanelMoveState.h"
 #include "SceneLoad_LoadState.h"
+#include "CameraManager.h"
+#include "Camera02_NoMove.h"
 
 void SceneLoad::Init()
 {	
@@ -16,6 +18,13 @@ void SceneLoad::Init()
 	static_cast<float>(GetAppWidth()),
 	static_cast<float>(GetAppHeight())
 		);
+
+	//カメラの作成
+	CameraNoMove* pCamera = static_cast<CameraNoMove*>(
+		CameraManager::GetInstance().CreateCamera<CameraNoMove>("NoMoveCamera"));
+	CameraManager::GetInstance().SetSceneCamera("NoMoveCamera");
+	pCamera->SetPos(CVector3(0.0f, 0.0f, -10.0f));
+	pCamera->SetLookPos(CVector3(0.0f, 0.0f, 0.0f));
 
 	//=====<描画するキャラクターを設定>=====
 	for (int i = 0; i < 2; i++)
@@ -51,6 +60,10 @@ void SceneLoad::Uninit()
 	{ delete copy; }
 
 	m_CharacterMovePanels.clear();
+
+	//エフェクトの終了
+	EffectManager::GetManager()->StopAllEffects();
+	CameraManager::GetInstance().DestroyAllCamera(true);
 }
 
 void SceneLoad::Update()
@@ -103,6 +116,7 @@ void SceneLoad::ChangeNextState()
 		pState->SetCharacterImages(&m_CharacterImage);
 		pState->SetVersusTextAnime(&m_VersusTextAnime);
 		pState->SetVersusIconImage(&m_VersusIcon);
+		pState->SetFireSparks(&m_efkHnd_FireSparks);
 		
 		//初期化処理
 		m_LoadStateContext.StateInit();

@@ -32,4 +32,6 @@ void SceneLoad_LoadState::Draw()
 	m_pVersusIconImage->Draw();
 
 	EnableDepth(true);
+
+	EffectManager::EffectDraw(*m_pEfkHnd_FireSparks);
 }

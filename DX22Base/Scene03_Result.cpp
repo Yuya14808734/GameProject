@@ -96,6 +96,9 @@ void SceneResult::Uninit()
 {
 	m_ResultStateContext.StateUninit();
 	m_ResultStateContext.ReleaseAllState();
+
+	EffectManager::GetManager()->StopAllEffects();
+	CameraManager::GetInstance().DestroyAllCamera(true);
 }
 
 void SceneResult::Update()
