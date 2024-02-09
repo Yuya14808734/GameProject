@@ -221,6 +221,7 @@ void SceneGame::EffectUpdate()
 	{
 		(*it)->Update();
 
+		//エフェクトの削除
 		if ((*it)->GetisDestroy())
 		{
 			//削除

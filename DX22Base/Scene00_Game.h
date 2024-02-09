@@ -47,12 +47,12 @@ public:
 	void EffectPause();
 
 private:
-	GAMESTATE m_GameState = GAMESTATE::MAX;
-	StateContext m_GameSceneStateContext;
+	GAMESTATE m_GameState = GAMESTATE::MAX;		//今のステート
+	StateContext m_GameSceneStateContext;		//ステートコンテクスト
 	std::vector<Character*> m_Characters;		//キャラクターの情報
 	Stage* m_pStage;							//ステージの情報
 	CameraGame* m_pGameCamera = nullptr;		//ゲームのカメラ
-	std::vector<EffectBase*> m_Effects;
+	std::vector<EffectBase*> m_Effects;			//エフェクトの種類
 	Image3D m_BackGround;
 
 	GameStartCountUI m_GameStartCountUI;

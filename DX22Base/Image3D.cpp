@@ -6,7 +6,7 @@ Image3D::Image3D()
 	:m_pTexture(nullptr)
 	, m_pVertexShader(nullptr)
 	, m_pPixelShader(nullptr)
-	, m_BasePos({ 0.0f,0.0f,0.0f })
+	, m_BasePos(CVector3(0.0f,0.0f,0.0f))
 	, m_pos(CVector3(0.0f,0.0f,0.0f))
 	, m_size(CVector2(1.0f,1.0f))
 	, m_scale(CVector3(1.0f, 1.0f, 1.0f))
@@ -73,7 +73,11 @@ void Image3D::Draw()
 
 	worldmat = DirectX::XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
 	worldmat *= DirectX::XMMatrixRotationQuaternion(m_rotate.v);
-	worldmat *= DirectX::XMMatrixTranslation(m_pos.x, m_pos.y, m_pos.z);
+	worldmat *= DirectX::XMMatrixTranslation(
+		m_pos.x + m_BasePos.x,
+		m_pos.y + m_BasePos.y,
+		m_pos.z + m_BasePos.z
+	);
 
 	DirectX::XMStoreFloat4x4(&mat[0], DirectX::XMMatrixTranspose(worldmat));
 	mat[1] = pCamera->GetViewMatrix();		//ƒJƒƒ‰‚Ìî•ñ‚ª•ª‚©‚èŸ‘æÀ‘•

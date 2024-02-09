@@ -191,6 +191,7 @@ void Character::CheckDeadLineOver()
 
 		if (pGameScene == nullptr) { return; }
 
+		//キャラクターが死んだときのエフェクトを再生
 		EffectDead* pEffectDead = new EffectDead();
 		pEffectDead->PlayDeadEffect(m_Parameter.Pos,-m_Parameter.Pos);
 		pGameScene->GetEffectVector()->push_back(pEffectDead);

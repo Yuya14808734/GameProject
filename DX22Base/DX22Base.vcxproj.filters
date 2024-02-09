@@ -1088,5 +1088,8 @@
     <FxCompile Include="MultiplyTexturePS_ShapeCut.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
+    <FxCompile Include="DissolveSpritePS.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
