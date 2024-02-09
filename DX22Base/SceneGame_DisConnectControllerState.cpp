@@ -56,6 +56,10 @@ void SceneGame_DisConnectControllerState::Update()
 
 void SceneGame_DisConnectControllerState::Draw()
 {
+	//=====<ƒVƒƒƒhƒEƒ}ƒbƒv‚Ì•`‰æ>=====
+	m_pGameScene->LightCameraDraw();
+	CameraManager::GetInstance().SetSceneCamera("GameCamera");
+
 	//=====<”wŒi‚Ì•`‰æ>=====
 	m_pBackGround->Draw();
 

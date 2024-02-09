@@ -191,7 +191,7 @@ void CameraGame::Update()
 
 void CameraGame::ChangeInit()
 {
-	Init();
+
 }
 
 void CameraGame::ChangeUninit()

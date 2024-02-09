@@ -1,8 +1,9 @@
 #include "Scene00_Game.h"
 #include "CameraManager.h"
-#include "Camera00_Debug.h"
 #include "Camera01_Game.h"
+#include "Camera00_Debug.h"
 #include "Camera03_GameStart.h"
+#include "Camera04_Light.h"
 #include "ModelDrawer.h"
 #include "Geometory.h"
 #include "Input.h"
@@ -27,6 +28,7 @@ void SceneGame::Init()
 	CameraManager::GetInstance().CreateCamera<CameraGame>("GameCamera");
 	CameraManager::GetInstance().CreateCamera<CameraGameStart>("GameStartCamera");
 	CameraManager::GetInstance().CreateCamera<CameraDebug>("DebugCamera");
+	CameraManager::GetInstance().CreateCamera<CameraLight>("LightCamera");
 	CameraManager::GetInstance().SetSceneCamera("DebugCamera");
 	m_pGameCamera = static_cast<CameraGame*>(CameraManager::GetInstance().GetCamera("GameCamera"));
 	CameraGameStart* pCameraGameStart = 
@@ -64,8 +66,6 @@ void SceneGame::Init()
 	m_BackGround.SetSize(CVector2(1200.0f,800.0f));
 	m_BackGround.SetScale(CVector3::GetOne() * 0.2f);
 
-
-
 	//=====<各オブジェクトに渡したいオブジェクトポインタがあるならここでする>=====
 	for (Character* pCharacter : m_Characters)
 	{
@@ -84,10 +84,22 @@ void SceneGame::Init()
 	ChangeNextState();
 
 	Trigger = false;
+
+	m_pShadowMapRenderTarget = new RenderTarget();
+	m_pShadowMapRenderTarget->Create(DXGI_FORMAT_R8G8B8A8_UNORM,
+		GetAppWidth(), GetAppHeight());
+
+	m_pShadowMapDepthStencil = new DepthStencil();
+	m_pShadowMapDepthStencil->Create(
+		static_cast<UINT>(GetAppWidth()), static_cast<UINT>(GetAppHeight()), false);
 }
 
 void SceneGame::Uninit()
 {
+	//=====<レンダーターゲットの削除>=====
+	delete m_pShadowMapRenderTarget;
+	delete m_pShadowMapDepthStencil;
+
 	//=====<エフェクトの削除>=====
 	SceneGame::EffectRelease();
 
@@ -134,13 +146,14 @@ void SceneGame::Update()
 	//=====<ゲームシーンのステートの入れ替え>=====
 	ChangeNextState();
 
-
 	//=====<エフェクトのアップデート>=====
 	SceneGame::EffectUpdate();
 }
 
 void SceneGame::Draw()
 {
+	//ライトカメラで描画
+
 	m_GameSceneStateContext.StateDraw();
 }
 
@@ -258,4 +271,30 @@ void SceneGame::EffectRelease()
 	}
 
 	m_Effects.clear();
+}
+
+void SceneGame::LightCameraDraw()
+{
+	//=====<カメラの切り替え>=====
+	CameraManager::GetInstance().SetSceneCamera("LightCamera");
+
+	//=====<レンダーターゲットの切り替え>=====
+	m_pShadowMapRenderTarget->Clear();
+	m_pShadowMapDepthStencil->Clear();
+
+	SetRenderTargets(1, &m_pShadowMapRenderTarget, m_pShadowMapDepthStencil);
+
+	//=====<背景の描画>=====
+	m_BackGround.Draw();
+
+	//=====<ステージの描画>=====
+	m_pStage->Stage_Draw();
+
+	//=====<キャラクターの描画>=====
+	for (Character* copy : m_Characters)
+	{
+		copy->Character_Draw();
+	}
+
+	SetDefaultRenderTargets();
 }

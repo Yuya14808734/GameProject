@@ -34,6 +34,7 @@ void CameraLight::ChangeInit()
 
 	m_pos = m_pLight->GetPos();
 	m_look = m_pos + m_pLight->GetDirection();
+	m_up = CVector3(0.0f, 1.0f, 0.0f);
 }
 
 void CameraLight::ChangeUninit()
@@ -43,4 +44,8 @@ void CameraLight::ChangeUninit()
 void CameraLight::SetLight(LightObject* pLight)
 {
 	m_pLight = pLight;
+
+	m_pos = m_pLight->GetPos();
+	m_look = m_pos + m_pLight->GetDirection();
+	m_up = CVector3(0.0f, 1.0f, 0.0f);
 }

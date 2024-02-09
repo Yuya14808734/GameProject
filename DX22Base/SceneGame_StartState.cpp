@@ -58,6 +58,10 @@ void SceneGame_StartState::Update()
 
 void SceneGame_StartState::Draw()
 {
+	//=====<ƒVƒƒƒhƒEƒ}ƒbƒv‚Ì•`‰æ>=====
+	m_pGameScene->LightCameraDraw();
+	CameraManager::GetInstance().SetSceneCamera("GameStartCamera");
+
 	//=====<”wŒi‚Ì•`‰æ>=====
 	m_pBackGround->Draw();
 

@@ -16,6 +16,8 @@ void SceneResult_DrawWinnderNumState::Init()
 
 void SceneResult_DrawWinnderNumState::Uninit()
 {
+	//=====<ワイプで使うテクスチャを作るレンダーターゲットを削除>=====
+	FadeInWipe::ReleaseRenderTargets_WipeTexture();
 }
 
 void SceneResult_DrawWinnderNumState::Update()

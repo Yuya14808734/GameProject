@@ -12,6 +12,8 @@
 #include "StatePattern.h"
 #include "Player_Controller.h"
 #include "EffectBase.h"
+#include "Light.h"
+#include "TextureClass.h"
 
 class SceneGame : public CScene
 {
@@ -44,6 +46,7 @@ private:
 	void EffectDraw();
 	void EffectRelease();
 public:
+	void LightCameraDraw();
 	void EffectPause();
 
 private:
@@ -63,6 +66,10 @@ private:
 	PlayerController* m_pSecondController = nullptr;
 
 	bool m_isDisConnectController = false;
+	
+	LightObject m_Light;
+	RenderTarget* m_pShadowMapRenderTarget = nullptr;
+	DepthStencil* m_pShadowMapDepthStencil = nullptr;
 
 public:
 	StateContext* GetStateContext()		

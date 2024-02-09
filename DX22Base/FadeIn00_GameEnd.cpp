@@ -34,9 +34,6 @@ void FadeInWipe::CreateRenderTarget_WipeTexture()
 
 void FadeInWipe::SetRenderTargets_WipeTexture()
 {
-	//=====<レンダーターゲットを作成する>=====
-	CreateRenderTarget_WipeTexture();
-
 	//=====<レンダーターゲットの中を消してやる>=====
 	m_pRenderTarget_WipeTexture->Clear();
 	m_pDepthStencil_WipeTexture->Clear();

@@ -3,6 +3,7 @@
 #include "Scene03_Result.h"
 #include "Main.h"
 #include "FadeIn00_GameEnd.h"
+#include "CameraManager.h"
 
 void SceneGame_EndState::Init()
 {
@@ -14,6 +15,9 @@ void SceneGame_EndState::Init()
 	
 	//=====<レンダーターゲットへ描画するかの変数の初期化>=====
 	m_WipeTextureWrite = false;
+
+	//=====<ワイプで使うテクスチャを作るレンダーターゲットを設定>=====
+	FadeInWipe::CreateRenderTarget_WipeTexture();
 }
 
 void SceneGame_EndState::Uninit()
@@ -57,6 +61,10 @@ void SceneGame_EndState::Update()
 
 void SceneGame_EndState::Draw()
 {
+	//=====<シャドウマップの描画>=====
+	m_pGameScene->LightCameraDraw();
+	CameraManager::GetInstance().SetSceneCamera("GameCamera");
+
 	//=====<背景描画>=====
 	m_pBackGround->Draw();
 

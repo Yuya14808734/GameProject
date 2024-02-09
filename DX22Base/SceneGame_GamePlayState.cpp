@@ -51,6 +51,10 @@ void SceneGame_PlayState::Update()
 
 void SceneGame_PlayState::Draw()
 {
+	//=====<ƒVƒƒƒhƒEƒ}ƒbƒv‚Ì•`‰æ>=====
+	m_pGameScene->LightCameraDraw();
+	CameraManager::GetInstance().SetSceneCamera("GameCamera");
+
 	//=====<”wŒi‚Ì•`‰æ>=====
 	m_pBackGround->Draw();
 
