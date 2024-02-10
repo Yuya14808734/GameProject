@@ -19,5 +19,7 @@ float4 main(PS_IN pin) : SV_TARGET
 	Plane.z * pin.WorldPos.z +
 	Plane.w;
 
+	Depth /= 10.0f;
+
 	return float4(Depth, Depth, Depth, 1.0f);
 }
