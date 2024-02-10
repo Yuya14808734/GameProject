@@ -184,9 +184,23 @@ void Sprite::SetDefaultPixelShader()
 }
 void Sprite::SetVertexShader(VertexShader* pVS)
 {
-	m_pVS = pVS;
+	if (pVS == nullptr)
+	{
+		SetDefaultVertexShader();
+	}
+	else
+	{
+		m_pVS = pVS;
+	}
 }
 void Sprite::SetPixelShader(PixelShader* pPS)
 {
-	m_pPS = pPS;
+	if (pPS == nullptr)
+	{
+		SetDefaultPixelShader();
+	}
+	else
+	{
+		m_pPS = pPS;
+	}	
 }

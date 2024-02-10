@@ -3,8 +3,17 @@
 std::map<std::string, VertexShader*> ShaderManager::m_pVertexShaders;
 std::map<std::string, PixelShader*> ShaderManager::m_pPixelShaders;
 
+bool			ShaderManager::m_isUseAllObjectShader_VS = false;
+VertexShader*	ShaderManager::m_pAllObjectShader_VS = nullptr;
+bool			ShaderManager::m_isUseAllObjectShader_PS = false;
+PixelShader*	ShaderManager::m_pAllObjectShader_PS = nullptr;
+
 void ShaderManager::InitShaders()
 {
+	m_isUseAllObjectShader_VS = false;
+	m_pAllObjectShader_VS = nullptr;
+	m_isUseAllObjectShader_PS = false;
+	m_pAllObjectShader_PS = nullptr;
 }
 
 void ShaderManager::UninitShaders()
@@ -66,7 +75,7 @@ PixelShader* ShaderManager::CreatePixelShader(const std::string & ShaderName, co
 	return pPS;
 }
 
-bool ShaderManager::SetNewVertexShader(const std::string& ShaderName, VertexShader* pVertexShader)
+bool ShaderManager::SetPointerVertexShader(const std::string& ShaderName, VertexShader* pVertexShader)
 {
 	//設定するシェーダーがnullptrの場合
 	if (pVertexShader == nullptr)
@@ -85,7 +94,7 @@ bool ShaderManager::SetNewVertexShader(const std::string& ShaderName, VertexShad
 	return true;
 }
 
-bool ShaderManager::SetNewPixelShader(const std::string& ShaderName, PixelShader* pPixelShader)
+bool ShaderManager::SetPointerPixelShader(const std::string& ShaderName, PixelShader* pPixelShader)
 {
 	//設定するシェーダーがnullptrの場合
 	if (pPixelShader == nullptr)
@@ -170,4 +179,46 @@ void ShaderManager::AllReleaseShader()
 	//=================================
 
 	m_pPixelShaders.clear();
+}
+
+void ShaderManager::SetUseAllObjectVS(bool use)
+{
+	m_isUseAllObjectShader_VS = use;
+}
+
+void ShaderManager::SetUseAllObjectPS(bool use)
+{
+	m_isUseAllObjectShader_PS = use;
+}
+
+void ShaderManager::SetAllObjectVS(const std::string& ShaderName)
+{
+	//シェーダーの取得
+	m_pAllObjectShader_VS = GetVertexShader(ShaderName);
+}
+
+void ShaderManager::SetAllObjectPS(const std::string& ShaderName)
+{
+	//シェーダーの取得
+	m_pAllObjectShader_PS = GetPixelShader(ShaderName);
+}
+
+bool ShaderManager::GetUseAllObjectVS()
+{
+	return m_isUseAllObjectShader_VS;
+}
+
+bool ShaderManager::GetUseAllObjectPS()
+{
+	return m_isUseAllObjectShader_PS;
+}
+
+VertexShader* ShaderManager::GetAllObjectVS()
+{
+	return m_pAllObjectShader_VS;
+}
+
+PixelShader* ShaderManager::GetAllObjectPS()
+{
+	return m_pAllObjectShader_PS;
 }

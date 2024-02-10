@@ -1,5 +1,6 @@
 #include "Image2D.h"
 #include "Main.h"
+#include "ShaderManager.h"
 
 Image2D::Image2D()
 	:m_pTexture(nullptr)
@@ -45,24 +46,23 @@ void Image2D::Draw()
 
 	PrevDraw();
 
-	//シェーダーの変更
-	if (m_pVertexShader != nullptr)
+	//設定するシェーダ
+	VertexShader* pVS = m_pVertexShader;
+	PixelShader* pPS = m_pPixelShader;
+
+	//すべて同じシェーダーを使う場合
+	if (ShaderManager::GetUseAllObjectVS())
 	{
-		Sprite::SetVertexShader(m_pVertexShader);
-	}
-	else
-	{
-		Sprite::SetDefaultVertexShader();
+		pVS = ShaderManager::GetAllObjectVS();
 	}
 
-	if (m_pPixelShader != nullptr)
+	if (ShaderManager::GetUseAllObjectPS())
 	{
-		Sprite::SetPixelShader(m_pPixelShader);
+		pPS = ShaderManager::GetAllObjectPS();
 	}
-	else
-	{
-		Sprite::SetDefaultPixelShader();
-	}
+
+	Sprite::SetVertexShader(pVS);
+	Sprite::SetPixelShader(pPS);
 
 	DirectX::XMFLOAT4X4 fView;
 	DirectX::XMStoreFloat4x4(&fView,

@@ -1,6 +1,7 @@
 #include "Image3D.h"
 #include "Main.h"
 #include "CameraManager.h"
+#include "ShaderManager.h"
 
 Image3D::Image3D()
 	:m_pTexture(nullptr)
@@ -49,24 +50,22 @@ void Image3D::Draw()
 
 	PrevDraw();
 
-	//シェーダーの変更
-	if (m_pVertexShader != nullptr)
+	VertexShader* pVS = m_pVertexShader;
+	PixelShader* pPS = m_pPixelShader;
+
+	//すべて同じシェーダーを使う場合
+	if (ShaderManager::GetUseAllObjectVS())
 	{
-		Sprite::SetVertexShader(m_pVertexShader);
-	}
-	else
-	{
-		Sprite::SetDefaultVertexShader();
+		pVS = ShaderManager::GetAllObjectVS();
 	}
 
-	if (m_pPixelShader != nullptr)
+	if (ShaderManager::GetUseAllObjectPS())
 	{
-		Sprite::SetPixelShader(m_pPixelShader);
+		pPS = ShaderManager::GetAllObjectPS();
 	}
-	else
-	{
-		Sprite::SetDefaultPixelShader();
-	}
+
+	Sprite::SetVertexShader(pVS);
+	Sprite::SetPixelShader(pPS);
 
 	DirectX::XMFLOAT4X4 mat[3];
 	DirectX::XMMATRIX worldmat;

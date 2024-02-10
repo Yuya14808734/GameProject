@@ -1,6 +1,7 @@
 #include "ModelDrawer.h"
 #include "CameraManager.h"
 #include <Windows.h>
+#include "ShaderManager.h"
 
 std::map<std::string, ModelDrawer::ModelInformation*> ModelDrawer::m_Models;
 ConstantBuffer* ModelDrawer::m_pConstantBuffer = nullptr;
@@ -305,8 +306,22 @@ void ModelDrawer::Draw()
 		m_pModelInfo->model->SetAnimeTime(m_NowPlayAnimeNo, m_AnimTime);
 	}
 
-	m_pModelInfo->model->SetVertexShader(m_pVertexShader);
-	m_pModelInfo->model->SetPixelShader(m_pPixelShader);
+	VertexShader* pNowVS = m_pVertexShader;
+	PixelShader* pNowPS = m_pPixelShader;
+
+	//オブジェクトごとのシェーダーを使ってよいか
+	if (ShaderManager::GetUseAllObjectVS())
+	{
+		pNowVS = ShaderManager::GetAllObjectVS();
+	}
+
+	if (ShaderManager::GetUseAllObjectPS())
+	{
+		pNowPS = ShaderManager::GetAllObjectPS();
+	}
+
+	m_pModelInfo->model->SetVertexShader(pNowVS);
+	m_pModelInfo->model->SetPixelShader(pNowPS);
 	m_pModelInfo->model->Draw();
 }
 

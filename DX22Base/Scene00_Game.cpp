@@ -13,6 +13,7 @@
 #include "Scene01_Select.h"
 #include "Character_State.h"
 #include "Character_Attack.h"
+#include "ShaderManager.h"
 
 #include "SceneGame_StartState.h"
 #include "SceneGame_GamePlayState.h"
@@ -21,9 +22,17 @@
 
 bool Trigger = false;
 
+Image2D ShadowMapImage;
 
 void SceneGame::Init()
 {
+
+	ShadowMapImage.SetPos(CVector2(200.0f, 100.0f));
+	ShadowMapImage.SetSize(CVector2(160, 90));
+
+	m_Light.SetPos(CVector3(0.0f, 0.0f, 5.0f));
+	m_Light.SetDirection(CVector3(0.0f, 0.0f, -1.0f));
+
 	//=====<カメラの生成>=====
 	CameraManager::GetInstance().CreateCamera<CameraGame>("GameCamera");
 	CameraManager::GetInstance().CreateCamera<CameraGameStart>("GameStartCamera");
@@ -33,6 +42,9 @@ void SceneGame::Init()
 	m_pGameCamera = static_cast<CameraGame*>(CameraManager::GetInstance().GetCamera("GameCamera"));
 	CameraGameStart* pCameraGameStart = 
 		static_cast<CameraGameStart*>(CameraManager::GetInstance().GetCamera("GameStartCamera"));
+	CameraLight* pCameraLight = 
+		static_cast<CameraLight*>(CameraManager::GetInstance().GetCamera("LightCamera"));
+	pCameraLight->SetLight(&m_Light);
 
 	//=====<ステージの作成>=====
 	m_pStage = new Stage00();
@@ -85,13 +97,18 @@ void SceneGame::Init()
 
 	Trigger = false;
 
+
+	//=====<レンダーターゲットの作成>=====
 	m_pShadowMapRenderTarget = new RenderTarget();
-	m_pShadowMapRenderTarget->Create(DXGI_FORMAT_R8G8B8A8_UNORM,
+	m_pShadowMapRenderTarget->Create(DXGI_FORMAT_R32_FLOAT,
 		GetAppWidth(), GetAppHeight());
 
 	m_pShadowMapDepthStencil = new DepthStencil();
 	m_pShadowMapDepthStencil->Create(
 		static_cast<UINT>(GetAppWidth()), static_cast<UINT>(GetAppHeight()), false);
+
+	ShaderManager::CreateVertexShader("ModelWorldPos", CreateShaderPath("ModelVS_WorldPos"));
+	ShaderManager::CreatePixelShader("ShadowMap", CreateShaderPath("ShadowMapPS"));
 }
 
 void SceneGame::Uninit()
@@ -155,6 +172,10 @@ void SceneGame::Draw()
 	//ライトカメラで描画
 
 	m_GameSceneStateContext.StateDraw();
+
+	EnableDepth(false);
+	ShadowMapImage.SetTexture(m_pShadowMapRenderTarget->GetResource());
+	ShadowMapImage.Draw();
 }
 
 Character* SceneGame::CreateCharacter(int Num)
@@ -277,15 +298,23 @@ void SceneGame::LightCameraDraw()
 {
 	//=====<カメラの切り替え>=====
 	CameraManager::GetInstance().SetSceneCamera("LightCamera");
+	CameraLight* pLightCamera = 
+		static_cast<CameraLight*>(CameraManager::GetInstance().GetCamera("LightCamera"));
+	pLightCamera->WriteConstBuffer();
+
+	//=====<すべてのシェーダーを変更する>=====
+	ShaderManager::SetAllObjectVS("ModelWorldPos");
+	ShaderManager::SetAllObjectPS("ShadowMap");
+	ShaderManager::SetUseAllObjectVS(true);
+	ShaderManager::SetUseAllObjectPS(true);
 
 	//=====<レンダーターゲットの切り替え>=====
 	m_pShadowMapRenderTarget->Clear();
 	m_pShadowMapDepthStencil->Clear();
 
 	SetRenderTargets(1, &m_pShadowMapRenderTarget, m_pShadowMapDepthStencil);
-
-	//=====<背景の描画>=====
-	m_BackGround.Draw();
+	
+	EnableDepth(true);
 
 	//=====<ステージの描画>=====
 	m_pStage->Stage_Draw();
@@ -296,5 +325,13 @@ void SceneGame::LightCameraDraw()
 		copy->Character_Draw();
 	}
 
+	EnableDepth(true);
+	
 	SetDefaultRenderTargets();
+	
+	EnableDepth(true);
+	
+	ShaderManager::SetUseAllObjectVS(false);
+	ShaderManager::SetUseAllObjectPS(false);
+
 }

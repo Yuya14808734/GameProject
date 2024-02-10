@@ -1112,5 +1112,8 @@
     <FxCompile Include="ShadowMapPS.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
+    <FxCompile Include="ModelVS_WorldPos.hlsl">
+      <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

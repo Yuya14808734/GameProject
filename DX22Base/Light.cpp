@@ -1,6 +1,8 @@
 #include "Light.h"
 
 LightObject::LightObject()
+	:m_Pos(CVector3(0.0f,0.0f,-10.0f)),
+	m_Direction(CVector3(0.0f,0.0f,1.0f))
 {
 }
 
