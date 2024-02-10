@@ -23,8 +23,8 @@ public:
 
 	static void SetUseAllObjectVS(bool use);							//すべてのオブジェクトに設定するシェーダ
 	static void SetUseAllObjectPS(bool use);							//すべてのオブジェクトに設定するシェーダ
-	static void SetAllObjectVS(const std::string& ShaderName);		//すべてのオブジェクトに設定するシェーダ
-	static void SetAllObjectPS(const std::string& ShaderName);			//すべてのオブジェクトに設定するシェーダ
+	static VertexShader* SetAllObjectVS(const std::string& ShaderName);		//すべてのオブジェクトに設定するシェーダ
+	static PixelShader* SetAllObjectPS(const std::string& ShaderName);			//すべてのオブジェクトに設定するシェーダ
 	static bool GetUseAllObjectVS();
 	static bool GetUseAllObjectPS();
 	static VertexShader* GetAllObjectVS();

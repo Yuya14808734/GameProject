@@ -4,6 +4,7 @@
 #include "Character_Base.h"
 #include "Stage_Base.h"
 #include "Camera01_Game.h"
+#include "Camera04_Light.h"
 #include "Select01_CharacterList.h"
 #include "GameUI00_StartCount.h"
 #include "GameUI01_GameEndText.h"
@@ -14,6 +15,7 @@
 #include "EffectBase.h"
 #include "Light.h"
 #include "TextureClass.h"
+#include "ConstantBuffer.h"
 
 class SceneGame : public CScene
 {
@@ -55,6 +57,7 @@ private:
 	std::vector<Character*> m_Characters;		//キャラクターの情報
 	Stage* m_pStage;							//ステージの情報
 	CameraGame* m_pGameCamera = nullptr;		//ゲームのカメラ
+	CameraLight* m_pLightCamera = nullptr;		//ライトのカメラ
 	std::vector<EffectBase*> m_Effects;			//エフェクトの種類
 	Image3D m_BackGround;
 
@@ -70,6 +73,8 @@ private:
 	LightObject m_Light;
 	RenderTarget* m_pShadowMapRenderTarget = nullptr;
 	DepthStencil* m_pShadowMapDepthStencil = nullptr;
+	ConstantBuffer m_LightLVPMatrixBuffer;
+
 
 public:
 	StateContext* GetStateContext()		

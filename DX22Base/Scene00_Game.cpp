@@ -26,12 +26,11 @@ Image2D ShadowMapImage;
 
 void SceneGame::Init()
 {
-
 	ShadowMapImage.SetPos(CVector2(200.0f, 100.0f));
-	ShadowMapImage.SetSize(CVector2(160, 90));
+	ShadowMapImage.SetSize(CVector2(160, 90) * 3.0f);
 
-	m_Light.SetPos(CVector3(0.0f, 0.0f, 5.0f));
-	m_Light.SetDirection(CVector3(0.0f, 0.0f, -1.0f));
+	m_Light.SetPos(CVector3(3.0f, 10.0f, -5.0f));
+	m_Light.SetDirection(CVector3(-3.0f, -10.0f, 5.0f));
 
 	//=====<カメラの生成>=====
 	CameraManager::GetInstance().CreateCamera<CameraGame>("GameCamera");
@@ -40,6 +39,7 @@ void SceneGame::Init()
 	CameraManager::GetInstance().CreateCamera<CameraLight>("LightCamera");
 	CameraManager::GetInstance().SetSceneCamera("DebugCamera");
 	m_pGameCamera = static_cast<CameraGame*>(CameraManager::GetInstance().GetCamera("GameCamera"));
+	m_pLightCamera = static_cast<CameraLight*>(CameraManager::GetInstance().GetCamera("LightCamera"));
 	CameraGameStart* pCameraGameStart = 
 		static_cast<CameraGameStart*>(CameraManager::GetInstance().GetCamera("GameStartCamera"));
 	CameraLight* pCameraLight = 
@@ -91,13 +91,6 @@ void SceneGame::Init()
 	//=====<コントローラーが解除されているか>=====
 	m_isDisConnectController = false;
 
-	//=====<ゲーム開始に設定>=====
-	SetNextState(SceneGame::GAMESTATE::GAMESTART);
-	ChangeNextState();
-
-	Trigger = false;
-
-
 	//=====<レンダーターゲットの作成>=====
 	m_pShadowMapRenderTarget = new RenderTarget();
 	m_pShadowMapRenderTarget->Create(DXGI_FORMAT_R32_FLOAT,
@@ -108,7 +101,17 @@ void SceneGame::Init()
 		static_cast<UINT>(GetAppWidth()), static_cast<UINT>(GetAppHeight()), false);
 
 	ShaderManager::CreateVertexShader("ModelWorldPos", CreateShaderPath("ModelVS_WorldPos"));
+	ShaderManager::CreateVertexShader("DepthShadowVS", CreateShaderPath("DepthShadowVS"));
 	ShaderManager::CreatePixelShader("ShadowMap", CreateShaderPath("ShadowMapPS"));
+	ShaderManager::CreatePixelShader("DepthShadowPS", CreateShaderPath("DepthShadowPS"));
+
+	m_LightLVPMatrixBuffer.Create(sizeof(DirectX::XMFLOAT4X4));
+
+	//=====<ゲーム開始に設定>=====
+	SetNextState(SceneGame::GAMESTATE::GAMESTART);
+	ChangeNextState();
+
+	Trigger = false;
 }
 
 void SceneGame::Uninit()
@@ -243,6 +246,9 @@ void SceneGame::ChangeNextState()
 		pState->SetEndTextUI(&m_GameEndTextUI);
 		pState->SetStockCountUI(&m_StockCountUI);
 		pState->SetEffect(&m_Effects);
+		pState->SetLightCamera(m_pLightCamera);
+		pState->SetLightLVPMatrixBuffer(&m_LightLVPMatrixBuffer);
+		pState->SetShadowMapRenderTarget(m_pShadowMapRenderTarget);
 
 		//初期化処理
 		m_GameSceneStateContext.StateInit();
@@ -298,9 +304,7 @@ void SceneGame::LightCameraDraw()
 {
 	//=====<カメラの切り替え>=====
 	CameraManager::GetInstance().SetSceneCamera("LightCamera");
-	CameraLight* pLightCamera = 
-		static_cast<CameraLight*>(CameraManager::GetInstance().GetCamera("LightCamera"));
-	pLightCamera->WriteConstBuffer();
+	m_pLightCamera->SetParameter();
 
 	//=====<すべてのシェーダーを変更する>=====
 	ShaderManager::SetAllObjectVS("ModelWorldPos");

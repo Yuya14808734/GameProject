@@ -191,16 +191,18 @@ void ShaderManager::SetUseAllObjectPS(bool use)
 	m_isUseAllObjectShader_PS = use;
 }
 
-void ShaderManager::SetAllObjectVS(const std::string& ShaderName)
+VertexShader* ShaderManager::SetAllObjectVS(const std::string& ShaderName)
 {
 	//シェーダーの取得
 	m_pAllObjectShader_VS = GetVertexShader(ShaderName);
+	return m_pAllObjectShader_VS;
 }
 
-void ShaderManager::SetAllObjectPS(const std::string& ShaderName)
+PixelShader* ShaderManager::SetAllObjectPS(const std::string& ShaderName)
 {
 	//シェーダーの取得
 	m_pAllObjectShader_PS = GetPixelShader(ShaderName);
+	return m_pAllObjectShader_PS;
 }
 
 bool ShaderManager::GetUseAllObjectVS()

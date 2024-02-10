@@ -50,7 +50,7 @@ VS_OUT main(VS_IN vin)
 	vout.uv = vin.uv;
 
 	// ライトビュースクリーン空間の座標を計算する
-	vout.posInLVP = mul(mLVP, vout.WorldPos);
+	vout.posInLVP = mul(vout.WorldPos, mLVP);
 
 	return vout;
 }

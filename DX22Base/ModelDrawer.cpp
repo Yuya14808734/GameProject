@@ -292,7 +292,7 @@ void ModelDrawer::Draw()
 	worldmat *= DirectX::XMMatrixTranslation(m_pos.x, m_pos.y, m_pos.z);
 
 	DirectX::XMStoreFloat4x4(&mat[0], DirectX::XMMatrixTranspose(worldmat));
-	mat[1] = pCamera->GetViewMatrix();		//カメラの情報が分かり次第実装
+	mat[1] = pCamera->GetViewMatrix();				//カメラの情報が分かり次第実装
 	mat[2] = pCamera->GetProjectionMatrix();		//カメラの情報が分かり次第実装
 
 	//定数バッファーで受け渡し

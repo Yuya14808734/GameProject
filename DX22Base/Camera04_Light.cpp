@@ -2,8 +2,7 @@
 
 
 CameraLight::CameraLight()
-	:m_pLight(nullptr),
-	m_pConstBuffer(nullptr)
+	:m_pLight(nullptr)
 {
 }
 
@@ -15,13 +14,11 @@ void CameraLight::Init()
 {
 	m_isOrtho = true;
 
-	m_pConstBuffer = new ConstantBuffer();
-	m_pConstBuffer->Create(sizeof(float) * 4);
+	m_ViewWidth = m_ViewHeight = 25.0f;
 }
 
 void CameraLight::Uninit()
 {
-
 }
 
 void CameraLight::Update()
@@ -55,28 +52,9 @@ void CameraLight::SetLight(LightObject* pLight)
 	SetParameter();
 }
 
-void CameraLight::WriteConstBuffer()
-{
-	SetParameter();
-
-	m_pConstBuffer->Write(m_LightPlane);
-	m_pConstBuffer->BindPS(0);
-}
-
 void CameraLight::SetParameter()
 {
 	m_pos = m_pLight->GetPos();
 	m_look = m_pos + m_pLight->GetDirection();
 	m_up = CVector3(0.0f, 1.0f, 0.0f);
-
-	CVector3 NormalDirect = m_pLight->GetDirection().normalize();
-
-	float ax = NormalDirect.x * m_pos.x;
-	float by = NormalDirect.y * m_pos.y;
-	float cz = NormalDirect.z * m_pos.z;
-
-	m_LightPlane[0] = NormalDirect.x;
-	m_LightPlane[1] = NormalDirect.y;
-	m_LightPlane[2] = NormalDirect.z;
-	m_LightPlane[3] = (ax + by + cz) * -1.0f;
 }

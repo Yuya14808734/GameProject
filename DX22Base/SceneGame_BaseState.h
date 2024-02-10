@@ -5,11 +5,13 @@
 #include "Character_Base.h"
 #include "Stage_Base.h"
 #include "Camera01_Game.h"
+#include "Camera04_Light.h"
 #include "Select01_CharacterList.h"
 #include "GameUI00_StartCount.h"
 #include "GameUI01_GameEndText.h"
 #include "GameUI02_StockCount.h"
 #include "Image3D.h"
+#include "ConstantBuffer.h"
 
 class SceneGame_BaseState : public State
 {
@@ -49,6 +51,15 @@ public:
 	void SetEffect(std::vector<EffectBase*>* pEffects) 
 	{ m_pEffects = pEffects; }
 
+	void SetLightCamera(CameraLight* pLightCamera) 
+	{ m_pLightCamera = pLightCamera; }
+
+	void SetLightLVPMatrixBuffer(ConstantBuffer* pLightLVPMatrixBuffer) 
+	{ m_pLightLVPMatrixBuffer = pLightLVPMatrixBuffer; }
+
+	void SetShadowMapRenderTarget(RenderTarget* pShadowMapRenderTarget) 
+	{ m_pShadowMapRenderTarget = pShadowMapRenderTarget; }
+
 protected:
 	std::vector<Character*>* m_pCharacters = nullptr;	//キャラクターの情報
 	SceneGame* m_pGameScene = nullptr;					//今のゲームシーン
@@ -58,5 +69,8 @@ protected:
 	GameStartCountUI* m_pGameStartCountUI = nullptr;	//最初のカウントUI
 	GameEndText* m_pGameEndTextUI = nullptr;			//ゲームエンドUI
 	StockCountUI* m_pStockCountUI = nullptr;			//ストックが減った時のUI
-	std::vector<EffectBase*>* m_pEffects = nullptr;//エフェクト情報が入った
+	std::vector<EffectBase*>* m_pEffects = nullptr;		//エフェクト情報が入った
+	CameraLight* m_pLightCamera = nullptr;				//ライトのカメラ
+	ConstantBuffer* m_pLightLVPMatrixBuffer = nullptr;	//ライトの行列を入れる
+	RenderTarget* m_pShadowMapRenderTarget = nullptr;	//ライトのレンダーターゲット
 };

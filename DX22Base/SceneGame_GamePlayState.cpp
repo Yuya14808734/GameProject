@@ -2,6 +2,7 @@
 #include "Character_State.h"
 #include "Character_Attack.h"
 #include "CameraManager.h"
+#include "ShaderManager.h"
 
 void SceneGame_PlayState::Init()
 {
@@ -58,17 +59,38 @@ void SceneGame_PlayState::Draw()
 	//=====<”wŒi‚Ì•`‰æ>=====
 	m_pBackGround->Draw();
 
-	//=====<“–‚½‚è”»’è‚Ì•`‰æ>=====
-	ColliderDraw();
-
-	//=====<ƒXƒe[ƒW‚Ì•`‰æ>=====
-	m_pStage->Stage_Draw();
+	//=====<‰e‚ÌƒVƒF[ƒ_[‚ÌÝ’è>=====
+	ShaderManager::SetAllObjectVS("DepthShadowVS");
+	ShaderManager::SetAllObjectPS("DepthShadowPS");
+	ShaderManager::SetUseAllObjectVS(true);
+	ShaderManager::SetUseAllObjectPS(true);
+	DirectX::XMMATRIX LVP =	m_pLightCamera->GetViewMatrix_TypeXMMAXRIX();
+		LVP *= m_pLightCamera->GetProjectionMatrix_TypeXMMAXRIX();
+	DirectX::XMFLOAT4X4 matrix;
+	DirectX::XMStoreFloat4x4(&matrix,
+		DirectX::XMMatrixTranspose(LVP));
+	m_pLightLVPMatrixBuffer->Write(&matrix);
+	m_pLightLVPMatrixBuffer->BindVS(2);
+	SetTexturePS(m_pShadowMapRenderTarget->GetResource(), 1);
+	m_pLightCamera->SetParameter();
 
 	//=====<ƒLƒƒƒ‰ƒNƒ^[‚Ì•`‰æ>=====
 	for (Character* copy : (*m_pCharacters))
 	{
 		copy->Character_Draw();
 	}
+
+	//=====<ƒXƒe[ƒW‚Ì•`‰æ>=====
+	m_pStage->Stage_Draw();
+
+	//=====<‰e‚Ì•`‰æ‚ÍI‚í‚é>=====
+	ShaderManager::SetUseAllObjectVS(false);
+	ShaderManager::SetUseAllObjectPS(false);
+
+	//=====<“–‚½‚è”»’è‚Ì•`‰æ>=====
+	ColliderDraw();
+
+	
 
 	//=====<ƒGƒtƒFƒNƒg‚Ì•`‰æ>=====
 	for (EffectBase* pEffect : (*m_pEffects))

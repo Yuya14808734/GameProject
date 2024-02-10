@@ -37,15 +37,9 @@ void CameraBase::ChangeUninit()
 DirectX::XMFLOAT4X4 CameraBase::GetViewMatrix()
 {
 	DirectX::XMFLOAT4X4 mat;
-	DirectX::XMMATRIX view;
-	/*メンバ変数を元にプロジェクション行列を作成し、転置済みの行列として戻り値を返す*/
-	DirectX::XMVECTOR EyePos = DirectX::XMVectorSet(m_pos.x, m_pos.y, m_pos.z, 0.0f);//カメラ位置
-	DirectX::XMVECTOR FocusPos = DirectX::XMVectorSet(m_look.x, m_look.y, m_look.z, 0.0f);//カメラ注点
-	DirectX::XMVECTOR UpDirection = DirectX::XMVectorSet(m_up.x, m_up.y, m_up.z, 0.0f);//カメラ上方向
-	view = DirectX::XMMatrixLookAtLH(EyePos, FocusPos, UpDirection);//ビュー座標系行列の作成
-	view = XMMatrixTranspose(view);//転置
 
-	DirectX::XMStoreFloat4x4(&mat, view);//最適化
+	DirectX::XMStoreFloat4x4(&mat, 
+		DirectX::XMMatrixTranspose(GetViewMatrix_TypeXMMAXRIX()));//最適化
 
 	return mat;
 }
@@ -53,6 +47,27 @@ DirectX::XMFLOAT4X4 CameraBase::GetViewMatrix()
 DirectX::XMFLOAT4X4 CameraBase::GetProjectionMatrix()
 {
 	DirectX::XMFLOAT4X4 mat;
+	
+	DirectX::XMStoreFloat4x4(&mat, 
+		DirectX::XMMatrixTranspose(GetProjectionMatrix_TypeXMMAXRIX()));//最適化	
+
+	return mat;
+}
+
+DirectX::XMMATRIX CameraBase::GetViewMatrix_TypeXMMAXRIX()
+{
+	DirectX::XMMATRIX view;
+	/*メンバ変数を元にプロジェクション行列を作成し、転置済みの行列として戻り値を返す*/
+	view = DirectX::XMMatrixLookAtLH(
+		DirectX::XMVectorSet(m_pos.x, m_pos.y, m_pos.z, 0.0f), 
+		DirectX::XMVectorSet(m_look.x, m_look.y, m_look.z, 0.0f), 
+		DirectX::XMVectorSet(m_up.x, m_up.y, m_up.z, 0.0f));
+
+	return view;
+}
+
+DirectX::XMMATRIX CameraBase::GetProjectionMatrix_TypeXMMAXRIX()
+{
 	DirectX::XMMATRIX proj;
 
 	if (!m_isOrtho)
@@ -64,8 +79,6 @@ DirectX::XMFLOAT4X4 CameraBase::GetProjectionMatrix()
 		/*メンバー変数を元にプロジェクション行列を作成し、転置済みの行列として戻り値を返す*/
 		float FovAngleY = DirectX::XMConvertToRadians(m_fovy);//カメラ縦方向の画角
 		proj = DirectX::XMMatrixPerspectiveFovLH(FovAngleY, m_aspect, m_near, m_far);//プロジェクション座標系行列の作成
-		proj = XMMatrixTranspose(proj);//転置
-		DirectX::XMStoreFloat4x4(&mat, proj);//最適化
 	}
 	else
 	{
@@ -74,11 +87,9 @@ DirectX::XMFLOAT4X4 CameraBase::GetProjectionMatrix()
 		//========================================================================
 
 		proj = DirectX::XMMatrixOrthographicLH(m_ViewHeight, m_ViewWidth, m_near, m_far);
-		proj = DirectX::XMMatrixTranspose(proj);
-		DirectX::XMStoreFloat4x4(&mat, proj);
-	}	
+	}
 
-	return mat;
+	return proj;
 }
 
 void CameraBase::SetPos(const CVector3 & pos)

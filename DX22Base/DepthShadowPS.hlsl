@@ -9,11 +9,6 @@ struct PS_IN
     float4 posInLVP : TEXCOORD1;    // ライトビュースクリーン空間でのピクセルの座標
 };
 
-cbuffer CameraPlane : register(b0)
-{
-    float4 Plane;
-};
-
 Texture2D tex : register(t0);
 Texture2D shadowMap : register(t1);
 SamplerState samp : register(s0);
@@ -29,11 +24,7 @@ float4 main(PS_IN pin) : SV_TARGET
 
     //ライトビュースクリーン空間でのZ値を計算
     //平面の方程式を使って深さを調べる
-    float zInLVP =
-        Plane.x * pin.WorldPos.x +
-        Plane.y * pin.WorldPos.y +
-        Plane.z * pin.WorldPos.z +
-        Plane.w;
+    float zInLVP = pin.posInLVP.z / pin.posInLVP.w;
 
     if (shadowMapUV.x > 0.0f && shadowMapUV.x < 1.0f
         && shadowMapUV.y > 0.0f && shadowMapUV.y < 1.0f)
