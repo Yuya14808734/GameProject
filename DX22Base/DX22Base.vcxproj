@@ -169,6 +169,7 @@
     <ClCompile Include="Character_Attack.cpp" />
     <ClCompile Include="Character_State.cpp" />
     <ClCompile Include="Effect01_SingleSmoke.cpp" />
+    <ClCompile Include="Effect02_MultipleSmoke.cpp" />
     <ClCompile Include="EffectBase.cpp" />
     <ClCompile Include="Effect00_Dead.cpp" />
     <ClCompile Include="FadeIn00_GameEnd.cpp" />
@@ -333,6 +334,7 @@
     <ClInclude Include="Character_Attack.h" />
     <ClInclude Include="Character_State.h" />
     <ClInclude Include="Effect01_SingleSmoke.h" />
+    <ClInclude Include="Effect02_MultipleSmoke.h" />
     <ClInclude Include="EffectBase.h" />
     <ClInclude Include="Effect00_Dead.h" />
     <ClInclude Include="FadeIn00_GameEnd.h" />

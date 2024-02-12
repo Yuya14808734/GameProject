@@ -23,14 +23,15 @@ float4 main(PS_IN pin) : SV_TARGET
 
 	//透明度がほぼない場合
 	float value = color.a - 0.5f;
-	// - 0.01;
 
 	clip(value);
 
 	//ディゾルブ
-	/*value = dissolve.Sample(samp, pin.uv).r - 0.01f;
+	float2 dissolveUV = pin.uv * 0.25f;
 
-	clip(value);*/
+	value = dissolve.Sample(samp, dissolveUV).r - dissolveRate;
+
+	clip(value);
 
 	return color;
 }

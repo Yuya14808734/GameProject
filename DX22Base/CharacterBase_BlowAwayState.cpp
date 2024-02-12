@@ -29,29 +29,32 @@ void CharacterBase_BlowAwayState::Init()
 	float RotateRadian = acosf(NormalVelocityVector.dot(NormalChangeVector));
 
 	m_pCharacterParameter->Velocity = CQuaternion::RadianAxis(
-		NormalVelocityVector.cross(NormalChangeVector).normalize(),						//回す軸
-		RotateRadian * m_pBlowAwayParameter->VectorChangePower				//回す弧度
+		NormalVelocityVector.cross(NormalChangeVector).normalize(),					//回す軸
+		RotateRadian * m_pBlowAwayParameter->VectorChangePower						//回す弧度
 	).RotateVector(NormalVelocityVector);											//回すベクトル
 
 	m_pCharacterParameter->MoveVector = CVector3::GetZero();
+
+	//エフェクトの追加
+	m_pMultipleSmoke = new MultipleSmoke();
+	m_pMultipleSmoke->SetSingleSmokeEndTime(1.0f);
+	m_pGameScene->GetEffectVector()->push_back(m_pMultipleSmoke);
 }
 
 void CharacterBase_BlowAwayState::Uninit()
 {
-
+	m_pMultipleSmoke->SetEffectAddEnd(true);
 }
 
 void CharacterBase_BlowAwayState::Update()
 {
 	m_Count++;
 
-	if (m_Count % 20)
+	if (m_Count % 2 == 0)
 	{
 		//飛んでいるエフェクトを追加
-		SingleSmoke* pSingleSmoke = new SingleSmoke();
-		pSingleSmoke->PlayEffect(m_pCharacterParameter->Pos,1.0f);
-
-		m_pGameScene->GetEffectVector()->push_back(pSingleSmoke);
+		m_pMultipleSmoke->AddPlayEffect(m_pCharacterParameter->Pos + CVector3(0.0f,0.5f,0.0f),
+			m_pCharacterParameter->Velocity * -0.5f);
 	}
 
 	//地面に当たっていなければ

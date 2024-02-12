@@ -672,6 +672,9 @@
     <ClCompile Include="Light.cpp">
       <Filter>ソース ファイル\04_Game\14_SceneObject</Filter>
     </ClCompile>
+    <ClCompile Include="Effect02_MultipleSmoke.cpp">
+      <Filter>ソース ファイル\04_Game\05_Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -1075,6 +1078,9 @@
     </ClInclude>
     <ClInclude Include="Light.h">
       <Filter>ヘッダー ファイル\04_Game\14_SceneObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect02_MultipleSmoke.h">
+      <Filter>ヘッダー ファイル\04_Game\05_Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

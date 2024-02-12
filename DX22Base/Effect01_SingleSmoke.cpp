@@ -13,25 +13,31 @@ SingleSmoke::SingleSmoke()
 		"Assets/Texture/Cloud03.png",
 	};
 
-	CVector3 RandPos = CVector3(
-		static_cast<float>(rand() % 200) / 100.0f - 1.0f,
-		static_cast<float>(rand() % 200) / 100.0f - 1.0f,
-		static_cast<float>(rand() % 200) / 100.0f - 1.0f
+	CVector3 randPos = CVector3(
+		static_cast<float>(rand() % 200 + 1) / 100.0f - 1.0f,
+		static_cast<float>(rand() % 200 + 1) / 100.0f - 1.0f,
+		static_cast<float>(rand() % 200 + 1) / 100.0f - 1.0f
 	);
 
 	m_SmokeImage.SetTexture(pFilePath[RandomNum]);
-	m_SmokeImage.SetSize(CVector2(256.0f, 256.0f) * 0.01f);
-	m_SmokeImage.SetPos(RandPos);
+	m_SmokeImage.SetPos(randPos);
+	m_SmokeImage.SetSize(CVector2(256.0f, 256.0f) * 0.005f);
 	m_SmokeImage.SetPixelShader(
 		ShaderManager::CreatePixelShader("DissolveSprite", CreateShaderPath("DissolveSpritePS"))
 	);
 	SetPos(CVector3::GetZero());
 	SetTime(1.0f);
 	m_isUpdate = true;
+
+	LoadTextureFromFile("Assets/Texture/dissolve.png", &m_pDissolveTexture);
+
+	m_Buffer_DissolveParameter.Create(sizeof(float) * 4.0f);
 }
 
 SingleSmoke::~SingleSmoke()
 {
+	m_pDissolveTexture->Release();
+	m_pDissolveTexture = nullptr;
 }
 
 void SingleSmoke::Update()
@@ -48,11 +54,21 @@ void SingleSmoke::Update()
 		m_isDestroy = true;
 	}
 
-	m_SmokeImage.m_pos *= 1.01f;
+	m_Velocity *= 0.9f;
+
+	m_SmokeImage.m_pos += m_Velocity;
+	m_SmokeImage.m_size *= 1.01f;
 }
 
 void SingleSmoke::Draw()
 {
+	//テクスチャを送る
+	SetTexturePS(m_pDissolveTexture,1);
+
+	m_DissolveParameter[0] = m_Time / m_EndTime;
+	m_Buffer_DissolveParameter.Write(m_DissolveParameter);
+	m_Buffer_DissolveParameter.BindPS(0);
+
 	m_SmokeImage.Draw();
 }
 
@@ -71,8 +87,14 @@ void SingleSmoke::SetTime(float EndTime)
 	m_EndTime = EndTime;
 }
 
-void SingleSmoke::PlayEffect(const CVector3& pos, float endTime)
+void SingleSmoke::SetVelocity(const CVector3& velocity)
+{
+	m_Velocity = velocity;
+}
+
+void SingleSmoke::PlayEffect(const CVector3& pos, float endTime, const CVector3& velocity)
 {
 	SetPos(pos);
 	SetTime(endTime);
+	SetVelocity(velocity);
 }
