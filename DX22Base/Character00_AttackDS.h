@@ -13,11 +13,13 @@ public:
 	void Init() override;
 	void Uninit() override;
 	void Update() override;
+	void Draw() override;
 	void HitCharacter(Character* pHitCharacter) override;
 
 private:
 	int m_FrameCount = 0;
 	float m_AnimeTime = 0.0f;
 	int m_HitStopCount = 0;
+	BoxCollider m_frontBox;
 };
 

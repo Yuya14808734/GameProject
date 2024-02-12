@@ -6,7 +6,7 @@ void Character00_AttackDS::Init()
 	m_FrameCount = 0;
 	m_AnimeTime = 0.375f;
 
-	//当たり判定の作成
+	//=========<当たり判定の作成>======================
 	CVector3 ColliderBasePos = m_pCharacterParameter->Pos;
 	CVector3 ShiftVec = m_pCharacterCollider->GetSize();
 	
@@ -27,11 +27,11 @@ void Character00_AttackDS::Init()
 		break;
 	}
 
-	//攻撃の当たり判定の設定
+	//=========<攻撃の当たり判定の設定>==================
 	Character::ATTACKPARAM Attack;
 	Attack.m_Use = false;
 	Attack.m_BoxCollider.CreateBox(BoxCollider::BOXTYPE::FOOT,
-		m_pCharacterParameter->Pos, ColliderSize);// , ShiftVec);
+		m_pCharacterParameter->Pos, ColliderSize + CVector3(-0.2f,0.0f,0.0f));// , ShiftVec);
 	Attack.m_CanAttackCharacterBit = 0xffffffff;					//当たるキャラクターの設定
 
 	(*m_pAttackCollider).push_back(Attack);
@@ -42,6 +42,17 @@ void Character00_AttackDS::Init()
 
 	m_pCharacterParameter->Velocity = m_pCharacterParameter->MoveVector;
 	m_pCharacterParameter->MoveVector = CVector3::GetZero();
+
+	//===========<キャラクターの前に置く当たり判定ボックスを置く>===============
+	//もし崖だった場合はそれよりも奥に行かない
+	float AddX = m_pCharacterParameter->Velocity.x > 0.0f ?
+		1.0f :	//右に行く場合
+		-1.0f;	//左に行く場合
+
+	AddX = AddX * ((ColliderSize.x * 0.5f) + 0.2f);
+
+	m_frontBox.SetShiftVec(CVector3(AddX, -0.15f, 0.0f));
+	m_frontBox.SetSize(CVector3(0.3f, 0.3f, 0.3f));
 }
 
 void Character00_AttackDS::Update()
@@ -78,7 +89,7 @@ void Character00_AttackDS::Update()
 		return;
 	}
 	//======================================================================
-	
+
 	//============<アニメーションの時間を設定>==============================
 	const int AnimeAllFrame = 30;								//アニメーション全体のフレーム
 	const int EndFrame = 30;									//攻撃終了時間
@@ -116,10 +127,31 @@ void Character00_AttackDS::Update()
 	{
 		(*m_pAttackCollider)[0].m_Use = false;
 	}
-	
+
 	//======================================================================
-	
+
 	//============<移動処理>===============================================
+	m_frontBox.SetBasePos(m_pCharacterParameter->Pos);
+
+	bool hitStage = false;
+
+	//キャラクターの前にブロックを設置して当たり判定を行う
+	for (const BoxCollider& box : (*m_pStage->GetStageCollider()))
+	{
+		hitStage = m_frontBox.CollisionBox(box);
+
+		if (hitStage)
+		{
+			break;
+		}
+	}
+
+	//すべての地面に当たらなかった場合、地面がない
+	if (!hitStage)
+	{
+		m_pCharacterParameter->Velocity.x = 0.0f;
+	}
+
 	m_pCharacterParameter->Velocity.x *= 0.99f;
 	m_pCharacterParameter->Velocity.y += m_pJumpParameter->FallDownGravity;
 
@@ -127,8 +159,11 @@ void Character00_AttackDS::Update()
 	m_pCharacterParameter->Pos += m_pCharacterParameter->Velocity;
 	(*m_pAttackCollider)[0].m_BoxCollider.SetBasePos(m_pCharacterParameter->Pos);
 	//======================================================================
+}
 
-	
+void Character00_AttackDS::Draw()
+{
+	m_frontBox.DrawCollider();
 }
 
 void Character00_AttackDS::Uninit()
