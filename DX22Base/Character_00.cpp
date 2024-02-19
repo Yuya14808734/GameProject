@@ -93,6 +93,7 @@ void Character_00::Init()
 
 	SetNextState(Character::STATE::State_StartAnime);
 
+	//ダメージのパネルのキャラクターアイコンの設定
 	m_DamageUI.SetCharacterIconImage("Assets/CharacterImage/IconImage_UnityChan.png");
 }
 
