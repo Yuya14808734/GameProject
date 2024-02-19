@@ -63,10 +63,22 @@ void SceneGame_EndState::Draw()
 {
 	//=====<ƒVƒƒƒhƒEƒ}ƒbƒv‚Ì•`‰æ>=====
 	m_pGameScene->LightCameraDraw();
-	CameraManager::GetInstance().SetSceneCamera("GameCamera");
+	CameraManager::GetInstance().SetSceneCamera("GameStartCamera");
 
-	//=====<”wŒi•`‰æ>=====
+	//=====<”wŒi‚Ì•`‰æ>=====
 	m_pBackGround->Draw();
+
+	//=====<‰e‚ÌƒVƒF[ƒ_[‚ÌÝ’è>=====
+	DirectX::XMMATRIX LVP = 
+		m_pLightCamera->GetViewMatrix_TypeXMMAXRIX() *
+		m_pLightCamera->GetProjectionMatrix_TypeXMMAXRIX();
+	DirectX::XMFLOAT4X4 matrix;
+	DirectX::XMStoreFloat4x4(&matrix, 
+		DirectX::XMMatrixTranspose(LVP));
+	m_pLightLVPMatrixBuffer->Write(&matrix);
+	m_pLightLVPMatrixBuffer->BindVS(2);
+	SetTexturePS(m_pShadowMapRenderTarget->GetResource(),1);
+	m_pLightCamera->SetParameter();
 
 	//=====<ƒXƒe[ƒW‚Ì•`‰æ>=====
 	m_pStage->Stage_Draw();

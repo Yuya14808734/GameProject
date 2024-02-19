@@ -20,15 +20,9 @@
 #include "SceneGame_EndState.h"
 #include "SceneGame_DisConnectControllerState.h"
 
-bool Trigger = false;
-
-Image2D ShadowMapImage;
 
 void SceneGame::Init()
 {
-	ShadowMapImage.SetPos(CVector2(200.0f, 100.0f));
-	ShadowMapImage.SetSize(CVector2(160, 90) * 3.0f);
-
 	m_Light.SetPos(CVector3(3.0f, 10.0f, -5.0f));
 	m_Light.SetDirection(CVector3(-3.0f, -10.0f, 5.0f));
 
@@ -101,17 +95,14 @@ void SceneGame::Init()
 		static_cast<UINT>(GetAppWidth()), static_cast<UINT>(GetAppHeight()), false);
 
 	ShaderManager::CreateVertexShader("ModelWorldPos", CreateShaderPath("ModelVS_WorldPos"));
-	ShaderManager::CreateVertexShader("DepthShadowVS", CreateShaderPath("DepthShadowVS"));
 	ShaderManager::CreatePixelShader("ShadowMap", CreateShaderPath("ShadowMapPS"));
-	ShaderManager::CreatePixelShader("DepthShadowPS", CreateShaderPath("DepthShadowPS"));
+	
 
 	m_LightLVPMatrixBuffer.Create(sizeof(DirectX::XMFLOAT4X4));
 
 	//=====<ゲーム開始に設定>=====
 	SetNextState(SceneGame::GAMESTATE::GAMESTART);
 	ChangeNextState();
-
-	Trigger = false;
 }
 
 void SceneGame::Uninit()
@@ -172,13 +163,7 @@ void SceneGame::Update()
 
 void SceneGame::Draw()
 {
-	//ライトカメラで描画
-
 	m_GameSceneStateContext.StateDraw();
-
-	EnableDepth(false);
-	ShadowMapImage.SetTexture(m_pShadowMapRenderTarget->GetResource());
-	ShadowMapImage.Draw();
 }
 
 Character* SceneGame::CreateCharacter(int Num)
@@ -305,6 +290,9 @@ void SceneGame::LightCameraDraw()
 	//=====<カメラの切り替え>=====
 	CameraManager::GetInstance().SetSceneCamera("LightCamera");
 	m_pLightCamera->SetParameter();
+	
+	//=====<エフェクトは描画できないように>=====
+	EffectManager::SetIsDrawEffect(false);
 
 	//=====<すべてのシェーダーを変更する>=====
 	ShaderManager::SetAllObjectVS("ModelWorldPos");
@@ -338,4 +326,6 @@ void SceneGame::LightCameraDraw()
 	ShaderManager::SetUseAllObjectVS(false);
 	ShaderManager::SetUseAllObjectPS(false);
 
+	//=====<エフェクトは描画できるようにする>=====
+	EffectManager::SetIsDrawEffect(true);
 }

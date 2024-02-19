@@ -7,5 +7,5 @@ struct PS_IN
 
 float4 main(PS_IN pin) : SV_TARGET
 {
-	return float4(pin.pos.z, 0.0f, 0.0f, 1.0f);
+	return float4(pin.pos.z + 0.001f, 0.0f, 0.0f, 1.0f);
 }

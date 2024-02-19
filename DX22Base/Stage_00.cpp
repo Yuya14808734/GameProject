@@ -1,8 +1,11 @@
 #include "Stage_00.h"
+#include "ShaderManager.h"
 
 void Stage00::Init()
 {
 	ModelDrawer::LoadModel("Assets/Stage/Block/konnkurito/blocks_konnkurito.fbx", "ConcreteBlock", 0.0125f);
+	VertexShader* pDepthVS = ShaderManager::CreateVertexShader("DepthShadowVS", CreateShaderPath("DepthShadowVS"));
+	PixelShader* pDepthPS = ShaderManager::CreatePixelShader("DepthShadowPS", CreateShaderPath("DepthShadowPS"));
 
 	//â°ïù10.0f,ècïù3.0f,âúçs3.0f
 	//íÜêS0.0f, 1.5f,0.0f
@@ -69,6 +72,8 @@ void Stage00::Init()
 
 				tempModelDrawer.SetPosition(BlockPos);
 				tempModelDrawer.SetScale(BlockSize);
+				tempModelDrawer.SetVertexShader(pDepthVS);
+				tempModelDrawer.SetPixelShader(pDepthPS);
 				m_ModelDrawer.push_back(tempModelDrawer);
 
 				BoxCollider tempBoxCollider;

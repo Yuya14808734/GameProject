@@ -23,11 +23,13 @@ public:
 	static Effekseer::EffectRef GetEffect(std::string EffectName);
 	static void EffectUpdate();
 	static void EffectDraw(Effekseer::Handle EffectHandle);
+	static void SetIsDrawEffect(bool IsDraw);
 private:
 	static Effekseer::ManagerRef m_efkManager;
 	static EffekseerRendererDX11::RendererRef m_efkRenderer;
 	static std::map<std::string, Effekseer::EffectRef> m_Effect;
 	static unsigned int m_EffectTimeCount;
+	static bool m_IsDrawEffect;
 };
 
 #endif // !EFFECT_MANAGER_H

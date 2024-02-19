@@ -54,6 +54,8 @@ public:
 	void SetRotate(const CVector3& rotate);
 	const CQuaternion& GetRotate();
 	void SetCulling(bool culling, float Length);
+	void SetVertexShader(VertexShader* pVertexShader);
+	void SetPixelShader(PixelShader* pPixelShader);
 
 private:
 	ModelInformation* m_pModelInfo = nullptr;

@@ -59,11 +59,7 @@ void SceneGame_PlayState::Draw()
 	//=====<背景の描画>=====
 	m_pBackGround->Draw();
 
-	//=====<影のシェーダーの設定>=====
-	ShaderManager::SetAllObjectVS("DepthShadowVS");
-	ShaderManager::SetAllObjectPS("DepthShadowPS");
-	ShaderManager::SetUseAllObjectVS(true);
-	ShaderManager::SetUseAllObjectPS(true);
+	//=====<影のシェーダーの時に使うライトカメラの行列の設定>=====
 	DirectX::XMMATRIX LVP =	m_pLightCamera->GetViewMatrix_TypeXMMAXRIX();
 		LVP *= m_pLightCamera->GetProjectionMatrix_TypeXMMAXRIX();
 	DirectX::XMFLOAT4X4 matrix;
@@ -74,23 +70,17 @@ void SceneGame_PlayState::Draw()
 	SetTexturePS(m_pShadowMapRenderTarget->GetResource(), 1);
 	m_pLightCamera->SetParameter();
 
+	//=====<ステージの描画>=====
+	m_pStage->Stage_Draw();
+
 	//=====<キャラクターの描画>=====
 	for (Character* copy : (*m_pCharacters))
 	{
 		copy->Character_Draw();
 	}
 
-	//=====<ステージの描画>=====
-	m_pStage->Stage_Draw();
-
-	//=====<影の描画は終わる>=====
-	ShaderManager::SetUseAllObjectVS(false);
-	ShaderManager::SetUseAllObjectPS(false);
-
 	//=====<当たり判定の描画>=====
 	ColliderDraw();
-
-	
 
 	//=====<エフェクトの描画>=====
 	for (EffectBase* pEffect : (*m_pEffects))

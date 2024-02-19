@@ -163,7 +163,7 @@ void Character00_AttackDS::Update()
 
 void Character00_AttackDS::Draw()
 {
-	m_frontBox.DrawCollider();
+
 }
 
 void Character00_AttackDS::Uninit()

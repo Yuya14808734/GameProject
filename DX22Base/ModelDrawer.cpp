@@ -469,3 +469,13 @@ void ModelDrawer::SetCulling(bool culling, float size)
 	m_isCheckDraw = culling;
 	m_ObjectSize = size;
 }
+
+void ModelDrawer::SetVertexShader(VertexShader* pVertexShader)
+{
+	m_pVertexShader = pVertexShader;
+}
+
+void ModelDrawer::SetPixelShader(PixelShader* pPixelShader)
+{
+	m_pPixelShader = pPixelShader;
+}

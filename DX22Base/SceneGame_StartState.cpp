@@ -67,10 +67,6 @@ void SceneGame_StartState::Draw()
 	m_pBackGround->Draw();
 
 	//=====<影のシェーダーの設定>=====
-	ShaderManager::SetAllObjectVS("DepthShadowVS");
-	ShaderManager::SetAllObjectPS("DepthShadowPS");
-	ShaderManager::SetUseAllObjectVS(true);
-	ShaderManager::SetUseAllObjectPS(true);
 	DirectX::XMMATRIX LVP = 
 		m_pLightCamera->GetViewMatrix_TypeXMMAXRIX() *
 		m_pLightCamera->GetProjectionMatrix_TypeXMMAXRIX();
@@ -90,10 +86,6 @@ void SceneGame_StartState::Draw()
 	{
 		copy->Character_Draw();
 	}
-
-	//=====<影の描画は終わる>=====
-	ShaderManager::SetUseAllObjectVS(false);
-	ShaderManager::SetUseAllObjectPS(false);
 
 	//=====<エフェクトの描画>=====
 	for (EffectBase* pEffect : (*m_pEffects))

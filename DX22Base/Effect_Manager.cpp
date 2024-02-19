@@ -9,6 +9,7 @@ Effekseer::ManagerRef EffectManager::m_efkManager;
 EffekseerRendererDX11::RendererRef EffectManager::m_efkRenderer;
 std::map<std::string, Effekseer::EffectRef> EffectManager::m_Effect;
 unsigned int EffectManager::m_EffectTimeCount;
+bool EffectManager::m_IsDrawEffect = false;
 
 void EffectManager::EffectInit()
 {
@@ -45,6 +46,8 @@ void EffectManager::EffectInit()
 	EffectManager::Add_Effect("FireSparksEffect", u"Assets/Effect/FireSparks.efkefc");
 
 	//===============================================================================
+
+	m_IsDrawEffect = false;
 }
 
 void EffectManager::EffectUninit()
@@ -77,6 +80,11 @@ void EffectManager::EffectUpdate()
 
 void EffectManager::EffectDraw(Effekseer::Handle Handle)
 {
+	if (!m_IsDrawEffect)
+	{
+		return;
+	}
+
 	//カメラを持ってくる
 	CameraBase* pCamera = CameraManager::GetInstance().GetSceneCamera();
 
@@ -140,6 +148,11 @@ void EffectManager::EffectDraw(Effekseer::Handle Handle)
 	//エフェクトの描画終了処理を行う
 	m_efkRenderer->EndRendering();
 
+}
+
+void EffectManager::SetIsDrawEffect(bool IsDraw)
+{
+	m_IsDrawEffect = IsDraw;
 }
 
 void EffectManager::Add_Effect(std::string name, const char16_t* filePath)
