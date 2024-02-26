@@ -762,6 +762,12 @@
     <ClCompile Include="Character01_WalkState.cpp">
       <Filter>ソース ファイル\04_Game\03_Character\Character_01\State</Filter>
     </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>ソース ファイル\03_Assets\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>ソース ファイル\03_Assets\Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -1237,6 +1243,9 @@
     </ClInclude>
     <ClInclude Include="Character01_AttackS2.h">
       <Filter>ヘッダー ファイル\04_Game\03_Character\Character_01\01_Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>ヘッダー ファイル\03_Assets\Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

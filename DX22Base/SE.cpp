@@ -1,49 +1,130 @@
 #include "Sound.h"
 
-#pragma comment(lib, "winmm.lib")
+std::list<IXAudio2SourceVoice*> SE::m_pDestroyVoiceList;
+std::list<const BYTE*> SE::m_pDestroyBufferList;
 
-unsigned long GetFileSize(const char* filePath);
 
 
-SE::SE(const char* filePath)
+
+SE::SE(LPCSTR filePath) :
+	m_volume(1.0f),
+	m_pitch(1.0f)
 {
-	unsigned long fileSize = GetFileSize(filePath);
-	m_soundData = new char[fileSize + 1];
+	HRESULT hr;
 
-	FILE* fp = fopen(filePath, "rb");
-	unsigned long readSize = fread(m_soundData, sizeof(char), fileSize, fp);
-	fclose(fp);
+	//オーディオファイルを開く
+	HANDLE hFile = CreateFile(filePath, GENERIC_READ, FILE_SHARE_READ | XAUDIO2_VOICE_NOSRC, NULL, OPEN_EXISTING, 0, NULL);
+	SetFilePointer(hFile, 0, NULL, FILE_BEGIN);
 
-	//事前に調べたファイルサイズと読み込んだファイルサイズを比較
-	if (readSize != fileSize)
+
+	//ファイルの種類を確認
+	DWORD dwChunkSize;
+	DWORD dwChunkPosition;
+	_FindChunk(hFile, fourccRIFF, dwChunkSize, dwChunkPosition);
+
+	DWORD dwFileType;
+	_ReadChunkData(hFile, &dwFileType, sizeof(DWORD), dwChunkPosition);
+
+
+	//fmtチャンク を WAVEFORMATEXTENSIBLE構造体 にコピー
+	_FindChunk(hFile, fourccFMT, dwChunkSize, dwChunkPosition);
+	_ReadChunkData(hFile, &m_wfx, dwChunkSize, dwChunkPosition);
+
+
+	//dataチャンク をバッファーに読み取り
+	_FindChunk(hFile, fourccDATA, dwChunkSize, dwChunkPosition);
+
+	BYTE* pDataBuffer = new BYTE[dwChunkSize];
+	_ReadChunkData(hFile, pDataBuffer, dwChunkSize, dwChunkPosition);
+
+
+	//XAUDIO2_BUFFER構造体 に値を設定
+	m_buffer.AudioBytes = dwChunkSize; //オーディオバッファーのサイズ(バイト単位)
+	m_buffer.pAudioData = pDataBuffer; //バッファーにデータを格納
+	m_buffer.Flags = XAUDIO2_END_OF_STREAM;
+
+
+	//ソース音声を作成
+	hr = _GetXAudio2()->CreateSourceVoice(&m_pSourceVoice, (WAVEFORMATEX*)&m_wfx);
+	if (FAILED(hr))
 	{
-		MessageBox(NULL, "ファイルの読み込みに失敗", "SE.cpp", MB_OK | MB_ICONERROR);
-		return;
+		MessageBox(NULL, "SourceVoiceの作成に失敗", "BGM.cpp", MB_OK | MB_ICONERROR);
 	}
+
+	//ソース音声に XAUDIO2_BUFFER を送信
+	hr = m_pSourceVoice->SubmitSourceBuffer(&m_buffer);
+	if (FAILED(hr))
+	{
+		MessageBox(NULL, "XAUDIO2_BUFFERの送信に失敗", "BGM.cpp", MB_OK | MB_ICONERROR);
+	}
+
+	m_pDestroyVoiceList.push_back(m_pSourceVoice);
+	m_pDestroyBufferList.push_back(m_buffer.pAudioData);
 }
 
 SE::~SE()
 {
-	delete[] m_soundData;
 }
 
 void SE::Play()
 {
-	PlaySound(m_soundData, NULL, SND_MEMORY | SND_ASYNC | SND_NODEFAULT);
+	Remove(m_pSourceVoice);
+
+	_GetXAudio2()->CreateSourceVoice(&m_pSourceVoice, (WAVEFORMATEX*)&m_wfx);
+	m_pSourceVoice->SubmitSourceBuffer(&m_buffer);
+	m_pDestroyVoiceList.push_back(m_pSourceVoice);
+
+	m_pSourceVoice->SetVolume(m_volume);
+	m_pSourceVoice->SetFrequencyRatio(m_pitch);
+
+	m_pSourceVoice->Start();
+}
+
+void SE::SetVolume(float volume)
+{
+	if (volume < 0) { m_volume = 0; }
+	if (volume > 1) { m_volume = 1; }
+
+	m_pSourceVoice->SetVolume(m_volume);
+}
+
+void SE::SetPitch(float pitch)
+{
+	m_pitch = pitch;
+	m_pSourceVoice->SetFrequencyRatio(m_pitch);
 }
 
 
 
-unsigned long GetFileSize(const char* filePath)
+void SE::_Destroy()
 {
-	FILE* fp = fopen(filePath, "rb");
-	fseek(fp, 0, SEEK_END);
+	for (auto it = m_pDestroyVoiceList.begin(); it != m_pDestroyVoiceList.end();)
+	{
+		(*it)->Stop();
+		(*it)->FlushSourceBuffers();
+		(*it)->DestroyVoice();
+		it = m_pDestroyVoiceList.erase(it);
+	}
 
-	unsigned long fileSize = 0;
-	fileSize = ftell(fp);
+	for (auto it = m_pDestroyBufferList.begin(); it != m_pDestroyBufferList.end();)
+	{
+		delete *it;
+		it = m_pDestroyBufferList.erase(it);
+	}
 
-	rewind(fp); //ファイル位置を先頭(0)に戻す
-	fclose(fp); //ファイルを閉じる
+}
 
-	return fileSize;
+void SE::Remove(IXAudio2SourceVoice* voice)
+{
+	for (auto it = m_pDestroyVoiceList.begin(); it != m_pDestroyVoiceList.end(); it++)
+	{
+		if (*it == voice)
+		{
+			(*it)->Stop();
+			(*it)->FlushSourceBuffers();
+			(*it)->DestroyVoice();
+			m_pDestroyVoiceList.erase(it);
+			break;
+		}
+	}
 }

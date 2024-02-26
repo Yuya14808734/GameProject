@@ -16,6 +16,7 @@
 #include "Light.h"
 #include "TextureClass.h"
 #include "ConstantBuffer.h"
+#include "Sound.h"
 
 class SceneGame : public CScene
 {
@@ -75,7 +76,7 @@ private:
 	DepthStencil* m_pShadowMapDepthStencil = nullptr;
 	ConstantBuffer m_LightLVPMatrixBuffer;
 
-
+	BGM* m_pBGM = nullptr;
 public:
 	StateContext* GetStateContext()		
 	{return &m_GameSceneStateContext;}

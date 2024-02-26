@@ -103,6 +103,9 @@ void SceneGame::Init()
 	//=====<ゲーム開始に設定>=====
 	SetNextState(SceneGame::GAMESTATE::GAMESTART);
 	ChangeNextState();
+
+	m_pBGM = new BGM("Assets/Music/Battle.wav", true);
+	m_pBGM->Start();
 }
 
 void SceneGame::Uninit()
@@ -132,6 +135,9 @@ void SceneGame::Uninit()
 	//=====<カメラの削除>=====
 	CameraManager::GetInstance().DestroyCamera("GameStartCamera", true);
 	CameraManager::GetInstance().DestroyCamera("GameCamera", true);
+
+	m_pBGM->Stop();
+	delete m_pBGM;
 }
 
 void SceneGame::Update()
