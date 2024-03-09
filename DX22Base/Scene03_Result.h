@@ -9,6 +9,7 @@
 #include "ResultWinnerCharacterImage.h"
 #include "ResultWinnerNumPanel.h"
 #include "Effect_Manager.h"
+#include "Sound.h"
 
 class SceneResult : public CScene
 {
@@ -65,4 +66,5 @@ private:
 	Image2D m_WinnerPlayerNum;
 	Image2D m_HideImage;
 	Effekseer::Handle m_efkHnd_FlowerBlizzard = 0;
+	BGM* m_pBGM = nullptr;
 };

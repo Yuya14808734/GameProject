@@ -44,6 +44,9 @@ void SceneLoad::Init()
 
 	SetNextState(SceneLoad::LOADSTATE::PANELMOVE);
 	ChangeNextState();
+
+	m_pBGM = new BGM("Assets/Music/Load.wav", true);
+	m_pBGM->Start();
 }
 
 void SceneLoad::Uninit()
@@ -64,6 +67,9 @@ void SceneLoad::Uninit()
 	//エフェクトの終了
 	EffectManager::GetManager()->StopAllEffects();
 	CameraManager::GetInstance().DestroyAllCamera(true);
+
+	m_pBGM->Stop();
+	delete m_pBGM;
 }
 
 void SceneLoad::Update()

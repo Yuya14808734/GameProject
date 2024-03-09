@@ -90,6 +90,9 @@ void SceneResult::Init()
 	EffectManager::GetManager()->SetLocation(m_efkHnd_FlowerBlizzard,
 		{ 0.0f,0.0f,0.0f });
 	EffectManager::GetManager()->SetScale(m_efkHnd_FlowerBlizzard, 10.0f, 10.0f, 10.0f);
+
+	m_pBGM = new BGM("Assets/Music/Result.wav", true);
+	m_pBGM->Start();
 }
 
 void SceneResult::Uninit()
@@ -99,6 +102,9 @@ void SceneResult::Uninit()
 
 	EffectManager::GetManager()->StopAllEffects();
 	CameraManager::GetInstance().DestroyAllCamera(true);
+
+	m_pBGM->Stop();
+	delete m_pBGM;
 }
 
 void SceneResult::Update()

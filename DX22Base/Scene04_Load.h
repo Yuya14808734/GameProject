@@ -7,6 +7,7 @@
 #include "VersusTextAnime.h"
 #include "VersusIconAnime.h"
 #include "Effect_Manager.h"
+#include "Sound.h"
 
 class SceneLoad : public CScene
 {
@@ -40,6 +41,6 @@ private:
 	Image2D m_HideImage;
 	VersusIconAnime m_VersusIcon;
 	Effekseer::Handle m_efkHnd_FireSparks = 0;
-
+	BGM* m_pBGM = nullptr;
 };
 

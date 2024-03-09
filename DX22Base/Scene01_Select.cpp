@@ -98,11 +98,15 @@ void SceneSelect::Init()
 	m_isLoadNextScene = false;
 
 	m_state = SceneSelect::SELECTSTATE::SELECT;
+
+	m_pBGM = new BGM("Assets/Music/Select.wav", true);
+	m_pBGM->Start();
 }
 
 void SceneSelect::Uninit()
 {
-	
+	m_pBGM->Stop();
+	delete m_pBGM;
 }
 
 void SceneSelect::Update()

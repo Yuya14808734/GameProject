@@ -7,6 +7,7 @@
 #include "Select02_SlideReadyToFightText.h"
 #include "Image2D.h"
 #include "FadeOut00_ColorFade.h"
+#include "Sound.h"
 
 class SceneSelect : public CScene
 {
@@ -55,4 +56,5 @@ private:
 	SlidReadyToFightText m_ReadyToFightTextImage;
 	FadeOutColorFade m_ColorFade;
 	bool m_isLoadNextScene = false;
+	BGM* m_pBGM = nullptr;
 };

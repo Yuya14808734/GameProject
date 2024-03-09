@@ -61,7 +61,7 @@ SE * SoundManager::GetSE(const std::string & SE_Name)
 	return (*it).second;
 }
 
-void SoundManager::DestroyBGM(const std::string & BGM_Name, bool MemoryDelete = true)
+void SoundManager::DestroyBGM(const std::string & BGM_Name, bool MemoryDelete)
 {
 	std::map<std::string, BGM*>::iterator it = m_BGM_Map.find(BGM_Name);
 
@@ -79,7 +79,7 @@ void SoundManager::DestroyBGM(const std::string & BGM_Name, bool MemoryDelete = 
 	m_BGM_Map.erase(it);
 }
 
-void SoundManager::DestroySE(const std::string & SE_Name, bool MemoryDelete = true)
+void SoundManager::DestroySE(const std::string & SE_Name, bool MemoryDelete)
 {
 	std::map<std::string, SE*>::iterator it = m_SE_Map.find(SE_Name);
 
