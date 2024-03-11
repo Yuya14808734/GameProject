@@ -10,4 +10,7 @@ public:
 	virtual void Init() override;
 	virtual void Uninit() override;
 	virtual void Update() override;
+
+private:
+	int m_WalkTimeCount = 0;
 };

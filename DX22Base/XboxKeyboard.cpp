@@ -108,19 +108,28 @@ void InputXPad::UpdateGamePad()
 	SetPressLeftStick();
 
 	//はじき入力がされたか確認をする
-	for (int i = 2; i > 0; i--)
+	//2フレームである程度まで倒されたら
+	//右スティック
+	m_RightSmash = (m_RightStickLength[0] >= 0.9f) ||
+		(m_RightStickLength[1] >= 0.9f &&
+		m_RightStickLength[2] <= 0.1f);
+	
+	if (m_RightSmash)
 	{
-			
+		int i = 0;
+		i++;
 	}
 
-	////スティックが前のフレームからどれくらい動いたのかを設定
-	//float leftmoveX = m_NowLeftStickValue.x - m_OldLeftStickValue.x;
-	//float leftmoveY = m_NowLeftStickValue.y - m_OldLeftStickValue.y;
-	//m_LeftStickMoveValue = sqrtf((leftmoveX * leftmoveX) + (leftmoveY * leftmoveY));
+	//左スティック
+	m_LeftSmash = m_LeftStickLength[0] >= 0.8f &&
+		(m_LeftStickLength[1] <= 0.2f ||
+		m_LeftStickLength[2] <= 0.2f);
 
-	//float rightmoveX = m_NowRightStickValue.x - m_OldRightStickValue.x;
-	//float rightmoveY = m_NowRightStickValue.y - m_OldRightStickValue.y;
-	//m_RightStickMoveValue = sqrtf((rightmoveX * rightmoveX) + (rightmoveY * rightmoveY));
+	if (m_LeftSmash)
+	{
+		int i = 0;
+		i++;
+	}
 }
 
 //====================================================================

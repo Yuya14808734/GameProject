@@ -4,6 +4,7 @@ void CharacterBase_WalkState::Init()
 {
 	m_pCharacterParameter->MoveVector.x = 0.0f;
 	m_pCharacterParameter->Velocity.x = 0.0f;
+	m_WalkTimeCount = 0;
 }
 
 void CharacterBase_WalkState::Uninit()
@@ -13,10 +14,20 @@ void CharacterBase_WalkState::Uninit()
 
 void CharacterBase_WalkState::Update()
 {
+	m_WalkTimeCount++;
+
 	//’n–Ê‚É“–‚½‚Á‚Ä‚¢‚È‚¯‚ê‚Î
 	if (!m_pCharacterParameter->HitGround)
 	{
 		m_pCharacter->SetNextState(Character::STATE::State_AirMove);
+	}
+
+	if (m_WalkTimeCount < 2)
+	{
+		if (m_pController->GetLeftSmash())
+		{
+			m_pCharacter->SetNextState(Character::STATE::State_Dash);
+		}
 	}
 
 	bool NoButton = true;
@@ -45,7 +56,6 @@ void CharacterBase_WalkState::Update()
 	if (NoButton)
 	{
 		m_pCharacter->SetNextState(Character::STATE::State_Idle);
-		//ChangeState(Character::STATE::IDLE);
 	}
 
 	//UŒ‚
@@ -59,12 +69,6 @@ void CharacterBase_WalkState::Update()
 	{
 		m_pCharacter->SetNextState(Character::STATE::State_JumpIn);
 	}
-
-	//‚µ‚á‚ª‚Ý‚ª‚ ‚ê‚Î
-	/*if (IsKeyPress(VK_DOWN))
-	{
-
-	}*/
 
 	m_pCharacterParameter->Velocity.y += m_pJumpParameter->FallDownGravity;
 
