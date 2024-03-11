@@ -768,6 +768,9 @@
     <ClCompile Include="SoundManager.cpp">
       <Filter>ソース ファイル\03_Assets\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="LoadSound.cpp">
+      <Filter>ソース ファイル\03_Assets\Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -1245,6 +1248,9 @@
       <Filter>ヘッダー ファイル\04_Game\03_Character\Character_01\01_Attack</Filter>
     </ClInclude>
     <ClInclude Include="SoundManager.h">
+      <Filter>ヘッダー ファイル\03_Assets\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadSound.h">
       <Filter>ヘッダー ファイル\03_Assets\Sound</Filter>
     </ClInclude>
   </ItemGroup>

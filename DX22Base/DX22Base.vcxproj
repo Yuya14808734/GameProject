@@ -202,6 +202,7 @@
     <ClCompile Include="GameUI02_StockCount.cpp" />
     <ClCompile Include="GameUI04_OnHeadUI.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="LoadSound.cpp" />
     <ClCompile Include="PushButtonText.cpp" />
     <ClCompile Include="ResultWinnerCharacterImage.cpp" />
     <ClCompile Include="ResultWinnerNumPanel.cpp" />
@@ -391,6 +392,7 @@
     <ClInclude Include="GameUI04_OnHeadUI.h" />
     <ClInclude Include="Character01_JumpState.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="LoadSound.h" />
     <ClInclude Include="SceneLoad_LoadState.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="VersusCharacterPanelMove.h" />

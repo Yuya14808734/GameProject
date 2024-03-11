@@ -110,26 +110,14 @@ void InputXPad::UpdateGamePad()
 	//はじき入力がされたか確認をする
 	//2フレームである程度まで倒されたら
 	//右スティック
-	m_RightSmash = (m_RightStickLength[0] >= 0.9f) ||
-		(m_RightStickLength[1] >= 0.9f &&
-		m_RightStickLength[2] <= 0.1f);
-	
-	if (m_RightSmash)
-	{
-		int i = 0;
-		i++;
-	}
+	m_RightSmash = m_RightStickLength[0] >= 0.7f &&
+		(m_RightStickLength[1] <= 0.2f ||
+		m_RightStickLength[2] <= 0.2f);
 
 	//左スティック
 	m_LeftSmash = m_LeftStickLength[0] >= 0.7f &&
 		(m_LeftStickLength[1] <= 0.2f ||
 		m_LeftStickLength[2] <= 0.2f);
-
-	if (m_LeftSmash)
-	{
-		int i = 0;
-		i++;
-	}
 }
 
 //====================================================================
