@@ -121,7 +121,7 @@ void InputXPad::UpdateGamePad()
 	}
 
 	//左スティック
-	m_LeftSmash = m_LeftStickLength[0] >= 0.8f &&
+	m_LeftSmash = m_LeftStickLength[0] >= 0.7f &&
 		(m_LeftStickLength[1] <= 0.2f ||
 		m_LeftStickLength[2] <= 0.2f);
 
