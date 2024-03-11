@@ -14,6 +14,8 @@
 #include "Character_State.h"
 #include "Character_Attack.h"
 #include "ShaderManager.h"
+#include "SoundManager.h"
+#include "LoadSound.h"
 
 #include "SceneGame_StartState.h"
 #include "SceneGame_GamePlayState.h"
@@ -106,6 +108,8 @@ void SceneGame::Init()
 
 	m_pBGM = new BGM("Assets/Music/Battle.wav", true);
 	m_pBGM->Start();
+
+	LoadBattleSE();
 }
 
 void SceneGame::Uninit()
@@ -138,6 +142,8 @@ void SceneGame::Uninit()
 
 	m_pBGM->Stop();
 	delete m_pBGM;
+
+	SoundManager::DestroyAll();
 }
 
 void SceneGame::Update()

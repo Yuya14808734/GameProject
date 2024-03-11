@@ -37,6 +37,30 @@ SE * SoundManager::AddSE(const std::string & SE_Name, const char * pFilePath)
 	return pSE;
 }
 
+void SoundManager::PlayBGM(const std::string& BGM_Name)
+{
+	BGM* pBGM = GetBGM(BGM_Name);
+
+	if (pBGM == nullptr)
+	{
+		return;
+	}
+
+	pBGM->Start();
+}
+
+void SoundManager::PlaySE(const std::string& SE_Name)
+{
+	SE* pSE = GetSE(SE_Name);
+
+	if (pSE == nullptr)
+	{
+		return;
+	}
+
+	pSE->Play();
+}
+
 BGM * SoundManager::GetBGM(const std::string & BGM_Name)
 {
 	std::map<std::string, BGM*>::iterator it = m_BGM_Map.find(BGM_Name);
