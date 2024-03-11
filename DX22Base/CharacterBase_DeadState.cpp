@@ -7,7 +7,8 @@ void CharacterBase_DeadState::Init()
 {
 	m_ChangeStateCount = 0;	//ステータスを変えるまでの時間をカウントする
 	m_pCharacter->SetStock(m_pCharacter->GetStock() - 1);
-	
+	m_pCharacterParameter->MoveVector =
+		m_pCharacterParameter->Velocity = CVector3::GetZero();
 
 	//ゲームオーバーを描画するのでストックは描画しない
 	if (m_pCharacter->GetStock() == 0)

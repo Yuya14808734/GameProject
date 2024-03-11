@@ -31,7 +31,7 @@ void CharacterBase_BlowAwayState::Init()
 	m_pCharacterParameter->Velocity = CQuaternion::RadianAxis(
 		NormalVelocityVector.cross(NormalChangeVector).normalize(),					//回す軸
 		RotateRadian * m_pBlowAwayParameter->VectorChangePower						//回す弧度
-	).RotateVector(NormalVelocityVector);											//回すベクトル
+	).RotateVector(m_pCharacterParameter->Velocity);											//回すベクトル
 
 	m_pCharacterParameter->MoveVector = CVector3::GetZero();
 
@@ -65,17 +65,7 @@ void CharacterBase_BlowAwayState::Update()
 	}
 
 	//吹っ飛ばされたベクトルをどんどん短くしていく
-	m_pCharacterParameter->Velocity.x *= m_pBlowAwayParameter->SmashMitigation;
-
-	//上から下に向かうベクトルに変わったら
-	if (m_pCharacterParameter->Velocity.y > 0.0f)
-	{
-		m_pCharacterParameter->Velocity.y *= m_pBlowAwayParameter->SmashMitigation;
-	}
-	else
-	{
-		m_pCharacterParameter->Velocity.y += m_pJumpParameter->FallDownGravity;
-	}
+	m_pCharacterParameter->Velocity *= m_pBlowAwayParameter->SmashMitigation;
 	
 	float SmashNowLength = m_pCharacterParameter->Velocity.length();
 	

@@ -30,6 +30,22 @@ void InputXPad::XpadUpdate()
 	}
 }
 
+InputXPad::InputXPad()
+{
+	for (int i = 0; i < 3; i++)
+	{
+		m_RightStickValue[i] =
+			m_LeftStickValue[i] = DirectX::XMFLOAT2(0.0f, 0.0f);
+		m_RightStickLength[i] =
+			m_LeftStickLength[i] = 0.0f;
+	}
+}
+
+InputXPad::~InputXPad()
+{
+
+}
+
 //====================================================================
 //用途　：コントローラーの状態を取得
 //戻り値：パッドが繋がっているか
@@ -56,9 +72,14 @@ void InputXPad::UpdateGamePad()
 	m_oldstate = m_state;
 	static int Count = 0;
 
-	//前のフレームでスティックの倒した量
-	m_OldRightStickValue = GetPressRightStick();
-	m_OldLeftStickValue = GetPressLeftStick();
+	//一つ後ろにずらしてやる
+	for (int i = 2; i > 0; i--)
+	{
+		m_RightStickValue[i] = m_RightStickValue[i - 1];
+		m_RightStickLength[i] = m_RightStickLength[i - 1];
+		m_LeftStickValue[i] = m_LeftStickValue[i - 1];
+		m_LeftStickLength[i] = m_LeftStickLength[i - 1];
+	}
 
 	ZeroMemory(&m_state, sizeof(XINPUT_STATE));      //XINPUT_STATE型のメモリ初期化
 
@@ -86,14 +107,20 @@ void InputXPad::UpdateGamePad()
 	SetPressRightStick();
 	SetPressLeftStick();
 
-	//スティックが前のフレームからどれくらい動いたのかを設定
-	float leftmoveX = m_NowLeftStickValue.x - m_OldLeftStickValue.x;
-	float leftmoveY = m_NowLeftStickValue.y - m_OldLeftStickValue.y;
-	m_LeftStickMoveValue = sqrtf((leftmoveX * leftmoveX) + (leftmoveY * leftmoveY));
+	//はじき入力がされたか確認をする
+	for (int i = 2; i > 0; i--)
+	{
+			
+	}
 
-	float rightmoveX = m_NowRightStickValue.x - m_OldRightStickValue.x;
-	float rightmoveY = m_NowRightStickValue.y - m_OldRightStickValue.y;
-	m_RightStickMoveValue = sqrtf((rightmoveX * rightmoveX) + (rightmoveY * rightmoveY));
+	////スティックが前のフレームからどれくらい動いたのかを設定
+	//float leftmoveX = m_NowLeftStickValue.x - m_OldLeftStickValue.x;
+	//float leftmoveY = m_NowLeftStickValue.y - m_OldLeftStickValue.y;
+	//m_LeftStickMoveValue = sqrtf((leftmoveX * leftmoveX) + (leftmoveY * leftmoveY));
+
+	//float rightmoveX = m_NowRightStickValue.x - m_OldRightStickValue.x;
+	//float rightmoveY = m_NowRightStickValue.y - m_OldRightStickValue.y;
+	//m_RightStickMoveValue = sqrtf((rightmoveX * rightmoveX) + (rightmoveY * rightmoveY));
 }
 
 //====================================================================
@@ -370,7 +397,7 @@ DirectX::XMFLOAT2 InputXPad::GetPressStick()
 //=====================================================================
 const DirectX::XMFLOAT2& InputXPad::GetPressRightStick()
 {
-	return m_NowRightStickValue;
+	return m_RightStickValue[0];
 }
 
 //====================================================================
@@ -381,7 +408,7 @@ const DirectX::XMFLOAT2& InputXPad::GetPressRightStick()
 //=====================================================================
 const DirectX::XMFLOAT2& InputXPad::GetPressLeftStick()
 {
-	return m_NowLeftStickValue;
+	return m_LeftStickValue[0];
 }
 
 //====================================================================
@@ -422,7 +449,10 @@ void InputXPad::SetPressRightStick()
 
 	normalized.x *= normalizedMagnitude;
 	normalized.y *= normalizedMagnitude;
-	m_NowRightStickValue = normalized;
+	m_RightStickValue[0] = normalized;
+	m_RightStickLength[0] =
+		sqrt(normalized.x * normalized.x +
+			normalized.y * normalized.y);
 }
 
 //====================================================================
@@ -463,17 +493,22 @@ void InputXPad::SetPressLeftStick()
 
 	normalized.x *= normalizedMagnitude;
 	normalized.y *= normalizedMagnitude;
-	m_NowLeftStickValue = normalized;
+	m_LeftStickValue[0] = normalized;
+	m_LeftStickLength[0] =
+		sqrt(normalized.x * normalized.x +
+			normalized.y * normalized.y);
 }
 
 bool InputXPad::GetRightSmash(float SmashValue)
 {
-	return (m_RightStickMoveValue > SmashValue);
+	return m_RightSmash;
+		//(m_RightStickMoveValue > SmashValue);
 }
 
 bool InputXPad::GetLeftSmash(float SmashValue)
 {
-	return (m_LeftStickMoveValue > SmashValue);
+	return m_LeftSmash;
+		//(m_LeftStickMoveValue > SmashValue);
 }
 
 //====================================================================

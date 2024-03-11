@@ -186,7 +186,7 @@ void Character00_AttackAirN::Draw()
 void Character00_AttackAirN::HitCharacter(Character* pHitCharacter)
 {
 	pHitCharacter->AddDamage(10.0f);								//ダメージの加算
-	float ForcePower = (pHitCharacter->GetDamage() / 100.0f) * 0.25f + 0.3f;			//ダメージから吹っ飛ばすベクトルの計算
+	float ForcePower = (pHitCharacter->GetDamage() / 100.0f) * 1.2f + 0.3f;			//ダメージから吹っ飛ばすベクトルの計算
 
 	pHitCharacter->SetPos(pHitCharacter->GetPos() + CVector3::GetUp() * 0.1f);		//少し上げて地面に当たっていないことにする
 

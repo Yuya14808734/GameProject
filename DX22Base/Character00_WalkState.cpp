@@ -16,7 +16,7 @@ void Character00_WalkState::Update()
 {
 	CharacterBase_WalkState::Update();
 
-	m_AnimeTime += 0.015f;
+	m_AnimeTime = m_AnimeTime + (0.015f * fabsf(m_pController->GetMoveInput().x));
 	if (m_AnimeTime > 1.0f)
 	{
 		m_AnimeTime -= 1.0f;

@@ -89,7 +89,7 @@ void Character00_Attack13::HitCharacter(Character* pHitCharacter)
 	float ForcePower = (pHitCharacter->GetDamage() / 100.0f) * 0.5f + 0.3f;			
 
 	//少し上げて地面に当たっていないことにする
-	pHitCharacter->SetPos(pHitCharacter->GetPos() + CVector3::GetUp() * 0.1f);		
+	pHitCharacter->SetPos(pHitCharacter->GetPos() + CVector3::GetUp() * 0.1f);	
 	
 	//吹っ飛ばしベクトルを設定
 	CVector3 AddVec = CVector2::GetAngleVector(

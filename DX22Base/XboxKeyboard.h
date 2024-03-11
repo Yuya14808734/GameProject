@@ -45,8 +45,9 @@ public:
 private:
 	static InputXPad m_XInputArray[4];
 
-
 public:
+	InputXPad();
+	~InputXPad();
 	bool IsPadConnect();
 	void UpdateGamePad();													//Xboxコントローラーの情報を取得する関数(Updateの初めの方に書きましょう) 
 	int InputPressKey(PadButton key);										//プレスキーの入力関数
@@ -80,19 +81,19 @@ private:
 	
 	int m_ControllerNum = 0;
 	DWORD m_dwResult;			//今コントローラーがつないであるのかなどの情報が入る
-	XINPUT_STATE m_state;     //XINPUT_STATE型の構造体宣言(コントローラーの変更があったか、現在の状態)
+	XINPUT_STATE m_state;		//XINPUT_STATE型の構造体宣言(コントローラーの変更があったか、現在の状態)
 	XINPUT_STATE m_oldstate;
 
 	XINPUT_VIBRATION vibration;
 	int Vibtime = 0;
 	bool Stop = false;
 
-	DirectX::XMFLOAT2 m_NowRightStickValue = DirectX::XMFLOAT2(0.0f, 0.0f);
-	DirectX::XMFLOAT2 m_OldRightStickValue = DirectX::XMFLOAT2(0.0f, 0.0f);
-	DirectX::XMFLOAT2 m_NowLeftStickValue = DirectX::XMFLOAT2(0.0f, 0.0f);
-	DirectX::XMFLOAT2 m_OldLeftStickValue = DirectX::XMFLOAT2(0.0f, 0.0f);
-	float m_RightStickMoveValue = 0.0f;
-	float m_LeftStickMoveValue = 0.0f;
+	DirectX::XMFLOAT2 m_RightStickValue[3];
+	float m_RightStickLength[3];
+	DirectX::XMFLOAT2 m_LeftStickValue[3];
+	float m_LeftStickLength[3];
+	bool m_RightSmash = false;
+	bool m_LeftSmash = false;
 };
 
 #endif
