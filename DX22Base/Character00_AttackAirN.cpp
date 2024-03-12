@@ -40,7 +40,7 @@ void Character00_AttackAirN::Init()
 
 	m_pModelDrawer->PlayAnime("WAIT04", true);
 
-	m_pCharacterParameter->MoveVector = CVector3::GetZero();
+	//m_pCharacterParameter->MoveVector = CVector3::GetZero();
 }
 
 void Character00_AttackAirN::Uninit()
@@ -170,7 +170,6 @@ void Character00_AttackAirN::Update()
 	}
 
 	//ÅI“I‚ÈˆÊ’u‚ðÝ’è
-	m_pCharacterParameter->Pos += m_pCharacterParameter->MoveVector;
 	m_pCharacterParameter->Pos += m_pCharacterParameter->Velocity;
 	//=====================================================
 

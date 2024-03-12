@@ -5,7 +5,6 @@
 
 void CharacterBase_DownState::Init()
 {
-	m_pCharacterParameter->MoveVector = CVector3::GetZero();
 	m_pCharacterParameter->Velocity = CVector3::GetZero();
 }
 
@@ -31,7 +30,6 @@ void CharacterBase_DownState::Update()
 		m_pCharacterParameter->Velocity.y = m_pJumpParameter->DefaultFallSpeed;
 	}
 
-	m_pCharacterParameter->Pos += m_pCharacterParameter->MoveVector;
 	m_pCharacterParameter->Pos += m_pCharacterParameter->Velocity;
 
 	//これ以上はアニメーションが終了したら起き上がれるようにしたいので

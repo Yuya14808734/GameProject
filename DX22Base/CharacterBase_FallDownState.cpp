@@ -65,6 +65,5 @@ void CharacterBase_FallDownState::Update()
 		m_pCharacterParameter->Velocity.y = m_pJumpParameter->DefaultFallSpeed;
 	}
 
-	m_pCharacterParameter->Pos += m_pCharacterParameter->MoveVector;
 	m_pCharacterParameter->Pos += m_pCharacterParameter->Velocity;
 }

@@ -5,9 +5,7 @@
 void CharacterBase_JumpInState::Init()
 {
 	m_pCharacterParameter->JumpCharageCount = 0;
-	m_pCharacterParameter->Velocity.x = m_pCharacterParameter->MoveVector.x;
 	m_pCharacterParameter->Velocity.y = 0.0f;
-	m_pCharacterParameter->MoveVector = CVector3::GetZero();
 }
 
 void CharacterBase_JumpInState::Uninit()
@@ -18,7 +16,6 @@ void CharacterBase_JumpInState::Uninit()
 void CharacterBase_JumpInState::Update()
 {
 	m_pCharacterParameter->JumpCharageCount++;
-
 
 	//ジャンプボタンの押している長さによってジャンプしている力を変えてやる
 	if (m_pController->GetJumpTrigger())

@@ -13,7 +13,6 @@ void CharacterBase_JumpState::Init()
 		m_pCharacterParameter->Velocity.y = m_pJumpParameter->SecondJumpPower;
 	}
 
-	m_pCharacterParameter->MoveVector = CVector3::GetZero();
 	m_pCharacterParameter->JumpCount++;
 }
 
@@ -33,11 +32,19 @@ void CharacterBase_JumpState::Update()
 
 	bool OnButton = false;
 
-	m_pCharacterParameter->MoveVector.x =  
+	float InputX =  
 		m_pController->GetMoveInput().x * m_pMoveParameter->AirSideMoveSpeed;
 
-	m_pCharacterParameter->Velocity.x *= m_pMoveParameter->AirDrag;	//空気抵抗を掛ける
-
+	//入力されている
+	if (fabsf(InputX) > 0.01f)
+	{
+		m_pCharacterParameter->Velocity.x = InputX;
+	}
+	else
+	{
+		m_pCharacterParameter->Velocity.x *= m_pMoveParameter->AirDrag;	//空気抵抗を掛ける
+	}
+	
 	//もう一度ジャンプができる
 	if (m_pCharacterParameter->JumpCount < m_pJumpParameter->MaxJumpCount)
 	{
@@ -68,7 +75,6 @@ void CharacterBase_JumpState::Update()
 		m_pCharacter->SetNextState(Character::STATE::State_AirMove);
 	}
 
-	m_pCharacterParameter->Pos += m_pCharacterParameter->MoveVector;
 	m_pCharacterParameter->Pos += m_pCharacterParameter->Velocity;
 
 	//ジャンプした後の位置が天井を超えていたら戻してやる

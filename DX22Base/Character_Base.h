@@ -79,7 +79,7 @@ public:
 		CVector3		Scale;						//大きさ
 		CQuaternion		Rotate;						//回転量
 		CVector3		Velocity;					//重力など
-		CVector3		MoveVector;					//コントローラーの移動量
+		//CVector3		MoveVector;					//コントローラーの移動量
 		CVector3		ShiftCenterPos;				//回転や拡縮をする中心位置をずらす
 
 		//-------------------------------------------------------------------------------
@@ -98,11 +98,11 @@ public:
 
 	struct MOVEPARAMETER
 	{
-		float	WalkSpeed = 0.0f;		//歩くスピード
-		float	DashSpeed = 0.0f;		//走るスピード
-		float	AirSideMoveSpeed = 0.0f;		//落ちているときの横移動のスピード
-		float	Friction = 0.0f;		//摩擦量
-		float	AirDrag = 0.0f;		//空気抵抗
+		float	WalkSpeed = 0.0f;			//歩くスピード
+		float	DashSpeed = 0.0f;			//走るスピード
+		float	AirSideMoveSpeed = 0.0f;	//落ちているときの横移動のスピード
+		float	Friction = 0.0f;			//摩擦量
+		float	AirDrag = 0.0f;				//空気抵抗
 	};
 
 	struct JUMPPARAMETER
@@ -110,14 +110,14 @@ public:
 		int		MaxJumpCount = 0;				//ジャンプできる最大数
 		int		MiniJumpPushButtonCount = 0;	//小ジャンプするときのフレーム
 		int		JumpChargeCount = 0;			//ジャンプするまでのチャージ時間
-		float	FirstMiniJumpPower = 0.0f;	//小ジャンプをするときの力
-		float	FirstJumpPower = 0.0f;		//ジャンプするときの力
-		float	SecondJumpPower = 0.0f;		//二回目のジャンプの力
-		float	JumpUpReduction = 0.0f;		//ジャンプして上に上がるときの重力
-		float	FallDownGravity = 0.0f;		//ジャンプし終わって下に下がるときの重力
+		float	FirstMiniJumpPower = 0.0f;		//小ジャンプをするときの力
+		float	FirstJumpPower = 0.0f;			//ジャンプするときの力
+		float	SecondJumpPower = 0.0f;			//二回目のジャンプの力
+		float	JumpUpReduction = 0.0f;			//ジャンプして上に上がるときの重力
+		float	FallDownGravity = 0.0f;			//ジャンプし終わって下に下がるときの重力
 		float	DefaultFallSpeed = 0.0f;		//最大落下速度
 		float	SpeedUpFallSpeed = 0.0f;		//落下中に下を押した場合の落下量
-		float	ChangeFallSpeed = 0.0f;		//落下に変わるときのスピード
+		float	ChangeFallSpeed = 0.0f;			//落下に変わるときのスピード
 	};
 
 	struct BLOWAWAYPARAMETER

@@ -2,7 +2,6 @@
 
 void CharacterBase_WalkState::Init()
 {
-	m_pCharacterParameter->MoveVector.x = 0.0f;
 	m_pCharacterParameter->Velocity.x = 0.0f;
 	m_WalkTimeCount = 0;
 }
@@ -32,14 +31,14 @@ void CharacterBase_WalkState::Update()
 
 	bool NoButton = true;
 
-	m_pCharacterParameter->MoveVector.x 
+	m_pCharacterParameter->Velocity.x 
 		= m_pController->GetMoveInput().x * m_pMoveParameter->WalkSpeed;
 
-	if (m_pCharacterParameter->MoveVector.x != 0.0f)
+	if (m_pCharacterParameter->Velocity.x != 0.0f)
 	{
 		NoButton = false;
 
-		if (m_pCharacterParameter->MoveVector.x > 0.0f)
+		if (m_pCharacterParameter->Velocity.x > 0.0f)
 		{
 			//‰E‚És‚Á‚Ä‚¢‚é
 			m_pCharacter->SetLookRight();
@@ -78,6 +77,5 @@ void CharacterBase_WalkState::Update()
 		m_pCharacterParameter->Velocity.y = m_pJumpParameter->DefaultFallSpeed;
 	}
 
-	m_pCharacterParameter->Pos += m_pCharacterParameter->MoveVector;
 	m_pCharacterParameter->Pos += m_pCharacterParameter->Velocity;
 }

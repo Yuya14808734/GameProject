@@ -41,9 +41,6 @@ void Character00_AttackDS::Init()
 
 	m_HitStopCount = 0;
 
-	m_pCharacterParameter->Velocity = m_pCharacterParameter->MoveVector;
-	m_pCharacterParameter->MoveVector = CVector3::GetZero();
-
 	//===========<キャラクターの前に置く当たり判定ボックスを置く>===============
 	//もし崖だった場合はそれよりも奥に行かない
 	float AddX = m_pCharacterParameter->Velocity.x > 0.0f ?

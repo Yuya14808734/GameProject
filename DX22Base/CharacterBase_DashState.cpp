@@ -23,14 +23,14 @@ void CharacterBase_DashState::Update()
 
 	if(NowX > 0.0f)
 	{
-		if (m_pCharacterParameter->MoveVector.x < -0.01f)
+		if (m_pCharacterParameter->Velocity.x < -0.01f)
 		{
 			//左に行っていた場合、摩擦を掛ける
-			m_pCharacterParameter->MoveVector.x *= m_pMoveParameter->Friction;
+			m_pCharacterParameter->Velocity.x *= m_pMoveParameter->Friction;
 		}
 		else
 		{
-			m_pCharacterParameter->MoveVector.x = m_pMoveParameter->DashSpeed;
+			m_pCharacterParameter->Velocity.x = m_pMoveParameter->DashSpeed;
 		}
 
 		//右に行っている
@@ -41,14 +41,14 @@ void CharacterBase_DashState::Update()
 
 	if(NowX < 0.0f)
 	{
-		if (m_pCharacterParameter->MoveVector.x > 0.01f)
+		if (m_pCharacterParameter->Velocity.x > 0.01f)
 		{
 			//右に行っていた場合、摩擦を掛ける
-			m_pCharacterParameter->MoveVector.x *= m_pMoveParameter->Friction;
+			m_pCharacterParameter->Velocity.x *= m_pMoveParameter->Friction;
 		}
 		else
 		{
-			m_pCharacterParameter->MoveVector.x = -m_pMoveParameter->DashSpeed;
+			m_pCharacterParameter->Velocity.x = -m_pMoveParameter->DashSpeed;
 		}
 
 		//左に行っている
@@ -61,12 +61,12 @@ void CharacterBase_DashState::Update()
 	if (NoButton)
 	{
 		//止まる
-		m_pCharacterParameter->MoveVector.x *= m_pMoveParameter->Friction;
+		m_pCharacterParameter->Velocity.x *= m_pMoveParameter->Friction;
 
 		//ある程度遅くなったら
-		if (m_pCharacterParameter->MoveVector.x < 0.01f || m_pCharacterParameter->MoveVector.x > -0.01f)
+		if (m_pCharacterParameter->Velocity.x < 0.01f && m_pCharacterParameter->Velocity.x > -0.01f)
 		{
-			m_pCharacterParameter->MoveVector.x = 0.0f;
+			m_pCharacterParameter->Velocity.x = 0.0f;
 			m_pCharacter->SetNextState(Character::STATE::State_Idle);
 		}
 	}
@@ -79,7 +79,6 @@ void CharacterBase_DashState::Update()
 	//ジャンプ
 	if (m_pController->GetJumpTrigger())
 	{
-		m_pCharacterParameter->Velocity.x = m_pCharacterParameter->MoveVector.x;
 		m_pCharacter->SetNextState(Character::STATE::State_JumpIn);
 	}
 
@@ -91,6 +90,5 @@ void CharacterBase_DashState::Update()
 		m_pCharacterParameter->Velocity.y = m_pJumpParameter->DefaultFallSpeed;
 	}
 
-	m_pCharacterParameter->Pos += m_pCharacterParameter->MoveVector;
 	m_pCharacterParameter->Pos += m_pCharacterParameter->Velocity;
 }

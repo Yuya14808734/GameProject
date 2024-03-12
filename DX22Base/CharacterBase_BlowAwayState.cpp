@@ -33,8 +33,6 @@ void CharacterBase_BlowAwayState::Init()
 		RotateRadian * m_pBlowAwayParameter->VectorChangePower						//回す弧度
 	).RotateVector(m_pCharacterParameter->Velocity);											//回すベクトル
 
-	m_pCharacterParameter->MoveVector = CVector3::GetZero();
-
 	//エフェクトの追加
 	m_pMultipleSmoke = new MultipleSmoke();
 	m_pMultipleSmoke->SetSingleSmokeEndTime(1.0f);

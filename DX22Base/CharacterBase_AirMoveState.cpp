@@ -5,7 +5,7 @@
 
 void CharacterBase_AirMoveState::Init()
 {
-	m_pCharacterParameter->MoveVector = CVector3::GetZero();
+
 }
 
 void CharacterBase_AirMoveState::Uninit()
@@ -57,6 +57,5 @@ void CharacterBase_AirMoveState::Update()
 		m_pCharacterParameter->Velocity.y = m_pJumpParameter->DefaultFallSpeed;
 	}
 
-	m_pCharacterParameter->Pos += m_pCharacterParameter->MoveVector;
 	m_pCharacterParameter->Pos += m_pCharacterParameter->Velocity;
 }
