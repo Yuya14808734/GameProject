@@ -5,14 +5,14 @@
 void CharacterBase_JumpInState::Init()
 {
 	m_pCharacterParameter->JumpCharageCount = 0;
-	m_pCharacterParameter->MoveVector = CVector3::GetZero();
 	m_pCharacterParameter->Velocity.x = m_pCharacterParameter->MoveVector.x;
 	m_pCharacterParameter->Velocity.y = 0.0f;
+	m_pCharacterParameter->MoveVector = CVector3::GetZero();
 }
 
 void CharacterBase_JumpInState::Uninit()
 {
-
+	
 }
 
 void CharacterBase_JumpInState::Update()
@@ -38,7 +38,6 @@ void CharacterBase_JumpInState::Update()
 	if(m_pCharacterParameter->JumpCharageCount > m_pJumpParameter->JumpChargeCount)
 	{
 		m_pCharacter->SetNextState(Character::STATE::State_Jump);
-		m_pCharacterParameter->Velocity.x = m_pCharacterParameter->MoveVector.x;
 	}
 
 	m_pCharacterParameter->Pos += m_pCharacterParameter->Velocity;

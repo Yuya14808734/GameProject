@@ -19,7 +19,8 @@ void CharacterBase_JumpState::Init()
 
 void CharacterBase_JumpState::Uninit()
 {
-
+	int i = 0;
+	i++;
 }
 
 void CharacterBase_JumpState::Update()

@@ -44,6 +44,9 @@ void EffectManager::EffectInit()
 	EffectManager::Add_Effect("DeadEffect", u"Assets/Effect/GameEffect/DeadEffect.efkefc");
 	EffectManager::Add_Effect("WinnerEffect", u"Assets/Effect/WinnerEffect.efkefc");
 	EffectManager::Add_Effect("FireSparksEffect", u"Assets/Effect/FireSparks.efkefc");
+	EffectManager::Add_Effect("DamageEffect00", u"Assets/Effect/DamageEffect00.efkefc");
+	EffectManager::Add_Effect("DamageEffect01", u"Assets/Effect/DamageEffect01.efkefc");
+	EffectManager::Add_Effect("DashEffect01", u"Assets/Effect/DashEffect.efkefc");
 
 	//===============================================================================
 
