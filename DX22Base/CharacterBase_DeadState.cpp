@@ -2,6 +2,7 @@
 #include "Scene00_Game.h"
 #include "SceneGame_GamePlayState.h"
 #include "Effect00_Dead.h"
+#include "SoundManager.h"
 
 void CharacterBase_DeadState::Init()
 {
@@ -9,6 +10,9 @@ void CharacterBase_DeadState::Init()
 	m_pCharacter->SetStock(m_pCharacter->GetStock() - 1);
 	m_pCharacterParameter->MoveVector =
 		m_pCharacterParameter->Velocity = CVector3::GetZero();
+
+	SoundManager::PlaySE("Kill01");
+	SoundManager::PlaySE("ShoutOfWay");
 
 	//ゲームオーバーを描画するのでストックは描画しない
 	if (m_pCharacter->GetStock() == 0)

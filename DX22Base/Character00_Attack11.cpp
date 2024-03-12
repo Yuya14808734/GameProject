@@ -2,6 +2,7 @@
 #include "Input.h"
 #include "XboxKeyboard.h"
 #include "CharacterBase_HitStopState.h"
+#include "SoundManager.h"
 
 void Character00_Attack11::Init()
 {
@@ -37,6 +38,8 @@ void Character00_Attack11::Init()
 	m_pModelDrawer->PlayAnime("Pose2", true);
 
 	m_PushButton = false;
+
+	SoundManager::PlaySE("MissPunch01");
 }
 
 void Character00_Attack11::Uninit()
@@ -111,6 +114,7 @@ void Character00_Attack11::Update()
 
 void Character00_Attack11::HitCharacter(Character* pHitCharacter)
 {
+	SoundManager::PlaySE("HitPunch01");
 	pHitCharacter->AddDamage(2.0f);								//ƒ_ƒ[ƒW‚Ì‰ÁZ
 	CharacterBase_HitStopState* pHitStopState =
 	static_cast<CharacterBase_HitStopState*>(pHitCharacter->SetNextState(Character::STATE::State_HitStop));

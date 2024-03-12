@@ -1,6 +1,7 @@
 #include "CharacterBase_AirMoveState.h"
 #include "Input.h"
 #include "XboxKeyboard.h"
+#include "SoundManager.h"
 
 void CharacterBase_AirMoveState::Init()
 {
@@ -17,6 +18,7 @@ void CharacterBase_AirMoveState::Update()
 	if (m_pCharacterParameter->HitGround)
 	{
 		m_pCharacter->SetNextState(Character::STATE::State_Idle);
+		SoundManager::PlaySE("FootSteps01_Walk");
 	}
 
 	bool OnButton = false;

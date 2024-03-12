@@ -67,14 +67,14 @@ void Character00_DownState::Update()
 		m_AnimeTime = AnimeEndTime;
 
 		//転んでいるときに上ボタンを押すと起き上がる
-		if (m_pController->GetWakeUp())
+		if (m_pController->GetMoveInput().length() > 0.5f)
 		{
 			m_pCharacter->SetNextState(Character::STATE::State_WakeUp);
 		}
 	}
 
 	//アニメーションが終了してある程度時間がたったら無敵を外す
-	if (m_FrameCount > AnimeEndFrame + 30)
+	if (m_FrameCount > AnimeEndFrame + 15)
 	{
 		m_pCharacter->SetInvincible(false);
 	}

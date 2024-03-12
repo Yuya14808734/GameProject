@@ -1,5 +1,6 @@
 #include "Character00_Attack13.h"
 #include "CharacterBase_HitStopState.h"
+#include "SoundManager.h"
 
 void Character00_Attack13::Init()
 {
@@ -33,6 +34,8 @@ void Character00_Attack13::Init()
 	(*m_pAttackCollider).push_back(Attack);
 
 	m_pModelDrawer->PlayAnime("WAIT04", true);
+
+	SoundManager::PlaySE("MissKick01");
 }
 
 void Character00_Attack13::Update()
@@ -82,6 +85,8 @@ void Character00_Attack13::Uninit()
 
 void Character00_Attack13::HitCharacter(Character* pHitCharacter)
 {
+	SoundManager::PlaySE("HitKick01");
+
 	//ƒ_ƒ[ƒW‚Ì‰ÁŽZ
 	pHitCharacter->AddDamage(5.0f);		
 

@@ -71,8 +71,8 @@ void CharacterBase_JumpState::Update()
 	m_pCharacterParameter->Pos += m_pCharacterParameter->Velocity;
 
 	//ジャンプした後の位置が天井を超えていたら戻してやる
-	if (m_pCharacterParameter->Pos.y > m_pStage->GetDeadLineTopY())
+	if (m_pCharacterParameter->Pos.y + m_pCharacterCollider->GetSize().y > m_pStage->GetDeadLineTopY())
 	{
-		m_pCharacterParameter->Pos.y = m_pStage->GetDeadLineTopY();
+		m_pCharacterParameter->Pos.y = m_pStage->GetDeadLineTopY() - m_pCharacterCollider->GetSize().y - 0.01f;
 	}
 }

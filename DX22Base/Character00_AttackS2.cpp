@@ -1,5 +1,6 @@
 #include "Character00_AttackS2.h"
 #include "CharacterBase_HitStopState.h"
+#include "SoundManager.h"
 
 void Character00_AttackS2::Init()
 {
@@ -52,6 +53,8 @@ void Character00_AttackS2::Init()
 	m_pModelDrawer->PlayAnime("Umatobi", true);
 
 	m_HitAttackStopCount = 0;
+
+	SoundManager::PlaySE("MissSword01");
 }
 
 void Character00_AttackS2::Uninit()
@@ -167,6 +170,8 @@ void Character00_AttackS2::Draw()
 
 void Character00_AttackS2::HitCharacter(Character* pHitCharacter)
 {
+	SoundManager::PlaySE("HitSword01");
+
 	//ƒ_ƒ[ƒW‚Ì‰ÁŽZ
 	pHitCharacter->AddDamage(13.0f);
 

@@ -2,6 +2,7 @@
 #include "Input.h"
 #include "XboxKeyboard.h"
 #include "CharacterBase_HitStopState.h"
+#include "SoundManager.h"
 
 void Character00_AttackAirN::Init()
 {
@@ -117,6 +118,12 @@ void Character00_AttackAirN::Update()
 
 	m_FrameCount++;
 
+	if (m_FrameCount == 13)
+	{
+		SoundManager::PlaySE("MissSword02");
+	}
+
+
 	//最後までアニメーションをした場合
 	if (m_FrameCount >= EndFrame)
 	{
@@ -185,6 +192,8 @@ void Character00_AttackAirN::Draw()
 
 void Character00_AttackAirN::HitCharacter(Character* pHitCharacter)
 {
+	SoundManager::PlaySE("HitSword02");
+
 	pHitCharacter->AddDamage(10.0f);								//ダメージの加算
 	float ForcePower = (pHitCharacter->GetDamage() / 100.0f) * 1.2f + 0.3f;			//ダメージから吹っ飛ばすベクトルの計算
 

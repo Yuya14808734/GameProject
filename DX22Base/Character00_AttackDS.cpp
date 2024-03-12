@@ -1,5 +1,6 @@
 #include "Character00_AttackDS.h"
 #include "CharacterBase_HitStopState.h"
+#include "SoundManager.h"
 
 void Character00_AttackDS::Init()
 {
@@ -99,6 +100,11 @@ void Character00_AttackDS::Update()
 
 	m_FrameCount++;
 
+	if (m_FrameCount == 4)
+	{
+		SoundManager::PlaySE("Slide");
+	}
+
 	//フレームごとにイベントを設定する
 	if (m_FrameCount >= EndFrame)
 	{
@@ -173,6 +179,8 @@ void Character00_AttackDS::Uninit()
 
 void Character00_AttackDS::HitCharacter(Character* pHitCharacter)
 {
+	SoundManager::PlaySE("HitPunch02");
+
 	//ダメージの加算
 	pHitCharacter->AddDamage(15.0f);
 

@@ -106,10 +106,11 @@ void SceneGame::Init()
 	SetNextState(SceneGame::GAMESTATE::GAMESTART);
 	ChangeNextState();
 
+	LoadBattleSE();
 	m_pBGM = new BGM("Assets/Music/Battle.wav", true);
+	m_pBGM->SetVolume(0.1f);
 	m_pBGM->Start();
 
-	LoadBattleSE();
 }
 
 void SceneGame::Uninit()

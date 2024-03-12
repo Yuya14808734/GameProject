@@ -14,6 +14,13 @@ void LoadBattleSE()
 	SoundManager::AddSE("MissSword01", "Assets/SE/SE_MissSword01.wav");
 	SoundManager::AddSE("MissSword02", "Assets/SE/SE_MissSword02.wav");
 	SoundManager::AddSE("ShoutOfWay", "Assets/SE/SE_ShoutOfWay.wav");
+	SoundManager::AddSE("FootSteps01_Run", "Assets/SE/SE_FootStepsRun01.wav");
+	SoundManager::AddSE("FootSteps02_Run", "Assets/SE/SE_FootStepsRun02.wav");
+	SoundManager::AddSE("FootSteps01_Walk", "Assets/SE/SE_FootStepsWalk01.wav");
+	SoundManager::AddSE("FootSteps02_Walk", "Assets/SE/SE_FootStepsWalk02.wav");
+	SoundManager::AddSE("Slide", "Assets/SE/SE_Slide.wav");
+	SoundManager::AddSE("CountDown", "Assets/SE/SE_CountDown.wav");
+	SoundManager::AddSE("CountStart", "Assets/SE/SE_CountStart.wav");
 }
 
 void LoadSelectSE()

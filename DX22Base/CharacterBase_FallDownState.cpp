@@ -1,4 +1,11 @@
 #include "CharacterBase_FallDownState.h"
+#include "SoundManager.h"
+
+//==================================================
+//
+//吹っ飛ばされた後の落ちるときのアップデート
+//
+//==================================================
 
 void CharacterBase_FallDownState::Init()
 {
@@ -17,6 +24,7 @@ void CharacterBase_FallDownState::Update()
 		m_pCharacter->SetNextState(Character::STATE::State_Down);
 		m_pCharacterParameter->Velocity.y += m_pJumpParameter->FallDownGravity;			//重力を掛ける
 		m_pCharacterParameter->Pos += m_pCharacterParameter->Velocity;
+		SoundManager::PlaySE("FootSteps01_Walk");
 		return;
 	}
 
