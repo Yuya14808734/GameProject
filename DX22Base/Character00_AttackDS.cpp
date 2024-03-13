@@ -174,7 +174,7 @@ void Character00_AttackDS::Uninit()
 	(*m_pAttackCollider).clear();
 }
 
-void Character00_AttackDS::HitCharacter(Character* pHitCharacter)
+void Character00_AttackDS::HitCharacter(Character* pHitCharacter, Character::ATTACKPARAM* pHitAttack)
 {
 	SoundManager::PlaySE("HitPunch02");
 

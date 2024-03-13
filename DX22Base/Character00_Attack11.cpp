@@ -112,7 +112,7 @@ void Character00_Attack11::Update()
 	m_pModelDrawer->SetAnimeTime(m_AnimeTime);
 }
 
-void Character00_Attack11::HitCharacter(Character* pHitCharacter)
+void Character00_Attack11::HitCharacter(Character* pHitCharacter, Character::ATTACKPARAM* pHitAttack)
 {
 	SoundManager::PlaySE("HitPunch01");
 	pHitCharacter->AddDamage(2.0f);								//ƒ_ƒ[ƒW‚Ì‰ÁZ

@@ -774,6 +774,12 @@
     <ClCompile Include="Effect03_Dash.cpp">
       <Filter>ソース ファイル\04_Game\05_Effect</Filter>
     </ClCompile>
+    <ClCompile Include="Effect04_HitSmall.cpp">
+      <Filter>ソース ファイル\04_Game\05_Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect05_HitBig.cpp">
+      <Filter>ソース ファイル\04_Game\05_Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinUtil.h">
@@ -1257,6 +1263,12 @@
       <Filter>ヘッダー ファイル\03_Assets\Sound</Filter>
     </ClInclude>
     <ClInclude Include="Effect03_Dash.h">
+      <Filter>ヘッダー ファイル\04_Game\05_Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect04_HitSmall.h">
+      <Filter>ヘッダー ファイル\04_Game\05_Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect05_HitBig.h">
       <Filter>ヘッダー ファイル\04_Game\05_Effect</Filter>
     </ClInclude>
   </ItemGroup>

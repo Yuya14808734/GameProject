@@ -10,7 +10,7 @@ public:
 	void Init() override;
 	void Uninit() override;
 	void Update() override;
-	void HitCharacter(Character* pHitCharacter) override;
+	void HitCharacter(Character* pHitCharacter, Character::ATTACKPARAM* pHitAttack) override;
 
 private:
 	int m_FrameCount = 0;

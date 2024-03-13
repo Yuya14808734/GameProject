@@ -168,7 +168,7 @@ void Character00_AttackS2::Draw()
 	EffectManager::EffectDraw(m_efkHnd_Sword);
 }
 
-void Character00_AttackS2::HitCharacter(Character* pHitCharacter)
+void Character00_AttackS2::HitCharacter(Character* pHitCharacter, Character::ATTACKPARAM* pHitAttack)
 {
 	SoundManager::PlaySE("HitSword01");
 

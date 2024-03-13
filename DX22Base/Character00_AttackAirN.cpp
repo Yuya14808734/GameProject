@@ -3,6 +3,9 @@
 #include "XboxKeyboard.h"
 #include "CharacterBase_HitStopState.h"
 #include "SoundManager.h"
+#include "Effect05_HitBig.h"
+#include "Scene00_Game.h"
+#include "Effect05_HitBig.h"
 
 void Character00_AttackAirN::Init()
 {
@@ -189,7 +192,7 @@ void Character00_AttackAirN::Draw()
 	EffectManager::EffectDraw(m_efkHnd_Sword);
 }
 
-void Character00_AttackAirN::HitCharacter(Character* pHitCharacter)
+void Character00_AttackAirN::HitCharacter(Character* pHitCharacter, Character::ATTACKPARAM* pHitAttack)
 {
 	SoundManager::PlaySE("HitSword02");
 
@@ -206,6 +209,13 @@ void Character00_AttackAirN::HitCharacter(Character* pHitCharacter)
 		? -15.0f : 15.0f
 	) * ForcePower;
 	pHitCharacter->AddForce(AddVec);
+
+	//キャラクターがダッシュしたときのエフェクト
+	SceneGame* pGameScene = static_cast<SceneGame*>(CScene::GetScene());
+
+	EffectHitBig* pEffectHitBig = new EffectHitBig();
+	pEffectHitBig->PlayHitEffect(pHitCharacter->GetPos());
+	pGameScene->GetEffectVector()->push_back(pEffectHitBig);
 
 	//ヒットストップの設定
 	CharacterBase_HitStopState* pHitStopState =

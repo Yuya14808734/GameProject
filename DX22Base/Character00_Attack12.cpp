@@ -108,7 +108,7 @@ void Character00_Attack12::Update()
 
 
 
-void Character00_Attack12::HitCharacter(Character* pHitCharacter)
+void Character00_Attack12::HitCharacter(Character* pHitCharacter, Character::ATTACKPARAM* pHitAttack)
 {
 	SoundManager::PlaySE("HitPunch02");
 

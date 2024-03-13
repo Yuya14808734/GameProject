@@ -194,6 +194,8 @@
     <ClCompile Include="Effect01_SingleSmoke.cpp" />
     <ClCompile Include="Effect02_MultipleSmoke.cpp" />
     <ClCompile Include="Effect03_Dash.cpp" />
+    <ClCompile Include="Effect04_HitSmall.cpp" />
+    <ClCompile Include="Effect05_HitBig.cpp" />
     <ClCompile Include="EffectBase.cpp" />
     <ClCompile Include="Effect00_Dead.cpp" />
     <ClCompile Include="FadeIn00_GameEnd.cpp" />
@@ -384,6 +386,8 @@
     <ClInclude Include="Effect01_SingleSmoke.h" />
     <ClInclude Include="Effect02_MultipleSmoke.h" />
     <ClInclude Include="Effect03_Dash.h" />
+    <ClInclude Include="Effect04_HitSmall.h" />
+    <ClInclude Include="Effect05_HitBig.h" />
     <ClInclude Include="EffectBase.h" />
     <ClInclude Include="Effect00_Dead.h" />
     <ClInclude Include="FadeIn00_GameEnd.h" />

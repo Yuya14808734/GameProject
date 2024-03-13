@@ -11,7 +11,7 @@ class Character_AttackState : public Character_State
 public:
 	Character_AttackState() :Character_State(Character_State::TYPE::ATTACK) {};
 	virtual ~Character_AttackState() {};
-	virtual void HitCharacter(Character* pHitCharacter) {};
+	virtual void HitCharacter(Character* pHitCharacter,Character::ATTACKPARAM* pHitAttack) {};
 
 protected:
 	virtual void Init() override {};

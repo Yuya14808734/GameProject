@@ -1,4 +1,5 @@
 #include "Character00_DashState.h"
+#include "Scene00_Game.h"
 #include "Effect03_Dash.h"
 
 void Character00_DashState::Init()

@@ -83,7 +83,7 @@ void Character00_Attack13::Uninit()
 	m_pAttackCollider->clear();
 }
 
-void Character00_Attack13::HitCharacter(Character* pHitCharacter)
+void Character00_Attack13::HitCharacter(Character* pHitCharacter, Character::ATTACKPARAM* pHitAttack)
 {
 	SoundManager::PlaySE("HitKick01");
 

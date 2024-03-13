@@ -302,7 +302,7 @@ void SceneGame_PlayState::Collision_Player_Stage()
 
 						//“–‚½‚Á‚½‚Ìˆ—‚ğ‚·‚é
 						static_cast<Character_AttackState*>(AttackCharacter->GetStateContext()->GetNowState())
-							->HitCharacter(HitCharacter);
+							->HitCharacter(HitCharacter,&Character_Attack);
 					}
 				}
 			}
