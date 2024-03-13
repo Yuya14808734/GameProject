@@ -61,7 +61,9 @@ void SceneGame_DisConnectControllerState::Draw()
 	CameraManager::GetInstance().SetSceneCamera("GameCamera");
 
 	//=====<”wŒi‚Ì•`‰æ>=====
+	EnableDepth(false);
 	m_pBackGround->Draw();
+	EnableDepth(true);
 
 	//=====<ƒXƒe[ƒW‚Ì•`‰æ>=====
 	m_pStage->Stage_Draw();

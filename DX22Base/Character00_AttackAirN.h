@@ -1,6 +1,7 @@
 #pragma once
 #include "Character_Attack.h"
 #include "Effect_Manager.h"
+#include "Effect05_HitBig.h"
 
 class Character00_AttackAirN : public Character_AttackState
 {
@@ -23,5 +24,6 @@ private:
 	bool m_PushButton = false;
 	int m_HitAttackStopCount = 0;
 	Effekseer::Handle m_efkHnd_Sword;
+	EffectHitBig* m_pEfk_HitBig = nullptr;
 };
 

@@ -3,9 +3,7 @@
 #include "XboxKeyboard.h"
 #include "CharacterBase_HitStopState.h"
 #include "SoundManager.h"
-#include "Effect05_HitBig.h"
 #include "Scene00_Game.h"
-#include "Effect05_HitBig.h"
 
 void Character00_AttackAirN::Init()
 {
@@ -106,6 +104,7 @@ void Character00_AttackAirN::Update()
 		if (m_HitAttackStopCount == 0)
 		{
 			EffectManager::GetManager()->SetPaused(m_efkHnd_Sword, false);
+			m_pEfk_HitBig->PausedEffect(false);
 		}
 
 		return;
@@ -213,9 +212,13 @@ void Character00_AttackAirN::HitCharacter(Character* pHitCharacter, Character::A
 	//キャラクターがダッシュしたときのエフェクト
 	SceneGame* pGameScene = static_cast<SceneGame*>(CScene::GetScene());
 
-	EffectHitBig* pEffectHitBig = new EffectHitBig();
-	pEffectHitBig->PlayHitEffect(pHitCharacter->GetPos());
-	pGameScene->GetEffectVector()->push_back(pEffectHitBig);
+	m_pEfk_HitBig = new EffectHitBig();
+	m_pEfk_HitBig->PlayHitEffect(
+		pHitCharacter->GetPos() + (CVector3::GetUp() * pHitCharacter->GetCharacterCollider()->GetSize().y * 0.5f)
+	);
+
+	m_pEfk_HitBig->PausedEffect();
+	pGameScene->GetEffectVector()->push_back(m_pEfk_HitBig);
 
 	//ヒットストップの設定
 	CharacterBase_HitStopState* pHitStopState =

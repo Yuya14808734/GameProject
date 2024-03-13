@@ -1,6 +1,7 @@
 #include "Character00_AttackS2.h"
 #include "CharacterBase_HitStopState.h"
 #include "SoundManager.h"
+#include "Scene00_Game.h"
 
 void Character00_AttackS2::Init()
 {
@@ -114,6 +115,7 @@ void Character00_AttackS2::Update()
 		if (m_HitAttackStopCount == 0)
 		{
 			EffectManager::GetManager()->SetPaused(m_efkHnd_Sword, false);
+			m_pEfk_HitBig->PausedEffect(false);
 		}
 
 		return;
@@ -186,6 +188,17 @@ void Character00_AttackS2::HitCharacter(Character* pHitCharacter, Character::ATT
 
 	//吹っ飛ばすベクトルを設定
 	pHitCharacter->AddForce(AddVec);
+
+	//キャラクターがダッシュしたときのエフェクト
+	SceneGame* pGameScene = static_cast<SceneGame*>(CScene::GetScene());
+
+	m_pEfk_HitBig = new EffectHitBig();
+	m_pEfk_HitBig->PlayHitEffect(
+		pHitCharacter->GetPos() + (CVector3::GetUp() * pHitCharacter->GetCharacterCollider()->GetSize().y * 0.5f)
+	);
+
+	m_pEfk_HitBig->PausedEffect();
+	pGameScene->GetEffectVector()->push_back(m_pEfk_HitBig);
 
 	//ヒットストップの設定
 	CharacterBase_HitStopState* pHitStopState =

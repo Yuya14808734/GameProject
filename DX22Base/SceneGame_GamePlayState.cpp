@@ -57,7 +57,9 @@ void SceneGame_PlayState::Draw()
 	CameraManager::GetInstance().SetSceneCamera("GameCamera");
 
 	//=====<背景の描画>=====
+	EnableDepth(false);
 	m_pBackGround->Draw();
+	EnableDepth(true);
 
 	//=====<影のシェーダーの時に使うライトカメラの行列の設定>=====
 	DirectX::XMMATRIX LVP =	m_pLightCamera->GetViewMatrix_TypeXMMAXRIX();

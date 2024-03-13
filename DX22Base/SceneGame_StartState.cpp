@@ -76,7 +76,9 @@ void SceneGame_StartState::Draw()
 	CameraManager::GetInstance().SetSceneCamera("GameStartCamera");
 
 	//=====<”wŒi‚Ì•`‰æ>=====
+	EnableDepth(false);
 	m_pBackGround->Draw();
+	EnableDepth(true);
 
 	//=====<‰e‚ÌƒVƒF[ƒ_[‚ÌÝ’è>=====
 	DirectX::XMMATRIX LVP = 

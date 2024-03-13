@@ -1,6 +1,7 @@
 #pragma once
 #include "Character_Attack.h"
 #include "Effect_Manager.h"
+#include "Effect05_HitBig.h"
 
 class Character00_AttackS2 : public Character_AttackState
 {
@@ -24,6 +25,7 @@ private:
 	int m_HitAttackStopCount = 0;
 
 	//エフェクトの変数
-	Effekseer::Handle m_efkHnd_Sword;
+	Effekseer::Handle m_efkHnd_Sword = NULL;
+	EffectHitBig* m_pEfk_HitBig = nullptr;
 };
 
