@@ -41,6 +41,16 @@ void CharacterBase_IdleState::Update()
 		{
 			m_pCharacter->SetNextState(Character::STATE::State_Walk);
 		}
+
+		if (LeftStick.x < 0.0f)
+		{
+			m_pCharacter->SetLookLeft();
+		}
+		else
+		{
+			//右に行っている
+			m_pCharacter->SetLookRight();
+		}
 	}
 
 	//ジャンプ
