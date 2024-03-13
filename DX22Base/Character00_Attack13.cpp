@@ -1,6 +1,8 @@
 #include "Character00_Attack13.h"
 #include "CharacterBase_HitStopState.h"
 #include "SoundManager.h"
+#include "Scene00_Game.h"
+#include "Effect04_HitSmall.h"
 
 void Character00_Attack13::Init()
 {
@@ -116,4 +118,14 @@ void Character00_Attack13::HitCharacter(Character* pHitCharacter, Character::ATT
 	{
 		pHitCharacter->SetLookRight();
 	}
+
+	//エフェクト
+	SceneGame* pGameScene = static_cast<SceneGame*>(CScene::GetScene());
+
+	EffectHitSmall* pEfk_HitSmall = new EffectHitSmall();
+	pEfk_HitSmall->PlayHitEffect(
+		pHitCharacter->GetPos() + (CVector3::GetUp() * pHitCharacter->GetCharacterCollider()->GetSize().y * 0.7f)
+	);
+
+	pGameScene->GetEffectVector()->push_back(pEfk_HitSmall);
 }

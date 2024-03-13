@@ -209,7 +209,7 @@ void Character00_AttackAirN::HitCharacter(Character* pHitCharacter, Character::A
 	) * ForcePower;
 	pHitCharacter->AddForce(AddVec);
 
-	//キャラクターがダッシュしたときのエフェクト
+	//エフェクト
 	SceneGame* pGameScene = static_cast<SceneGame*>(CScene::GetScene());
 
 	m_pEfk_HitBig = new EffectHitBig();

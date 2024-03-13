@@ -33,8 +33,8 @@ void EffectHitSmall::PausedEffect(bool paused)
 void EffectHitSmall::PlayHitEffect(CVector3 pos)
 {
 	m_efkHnd_Hit = EffectManager::GetManager()->
-		Play(EffectManager::GetEffect("DamageEffect00"),
+		Play(EffectManager::GetEffect("DamageEffect02"),
 			pos.x, pos.y, pos.z);
 
-	EffectManager::GetManager()->SetScale(m_efkHnd_Hit, 0.3f, 0.3f, 0.3f);
+	EffectManager::GetManager()->SetScale(m_efkHnd_Hit, 0.5f, 0.5f, 0.5f);
 }
