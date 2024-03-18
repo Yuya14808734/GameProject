@@ -13,6 +13,7 @@ void CharacterBase_RespawnState::Uninit()
 {
 	m_pStage->MinaRespawn();
 	m_pCharacter->SetInvincible(false);
+	m_pCharacter->SetCheckDead(true);
 }
 
 void CharacterBase_RespawnState::Update()

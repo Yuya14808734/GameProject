@@ -57,7 +57,7 @@ void CharacterBase_JumpState::Update()
 	//攻撃
 	if (m_pController->GetAttack())
 	{
-		m_pCharacter->SetNextState(Character::STATE::State_AttackAirN); //弱の設定
+		m_pCharacter->SetNextState(Character::STATE::State_AttackAirN);
 	}
 
 	m_pCharacterParameter->Velocity.y 
@@ -73,6 +73,7 @@ void CharacterBase_JumpState::Update()
 	if (m_pCharacterParameter->Velocity.y < m_pJumpParameter->ChangeFallSpeed)
 	{
 		m_pCharacter->SetNextState(Character::STATE::State_AirMove);
+		m_pCharacterParameter->Velocity.y = 0.0f;
 	}
 
 	m_pCharacterParameter->Pos += m_pCharacterParameter->Velocity;
@@ -80,6 +81,6 @@ void CharacterBase_JumpState::Update()
 	//ジャンプした後の位置が天井を超えていたら戻してやる
 	if (m_pCharacterParameter->Pos.y + m_pCharacterCollider->GetSize().y > m_pStage->GetDeadLineTopY())
 	{
-		m_pCharacterParameter->Pos.y = m_pStage->GetDeadLineTopY() - m_pCharacterCollider->GetSize().y - 0.01f;
+		m_pCharacterParameter->Pos.y = m_pStage->GetDeadLineTopY() - m_pCharacterCollider->GetSize().y - 0.1f;
 	}
 }

@@ -43,7 +43,7 @@ void CameraGame::Update()
 	//=================================================================
 
 	//=====<移動に関する情報を取得できるか確認>========================
-	float MaxRightX, MaxLeftX, MaxTopY, MaxBottomY;
+	float MaxRightX, MaxLeftX, MaxTopY, MaxBottomY;	//一番端の位置
 
 	std::vector<Character*>::iterator Character_It = (*m_pCharacterVector).begin();
 
@@ -74,7 +74,7 @@ void CameraGame::Update()
 		}
 	}
 
-	//デットラインより少しずらした位置をカメラが見れる橋として設定する
+	//デットラインより少しずらした位置をカメラが見れる端として設定する
 	float StageCanSeeLineRightX = m_pStage->GetDeadLineRightX() - 3.0f;
 	float StageCanSeeLineLeftX = m_pStage->GetDeadLineLeftX() + 3.0f;
 	float StageCanSeeLineTopY = m_pStage->GetDeadLineTopY() - 3.0f;
@@ -104,12 +104,12 @@ void CameraGame::Update()
 	//=====<キャラクターとキャラクターの中間を取って移動する位置を設定>=====
 	const float NearZ = -7.0f;				//一番近くに置けるカメラ座標
 	const float FarZ = -20.0f;				//一番遠くに置けるカメラ座標
-	const float NearDistance = 4.0f;		//斜めがこの長さに近くなるとZがNearZになる
-	const float FarDistance = 10.0f;		//斜めがこの長さに近くなるとZがFarZになる
-	float HypotenuseDistance =				//端にいるキャラクター同士の位置の斜めの長さが入る
+	const float NearDistance = 4.0f;		//キャラクター同士の距離がこの値に近くなるとZがNearZになる
+	const float FarDistance = 10.0f;		//キャラクター同士の距離がこの値に近くなるとZがFarZになる
+	float HypotenuseDistance =				//キャラクター同士の距離が入る
 		sqrtf(powf(MaxRightX - MaxLeftX, 2.0f) + powf(MaxTopY - MaxBottomY, 2.0f));
 
-	//カメラが行くべき座標
+	//カメラが行くべき座標(終了位置)
 	CVector3 GotoPos;
 
 	//XとYを設定
@@ -137,7 +137,8 @@ void CameraGame::Update()
 	}
 	//======================================================================
 
-	//=====<Zが0の位置でカメラが見ている4端の位置を特定する>=============================
+	//=====<Zが0の位置(プレイヤーたちがいる位置)でカメラが見ている4端の位置を特定する>=============================
+
 	float CameraVerticalRadian = DirectX::XMConvertToRadians(m_fovy / 2.0f);		//カメラのカメラ縦方向の画角をラジアンに
 	float SlantingLength = (1.0f / cosf(CameraVerticalRadian)) * GotoPos.z;			//上の変数を使って斜めの長さを出す
 	float CameraCanLookLengthY =													//三平方の定理を使って縦の長さを出す

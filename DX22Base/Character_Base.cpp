@@ -179,7 +179,7 @@ void Character::CheckDeadLineOver()
 
 	if (m_pStage->GetDeadLineRightX()	< m_Parameter.Pos.x ||
 		m_pStage->GetDeadLineLeftX()	> m_Parameter.Pos.x ||
-		m_pStage->GetDeadLineTopY()		< m_Parameter.Pos.y ||
+		m_pStage->GetDeadLineTopY()		< m_Parameter.Pos.y + m_CharacterCollider.GetSize().y ||
 		m_pStage->GetDeadLineBottomY()	> m_Parameter.Pos.y)
 	{
 		SetNextState(Character::STATE::State_Dead);
