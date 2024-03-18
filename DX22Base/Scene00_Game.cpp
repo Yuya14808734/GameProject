@@ -108,7 +108,7 @@ void SceneGame::Init()
 
 	LoadBattleSE();
 	m_pBGM = new BGM("Assets/Music/Battle.wav", true);
-	m_pBGM->SetVolume(0.1f);
+	m_pBGM->SetVolume(0.25f);
 	m_pBGM->Start();
 
 }

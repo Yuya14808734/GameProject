@@ -86,6 +86,6 @@ void SceneLoad_CharacterDrawState::Draw()
 
 	EnableDepth(true);
 
-	EffectManager::EffectDraw(*m_pEfkHnd_FireSparks);
+	EffectManager::EffectDraw((*m_pEfkHnd_FireSparks));
 
 }

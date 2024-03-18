@@ -100,6 +100,7 @@ void SceneSelect::Init()
 	m_state = SceneSelect::SELECTSTATE::SELECT;
 
 	m_pBGM = new BGM("Assets/Music/Select.wav", true);
+	m_pBGM->SetVolume(0.3f);
 	m_pBGM->Start();
 }
 

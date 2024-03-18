@@ -92,6 +92,7 @@ void SceneResult::Init()
 	EffectManager::GetManager()->SetScale(m_efkHnd_FlowerBlizzard, 10.0f, 10.0f, 10.0f);
 
 	m_pBGM = new BGM("Assets/Music/Result.wav", true);
+	m_pBGM->SetVolume(0.35f);
 	m_pBGM->Start();
 }
 

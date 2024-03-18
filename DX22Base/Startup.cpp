@@ -3,6 +3,7 @@
 #include "Timer.h"
 #include <crtdbg.h>
 #include "Scene.h"
+#include "resource.h"
 
 //--- ’è”’è‹`
 const char* APP_TITLE = "‚Á”ò‚ÑƒLƒ‰[";

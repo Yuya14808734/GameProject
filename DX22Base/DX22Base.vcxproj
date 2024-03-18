@@ -399,6 +399,7 @@
     <ClInclude Include="Character01_JumpState.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="LoadSound.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="SceneLoad_LoadState.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="VersusCharacterPanelMove.h" />
@@ -572,6 +573,12 @@
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="imgui\imgui.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DX22Base.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Icon\TitleImage00.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

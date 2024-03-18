@@ -292,6 +292,9 @@
     <Filter Include="ソース ファイル\04_Game\03_Character\Character_01\State">
       <UniqueIdentifier>{ab978d5e-4375-4e95-8385-5d77fc79a400}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\icon">
+      <UniqueIdentifier>{fe4d4d9d-9754-41ef-b76c-a841c343f92d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BlendState.cpp">
@@ -1271,6 +1274,9 @@
     <ClInclude Include="Effect05_HitBig.h">
       <Filter>ヘッダー ファイル\04_Game\05_Effect</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui\imgui.natstepfilter">
@@ -1316,5 +1322,15 @@
     <FxCompile Include="DepthShadowPS.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DX22Base.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Icon\TitleImage00.ico">
+      <Filter>リソース ファイル</Filter>
+    </Image>
   </ItemGroup>
 </Project>

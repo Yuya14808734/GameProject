@@ -46,6 +46,7 @@ void SceneLoad::Init()
 	ChangeNextState();
 
 	m_pBGM = new BGM("Assets/Music/Load.wav", true);
+	m_pBGM->SetVolume(0.35f);
 	m_pBGM->Start();
 }
 
