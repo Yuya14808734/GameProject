@@ -187,6 +187,7 @@ protected:
 	bool					 m_Invincible = false;			//無敵か否か
 	bool					 m_GameOver = false;			//ゲームオーバーしているか
 	bool					 m_IsCheckDead = false;			//死ぬ判定を連続でしないようにする
+	bool					 m_IsCheckTopDeadLine = false;	//ステージの上の死ぬラインで判定を取るか
 	BoxCollider				 m_CharacterCollider;			//プレイヤーの当たり判定
 	std::vector<ATTACKPARAM> m_AttackCollider;				//攻撃したときの当たり判定
 	Character_DamageUI		 m_DamageUI;					//ダメージUI
@@ -347,6 +348,14 @@ public:
 	//------------------------------------------------------------------------------
 	bool IsCheckDead()											//死んだ判定をするか取得
 	{ return m_GameOver; }
+
+	//------------------------------------------------------------------------------
+	void SetCheckTopDeadLine(bool check)						//上のラインで判定を行うのか
+	{ m_IsCheckTopDeadLine = check; }
+
+	//------------------------------------------------------------------------------
+	bool IsCheckTopDeadLine()									//上のラインで判定しているか取得
+	{ return m_IsCheckTopDeadLine; }
 
 	//------------------------------------------------------------------------------
 	BoxCollider* GetCharacterCollider() const					//キャラクターの当たり判定を取得

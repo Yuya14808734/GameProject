@@ -40,12 +40,11 @@ void Character00_AttackAirN::Init()
 	EffectManager::GetManager()->SetScale(m_efkHnd_Sword, 1.0f, 1.0f, 1.0f);
 
 	m_pModelDrawer->PlayAnime("WAIT04", true);
-
-	//m_pCharacterParameter->MoveVector = CVector3::GetZero();
 }
 
 void Character00_AttackAirN::Uninit()
 {
+	EffectManager::GetManager()->SetPaused(m_efkHnd_Sword, false);
 	EffectManager::GetManager()->StopEffect(m_efkHnd_Sword);
 	(*m_pAttackCollider).clear();
 	m_pCharacter->SetDefaultCollider();
@@ -163,7 +162,18 @@ void Character00_AttackAirN::Update()
 		LeftStickX : m_pCharacterParameter->Velocity.x;
 
 	m_pCharacterParameter->Velocity.x *= m_pMoveParameter->AirDrag;	//空気抵抗を掛ける
-	m_pCharacterParameter->Velocity.y += m_pJumpParameter->FallDownGravity;	//重力を掛ける
+
+	
+	//上に登っているときと落ちている時で重力の掛け方が違う
+	if (m_pCharacterParameter->Velocity.y > m_pJumpParameter->ChangeFallSpeed)
+	{
+		m_pCharacterParameter->Velocity.y
+		*= m_pJumpParameter->JumpUpReduction;		//1より小さい数値を掛ける
+	}
+	else
+	{
+		m_pCharacterParameter->Velocity.y += m_pJumpParameter->FallDownGravity;	//重力を掛ける
+	}
 
 	//重力制御(最大の落下速度になったら)
 	if (m_pCharacterParameter->Velocity.y < m_pJumpParameter->DefaultFallSpeed)
@@ -212,6 +222,7 @@ void Character00_AttackAirN::HitCharacter(Character* pHitCharacter, Character::A
 	//エフェクト
 	SceneGame* pGameScene = static_cast<SceneGame*>(CScene::GetScene());
 
+	//当たった時のエフェクトを描画
 	m_pEfk_HitBig = new EffectHitBig();
 	m_pEfk_HitBig->PlayHitEffect(
 		pHitCharacter->GetPos() + (CVector3::GetUp() * pHitCharacter->GetCharacterCollider()->GetSize().y * 0.5f)

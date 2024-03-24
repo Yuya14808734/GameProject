@@ -102,8 +102,8 @@ private:
 	};
 
 private:
-	bool GetBitTrigger(TRIGGERBIT Bit);
+	bool GetBitTrigger(TRIGGERBIT Bit);	//今と前のビットを調べTrigger判定になっているか調べる
 
-	int m_NowTriggerBit = 0x00;
-	int m_OldTriggerBit = 0x00;
+	int m_NowTriggerBit = 0x00;	//今押された情報が入る
+	int m_OldTriggerBit = 0x00;	//前のフレームで押された情報が入る
 };

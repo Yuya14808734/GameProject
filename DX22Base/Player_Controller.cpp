@@ -90,7 +90,7 @@ void PlayerController::SetController(PLAYCONTROLLERTYPE type, int PlayerNum)
 	{
 	case PlayerController::PLAYCONTROLLERTYPE::GAMEPAD:
 		m_pXPad = InputXPad::GetXPad(m_XPadNum);
-		m_XPadNum++;
+		m_XPadNum++;	//次に設定するパットの変更
 		break;
 	case PlayerController::PLAYCONTROLLERTYPE::KEYBOARD:
 		break;
@@ -297,6 +297,8 @@ const CVector2 PlayerController::GetMoveInput()
 	case PlayerController::PLAYCONTROLLERTYPE::KEYBOARD:
 		returnVec.x += IsKeyPress('D') ? 1.0f : 0.0f;
 		returnVec.x += IsKeyPress('A') ? -1.0f : 0.0f;
+		returnVec.y += IsKeyPress('W') ? 1.0f : 0.0f;
+		returnVec.y += IsKeyPress('S') ? -1.0f : 0.0f;
 		break;
 	}
 	return returnVec;

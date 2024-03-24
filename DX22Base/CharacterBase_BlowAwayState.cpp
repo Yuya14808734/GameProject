@@ -37,11 +37,15 @@ void CharacterBase_BlowAwayState::Init()
 	m_pMultipleSmoke = new MultipleSmoke();
 	m_pMultipleSmoke->SetSingleSmokeEndTime(1.0f);
 	m_pGameScene->GetEffectVector()->push_back(m_pMultipleSmoke);
+
+	//ã‚Ìƒ‰ƒCƒ“‚ÅŽ€‚ñ‚¾‚©”»’è‚ðŽæ‚é‚©Ý’è
+	m_pCharacter->SetCheckTopDeadLine(true);
 }
 
 void CharacterBase_BlowAwayState::Uninit()
 {
 	m_pMultipleSmoke->SetEffectAddEnd(true);
+	m_pCharacter->SetCheckTopDeadLine(false);
 }
 
 void CharacterBase_BlowAwayState::Update()
