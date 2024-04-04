@@ -99,10 +99,10 @@ void Stage00::Init()
 	characterstartpos = CVector3(0.0f, 0.0f, 0.0f);
 	m_CharacterStartPos.push_back(characterstartpos);
 
-	m_DeadLineRightX	= 30.0f;
-	m_DeadLineLeftX		= -30.0f;
+	m_DeadLineRightX	= 22.0f;
+	m_DeadLineLeftX		= -22.0f;
 	m_DeadLineTopY		= 20.0f;
-	m_DeadLineBottomY	= -20.0f;
+	m_DeadLineBottomY	= -17.0f;
 
 	//キャラクターがリスポーンする位置を設定
 	m_BaseRespawnPos = CVector3(0.0f, 3.0f, 0.0f);

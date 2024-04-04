@@ -6,6 +6,7 @@ void CharacterBase_RespawnState::Init()
 	m_RespawnStartPos.y = m_pStage->GetDeadLineTopY() - 1.0f;
 	m_RespawnLerpPercent = 0.0f;
 	m_pCharacter->SetInvincible(true);
+	m_pCharacter->SetDefaultCollider();
 	m_pCharacterParameter->Pos = m_RespawnStartPos;
 }
 

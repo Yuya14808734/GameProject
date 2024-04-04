@@ -56,6 +56,8 @@ void Character00_Attack11::Update()
 	(*m_pAttackCollider)[0].m_CanAttackCharacterBit = ~(*m_pAttackCollider)[0].m_haveHitCharacterBit;
 	//=====================================================
 
+
+
 	const int AnimeAllFrame = 16;								//アニメーション全体のフレーム
 	const int EndFrame = 30;									//攻撃終了時間
 	const float AnimeStartTime = 1.145f;						//アニメーション開始時間
@@ -65,13 +67,22 @@ void Character00_Attack11::Update()
 	m_FrameCount++;
 
 	//アニメーションの再生時間の更新
-	m_AnimeTime = static_cast<float>(m_FrameCount) / static_cast<float>(AnimeAllFrame) * AnimeAllTime + AnimeStartTime;
+	m_AnimeTime = 
+		static_cast<float>(m_FrameCount) / static_cast<float>(AnimeAllFrame)
+		* AnimeAllTime + AnimeStartTime;
 
 	//アニメーションが終了するべき時間を超えていた場合
 	if (m_AnimeTime > AnimeEndTime)
 	{
 		m_AnimeTime = AnimeEndTime;
 	}
+
+	//アニメーションの再生時間の設定
+	m_pModelDrawer->SetAnimeTime(m_AnimeTime);
+
+
+
+
 
 	//当たり判定開始
 	if (m_FrameCount == 6)					
@@ -110,8 +121,7 @@ void Character00_Attack11::Update()
 		m_pCharacter->SetNextState(Character::STATE::State_Idle);
 	}
 
-	//アニメーションの再生時間の設定
-	m_pModelDrawer->SetAnimeTime(m_AnimeTime);
+	
 }
 
 void Character00_Attack11::HitCharacter(Character* pHitCharacter, Character::ATTACKPARAM* pHitAttack)

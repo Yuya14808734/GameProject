@@ -247,7 +247,6 @@ void ModelDrawer::Draw()
 {
 	CameraBase* pCamera = 
 		CameraManager::GetInstance().GetSceneCamera();
-		;
 
 	if (pCamera == nullptr)
 	{

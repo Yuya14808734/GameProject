@@ -168,6 +168,8 @@ CVector3 CameraBase::GetUpVector()
 
 void CameraBase::CreateViewingFrustum()
 {
+
+	//カメラの右、上、前ベクトルを取得
 	CVector3 rightVec = GetRightVector();
 	CVector3 upVec = GetUpVector();
 	CVector3 fowardVec = m_look - m_pos;

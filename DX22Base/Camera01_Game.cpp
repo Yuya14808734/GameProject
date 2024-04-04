@@ -103,9 +103,9 @@ void CameraGame::Update()
 
 	//=====<キャラクターとキャラクターの中間を取って移動する位置を設定>=====
 	const float NearZ = -7.0f;				//一番近くに置けるカメラ座標
-	const float FarZ = -20.0f;				//一番遠くに置けるカメラ座標
+	const float FarZ = -17.0f;				//一番遠くに置けるカメラ座標
 	const float NearDistance = 4.0f;		//キャラクター同士の距離がこの値に近くなるとZがNearZになる
-	const float FarDistance = 10.0f;		//キャラクター同士の距離がこの値に近くなるとZがFarZになる
+	const float FarDistance = 7.0f;		//キャラクター同士の距離がこの値に近くなるとZがFarZになる
 	float HypotenuseDistance =				//キャラクター同士の距離が入る
 		sqrtf(powf(MaxRightX - MaxLeftX, 2.0f) + powf(MaxTopY - MaxBottomY, 2.0f));
 

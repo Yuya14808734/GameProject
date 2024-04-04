@@ -159,6 +159,12 @@ void EffectManager::SetIsDrawEffect(bool IsDraw)
 	m_IsDrawEffect = IsDraw;
 }
 
+void EffectManager::SetAllEndEffectr()
+{
+	EffectManager::GetManager()->StopAllEffects();
+	m_EffectTimeCount = 0;
+}
+
 void EffectManager::Add_Effect(std::string name, const char16_t* filePath)
 {
 	std::map<std::string, Effekseer::EffectRef>::iterator it = m_Effect.find(name);

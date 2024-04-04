@@ -24,6 +24,7 @@ public:
 	static void EffectUpdate();
 	static void EffectDraw(Effekseer::Handle EffectHandle);
 	static void SetIsDrawEffect(bool IsDraw);
+	static void SetAllEndEffectr();
 private:
 	static Effekseer::ManagerRef m_efkManager;
 	static EffekseerRendererDX11::RendererRef m_efkRenderer;
