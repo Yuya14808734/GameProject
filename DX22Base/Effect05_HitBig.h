@@ -2,6 +2,12 @@
 #include "EffectBase.h"
 #include "Calculation.h"
 
+//==========================================================
+// 
+// 攻撃が当たった時のヒットエフェクト
+// 
+//==========================================================
+
 class EffectHitBig : public EffectBase
 {
 private:

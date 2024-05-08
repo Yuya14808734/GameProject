@@ -28,12 +28,12 @@ public:
 class State
 {
 public:
-	State() {};
-	virtual ~State() {};
-	virtual void Init() {};
-	virtual void Uninit() {};
-	virtual void Update() {};
-	virtual void Draw() {};
+	State() {};							//コンストラクタ
+	virtual ~State() {};				//デストラクタ
+	virtual void Init() {};				//ステートの初期化
+	virtual void Uninit() {};			//ステートの終了処理
+	virtual void Update() {};			//ステートのアップデート
+	virtual void Draw() {};				//ステートの描画
 };
 
 
