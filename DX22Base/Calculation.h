@@ -144,7 +144,7 @@ public:
 	~CQuaternion() {};
 	CQuaternion(float x,float y,float z,float w);
 	CQuaternion(float AngleX, float AngleY, float AngleZ);
-	CQuaternion(CVector3 Angle);
+	CQuaternion(const CVector3& Angle);
 	CQuaternion(const DirectX::XMFLOAT4& f);
 	CQuaternion operator*  (const CQuaternion& q);
 	CQuaternion operator*= (const CQuaternion& q);

@@ -446,7 +446,7 @@ CQuaternion::CQuaternion(float AngleX, float AngleY, float AngleZ)
 		DirectX::XMConvertToRadians(AngleZ));
 }
 
-CQuaternion::CQuaternion(CVector3 Angle)
+CQuaternion::CQuaternion(const CVector3& Angle)
 	:CQuaternion(Angle.x, Angle.y, Angle.z)
 {}
 
