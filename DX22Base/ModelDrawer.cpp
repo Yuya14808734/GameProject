@@ -474,7 +474,17 @@ void ModelDrawer::SetVertexShader(VertexShader* pVertexShader)
 	m_pVertexShader = pVertexShader;
 }
 
+void ModelDrawer::SetDefaultVertexShader()
+{
+	m_pVertexShader = m_pDefaultVertexShader;
+}
+
 void ModelDrawer::SetPixelShader(PixelShader* pPixelShader)
 {
 	m_pPixelShader = pPixelShader;
+}
+
+void ModelDrawer::SetDefaultPixelShader()
+{
+	m_pPixelShader = nullptr;
 }

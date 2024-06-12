@@ -196,6 +196,8 @@ protected:
 	JUMPPARAMETER			 m_JumpParameter;				//ジャンプ力などのパラメータ
 	BLOWAWAYPARAMETER		 m_BlowAwayParameter;			//吹っ飛ばし力などのパラメータ
 	Stage*					 m_pStage = nullptr;			//ステージの情報が入る
+	ID3D11ShaderResourceView* m_pToonTexture;			//トゥーン用のテクスチャ
+
 
 public:
 	//===============================================================================

@@ -150,19 +150,19 @@ void SceneGame::Uninit()
 void SceneGame::Update()
 {
 	//=====<コントローラーが抜かれたらゲームを終了する>=====
-	if (!m_isDisConnectController)
-	{	
-		if (!m_pFirstController->IsConnect() || !m_pSecondController->IsConnect())
-		{
-			//もう入らないようにする
-			m_isDisConnectController = true;
+	//if (!m_isDisConnectController)
+	//{	
+	//	if (!m_pFirstController->IsConnect() || !m_pSecondController->IsConnect())
+	//	{
+	//		//もう入らないようにする
+	//		m_isDisConnectController = true;
 
-			//コントローラーが抜かれた
-			SetNextState(SceneGame::GAMESTATE::GAMEDISCONNECTCONTROLLER);
-			ChangeNextState();
-			return;
-		}
-	}
+	//		//コントローラーが抜かれた
+	//		SetNextState(SceneGame::GAMESTATE::GAMEDISCONNECTCONTROLLER);
+	//		ChangeNextState();
+	//		return;
+	//	}
+	//}
 
 	//=====<ゲームシーンのステートのアップデート>=====
 	m_GameSceneStateContext.StateUpdate();

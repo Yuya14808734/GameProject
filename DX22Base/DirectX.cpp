@@ -16,6 +16,7 @@ Effekseer::Handle g_efkHandle;
 ID3D11Device* g_pDevice;
 ID3D11DeviceContext* g_pContext;
 IDXGISwapChain* g_pSwapChain;
+ID3D11RasterizerState* g_pRasterizerState[3];
 ID3D11RenderTargetView* g_pNowRTV[4] = { nullptr ,nullptr, nullptr, nullptr};		//レンダーターゲット
 int						g_NowRTVNum = 0;
 ID3D11DepthStencilView* g_pNowDSV = nullptr;		//深度バッファ情報
@@ -142,6 +143,25 @@ HRESULT InitDX(HWND hWnd, UINT width, UINT height, bool fullscreen)
 	//描画先(レンダーターゲット)と深度バッファを設定
 	g_pContext->OMSetRenderTargets(1, &g_pDefaultRTV, g_pDefaultDSV);
 
+	//--- カリング設定
+	D3D11_RASTERIZER_DESC rasterizer = {};
+	D3D11_CULL_MODE cull[] = {
+		D3D11_CULL_NONE,
+		D3D11_CULL_FRONT,
+		D3D11_CULL_BACK
+	};
+	rasterizer.FillMode =
+		D3D11_FILL_SOLID;
+	//D3D11_FILL_WIREFRAME;
+	rasterizer.FrontCounterClockwise = true;
+	for (int i = 0; i < 3; ++i)
+	{
+		rasterizer.CullMode = cull[i];
+		hr = g_pDevice->CreateRasterizerState(&rasterizer, &g_pRasterizerState[i]);
+		if (FAILED(hr)) { return hr; }
+	}
+	SetCullingMode(D3D11_CULL_NONE);
+
 	//--- ビューポート
 	D3D11_VIEWPORT viewPort;
 	viewPort.TopLeftX = 0.0f;
@@ -224,6 +244,16 @@ void SetRenderTargets(UINT num, RenderTarget ** ppViews, DepthStencil * pView)
 	vp.MinDepth = 0.0f;
 	vp.MaxDepth = 1.0f;
 	g_pContext->RSSetViewports(1, &vp);
+}
+
+void SetCullingMode(D3D11_CULL_MODE cull)
+{
+	switch (cull)
+	{
+	case D3D11_CULL_NONE: g_pContext->RSSetState(g_pRasterizerState[0]); break;
+	case D3D11_CULL_FRONT: g_pContext->RSSetState(g_pRasterizerState[1]); break;
+	case D3D11_CULL_BACK: g_pContext->RSSetState(g_pRasterizerState[2]); break;
+	}
 }
 
 void SetDefaultRenderTargets()

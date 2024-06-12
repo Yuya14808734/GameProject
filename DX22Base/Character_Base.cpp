@@ -5,6 +5,7 @@
 #include "Scene00_Game.h"
 #include "Effect00_Dead.h"
 #include "CameraManager.h"
+#include "ShaderManager.h"
 
 int Character::m_NewPlayerBit = 0x01;
 
@@ -58,6 +59,10 @@ void Character::Character_Init()
 
 	m_Parameter.JumpCount = 0;
 	Character_ColliderInit();
+
+	ShaderManager::CreateVertexShader("ModelOutline", CreateShaderPath("ModelVS_Outline"));
+	ShaderManager::CreatePixelShader("Outline", CreateShaderPath("OutlinePS"));
+	ShaderManager::CreatePixelShader("ToonShader", CreateShaderPath("ToonShaderPS"));
 
 }
 
@@ -115,6 +120,27 @@ void Character::Character_Draw()
 	m_CharacterModel.SetCulling(true, 2.0f);
 	m_CharacterModel.SetPosition(m_Parameter.Pos);
 	m_CharacterModel.SetRotate(m_Parameter.Rotate);
+
+	//アウトライン描画
+	m_CharacterModel.SetVertexShader(
+		ShaderManager::GetVertexShader("ModelOutline")
+	);
+	m_CharacterModel.SetPixelShader(
+		ShaderManager::GetPixelShader("Outline")
+	);
+
+	SetCullingMode(D3D11_CULL_BACK);
+	m_CharacterModel.Draw();
+	SetCullingMode(D3D11_CULL_FRONT);
+
+	//通常描画
+	m_CharacterModel.SetDefaultVertexShader();
+	m_CharacterModel.SetPixelShader(
+	ShaderManager::GetPixelShader("ToonShader"));
+
+	//テクスチャを送る
+	SetTexturePS(m_pDissolveTexture, 1);
+
 	m_CharacterModel.Draw();
 
 	//エフェクトなどの描画

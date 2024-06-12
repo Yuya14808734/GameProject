@@ -16,6 +16,7 @@ void BeginDrawDX();
 void EndDrawDX();
 
 void SetRenderTargets(UINT num, RenderTarget** ppViews, DepthStencil* pView);
+void SetCullingMode(D3D11_CULL_MODE cull);
 void SetDefaultRenderTargets();
 
 

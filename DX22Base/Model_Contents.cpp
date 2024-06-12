@@ -47,13 +47,20 @@ bool Model::Load(const char* file, float scale, bool flip)
 		{
 			// ílÇÃãzèoÇµ
 			aiVector3D pos = pScene->mMeshes[i]->mVertices[j];
+			aiVector3D normal{ 0.0f,0.0f,0.0f };
+			if (pScene->mMeshes[i]->HasNormals())
+			{
+				normal = pScene->mMeshes[i]->mNormals[j];
+			}
+
+
 			aiVector3D uv = pScene->mMeshes[i]->HasTextureCoords(0) ?
 				pScene->mMeshes[i]->mTextureCoords[0][j] : zero;
 			//	ílÇê›íË
 			m_pMeshes[i].pVertices[j] =
 			{
 				DirectX::XMFLOAT3(pos.x * scale, pos.y * scale, pos.z * scale),
-				DirectX::XMFLOAT3(0.0f,0.0f,0.0f),
+				DirectX::XMFLOAT3(normal.x,normal.y,normal.z),
 				DirectX::XMFLOAT2(uv.x,uv.y),
 				{0.0f,0.0f,0.0f,0.0f},
 				{0,0,0,0}

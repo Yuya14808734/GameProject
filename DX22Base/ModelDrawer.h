@@ -55,7 +55,9 @@ public:
 	const CQuaternion& GetRotate();							//姿勢を取得(クォータニオン)
 	void SetCulling(bool culling, float Length);			//視錐台による描画判定するか(大きさ設定)
 	void SetVertexShader(VertexShader* pVertexShader);		//頂点シェーダー設定
+	void SetDefaultVertexShader();							//元のシェーダーに戻す
 	void SetPixelShader(PixelShader* pPixelShader);			//ピクセルシェーダー設定
+	void SetDefaultPixelShader();
 
 private:
 	ModelInformation* m_pModelInfo = nullptr;
